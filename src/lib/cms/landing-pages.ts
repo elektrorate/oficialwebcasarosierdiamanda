@@ -2,8 +2,8 @@ import { randomUUID } from "crypto";
 import { createAdminClient } from "../supabase/admin";
 import { addTrashItem, getCurrentUserEmail, getTrashItemByEntity, removeTrashItem } from "./trash";
 import { readJsonFile, writeJsonFile } from "./local-storage";
-import { isLandingPageStatus, isCampaignType, isBlockType } from "./types";
-import type { LandingPage, LandingPageStatus, CampaignType, BlockType, LandingPageBlock } from "./types";
+import { isLandingPageStatus, isCampaignType } from "./types";
+import type { LandingPage, LandingPageBlock } from "./types";
 import { logAction } from "./history-logs";
 
 const TABLE = "landing_pages";
@@ -58,7 +58,9 @@ function normalize(input: Input, existing?: LandingPage, all: LandingPage[] = []
 }
 
 function stripBlockMeta(row: Record<string, unknown>): LandingPageBlock {
-  const { landing_page_id, source_url, ...rest } = row;
+  const rest = { ...row };
+  delete rest.landing_page_id;
+  delete rest.source_url;
   return {
     ...rest,
     cta_text: (rest.cta_text as string) ?? "",
@@ -103,7 +105,30 @@ async function upsertToSupabase(lp: LandingPage): Promise<void> {
   try {
     const supabase = createAdminClient();
     const { blocks, ...data } = lp;
-    await supabase.from(TABLE).upsert(data as unknown as Record<string, unknown>, { onConflict: "id" });
+    const { error } = await supabase.from(TABLE).upsert(data as unknown as Record<string, unknown>, { onConflict: "id" });
+    if (error) throw error;
+
+    const { data: storedBlocks, error: readError } = await supabase
+      .from(BLOCK_TABLE)
+      .select("id")
+      .eq("landing_page_id", lp.id);
+    if (readError) throw readError;
+
+    if (blocks.length) {
+      const { error: blocksError } = await supabase
+        .from(BLOCK_TABLE)
+        .upsert(blocks.map((block) => addBlockMeta(lp.id, block)), { onConflict: "id" });
+      if (blocksError) throw blocksError;
+    }
+
+    const currentIds = new Set(blocks.map((block) => block.id));
+    const staleIds = (storedBlocks ?? [])
+      .map((block) => block.id as string)
+      .filter((id) => !currentIds.has(id));
+    if (staleIds.length) {
+      const { error: deleteError } = await supabase.from(BLOCK_TABLE).delete().in("id", staleIds);
+      if (deleteError) throw deleteError;
+    }
   } catch { /* best-effort */ }
 }
 
@@ -143,7 +168,7 @@ export async function getLandingPageById(id: string) {
 }
 
 export async function createLandingPage(data: Input) {
-  const all = await readJsonFile<LandingPage[]>(FILE_NAME, []);
+  const all = await getLandingPages();
   const next = normalize(data, undefined, all);
   await writeJsonFile(FILE_NAME, [next, ...all]);
   await upsertToSupabase(next);
@@ -152,7 +177,7 @@ export async function createLandingPage(data: Input) {
 }
 
 export async function updateLandingPage(id: string, data: Input) {
-  const all = await readJsonFile<LandingPage[]>(FILE_NAME, []);
+  const all = await getLandingPages();
   const idx = all.findIndex((x) => x.id === id);
   if (idx === -1) return null;
   const old = all[idx];
@@ -169,17 +194,54 @@ export async function updateLandingPage(id: string, data: Input) {
 }
 
 export async function duplicateLandingPage(id: string) {
-  const all = await readJsonFile<LandingPage[]>(FILE_NAME, []);
+  const all = await getLandingPages();
   const orig = all.find((x) => x.id === id);
   if (!orig) return null;
-  const copy = normalize({ ...orig, title: `${orig.title} (copia)`, slug: "", status: "draft" }, undefined, all);
+  const now = new Date().toISOString();
+  const copy = normalize({
+    ...orig,
+    title: `${orig.title} (copia)`,
+    slug: "",
+    status: "draft",
+    blocks: orig.blocks.map((block, index) => ({
+      ...block,
+      id: randomUUID(),
+      sort_order: index,
+      created_at: now,
+      updated_at: now,
+    })),
+  }, undefined, all);
   await writeJsonFile(FILE_NAME, [copy, ...all]);
   await upsertToSupabase(copy);
-  for (const block of copy.blocks) {
-    await upsertBlock(copy.id, block);
-  }
   await logAction({ action: "duplicate", entity_type: "landing_page", entity_id: orig.id, entity_title: orig.title, new_data: copy });
   return copy;
+}
+
+export async function getPublishedLandingPageBySlug(slug: string) {
+  const normalizedSlug = toSlug(slug);
+  try {
+    const supabase = createAdminClient();
+    const { data: lp, error } = await supabase
+      .from(TABLE)
+      .select("*")
+      .eq("slug", normalizedSlug)
+      .eq("status", "published")
+      .is("deleted_at", null)
+      .maybeSingle();
+    if (!error && lp) {
+      const { data: blocks, error: blocksError } = await supabase
+        .from(BLOCK_TABLE)
+        .select("*")
+        .eq("landing_page_id", lp.id)
+        .order("sort_order");
+      if (!blocksError) {
+        return { ...(lp as Record<string, unknown>), blocks: (blocks ?? []).map(stripBlockMeta) } as LandingPage;
+      }
+    }
+  } catch { /* fall through to local data */ }
+
+  const all = await readJsonFile<LandingPage[]>(FILE_NAME, []);
+  return all.find((item) => item.slug === normalizedSlug && item.status === "published" && !item.deleted_at) ?? null;
 }
 
 export async function moveLandingPageToTrash(id: string, deletedBy?: string) {
