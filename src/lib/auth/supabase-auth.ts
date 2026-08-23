@@ -1,7 +1,7 @@
 import { createServerClient } from "@supabase/ssr";
+import type { SupabaseClient } from "@supabase/supabase-js";
 import { cookies } from "next/headers";
 import { cache } from "react";
-import { createAdminClient } from "../supabase/admin";
 import { getCurrentLocalSession, LOCAL_ADMIN_EMAIL } from "./local-auth";
 import { isAdminRole, type AdminRole } from "./roles";
 export { ADMIN_ROLES, isAdminRole } from "./roles";
@@ -61,10 +61,11 @@ export async function getCurrentUser() {
   }
 }
 
-export async function getProfile(userId: string): Promise<AdminProfile | null> {
+export async function getProfile(userId: string, authenticatedClient?: SupabaseClient): Promise<AdminProfile | null> {
   try {
-    const admin = createAdminClient();
-    const { data } = await admin
+    const client = authenticatedClient ?? await createSupabaseAuthClient();
+    if (!client) return null;
+    const { data } = await client
       .from("profiles")
       .select("*")
       .eq("id", userId)
@@ -120,15 +121,16 @@ export const requireAdminProfile = cache(requireAdminProfileUncached);
 export interface AdminSession {
   userId: string;
   userEmail: string;
+  role: AdminRole;
 }
 
 export async function requireAdminApi(): Promise<AdminSession | null> {
   if (isLocalAuthBypassEnabled()) {
-    return { userId: "local-bypass-admin", userEmail: LOCAL_ADMIN_EMAIL };
+    return { userId: "local-bypass-admin", userEmail: LOCAL_ADMIN_EMAIL, role: "admin" };
   }
   const localSession = await getCurrentLocalSession();
   if (localSession) {
-    return { userId: "bootstrap-admin", userEmail: localSession.email };
+    return { userId: "bootstrap-admin", userEmail: localSession.email, role: "admin" };
   }
 
   try {
@@ -139,7 +141,7 @@ export async function requireAdminApi(): Promise<AdminSession | null> {
     const profile = await getProfile(user.id);
     if (!profile || !isAdminRole(profile.role)) return null;
 
-    return { userId: user.id, userEmail: user.email };
+    return { userId: user.id, userEmail: user.email, role: profile.role };
   } catch {
     return null;
   }

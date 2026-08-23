@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import { ADMIN_ROLES, isAdminRole } from "../src/lib/auth/roles.ts";
+import { ADMIN_ROLES, USER_ROLES, canManageUsers, isAdminRole, isUserRole } from "../src/lib/auth/roles.ts";
 import {
   ALLOWED_UPLOAD_EXTENSIONS,
   hasAllowedFileSignature,
@@ -94,4 +94,15 @@ test("rechaza archivos renombrados y formatos activos", () => {
   assert.equal(hasAllowedFileSignature(Buffer.from("<svg><script/></svg>"), "svg"), false);
   assert.equal(ALLOWED_UPLOAD_EXTENSIONS.has("svg"), false);
   assert.equal(MAX_UPLOAD_SIZE, 10 * 1024 * 1024);
+});
+
+test("valida roles y reserva la gestión de usuarios al administrador", () => {
+  assert.deepEqual(USER_ROLES, ["admin", "editor", "teacher", "collaborator"]);
+  for (const role of USER_ROLES) assert.equal(isUserRole(role), true);
+  assert.equal(isUserRole("owner"), false);
+  assert.equal(isUserRole(null), false);
+  assert.equal(canManageUsers("admin"), true);
+  assert.equal(canManageUsers("editor"), false);
+  assert.equal(canManageUsers("teacher"), false);
+  assert.equal(canManageUsers("collaborator"), false);
 });

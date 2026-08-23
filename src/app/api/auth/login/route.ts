@@ -76,7 +76,7 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: "Email o contraseña incorrectos" }, { status: 401 });
     }
 
-    const profile = await getProfile(data.user.id);
+    const profile = await getProfile(data.user.id, supabase);
     if (!profile || !isAdminRole(profile.role)) {
       return NextResponse.json({ error: "Usuario sin permisos de administracion" }, { status: 403 });
     }

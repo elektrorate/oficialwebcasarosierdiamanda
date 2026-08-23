@@ -5,10 +5,12 @@ import Link from "@/components/admin/AdminLink";
 import { adminSections } from "@/lib/admin/navigation";
 import type { AdminNavLink } from "@/lib/admin/navigation";
 import { usePathname, useSearchParams } from "next/navigation";
+import type { AdminRole } from "@/lib/auth/roles";
 
 interface SidebarProps {
   userName: string;
   userEmail: string;
+  role: AdminRole;
 }
 
 function splitLocation(location: string) {
@@ -46,7 +48,7 @@ function getActiveChild(children: AdminNavLink[], location: string) {
   return active;
 }
 
-export default function Sidebar({ userName, userEmail }: SidebarProps) {
+export default function Sidebar({ userName, userEmail, role }: SidebarProps) {
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const query = searchParams.toString();
@@ -54,9 +56,12 @@ export default function Sidebar({ userName, userEmail }: SidebarProps) {
   const [expanded, setExpanded] = useState<string[]>([]);
   const [collapsedActive, setCollapsedActive] = useState<string[]>([]);
   const userInitial = (userName || userEmail || "A").trim().charAt(0).toUpperCase();
+  const visibleSections = role === "admin"
+    ? adminSections
+    : adminSections.filter((section) => section.href !== "/admin/users");
 
   const toggleGroup = (key: string) => {
-    const section = adminSections.find((item) => item.label === key);
+    const section = visibleSections.find((item) => item.label === key);
     const active = Boolean(getActiveChild(section?.children ?? [], location));
 
     if (active) {
@@ -95,7 +100,7 @@ export default function Sidebar({ userName, userEmail }: SidebarProps) {
 
       <nav className="admin-sidebar__nav" aria-label="Navegación administrativa">
         <div className="admin-sidebar__nav-list">
-          {adminSections.map((section) => {
+          {visibleSections.map((section) => {
             const children = section.children ?? [];
             const activeChild = getActiveChild(children, location);
             const childActive = Boolean(activeChild);

@@ -15,7 +15,7 @@ export default async function AdminLayout({ children, session: initialSession }:
 
   return (
     <div className="cms-admin cms-admin-shell">
-      <Sidebar userName={name} userEmail={email} />
+      <Sidebar userName={name} userEmail={email} role={session?.profile.role ?? "editor"} />
       <main className="cms-admin-main">
         <header className="cms-admin-toolbar">
           <LogoutButton />

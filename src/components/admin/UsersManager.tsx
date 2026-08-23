@@ -4,6 +4,21 @@ import { useCallback, useEffect, useMemo, useState, type FormEvent } from "react
 import { useRouter } from "next/navigation";
 import type { CmsAdminUser } from "@/lib/admin/users";
 import { formatAdminDateTime } from "@/lib/admin/date-format";
+import { USER_ROLES, type AdminRole } from "@/lib/auth/roles";
+
+const ROLE_LABELS: Record<AdminRole, string> = {
+  admin: "Administrador",
+  editor: "Editor",
+  teacher: "Profesor",
+  collaborator: "Colaborador",
+};
+
+const ROLE_DESCRIPTIONS: Record<AdminRole, string> = {
+  admin: "Acceso completo, incluida la gestión de usuarios.",
+  editor: "Acceso al CMS y gestión de contenidos, sin administrar usuarios.",
+  teacher: "Perfil preparado para acceso limitado de profesor.",
+  collaborator: "Perfil preparado para acceso limitado de colaborador.",
+};
 
 export default function UsersManager({ initialUsers }: { initialUsers: CmsAdminUser[] }) {
   const router = useRouter();
@@ -58,6 +73,7 @@ export default function UsersManager({ initialUsers }: { initialUsers: CmsAdminU
         full_name: formData.get("full_name"),
         email: formData.get("email"),
         password: formData.get("password"),
+        role: formData.get("role"),
       }),
     });
 
@@ -71,7 +87,29 @@ export default function UsersManager({ initialUsers }: { initialUsers: CmsAdminU
 
     form.reset();
     setCreateOpen(false);
-    setStatus({ type: "success", text: "Administrador creado correctamente." });
+    setStatus({ type: "success", text: "Usuario creado correctamente." });
+    await reloadUsers();
+  }
+
+  async function updateRole(user: CmsAdminUser, role: AdminRole) {
+    if (role === user.role) return;
+    const confirmed = window.confirm(`¿Cambiar el rol de ${user.email} a ${ROLE_LABELS[role]}?`);
+    if (!confirmed) return;
+
+    setIsLoading(true);
+    setStatus(null);
+    const response = await fetch(`/api/admin/users/${user.id}`, {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ role }),
+    });
+    const data = (await response.json().catch(() => ({}))) as { error?: string };
+    setIsLoading(false);
+    if (!response.ok) {
+      setStatus({ type: "error", text: data.error || "No se pudo actualizar el rol." });
+      return;
+    }
+    setStatus({ type: "success", text: "Rol actualizado correctamente." });
     await reloadUsers();
   }
 
@@ -149,7 +187,7 @@ export default function UsersManager({ initialUsers }: { initialUsers: CmsAdminU
       {createOpen ? (
         <form className="editor-form form-block users-admin__form" onSubmit={handleCreate}>
           <div className="menu-editor-head">
-            <h3>Crear administrador</h3>
+            <h3>Crear usuario</h3>
             <button type="button" className="secondary-btn" onClick={() => setCreateOpen(false)}>
               Cancelar
             </button>
@@ -168,17 +206,26 @@ export default function UsersManager({ initialUsers }: { initialUsers: CmsAdminU
               <input name="password" type="password" autoComplete="new-password" minLength={8} required />
               <small>Usa al menos 8 caracteres.</small>
             </label>
+            <label className="field span-2">
+              <span>Rol *</span>
+              <select name="role" defaultValue="editor" required>
+                {USER_ROLES.map((role) => (
+                  <option key={role} value={role}>{ROLE_LABELS[role]}</option>
+                ))}
+              </select>
+              <small>El administrador tiene control completo. Los accesos limitados se aplican según el rol.</small>
+            </label>
           </div>
           <div className="form-actions">
             <button className="primary-btn" type="submit" disabled={isLoading}>
-              {isLoading ? "Creando..." : "Crear administrador"}
+              {isLoading ? "Creando..." : "Crear usuario"}
             </button>
           </div>
         </form>
       ) : (
         <button type="button" className="primary-btn users-admin__create" onClick={() => setCreateOpen(true)}>
           <span className="material-symbols-outlined" aria-hidden="true">person_add</span>
-          Crear administrador
+          Crear usuario
         </button>
       )}
 
@@ -223,7 +270,21 @@ export default function UsersManager({ initialUsers }: { initialUsers: CmsAdminU
                   <br />
                   <span className="muted">{user.email}</span>
                 </td>
-                <td><span className="entity-badge">Administrador</span></td>
+                <td>
+                  <label className="field">
+                    <span className="sr-only">Rol de {user.email}</span>
+                    <select
+                      value={user.role}
+                      disabled={isLoading}
+                      title={ROLE_DESCRIPTIONS[user.role]}
+                      onChange={(event) => void updateRole(user, event.target.value as AdminRole)}
+                    >
+                      {USER_ROLES.map((role) => (
+                        <option key={role} value={role}>{ROLE_LABELS[role]}</option>
+                      ))}
+                    </select>
+                  </label>
+                </td>
                 <td>{formatAdminDateTime(user.created_at)}</td>
                 <td>{formatAdminDateTime(user.last_sign_in_at, "Sin ingreso")}</td>
                 <td>
