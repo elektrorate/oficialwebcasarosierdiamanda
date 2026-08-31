@@ -20,9 +20,9 @@ export function BlogPostArticleSection({
 }) {
   return (
     <>
-      <article className="blog-article section">
-        <div className="blog-article__container">
-          <header className="blog-article__header">
+      <article className="blog-article section py-[clamp(28px,4vw,48px)] pb-[clamp(32px,4vw,56px)] bg-[#f9f8f3]">
+        <div className="blog-article__container w-[min(100%-40px,640px)] mx-auto">
+          <header className="blog-article__header mb-[clamp(28px,4vw,40px)] text-center">
             <BlogPostTitle title={post.title} />
             <BlogPostIntro post={post} />
           </header>

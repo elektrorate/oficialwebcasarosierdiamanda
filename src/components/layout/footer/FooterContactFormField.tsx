@@ -3,6 +3,11 @@
 import type { FormField } from "@/lib/cms/types";
 import { footerFieldHtmlInputType } from "@/lib/layout/footer-contact-form/fields";
 
+const FIELD_CLASS =
+  "w-full rounded border border-[#c4c4c4] bg-transparent px-3 py-[11px] text-[clamp(12px,1.05vw,14px)] leading-[1.35] font-light text-[#4d4d4d] [font-family:var(--font-menu)]";
+
+const TEXTAREA_CLASS = `${FIELD_CLASS} min-h-[clamp(88px,12vw,108px)] resize-y`;
+
 export function FooterContactFormField({
   field,
   preview,
@@ -18,10 +23,10 @@ export function FooterContactFormField({
   if (field.type === "select") {
     return (
       <div>
-        <label htmlFor={id}>{label}</label>
+        <label htmlFor={id} className="sr-only">{label}</label>
         <select
           id={id}
-          className="contact-form__input"
+          className={FIELD_CLASS}
           name={preview ? undefined : field.name}
           disabled={disabled}
           required={required}
@@ -87,10 +92,10 @@ export function FooterContactFormField({
   if (field.type === "textarea") {
     return (
       <div>
-        <label htmlFor={id}>{label}</label>
+        <label htmlFor={id} className="sr-only">{label}</label>
         <textarea
           id={id}
-          className="contact-form__textarea"
+          className={TEXTAREA_CLASS}
           name={preview ? undefined : field.name}
           placeholder={field.placeholder}
           disabled={disabled}
@@ -102,10 +107,10 @@ export function FooterContactFormField({
 
   return (
     <div>
-      <label htmlFor={id}>{label}</label>
+      <label htmlFor={id} className="sr-only">{label}</label>
       <input
         id={id}
-        className="contact-form__input"
+        className={FIELD_CLASS}
         name={preview ? undefined : field.name}
         type={footerFieldHtmlInputType(field)}
         placeholder={field.placeholder}

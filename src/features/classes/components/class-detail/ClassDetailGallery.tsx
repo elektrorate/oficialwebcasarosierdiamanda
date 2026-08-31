@@ -119,7 +119,7 @@ export function ClassDetailGallery({ item }: Props) {
   if (!gallery.items.length || !gallery.activeItem) return null;
 
   return (
-    <div className="class-gallery thumbnail-carousel" aria-label={`Galeria de ${item.title}`}>
+    <div className="class-gallery thumbnail-carousel grid gap-4.5" aria-label={`Galeria de ${item.title}`}>
       <div className="thumbnail-carousel__main">
         <GalleryMainMedia
           item={gallery.activeItem}
@@ -129,13 +129,13 @@ export function ClassDetailGallery({ item }: Props) {
         />
       </div>
       {gallery.items.length > 1 ? (
-        <div className={classNames("thumbnail-carousel__thumbs", "class-gallery__thumbs")}>
+        <div className={classNames("thumbnail-carousel__thumbs", "class-gallery__thumbs grid grid-cols-4 gap-2.5 justify-self-center w-full")}>
           {gallery.items.map((mediaItem, index) => {
             const isActive = index === gallery.activeIndex;
             return (
               <div className="thumbnail-carousel__thumb-wrap" key={mediaItem.id}>
                 <button
-                  className={classNames("class-gallery__thumb", isActive && "is-active")}
+                  className={classNames("class-gallery__thumb p-0 border border-[rgba(140,119,93,0.18)] rounded-none bg-transparent overflow-hidden cursor-pointer", isActive && "is-active border-[#b06f34] shadow-[0_0_0_1px_rgba(176,111,52,0.16)]")}
                   type="button"
                   aria-label={
                     mediaItem.kind === "video"
@@ -145,7 +145,7 @@ export function ClassDetailGallery({ item }: Props) {
                   aria-current={isActive ? "true" : undefined}
                   onClick={() => gallery.selectIndex(index)}
                 >
-                  <img src={assetPath(mediaItem.poster)} alt="" />
+                  <img src={assetPath(mediaItem.poster)} alt="" className="w-full aspect-square object-cover" />
                   {mediaItem.kind === "video" ? (
                     <span className="class-gallery__thumb-play" aria-hidden="true" />
                   ) : null}

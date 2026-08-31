@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import { Carousel } from "@/components/ui/Carousel";
 import { classNames } from "@/lib/utils";
 
@@ -121,17 +122,11 @@ export function SocialGallery({
     <>
       <section
         id={id}
-        className={isHomeStrip ? "social social--home-strip section" : "social section"}
+        className="social--home-strip bg-[#fbfaf6] pt-[clamp(48px,6vw,72px)] pb-[clamp(52px,6.5vw,76px)]"
       >
-        <div
-          className={classNames(
-            "container",
-            "social__container",
-            isHomeStrip && "featured__container",
-          )}
-        >
-          <header className="social__head">
-            <h2 className="social__title section-title">
+        <div className="container max-w-276 mx-auto">
+          <header className="text-center mb-[clamp(22px,3vw,34px)]">
+            <h2 className="m-0 text-transform-none tracking-[0.01em] text-[clamp(26px,3vw,38px)] leading-[1.12] font-light text-[#2e2e2e] [font-family:var(--font-display)]">
               {title.split("\n").map((line, index, lines) => (
                 <span key={line}>
                   {line}
@@ -139,7 +134,7 @@ export function SocialGallery({
                 </span>
               ))}
             </h2>
-            <p className="social__subtitle">{subtitle}</p>
+            <p className="mt-[clamp(8px,1.2vw,12px)] mb-0 text-[#666] text-[clamp(12px,1.05vw,14px)] leading-[1.45] font-light tracking-[0.02em] lowercase [font-family:var(--font-menu)]">{subtitle}</p>
           </header>
           <Carousel
             items={posts}
@@ -159,7 +154,7 @@ export function SocialGallery({
         </div>
       </section>
 
-      {current && (
+      {current && typeof document !== "undefined" && createPortal(
         <div
           className="ig-modal is-open"
           id="ig-modal"
@@ -238,7 +233,8 @@ export function SocialGallery({
               ) : null}
             </section>
           </div>
-        </div>
+        </div>,
+        document.body,
       )}
     </>
   );

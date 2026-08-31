@@ -8,6 +8,7 @@ import {
 } from "@/lib/cms/rich-text-typography";
 import { experienceHref } from "@/lib/routes";
 import { truncateHomeFlipExcerpt } from "@/lib/text/plain-text";
+import { classNames } from "@/lib/utils";
 
 function homeCardExcerpt(item: ExperienceItem) {
   const raw = item.homeExcerpt || item.excerpt;
@@ -29,26 +30,29 @@ export function FeaturedExperienceCards({ items }: { items: readonly ExperienceI
         const flipExcerpt = truncateHomeFlipExcerpt(homeCardExcerpt(item));
 
         return (
-          <article className="content-card content-card--home-flip" key={item.id}>
+          <article className="content-card--home-flip group mx-auto w-full" key={item.id}>
             <Link
-              className="content-card__link content-card__link--home-flip"
+              className="block text-inherit no-underline focus-visible:outline-2 focus-visible:outline-[#8c7457] focus-visible:outline-offset-4"
               href={href}
               aria-label={`Ver ${label}`}
             >
-              <div className="content-card__flip-scene">
-                <div className="content-card__flip-panel">
-                  <div className="content-card__flip-face content-card__flip-face--front">
+              <div className="relative aspect-square overflow-hidden bg-[#e8e4dc]">
+                <div className="relative h-full w-full">
+                  <div className="absolute inset-0 z-1 opacity-100 transition-opacity duration-280 ease-in-out group-hover:opacity-0 group-focus-within:opacity-0">
                     <img
+                      className={classNames(
+                        "block h-full w-full object-cover",
+                        resolvedImage !== `/${image}` && "asset-fallback",
+                      )}
                       src={resolvedImage}
                       alt=""
                       loading="lazy"
                       decoding="async"
-                      className={resolvedImage !== `/${image}` ? "asset-fallback" : undefined}
                     />
                   </div>
-                  <div className="content-card__flip-face content-card__flip-face--back">
+                  <div className="pointer-events-none absolute inset-0 z-2 flex items-center justify-center overflow-hidden bg-[#f7f5f0] p-[clamp(16px,4vw,28px)] text-center opacity-0 transition-opacity duration-280 ease-in-out group-hover:pointer-events-auto group-hover:opacity-100 group-focus-within:pointer-events-auto group-focus-within:opacity-100">
                     <p
-                      className="content-card__flip-copy content-card__excerpt--styled"
+                      className="m-0 line-clamp-10 w-full max-w-[28ch] overflow-hidden text-ellipsis [font-family:var(--font-baskervville)] text-[clamp(13px,1.35vw,16px)] font-light leading-[1.45] text-[#5a5a5a] text-pretty max-[640px]:line-clamp-9 max-[640px]:max-w-[26ch] max-[640px]:text-[15px] max-[640px]:leading-[1.42]"
                       style={excerptStyle}
                     >
                       {flipExcerpt}
@@ -56,7 +60,9 @@ export function FeaturedExperienceCards({ items }: { items: readonly ExperienceI
                   </div>
                 </div>
               </div>
-              <p className="content-card__caption">{label}</p>
+              <p className="mt-[clamp(11px,1.9vw,15px)] mb-0 px-[clamp(4px,1vw,8px)] text-center [font-family:var(--font-nunito)] text-[clamp(11px,1.05vw,13px)] font-light leading-[1.38] tracking-[0.07em] text-[#4a4a4a] text-balance capitalize max-[640px]:mt-3.25 max-[640px]:text-[12px] max-[640px]:tracking-[0.06em]">
+                {label}
+              </p>
             </Link>
           </article>
         );

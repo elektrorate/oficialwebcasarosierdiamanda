@@ -29,6 +29,7 @@ export interface ExperienceItem {
   slug: string;
   title: string;
   subtitle: string;
+  heroSubtitle?: string;
   category: string;
   excerpt: string;
   description: string[];

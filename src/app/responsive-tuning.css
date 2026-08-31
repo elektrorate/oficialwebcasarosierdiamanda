@@ -46,11 +46,7 @@
 @media (min-width: 641px) and (max-width: 1024px) {
   .site-nav-shell--home .mobile-scroll-nav.is-at-top .mobile-scroll-nav__bar {
     height: auto;
-    min-height: calc(
-      var(--hero-logo-tablet-position-y, 42px) +
-        (var(--hero-logo-tablet-width, 106px) * 0.45) +
-        12px
-    );
+    min-height: 145px;
   }
 
   .site-nav-shell--home .mobile-scroll-nav:not(.is-at-top) .mobile-scroll-nav__bar {
@@ -60,8 +56,13 @@
 
   .site-nav-shell--home .mobile-scroll-nav.is-at-top .mobile-scroll-nav__logo {
     left: var(--hero-logo-tablet-position-x, var(--hero-logo-position-x, 50%)) !important;
-    top: var(--hero-logo-tablet-position-y, var(--hero-logo-position-y, 42px)) !important;
+    top: 50px !important;
     transform: translate(-50%, -50%);
+  }
+
+  .site-nav-shell--home .mobile-scroll-nav.is-at-top .mobile-scroll-nav__logo-image,
+  .site-nav-shell--home .mobile-scroll-nav.is-at-top .mobile-scroll-nav__logo-tint {
+    width: 148px !important;
   }
 
   .site-nav-shell--home .mobile-scroll-nav.is-at-top .mobile-scroll-nav__toggle {
@@ -81,21 +82,18 @@
 @media (max-width: 640px) {
   .site-nav-shell--home .mobile-scroll-nav.is-at-top .mobile-scroll-nav__bar {
     height: auto;
-    min-height: calc(
-      var(--hero-logo-mobile-position-y, 34px) +
-        (var(--hero-logo-mobile-width, 92px) * 0.5) +
-        env(safe-area-inset-top, 0px) +
-        12px
-    );
+    min-height: calc(48px + (110px * 0.5) + env(safe-area-inset-top, 0px) + 12px);
   }
 
   .site-nav-shell--home .mobile-scroll-nav.is-at-top .mobile-scroll-nav__logo {
     left: var(--hero-logo-mobile-position-x, var(--hero-logo-tablet-position-x, var(--hero-logo-position-x, 50%))) !important;
-    top: calc(
-      var(--hero-logo-mobile-position-y, var(--hero-logo-tablet-position-y, var(--hero-logo-position-y, 34px))) +
-        env(safe-area-inset-top, 0px)
-    ) !important;
+    top: calc(48px + env(safe-area-inset-top, 0px)) !important;
     transform: translate(-50%, -50%);
+  }
+
+  .site-nav-shell--home .mobile-scroll-nav.is-at-top .mobile-scroll-nav__logo-image,
+  .site-nav-shell--home .mobile-scroll-nav.is-at-top .mobile-scroll-nav__logo-tint {
+    width: 110px !important;
   }
 
   .site-nav-shell--home .mobile-scroll-nav.is-at-top .mobile-scroll-nav__toggle {
@@ -423,37 +421,32 @@
 }
 
 @media (max-width: 1024px) {
-  .site-nav-shell > .mobile-scroll-nav {
+  .native-mobile-nav {
     display: none !important;
   }
 
-  .native-mobile-nav {
-    position: fixed !important;
-    top: 0 !important;
-    left: 0 !important;
-    right: 0 !important;
-    z-index: 2147483000 !important;
-    display: block !important;
-    width: 100%;
-    min-height: 82px;
-    margin: 0;
-    padding: 0;
-    border: 0;
-    background: rgba(251, 250, 246, 0.96);
-    box-shadow: 0 1px 0 rgba(63, 57, 51, 0.08);
-    -webkit-backdrop-filter: blur(10px);
-    backdrop-filter: blur(10px);
-    pointer-events: auto !important;
-    isolation: isolate;
+  /* Antes del primer scroll solo queda visible el logo del hero. */
+  .site-nav-shell .mobile-scroll-nav.is-at-top .mobile-scroll-nav__toggle {
+    display: none !important;
+  }
+
+  /* Al desplazarse, el logo pasa a la izquierda de la barra activa. */
+  .site-nav-shell .mobile-scroll-nav:not(.is-at-top) .mobile-scroll-nav__bar {
+    justify-content: flex-start;
+  }
+
+  .site-nav-shell .mobile-scroll-nav:not(.is-at-top) .mobile-scroll-nav__logo-image {
+    filter: brightness(0) saturate(100%) invert(1) !important;
+    opacity: 1 !important;
   }
 
   .native-mobile-nav__summary {
     position: absolute !important;
-    top: 17px !important;
+    top: 24px !important;
     right: max(18px, env(safe-area-inset-right, 0px)) !important;
     z-index: 2147483003 !important;
-    width: 50px;
-    height: 50px;
+    width: 25px;
+    height: 25px;
     display: flex !important;
     align-items: center;
     justify-content: center;
@@ -480,14 +473,14 @@
   .native-mobile-nav__logo {
     position: absolute !important;
     top: 12px !important;
-    left: 50% !important;
+    left: 16px !important;
     z-index: 2147483002 !important;
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
     width: min(130px, 30vw);
     height: 62px;
-    transform: translateX(-50%) !important;
+    transform: none !important;
     text-decoration: none;
     pointer-events: auto !important;
   }
@@ -499,14 +492,15 @@
     max-width: 130px;
     max-height: 62px;
     object-fit: contain;
-    filter: none !important;
+    filter: brightness(0) !important;
+    opacity: 0.9 !important;
   }
 
   .native-mobile-nav__hamburger,
   .native-mobile-nav__hamburger::before,
   .native-mobile-nav__hamburger::after {
-    width: 32px;
-    height: 3px;
+    width: 20px;
+    height: 2px;
     display: block;
     border-radius: 999px;
     background: currentColor;
@@ -525,11 +519,11 @@
   }
 
   .native-mobile-nav__hamburger::before {
-    transform: translateY(-10px);
+    transform: translateY(-7px);
   }
 
   .native-mobile-nav__hamburger::after {
-    transform: translateY(10px);
+    transform: translateY(7px);
   }
 
   .native-mobile-nav[open] .native-mobile-nav__hamburger {
@@ -632,7 +626,7 @@
   }
 
   .native-mobile-nav__summary {
-    top: 14px !important;
+    top: 22px !important;
     right: max(14px, env(safe-area-inset-right, 0px)) !important;
   }
 
@@ -706,5 +700,123 @@
   .native-mobile-nav__submenu-link:focus-visible,
   .native-mobile-nav__submenu-link[aria-current="page"] {
     color: #8c7457 !important;
+  }
+}
+
+/* Logo inicial: conserva la posicion centrada y gana presencia en pantallas pequenas. */
+@media (min-width: 641px) and (max-width: 1024px) {
+  .site-nav-shell .mobile-scroll-nav.is-at-top .mobile-scroll-nav__bar {
+    min-height: 145px;
+  }
+
+  .site-nav-shell .mobile-scroll-nav.is-at-top .mobile-scroll-nav__logo {
+    top: 84px !important;
+  }
+
+  .site-nav-shell .mobile-scroll-nav.is-at-top .mobile-scroll-nav__logo-image,
+  .site-nav-shell .mobile-scroll-nav.is-at-top .mobile-scroll-nav__logo-tint {
+    width: 160px !important;
+  }
+
+  .site-nav-shell .mobile-scroll-nav.is-at-top .mobile-scroll-nav__toggle {
+    display: none !important;
+  }
+}
+
+@media (max-width: 640px) {
+  .site-nav-shell .mobile-scroll-nav.is-at-top .mobile-scroll-nav__bar {
+    min-height: calc(60px + (132px * 0.5) + env(safe-area-inset-top, 0px) + 12px);
+  }
+
+  .site-nav-shell .mobile-scroll-nav.is-at-top .mobile-scroll-nav__logo {
+    top: calc(80px + env(safe-area-inset-top, 0px)) !important;
+  }
+
+  .site-nav-shell .mobile-scroll-nav.is-at-top .mobile-scroll-nav__logo-image,
+  .site-nav-shell .mobile-scroll-nav.is-at-top .mobile-scroll-nav__logo-tint {
+    width: 162px !important;
+  }
+
+  .site-nav-shell .mobile-scroll-nav.is-at-top .mobile-scroll-nav__toggle {
+    display: none !important;
+  }
+}
+
+/* Headers internos sin imagen: el logo ocupa solo la banda superior. */
+@media (min-width: 641px) and (max-width: 1024px) {
+  .header-interno--text-hero {
+    min-height: 128px !important;
+    --header-interno-band-height: 128px;
+  }
+
+  .header-interno--text-hero + .page-title-block {
+    padding-top: 14px !important;
+  }
+
+  .header-interno--text-hero .mobile-scroll-nav.is-at-top {
+    position: fixed !important;
+    top: 0 !important;
+  }
+
+  .header-interno--text-hero .mobile-scroll-nav.is-at-top .mobile-scroll-nav__logo {
+    left: 50% !important;
+  }
+}
+
+@media (max-width: 640px) {
+  .header-interno--text-hero {
+    min-height: 108px !important;
+    --header-interno-band-height: 108px;
+  }
+
+  .header-interno--text-hero + .page-title-block {
+    padding-top: 3px !important;
+  }
+
+  .header-interno--text-hero .mobile-scroll-nav.is-at-top,
+  .shop-page .mobile-scroll-nav.is-at-top {
+    position: fixed !important;
+    top: 0 !important;
+  }
+
+  .header-interno--text-hero .mobile-scroll-nav.is-at-top .mobile-scroll-nav__logo,
+  .shop-page .mobile-scroll-nav.is-at-top .mobile-scroll-nav__logo {
+    left: 50% !important;
+  }
+}
+
+/* Detalle de clase textual: deja el logo por encima del titular del hero. */
+@media (min-width: 641px) and (max-width: 1024px) {
+  .experience-detail-hero:not(.header-interno--image-hero):not(.header-interno--presentation-hero) {
+    height: 240px !important;
+    min-height: 240px !important;
+    padding: 0 !important;
+  }
+
+  .experience-detail-hero .mobile-scroll-nav.is-at-top .mobile-scroll-nav__logo {
+    top: 42px !important;
+  }
+
+  .experience-detail-hero .mobile-scroll-nav.is-at-top .mobile-scroll-nav__logo-image,
+  .experience-detail-hero .mobile-scroll-nav.is-at-top .mobile-scroll-nav__logo-tint {
+    width: 120px !important;
+  }
+}
+
+@media (max-width: 640px) {
+  .experience-detail-hero:not(.header-interno--image-hero):not(.header-interno--presentation-hero) {
+    height: 180px !important;
+    min-height: 180px !important;
+        padding-bottom: 10px;
+    /* padding: 0 !important; */
+  }
+
+  .experience-detail-hero .mobile-scroll-nav.is-at-top .mobile-scroll-nav__logo {
+    top: calc(40px + env(safe-area-inset-top, 0px)) !important;
+  }
+
+  .experience-detail-hero .mobile-scroll-nav.is-at-top .mobile-scroll-nav__logo-image,
+  .experience-detail-hero .mobile-scroll-nav.is-at-top .mobile-scroll-nav__logo-tint {
+    width: 118px !important;
   }
 }

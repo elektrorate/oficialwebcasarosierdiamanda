@@ -292,6 +292,7 @@ function cmsOfferingToExperienceItem(
     slug: offering.slug,
     title: offering.title,
     subtitle: offering.subtitle || offering.title,
+    heroSubtitle: hero.heroSubtitle || details.heroSubtitle || offering.subtitle || offering.title,
     category: details.heroSubtitle || stringValue(details.category) || offering.type,
     excerpt: offering.excerpt,
     description: splitParagraphs(offering.description),

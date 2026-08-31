@@ -1,61 +1,11 @@
 /**
- * Home gift carousel — editorial layout (square image + left-aligned copy + ghost CTA).
+ * Home gift carousel — typography inherited from CMS variables and MarkdownContent resets.
+ * Structural layout lives in Tailwind on the component.
  */
 
-.gift.home-section--editorial .gift__container {
-  max-width: min(920px, 94vw);
-}
-
-.gift.home-section--editorial .gift-carousel__title,
-.gift.home-section--editorial .gift-carousel__text {
+.gift-carousel__title,
+.gift-carousel__text {
   margin-bottom: 0;
-}
-
-.gift-carousel--single {
-  display: block;
-  width: 100%;
-  max-width: none;
-  margin-inline: 0;
-  text-align: left;
-}
-
-.gift-carousel__card-link {
-  display: grid;
-  grid-template-columns: minmax(min(100%, 240px), clamp(240px, 28vw, 320px)) minmax(0, 1fr);
-  align-items: center;
-  gap: clamp(28px, 4.5vw, 52px);
-  text-align: left;
-  color: inherit;
-  text-decoration: none;
-}
-
-.gift-carousel__slide {
-  display: block;
-  text-align: left;
-}
-
-.gift-carousel__media {
-  display: block;
-  aspect-ratio: 1 / 1;
-  width: 100%;
-  background: #1a1a1a;
-  overflow: hidden;
-}
-
-.gift-carousel__media img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-}
-
-.gift-carousel__body {
-  max-width: none;
-  min-width: 0;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 0;
 }
 
 .gift-carousel__eyebrow {
@@ -70,11 +20,6 @@
   line-height: 1.35;
   letter-spacing: 0.01em;
   text-transform: none;
-}
-
-.gift-carousel__headline {
-  display: block;
-  margin: 0 0 clamp(14px, 1.75vw, 18px);
 }
 
 .gift-carousel__title {
@@ -153,79 +98,9 @@
   margin-top: 0.35em !important;
 }
 
-.gift-carousel__cta {
-  margin-top: clamp(14px, 1.75vw, 18px);
-  padding: 10px 26px;
-  border: 1px solid #c4c4c4;
-  border-radius: 0;
-  background: transparent;
-  font: 500 var(--text-nav) / 1 var(--font-primary);
-  letter-spacing: 0;
-  text-transform: lowercase;
-  color: #707070;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  transition: border-color 180ms ease, color 180ms ease, background-color 180ms ease;
-}
-
-.gift-carousel__cta::before {
-  content: none;
-  display: none;
-}
-
-.gift-carousel__card-link:hover .gift-carousel__cta,
-.gift-carousel__card-link:focus-visible .gift-carousel__cta {
-  border-color: #707070;
-  color: #000;
-}
-
-.gift-carousel {
-  align-items: stretch;
-}
-
-.gift-carousel__arrow {
-  align-self: center;
-  color: #98918b;
-}
-
 @media (max-width: 720px) {
-  .gift-carousel__card-link {
-    grid-template-columns: 1fr;
-    gap: clamp(20px, 5vw, 28px);
-  }
-
-  .gift-carousel__media {
-    width: min(100%, 320px);
-    margin-inline: auto;
-  }
-
-  .gift-carousel__body {
-    align-items: center;
-    text-align: center;
-  }
-
   .gift-carousel__text.markdown-content,
   .gift-carousel__text.markdown-content > * {
     text-align: center !important;
-  }
-
-  .gift-carousel__eyebrow,
-  .gift-carousel__headline {
-    width: 100%;
-    text-align: center;
-  }
-
-  .gift-carousel__cta {
-    margin-inline: auto;
-  }
-}
-
-@media (min-width: 721px) {
-  .gift-carousel--single .gift-carousel__media,
-  .gift-carousel--single .gift-carousel__body {
-    width: auto;
-    max-width: none;
-    margin-inline: 0;
   }
 }

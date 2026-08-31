@@ -14,16 +14,16 @@ export function ShopCatalogSidebar({ categories, activeCategory, onSelect }: Pro
 
   return (
     <aside className="shop-catalog__sidebar" aria-label="Categorías de la tienda">
-      <p className="shop-catalog__sidebar-kicker">Categories:</p>
+      <p className="shop-catalog__sidebar-kicker max-[640px]:text-center!">Categories:</p>
       <nav className="shop-catalog__nav" aria-label="Filtrar por categoría">
-        <ul className="shop-catalog__nav-list">
+        <ul className="shop-catalog__nav-list max-[640px]:justify-center! max-[640px]:gap-y-0! max-[640px]:gap-x-2.5!">
           {categories.map((category) => {
             const isActive = activeCategory === category.key;
             return (
               <li key={category.key}>
                 <button
                   type="button"
-                  className={`shop-catalog__nav-link${isActive ? " is-active" : ""}`}
+                  className={`shop-catalog__nav-link max-[640px]:justify-center! max-[640px]:text-center! max-[640px]:!min-h-9${isActive ? " is-active" : ""}`}
                   aria-pressed={isActive}
                   onClick={() =>
                     onSelect(isActive ? ALL_CATEGORIES_KEY : category.key)

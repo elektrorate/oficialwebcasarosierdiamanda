@@ -7,8 +7,6 @@ import { getSettings } from "@/lib/cms/settings";
 import "./tailwind.css";
 import "./legacy/base.css";
 import "./legacy/home.css";
-import "../components/home/home-section.css";
-import "../components/home/featured-experience-cards.css";
 import "./legacy/classes.css";
 import "./legacy/shop.css";
 import "../features/shop/components/catalog/shop-catalog.css";
@@ -21,16 +19,12 @@ import "./legacy/cart.css";
 import "./legacy/studio.css";
 import "./legacy/promo-entry.css";
 import "./legacy/footer.css";
-import "./legacy/cookiebar.css";
-import "./legacy/site.css";
 import "./globals.css";
 import "./responsive-tuning.css";
 import "./public-header-desktop.css";
 import "./admin-offerings-table.css";
 import "../components/home/gift-carousel.css";
 import "../components/home/social-gallery-home.css";
-import "../components/home/testimonial-slider-home.css";
-import "../components/layout/footer/public-footer-editorial.css";
 import "../components/layout/scroll-nav/home-scroll-sticky-nav.css";
 
 const baskervville = Baskervville({

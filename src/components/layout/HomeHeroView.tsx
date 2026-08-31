@@ -181,6 +181,7 @@ export function HomeHeroView({
     <header
       id="hero"
       className={classNames(
+        "relative h-svh min-h-svh overflow-hidden bg-[#d8d1c6]",
         "hero header-home header-home--ready",
         hero.heroVariant === "text" && "header-home--text-hero",
         hero.heroVariant === "image" && "header-home--image-hero",
@@ -270,12 +271,21 @@ export function HomeHeroView({
       ) : (
         <>
           <h1 className="hero__title">Casa Rosier</h1>
-          <div className="hero__overlays" aria-hidden="true">
-            <img className="hero__overlay hero__overlay--1" src="/img/hero-overlay-1.png" alt="" width={578} height={224} decoding="async" />
-            <img className="hero__overlay hero__overlay--2" src="/img/hero-overlay-2.png" alt="" width={501} height={235} decoding="async" />
+          <div className="pointer-events-none absolute inset-0 z-[2]" aria-hidden="true">
+            <img className="hero__overlay hero__overlay--1 absolute object-contain max-w-none will-change-[transform,opacity]" src="/img/hero-overlay-1.png" alt="" width={578} height={224} decoding="async" />
+            <img className="hero__overlay hero__overlay--2 absolute object-contain max-w-none will-change-[transform,opacity]" src="/img/hero-overlay-2.png" alt="" width={501} height={235} decoding="async" />
           </div>
         </>
       )}
+      <div
+        className={classNames(
+          "pointer-events-none absolute inset-0 z-3",
+          "bg-[linear-gradient(to_bottom,rgba(251,250,246,0)_0%,rgba(251,250,246,0.03)_42%,rgba(251,250,246,0.16)_58%,rgba(251,250,246,0.42)_72%,rgba(251,250,246,0.72)_84%,rgba(251,250,246,0.94)_94%,rgba(251,250,246,1)_100%)]",
+          "max-md:bg-[linear-gradient(to_bottom,rgba(251,250,246,0)_0%,rgba(251,250,246,0.04)_36%,rgba(251,250,246,0.18)_52%,rgba(251,250,246,0.44)_68%,rgba(251,250,246,0.72)_82%,rgba(251,250,246,0.94)_94%,rgba(251,250,246,1)_100%)]",
+          hero.heroVariant === "text" && "hidden",
+        )}
+        aria-hidden="true"
+      />
     </header>
   );
 }

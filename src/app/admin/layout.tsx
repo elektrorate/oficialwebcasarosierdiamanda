@@ -2,6 +2,7 @@ import type { ReactNode } from "react";
 import { redirect } from "next/navigation";
 import AdminLayoutShell from "@/components/layout/AdminLayout";
 import { requireAdminProfile } from "@/lib/auth/supabase-auth";
+import "./admin.css";
 
 export default async function AdminLayout({
   children,

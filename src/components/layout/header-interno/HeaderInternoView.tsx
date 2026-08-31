@@ -76,6 +76,7 @@ export function HeaderInternoView(props: Props) {
   const resolvedVariant = hero?.heroVariant ?? variant;
   const isImageLikeHero =
     resolvedVariant === "image" || resolvedVariant === "presentation";
+  const isTextHero = resolvedVariant === "text" && (Boolean(hero) || overlayTitle);
   const titleContent = (
     <HeaderInternoTitleBlock eyebrow={eyebrow} title={title}>
       {children}
@@ -84,6 +85,10 @@ export function HeaderInternoView(props: Props) {
   const hasTitle = Boolean(children || title);
   const menuTone =
     heroMenuTone ?? hero?.heroMenuTone ?? (isImageLikeHero ? "light" : "dark");
+  const effectiveHeroMenuColor =
+    heroMenuColor ??
+    hero?.heroMenuColor ??
+    (menuTone === "light" ? "#ffffff" : "#403b36");
 
   const logoFromHero = hero
     ? {
@@ -99,7 +104,7 @@ export function HeaderInternoView(props: Props) {
         heroMenuPositionY: heroMenuPositionY ?? hero.heroMenuPositionY,
         heroMenuTabletPositionY: heroMenuTabletPositionY ?? hero.heroMenuTabletPositionY,
         heroMenuMobilePositionY: heroMenuMobilePositionY ?? hero.heroMenuMobilePositionY,
-        heroMenuColor: heroMenuColor ?? hero.heroMenuColor,
+        heroMenuColor: effectiveHeroMenuColor,
         heroMenuScale: heroMenuScale ?? hero.heroMenuScale,
       }
     : {
@@ -115,7 +120,7 @@ export function HeaderInternoView(props: Props) {
         heroMenuPositionY,
         heroMenuTabletPositionY,
         heroMenuMobilePositionY,
-        heroMenuColor,
+        heroMenuColor: effectiveHeroMenuColor,
         heroMenuScale,
       };
 
@@ -124,7 +129,7 @@ export function HeaderInternoView(props: Props) {
       <header
         className={classNames(
           "header-interno page-hero header-interno--ready header-interno--center header-interno--overlay-warm",
-          isImageLikeHero ? "header-interno--image-hero" : "header-interno--text-hero",
+          isImageLikeHero ? "header-interno--image-hero" : isTextHero && "header-interno--text-hero",
           resolvedVariant === "presentation" && "header-interno--presentation-hero",
           `header-interno--menu-${menuTone}`,
           `header-interno--${height}`,

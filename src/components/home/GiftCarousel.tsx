@@ -76,26 +76,42 @@ function GiftCard({ item }: { item: ExperienceItem }) {
   };
 
   return (
-    <Link className="gift-carousel__card-link" href={href} aria-label={`Ver ${stripMarkdown(content.title) || item.title}`} style={style}>
-      <span className="gift-carousel__media">
+    <Link
+      href={href}
+      aria-label={`Ver ${stripMarkdown(content.title) || item.title}`}
+      style={style}
+      className="group grid items-center gap-[clamp(28px,4.5vw,52px)] text-left text-inherit no-underline grid-cols-[minmax(min(100%,240px),clamp(240px,28vw,320px))_minmax(0,1fr)] focus-visible:outline-2 focus-visible:outline-[currentColor] focus-visible:outline-offset-[6px] max-[720px]:grid-cols-1 max-[720px]:gap-[clamp(20px,5vw,28px)]"
+    >
+      <span className="block aspect-square w-full overflow-hidden bg-[#1a1a1a] max-[720px]:mx-auto max-[720px]:w-[min(100%,320px)]">
         <img
           src={assetPath(content.image)}
           alt={content.imageAlt}
           loading="lazy"
           decoding="async"
+          className="block h-full w-full object-cover"
         />
       </span>
-      <div className="gift-carousel__body">
-        {content.eyebrow ? <MarkdownContent className="gift-carousel__eyebrow" source={content.eyebrow} /> : null}
-        <div className="gift-carousel__headline">
+      <div className="flex min-w-0 flex-col items-start max-[720px]:items-center max-[720px]:text-center">
+        {content.eyebrow ? (
+          <MarkdownContent
+            className="gift-carousel__eyebrow max-[720px]:w-full max-[720px]:text-center"
+            source={content.eyebrow}
+          />
+        ) : null}
+        <div className="block mb-[clamp(14px,1.75vw,18px)] max-[720px]:w-full max-[720px]:text-center">
           <MarkdownContent className="gift-carousel__title" source={content.title} />
-          {content.tagline ? <MarkdownContent className="gift-carousel__tagline" source={content.tagline} /> : null}
+          {content.tagline ? (
+            <MarkdownContent className="gift-carousel__tagline" source={content.tagline} />
+          ) : null}
         </div>
         <MarkdownContent
-          className="gift-carousel__text"
+          className="gift-carousel__text max-[720px]:text-center"
           source={content.excerpt}
         />
-        <span className="gift-carousel__cta" aria-hidden="true">
+        <span
+          aria-hidden="true"
+          className="mt-[clamp(14px,1.75vw,18px)] inline-flex items-center justify-center border border-[#c4c4c4] bg-transparent px-6.5 py-2.5 font-medium text-[14px]/[1] leading-none lowercase text-[#707070] [font-family:var(--font-primary)] transition-[border-color,color,background-color] duration-180 ease-in-out group-hover:border-[#707070] group-hover:text-black group-focus-visible:border-[#707070] group-focus-visible:text-black max-[720px]:mx-auto"
+        >
           ver más
         </span>
       </div>
@@ -109,7 +125,7 @@ export function GiftCarousel({ items }: GiftCarouselProps) {
 
   if (items.length === 1 && singleItem) {
     return (
-      <article className="gift-carousel gift-carousel--single">
+      <article className="block w-full max-w-none text-left">
         <GiftCard item={singleItem} />
       </article>
     );
@@ -119,13 +135,11 @@ export function GiftCarousel({ items }: GiftCarouselProps) {
     <Carousel
       items={items}
       ariaLabel="Experiencias en ceramica"
-      className="gift-carousel"
-      viewportClassName="gift-carousel__viewport"
-      trackClassName="gift-carousel__track"
-      slideClassName="gift-carousel__slide"
-      arrowClassName="gift-carousel__arrow"
-      previousArrowClassName="gift-carousel__arrow--prev"
-      nextArrowClassName="gift-carousel__arrow--next"
+      className="relative grid items-center gap-4.5 grid-cols-[44px_minmax(0,1fr)_44px]"
+      viewportClassName="overflow-hidden"
+      trackClassName="transition-transform duration-[420ms] ease-in-out"
+      slideClassName="block text-left flex-[0_0_100%]"
+      arrowClassName="w-[40px] h-[40px] inline-flex items-center justify-center border-0 bg-transparent cursor-pointer font-light text-[28px] [font-family:var(--font-menu)] text-[#98918b] transition-[color,transform] duration-[180ms] ease hover:text-[#4f4943] hover:-translate-y-px self-center"
       previousLabel="Experiencia anterior"
       nextLabel="Experiencia siguiente"
       showArrows

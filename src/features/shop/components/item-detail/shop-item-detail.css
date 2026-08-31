@@ -13,7 +13,15 @@
  */
 .shop-item-page-header.page-hero--nav-only {
   min-height: var(--header-interno-band-height);
+  height: var(--header-interno-band-height);
   --header-interno-band-height: 236px;
+}
+
+@media (min-width: 1025px) {
+  .shop-item-page-header.page-hero--nav-only {
+    min-height: 236px !important;
+    height: 236px !important;
+  }
 }
 
 @media (max-width: 900px) {

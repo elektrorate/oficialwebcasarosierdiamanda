@@ -22,7 +22,7 @@ export function Accordion({ items }: { items: ProgramItem[] }) {
   };
 
   return (
-    <div className="course-accordion">
+    <div className="grid gap-2.5">
       {items.map((item, index) => {
         const open = openItems.has(index);
         const panelId = `course-panel-${index}`;
@@ -31,27 +31,26 @@ export function Accordion({ items }: { items: ProgramItem[] }) {
         );
         return (
           <div
-            className={open ? "course-accordion__item is-open" : "course-accordion__item"}
+            className="border border-[rgba(147,124,97,0.16)] rounded-[14px] bg-[#fffdf9] overflow-hidden"
             key={`${item.title}-${index}`}
           >
             <button
-              className="course-accordion__trigger"
+              className="w-full border-0 bg-transparent py-4.5 px-5 flex items-center justify-between gap-4.5 text-left text-[#544f49]! text-[16px]/[1.35] font-normal cursor-pointer [font-family:var(--font-menu)]"
               type="button"
               aria-expanded={open}
               aria-controls={panelId}
               onClick={() => toggle(index)}
             >
               <span>{item.title}</span>
-              <span className="course-accordion__symbol" aria-hidden="true">
+              <span className="text-[22px] leading-none text-[#8e816f]" aria-hidden="true">
                 {open ? "-" : "+"}
               </span>
             </button>
             <div
-              className="course-accordion__panel"
               id={panelId}
               hidden={!open}
             >
-              <div className="course-accordion__content">
+              <div className="course-accordion__content pb-4.5 px-5">
                 <MarkdownContent
                   source={item.content}
                   className="course-accordion__copy"

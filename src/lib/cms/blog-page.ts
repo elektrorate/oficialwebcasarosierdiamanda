@@ -147,10 +147,15 @@ export async function getBlogPageSettings() {
 
 export async function updateBlogPageSettings(input: Partial<BlogPageSettings>) {
   const existing = await getBlogPageSettings();
+  const mergedHero = input.hero
+    ? normalizeHeroSettings(input.hero, existing.hero)
+    : existing.hero;
   const next = normalizeBlogPageSettings({
     ...existing,
     ...input,
-    hero: input.hero ? normalizeHeroSettings(input.hero, existing.hero) : existing.hero,
+    hero: mergedHero,
+    introHeading: input.introHeading ?? mergedHero.heroTitle ?? existing.introHeading,
+    introKicker: input.introKicker ?? mergedHero.heroSubtitle ?? existing.introKicker,
     updated_at: new Date().toISOString(),
   });
 

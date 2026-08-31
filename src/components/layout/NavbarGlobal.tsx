@@ -80,6 +80,7 @@ export function NavbarGlobal({
   >(null);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [mobileScrolled, setMobileScrolled] = useState(false);
+  const [mobileScrolledAny, setMobileScrolledAny] = useState(false);
   const [desktopScrolled, setDesktopScrolled] = useState(false);
   const [isDesktopViewport, setIsDesktopViewport] = useState(false);
   const [desktopOpen, setDesktopOpen] = useState<string | null>(null);
@@ -230,6 +231,10 @@ export function NavbarGlobal({
       const scrolled = scrollY > threshold;
 
       setIsDesktopViewport((previous) => previous === isDesktop ? previous : isDesktop);
+      setMobileScrolledAny((previous) => {
+        const next = scrollY > 0;
+        return previous === next ? previous : next;
+      });
       setMobileScrolled((previous) => previous === scrolled ? previous : scrolled);
 
       setDesktopScrolled((previous) => {
@@ -378,90 +383,36 @@ export function NavbarGlobal({
       )}
 
 
-      {/* MENU MOVIL NATIVO: funciona sin depender de onClick de React */}
-      <details className="native-mobile-nav">
-        <summary
-          className="native-mobile-nav__summary"
-          aria-label="Abrir o cerrar menu principal"
-        >
-          <span className="native-mobile-nav__hamburger" aria-hidden="true" />
-        </summary>
-
-        <Link
-          className="native-mobile-nav__logo"
-          href="/#hero"
-          aria-label="Casa Rosier - Inicio"
-        >
-          <img
-            className="native-mobile-nav__logo-image"
-            src={logoUrl}
-            alt="Casa Rosier"
-          />
-        </Link>
-
-        <nav
-          className="native-mobile-nav__panel"
-          aria-label="Principal movil"
-        >
-          <ul className="native-mobile-nav__list">
-            {mobileItems.map((item) => {
-              const children =
-                item.children?.filter((child) => child.visible) ?? [];
-
-              return (
-                <li className="native-mobile-nav__item" key={item.label}>
-                  <Link
-                    className="native-mobile-nav__link"
-                    href={item.href}
-                    target={item.target}
-                    rel={
-                      item.target === "_blank"
-                        ? "noopener noreferrer"
-                        : undefined
-                    }
-                    aria-current={current(item.href) ? "page" : undefined}
-                  >
-                    {item.label}
-                  </Link>
-
-                  {children.length > 0 ? (
-                    <ul className="native-mobile-nav__submenu">
-                      {children.map((child) => (
-                        <li key={child.href}>
-                          <Link
-                            className="native-mobile-nav__submenu-link"
-                            href={child.href}
-                            target={child.target}
-                            rel={
-                              child.target === "_blank"
-                                ? "noopener noreferrer"
-                                : undefined
-                            }
-                            aria-current={
-                              current(child.href) ? "page" : undefined
-                            }
-                          >
-                            {child.label}
-                          </Link>
-                        </li>
-                      ))}
-                    </ul>
-                  ) : null}
-                </li>
-              );
-            })}
-          </ul>
-        </nav>
-      </details>
-
       <div
         className={classNames(
           "mobile-scroll-nav",
           !isDesktopViewport && "is-visible",
-          !mobileScrolled && !mobileOpen && "is-at-top",
+          !mobileScrolledAny && !mobileOpen && "is-at-top",
+          mobileScrolledAny && !mobileOpen && "is-scrolled-any",
           mobileOpen && "is-open"
         )}
       >
+        <Link
+          className="mobile-scroll-nav__hero-logo"
+          href="/#hero"
+          aria-label="Casa Rosier"
+          style={{ display: mobileScrolledAny ? "none" : undefined }}
+        >
+          {heroMenuColor ? (
+            <span
+              className="mobile-scroll-nav__hero-logo-tint"
+              style={scrollLogoTintStyle}
+              aria-hidden="true"
+            />
+          ) : (
+            <img
+              className="mobile-scroll-nav__hero-logo-image"
+              src={logoUrl}
+              alt="Casa Rosier"
+            />
+          )}
+        </Link>
+
         <ScrollStickyNavBar
           variant={home || editorialScrollNav ? "editorial" : "default"}
           items={scrollDesktopItems}

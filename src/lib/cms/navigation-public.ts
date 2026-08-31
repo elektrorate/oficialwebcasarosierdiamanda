@@ -163,8 +163,8 @@ function mergeGeneratedChildrenWithSavedOrder(generated: NavigationItem[], saved
         usedIds.add(child.linked_entity_id!);
         usedHrefs.add(byId.href);
         merged.push({
-          // Always use the live label and href from the entity, not the stale saved record
           ...byId,
+          label: child.label || byId.label,
           visible: child.visible,
           target: child.target ?? byId.target,
         });
@@ -176,6 +176,7 @@ function mergeGeneratedChildrenWithSavedOrder(generated: NavigationItem[], saved
       usedHrefs.add(child.href);
       merged.push({
         ...byHref,
+        label: child.label || byHref.label,
         visible: child.visible,
         target: child.target ?? byHref.target,
       });

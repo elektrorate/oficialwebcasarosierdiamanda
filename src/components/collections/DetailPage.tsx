@@ -1,7 +1,6 @@
 "use client";
 
-import Link from "next/link";
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import { Accordion } from "@/components/collections/Accordion";
 import { Gallery } from "@/components/collections/Gallery";
 import { MarkdownContent, renderInlineMarkdown } from "@/components/ui/MarkdownContent";
@@ -14,7 +13,7 @@ import {
   normalizeRichTextTypography,
   richTextTypographyStyle,
 } from "@/lib/cms/rich-text-typography";
-import { addCartItem } from "@/lib/cart";
+
 
 function includedMarkdownSource(items: string[]) {
   const lines = items.map((item) => item.replace(/\r\n/g, "\n"));
@@ -159,10 +158,7 @@ export function DetailPage({
   const DetailTitle = titleLevel;
   const isGiftCard = item.kind === "gift-card";
   const consultHref = item.ctaConsultHref || item.ctaHref;
-  const enrollHref = item.ctaEnrollHref || "";
   const consultLabel = item.ctaConsultLabel || (isGiftCard ? "Comprar" : "Consultar");
-  const enrollLabel = item.ctaEnrollLabel || (isGiftCard ? "Anadir al carrito" : "Inscribirme");
-  const [added, setAdded] = useState(false);
   const programItems = item.program.filter(hasMeaningfulProgramItem);
   const showProgram = item.showModulesSection && programItems.length > 0;
   const showIncluded = item.showIncludedSection && hasMeaningfulContent(item.included);
@@ -177,31 +173,6 @@ export function DetailPage({
     item.additionalInfo.trim() ||
     hasCalendarLabels
   );
-  const defaultPrice = useMemo(
-    () =>
-      item.priceOptions.length <= 1
-        ? item.priceOptions[0]?.price ?? ""
-        : item.priceOptions
-            .map((option) => `${option.label}: ${option.price}`)
-            .join(" / "),
-    [item.priceOptions]
-  );
-
-  const addGiftCard = () => {
-    addCartItem({
-      cartItemId: `${item.id}-${Date.now()}`,
-      productId: item.id,
-      slug: item.slug,
-      kind: item.kind,
-      title: item.title,
-      subtitle: item.subtitle,
-      price: defaultPrice,
-      quantity: 1,
-      addedAt: new Date().toISOString()
-    });
-    setAdded(true);
-  };
-
   return (
     <section className="class-detail section">
       <div className="container class-detail__container">
@@ -387,56 +358,10 @@ export function DetailPage({
                 </section>
               ) : null}
 
-              {showProgram || (isGiftCard && enrollHref) ? (
+              {showProgram ? (
                 <section className="class-detail__program">
-                  {showProgram ? (
-                    <>
-                      <h2>{item.programSectionTitle || "Contenido del curso"}</h2>
-                      <Accordion items={programItems} />
-                    </>
-                  ) : null}
-                  {isGiftCard && enrollHref ? (
-                    <>
-                      <button
-                        className="class-detail__button class-detail__button--primary"
-                        type="button"
-                        onClick={addGiftCard}
-                      >
-                        {enrollLabel}
-                      </button>
-                      {added && (
-                        <div className="gift-card-cart-feedback">
-                          <p className="gift-card-cart-feedback__message">
-                            Gift card anadida al carrito.
-                          </p>
-                          <div className="gift-card-cart-feedback__summary">
-                            <div className="gift-card-cart-feedback__row">
-                              <span>Producto</span>
-                              <strong>{item.title}</strong>
-                            </div>
-                            {defaultPrice && (
-                              <div className="gift-card-cart-feedback__row">
-                                <span>Precio</span>
-                                <strong>{defaultPrice}</strong>
-                              </div>
-                            )}
-                          </div>
-                          <Link className="class-detail__button" href="/carrito">
-                            Ver carrito
-                          </Link>
-                        </div>
-                      )}
-                    </>
-                  ) : enrollHref ? (
-                    <a
-                      className="class-detail__button class-detail__button--primary"
-                      href={enrollHref}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      {enrollLabel}
-                    </a>
-                  ) : null}
+                  <h2>{item.programSectionTitle || "Contenido del curso"}</h2>
+                  <Accordion items={programItems} />
                 </section>
               ) : null}
             </section>

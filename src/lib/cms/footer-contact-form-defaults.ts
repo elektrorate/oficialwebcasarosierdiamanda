@@ -45,7 +45,7 @@ export const DEFAULT_FOOTER_CONTACT_FIELDS: FormField[] = [
     name: "message",
     type: "textarea",
     placeholder: "Comentario",
-    required: false,
+    required: true,
     options: [],
     default_value: "",
     sort_order: 3,

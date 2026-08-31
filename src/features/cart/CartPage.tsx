@@ -11,8 +11,8 @@ export async function CartPage() {
       bodyClass="cart-page"
       header={<HeaderInterno eyebrow="Resumen del pedido" title="Carrito" />}
     >
-      <section className="cart section">
-        <div className="container cart__container">
+      <section className="cart section pt-9 pb-24">
+        <div className="container cart__container max-w-290">
           <Cart whatsappHref={whatsappHref} />
         </div>
       </section>

@@ -39,7 +39,7 @@ img { max-width: 100%; display: block; }
 }
 
 @media (max-width: 640px) {
-  .container { width: calc(100% - 32px); }
+  .container { width: calc(100% - 48px); }
   .section { padding-block: var(--space-section-mobile); }
 }
 

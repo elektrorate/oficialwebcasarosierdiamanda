@@ -27,7 +27,7 @@
   --color-outline-variant: #cac4d4;
   --color-error: #ba1a1a;
   --font-sans: var(--font-manrope), Manrope, sans-serif;
-  --font-inter: var(--font-inter), Inter, sans-serif;
+  --font-inter: Inter, sans-serif;
   --text-headline-lg: 24px;
   --text-headline-lg--line-height: 32px;
   --text-headline-lg--font-weight: 700;
@@ -56,4 +56,28 @@
   --spacing-container-margin: 1rem;
   --spacing-sidebar-width: 280px;
   --spacing-section-gap: 1.5rem;
+}
+
+@layer base {
+  body.cookiebar-visible {
+    padding-bottom: var(--cookiebar-offset, 0px);
+  }
+  body.modal-open {
+    overflow: hidden;
+  }
+}
+
+.public-faq__item summary::-webkit-details-marker {
+  display: none;
+}
+
+.public-faq__item summary::after {
+  content: "+";
+  flex: 0 0 auto;
+  font-size: 24px;
+  font-weight: 400;
+}
+
+.public-faq__item[open] summary::after {
+  content: "-";
 }

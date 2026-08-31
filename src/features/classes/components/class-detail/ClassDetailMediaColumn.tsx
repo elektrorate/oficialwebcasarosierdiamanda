@@ -61,10 +61,10 @@ export function ClassDetailMediaColumn({
   calendarLabels,
 }: Props) {
   return (
-    <section className="class-detail__media-column">
+    <section className="class-detail__media-column pt-11.5">
       <ClassDetailGallery item={item} />
       {hasSideContent ? (
-        <aside className="class-detail__side-column">
+        <aside className="class-detail__side-column gap-[clamp(14px,2vw,18px)] mt-[24px]">
           <ClassDetailSidebar
             item={item}
             showPaymentMethods={showPaymentMethods}

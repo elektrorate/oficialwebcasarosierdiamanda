@@ -6,7 +6,7 @@ export function buildExperienceDetailHero(item: ExperienceItem): CmsHeroSettings
   return normalizeHeroSettings({
     heroVariant: item.heroVariant ?? "text",
     heroTitle: item.heroTitle,
-    heroSubtitle: item.subtitle ?? "",
+    heroSubtitle: item.heroSubtitle ?? item.subtitle ?? "",
     heroPresentationText: item.heroPresentationText ?? "",
     heroPresentationSubtitle: item.heroPresentationSubtitle ?? "",
     heroPresentationTextTypography: item.heroPresentationTextTypography,
