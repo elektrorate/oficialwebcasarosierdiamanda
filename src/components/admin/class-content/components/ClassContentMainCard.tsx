@@ -90,6 +90,20 @@ function ClassContentMainCardComponent({
         removePaymentMethod={removePaymentMethod}
       />
 
+      <Switch
+        checked={content.showExtraInfoSection === true}
+        label="Mostrar 'Información adicional' en la página pública"
+        description="El texto permanece guardado aunque esta sección esté oculta."
+        onCheckedChange={(checked) => setField("showExtraInfoSection", checked)}
+      />
+
+      <ClassContentTextField
+        label="Título de 'Información adicional'"
+        value={content.extraInfoTitle ?? ""}
+        placeholder="Información adicional"
+        onChange={(event) => setField("extraInfoTitle", event.target.value)}
+      />
+
       <ClassContentRichTextField
         label="Información extra (opcional)"
         value={content.extraInfo}

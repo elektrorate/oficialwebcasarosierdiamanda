@@ -168,6 +168,8 @@ export interface ExperienceItem {
   whoCanJoinTypography?: RichTextTypography;
   paymentMethods: string[];
   additionalInfo: string;
+  additionalInfoTitle?: string;
+  showAdditionalInfoSection?: boolean;
   additionalInfoTypography?: RichTextTypography;
   showIdeaPromptSection?: boolean;
   ctaHref: string;

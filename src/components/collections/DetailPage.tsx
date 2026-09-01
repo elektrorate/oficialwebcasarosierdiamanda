@@ -217,9 +217,9 @@ export function DetailPage({
                   </ul>
                 </div>
               ) : null}
-              {item.additionalInfo.trim() ? (
+              {item.showAdditionalInfoSection !== false && item.additionalInfo.trim() ? (
                 <div className="class-sidecard class-sidecard--soft">
-                  <h3>Informacion adicional</h3>
+                  <h3>{item.additionalInfoTitle?.trim() || "Informacion adicional"}</h3>
                   <MarkdownContent
                     source={item.additionalInfo}
                     className="class-detail__content-copy"

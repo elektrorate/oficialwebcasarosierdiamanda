@@ -442,6 +442,8 @@ function cmsOfferingToExperienceItem(
     ),
     paymentMethods,
     additionalInfo: hasClassExtraInfo ? stringValue(content.extraInfo) : stringValue(content.extraInfo) || stringValue(details.additionalInfo),
+    additionalInfoTitle: stringValue(content.extraInfoTitle),
+    showAdditionalInfoSection: content.showExtraInfoSection === true,
     additionalInfoTypography: normalizeRichTextTypography(
       content.extraInfoTypography ?? DEFAULT_DESCRIPTION_TYPOGRAPHY,
     ),

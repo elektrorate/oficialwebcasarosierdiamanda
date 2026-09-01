@@ -96,6 +96,8 @@ export interface ClassOfferingContent {
   contactWhatsapp: string;
   contactEmail: string;
   extraInfo: string;
+  extraInfoTitle?: string;
+  showExtraInfoSection?: boolean;
   extraInfoTypography?: RichTextTypography;
   showEnrollButtonAtEnd: boolean;
   activitiesSection: {

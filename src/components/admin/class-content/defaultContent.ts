@@ -19,6 +19,8 @@ export function defaultContent(): ClassOfferingContent {
     contactWhatsapp: "",
     contactEmail: "",
     extraInfo: "",
+    extraInfoTitle: "",
+    showExtraInfoSection: false,
     extraInfoTypography: { ...DEFAULT_DESCRIPTION_TYPOGRAPHY },
     showEnrollButtonAtEnd: true,
     activitiesSection: { enabled: false, title: "", content: "", items: [] },
