@@ -60,7 +60,7 @@ export function FeaturedExperienceCards({ items }: { items: readonly ExperienceI
                   </div>
                 </div>
               </div>
-              <p className="mt-[clamp(11px,1.9vw,15px)] mb-0 px-[clamp(4px,1vw,8px)] text-center [font-family:var(--font-nunito)] text-[clamp(13px,1.05vw,15px)] font-light leading-[1.38] tracking-[0.07em] text-[#4a4a4a] text-balance capitalize max-[640px]:mt-3.25 max-[640px]:text-[13px] max-[640px]:tracking-[0.06em]">
+              <p className="mt-[clamp(11px,1.9vw,15px)] mb-0 whitespace-pre-line px-[clamp(4px,1vw,8px)] text-center [font-family:var(--font-nunito)] text-[clamp(13px,1.05vw,15px)] font-light leading-[1.38] tracking-[0.07em] text-[#4a4a4a] max-[640px]:mt-3.25 max-[640px]:text-[13px] max-[640px]:tracking-[0.06em]">
                 {label}
               </p>
             </Link>
