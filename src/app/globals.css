@@ -1343,6 +1343,18 @@ body {
     height: max(100%, 177.78vw);
   }
 
+  /*
+   * Android/Chrome can repaint a transformed Vimeo iframe in horizontal tiles
+   * while its opacity changes. Keep the mobile player on a stable compositor
+   * layer; the poster remains available only while Vimeo is loading.
+   */
+  .header-home .hero__video--loop-fade {
+    opacity: 1 !important;
+    transition: none !important;
+    will-change: auto !important;
+    backface-visibility: hidden;
+  }
+
   .header-home .hero__video {
     object-position: center center;
   }
