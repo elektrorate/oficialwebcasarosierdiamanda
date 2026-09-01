@@ -25,6 +25,7 @@ type HomeCardEditorSectionProps = {
 
 export function HomeCardEditorSection({ offering, form }: HomeCardEditorSectionProps) {
   const { title, details, uploadingTarget, uploadImage, setPickerTarget, updateHomeCard } = form;
+  const supportsExtendedHomeCopy = offering.type === "gift_card";
   const eyebrowTypography = normalizeRichTextTypography(
     details.homeCard.eyebrowTypography ?? { ...DEFAULT_RICH_TEXT_TYPOGRAPHY, fontSize: 14 },
   );
@@ -65,14 +66,16 @@ export function HomeCardEditorSection({ offering, form }: HomeCardEditorSectionP
         </div>
 
         <div className="class-edit-home-editor-grid__copy space-y-4">
-          <Switch
-            checked={details.homeCard.showEyebrow !== false}
-            label="Mostrar etiqueta superior"
-            description="Si la desactivas, la tarjeta publicada no mostrará esta etiqueta ni utilizará un texto automático."
-            onCheckedChange={(showEyebrow) => updateHomeCard({ showEyebrow })}
-          />
+          {supportsExtendedHomeCopy ? (
+            <Switch
+              checked={details.homeCard.showEyebrow !== false}
+              label="Mostrar etiqueta superior"
+              description="Si la desactivas, la tarjeta publicada no mostrará esta etiqueta ni utilizará un texto automático."
+              onCheckedChange={(showEyebrow) => updateHomeCard({ showEyebrow })}
+            />
+          ) : null}
           <div className="class-edit-home-text-fields">
-            {details.homeCard.showEyebrow !== false ? (
+            {supportsExtendedHomeCopy && details.homeCard.showEyebrow !== false ? (
               <AdminRichTextField
                 label="Etiqueta superior"
                 value={details.homeCard.eyebrow}
@@ -98,18 +101,20 @@ export function HomeCardEditorSection({ offering, form }: HomeCardEditorSectionP
               onChange={(value) => updateHomeCard({ title: value })}
               onTypographyChange={(next) => updateHomeCard({ titleTypography: next })}
             />
-            <AdminRichTextField
-              label="Subtítulo para Home"
-              value={details.homeCard.tagline}
-              placeholder={form.subtitle || title || "Segunda línea de la tarjeta"}
-              typography={taglineTypography}
-              controls={HOME_CARD_SHORT_TEXT_CONTROLS}
-              layout="compact"
-              minHeight="64px"
-              help="Si queda vacío, usa el título de página."
-              onChange={(value) => updateHomeCard({ tagline: value })}
-              onTypographyChange={(next) => updateHomeCard({ taglineTypography: next })}
-            />
+            {supportsExtendedHomeCopy ? (
+              <AdminRichTextField
+                label="Subtítulo para Home"
+                value={details.homeCard.tagline}
+                placeholder={form.subtitle || title || "Segunda línea de la tarjeta"}
+                typography={taglineTypography}
+                controls={HOME_CARD_SHORT_TEXT_CONTROLS}
+                layout="compact"
+                minHeight="64px"
+                help="Si queda vacío, usa el título de página."
+                onChange={(value) => updateHomeCard({ tagline: value })}
+                onTypographyChange={(next) => updateHomeCard({ taglineTypography: next })}
+              />
+            ) : null}
           </div>
 
           <AdminRichTextField
