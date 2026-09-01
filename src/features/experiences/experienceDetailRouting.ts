@@ -253,7 +253,9 @@ function cmsOfferingToExperienceItem(
     .sort((a, b) => (a.order ?? 0) - (b.order ?? 0))
     .map((item) => ({ label: item.description || "Precio", price: formatPrice(item.price) }));
   const schedule = scheduleForOffering(offering, details);
-  const calendarLabels = normalizeCalendarLabels(details.calendarLabels).filter((label) => label.active);
+  const calendarLabels = details.showCalendarLabels === true
+    ? normalizeCalendarLabels(details.calendarLabels).filter((label) => label.active)
+    : [];
   const consultHref = ctaConsultHref(details, defaultWhatsappNumber);
   const enrollHref = ctaEnrollHref(details, defaultWhatsappNumber);
   const hero = normalizeHeroSettings(details, {

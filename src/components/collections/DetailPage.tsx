@@ -82,6 +82,7 @@ function formatCalendarDays(days: number[]) {
 }
 
 function visibleCalendarLabels(item: ExperienceItem) {
+  if (item.showCalendarLabels !== true) return [];
   return (item.calendarLabels ?? [])
     .filter((label) => label.active && label.days.length > 0 && daysInMonth(label.year, label.month) > 0)
     .sort((a, b) => a.year - b.year || a.month - b.month || a.order - b.order);
