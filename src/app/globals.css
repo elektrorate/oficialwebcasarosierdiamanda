@@ -1950,6 +1950,11 @@ body {
     left: auto !important;
   }
 
+  /* On the mobile Home hero, navigation starts only after the user scrolls. */
+  .header-home .mobile-scroll-nav.is-at-top .mobile-scroll-nav__toggle {
+    display: none;
+  }
+
   .mobile-scroll-nav__logo-tint {
     width: var(--hero-logo-mobile-width, var(--hero-logo-tablet-width, var(--hero-logo-width, 92px))) !important;
   }
