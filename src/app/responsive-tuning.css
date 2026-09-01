@@ -782,38 +782,81 @@
   }
 }
 
-/* Detalle de clase textual: deja el logo por encima del titular del hero. */
+/*
+ * Offering detail hero: the CMS owns logo/title placement per device.
+ * These selectors intentionally outrank the generic internal-header rules
+ * above, which keep their larger fixed logo treatment on non-offering pages.
+ */
 @media (min-width: 641px) and (max-width: 1024px) {
   .experience-detail-hero:not(.header-interno--image-hero):not(.header-interno--presentation-hero) {
-    height: 240px !important;
-    min-height: 240px !important;
+    height: auto !important;
+    min-height: max(
+      240px,
+      var(--hero-title-clearance-tablet, var(--hero-title-clearance-laptop, 240px)),
+      calc(
+        var(--hero-logo-tablet-position-y, var(--hero-logo-position-y, 42px)) +
+        var(--hero-logo-tablet-width, var(--hero-logo-width, 106px)) +
+        20px
+      )
+    ) !important;
     padding: 0 !important;
+    overflow: visible !important;
   }
 
-  .experience-detail-hero .mobile-scroll-nav.is-at-top .mobile-scroll-nav__logo {
-    top: 42px !important;
+  .experience-detail-hero .site-nav-shell--internal .mobile-scroll-nav.is-at-top .mobile-scroll-nav__bar {
+    min-height: max(
+      72px,
+      calc(
+        var(--hero-logo-tablet-position-y, var(--hero-logo-position-y, 42px)) +
+        var(--hero-logo-tablet-width, var(--hero-logo-width, 106px))
+      )
+    );
   }
 
-  .experience-detail-hero .mobile-scroll-nav.is-at-top .mobile-scroll-nav__logo-image,
-  .experience-detail-hero .mobile-scroll-nav.is-at-top .mobile-scroll-nav__logo-tint {
-    width: 120px !important;
+  .experience-detail-hero .site-nav-shell--internal .mobile-scroll-nav.is-at-top .mobile-scroll-nav__logo {
+    left: var(--hero-logo-tablet-position-x, var(--hero-logo-position-x, 50%)) !important;
+    top: var(--hero-logo-tablet-position-y, var(--hero-logo-position-y, 42px)) !important;
+  }
+
+  .experience-detail-hero .site-nav-shell--internal .mobile-scroll-nav.is-at-top .mobile-scroll-nav__logo-image,
+  .experience-detail-hero .site-nav-shell--internal .mobile-scroll-nav.is-at-top .mobile-scroll-nav__logo-tint {
+    width: var(--hero-logo-tablet-width, var(--hero-logo-width, 106px)) !important;
   }
 }
 
 @media (max-width: 640px) {
   .experience-detail-hero:not(.header-interno--image-hero):not(.header-interno--presentation-hero) {
-    height: 180px !important;
-    min-height: 180px !important;
-        padding-bottom: 10px;
-    /* padding: 0 !important; */
+    height: auto !important;
+    min-height: max(
+      180px,
+      var(--hero-title-clearance-mobile, var(--hero-title-clearance-tablet, 180px)),
+      calc(
+        var(--hero-logo-mobile-position-y, var(--hero-logo-tablet-position-y, var(--hero-logo-position-y, 34px))) +
+        var(--hero-logo-mobile-width, var(--hero-logo-tablet-width, var(--hero-logo-width, 92px))) +
+        16px
+      )
+    ) !important;
+    padding: 0 !important;
+    overflow: visible !important;
   }
 
-  .experience-detail-hero .mobile-scroll-nav.is-at-top .mobile-scroll-nav__logo {
-    top: calc(40px + env(safe-area-inset-top, 0px)) !important;
+  .experience-detail-hero .site-nav-shell--internal .mobile-scroll-nav.is-at-top .mobile-scroll-nav__bar {
+    min-height: max(
+      72px,
+      calc(
+        var(--hero-logo-mobile-position-y, var(--hero-logo-tablet-position-y, var(--hero-logo-position-y, 34px))) +
+        var(--hero-logo-mobile-width, var(--hero-logo-tablet-width, var(--hero-logo-width, 92px)))
+      )
+    );
   }
 
-  .experience-detail-hero .mobile-scroll-nav.is-at-top .mobile-scroll-nav__logo-image,
-  .experience-detail-hero .mobile-scroll-nav.is-at-top .mobile-scroll-nav__logo-tint {
-    width: 118px !important;
+  .experience-detail-hero .site-nav-shell--internal .mobile-scroll-nav.is-at-top .mobile-scroll-nav__logo {
+    left: var(--hero-logo-mobile-position-x, var(--hero-logo-tablet-position-x, var(--hero-logo-position-x, 50%))) !important;
+    top: var(--hero-logo-mobile-position-y, var(--hero-logo-tablet-position-y, var(--hero-logo-position-y, 34px))) !important;
+  }
+
+  .experience-detail-hero .site-nav-shell--internal .mobile-scroll-nav.is-at-top .mobile-scroll-nav__logo-image,
+  .experience-detail-hero .site-nav-shell--internal .mobile-scroll-nav.is-at-top .mobile-scroll-nav__logo-tint {
+    width: var(--hero-logo-mobile-width, var(--hero-logo-tablet-width, var(--hero-logo-width, 92px))) !important;
   }
 }

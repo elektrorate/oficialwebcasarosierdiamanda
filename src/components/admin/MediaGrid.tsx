@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import type { MediaAsset } from "@/lib/cms/types";
 
 type Toast = { type: "success" | "error"; message: string };
@@ -39,8 +39,18 @@ export default function MediaGrid({
 }) {
   const router = useRouter();
   const [copiedId, setCopiedId] = useState<string | null>(null);
-  const [deletingId, setDeletingId] = useState<string | null>(null);
+  const [deleting, setDeleting] = useState(false);
+  const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
   const [toast, setToast] = useState<Toast | null>(null);
+
+  const photoAssets = useMemo(() => assets.filter((a) => isImage(a)), [assets]);
+  const selectableIds = useMemo(() => new Set(photoAssets.map((a) => a.id)), [photoAssets]);
+
+  const allPhotosSelected = photoAssets.length > 0 && photoAssets.every((a) => selectedIds.has(a.id));
+  const selectableSelectedIds = useMemo(
+    () => new Set([...selectedIds].filter((id) => selectableIds.has(id))),
+    [selectedIds, selectableIds],
+  );
 
   async function copyUrl(url: string, id: string) {
     await navigator.clipboard.writeText(absoluteUrl(url));
@@ -53,11 +63,37 @@ export default function MediaGrid({
     window.setTimeout(() => setToast(null), 3000);
   }
 
+  function toggleSelect(id: string) {
+    setSelectedIds((prev) => {
+      const next = new Set(prev);
+      if (next.has(id)) {
+        next.delete(id);
+      } else {
+        next.add(id);
+      }
+      return next;
+    });
+  }
+
+  function toggleSelectAll() {
+    if (allPhotosSelected) {
+      setSelectedIds(new Set());
+    } else {
+      setSelectedIds((prev) => {
+        const next = new Set(prev);
+        for (const id of photoAssets) {
+          if (isImage(id)) next.add(id.id);
+        }
+        return next;
+      });
+    }
+  }
+
   async function deletePhoto(asset: MediaAsset) {
-    if (deletingId) return;
+    if (deleting) return;
     if (!window.confirm("¿Eliminar esta foto definitivamente de Multimedia y Supabase?")) return;
 
-    setDeletingId(asset.id);
+    setDeleting(true);
     try {
       const response = await fetch("/api/admin/media/delete", {
         method: "POST",
@@ -67,6 +103,11 @@ export default function MediaGrid({
 
       if (response.ok) {
         showToast({ type: "success", message: "Foto eliminada correctamente." });
+        setSelectedIds((prev) => {
+          const next = new Set(prev);
+          next.delete(asset.id);
+          return next;
+        });
         router.refresh();
         return;
       }
@@ -76,9 +117,58 @@ export default function MediaGrid({
     } catch {
       showToast({ type: "error", message: "No se pudo conectar con el servidor. Intenta nuevamente." });
     } finally {
-      setDeletingId(null);
+      setDeleting(false);
     }
   }
+
+  async function deleteSelected() {
+    if (deleting) return;
+    const ids = [...selectableSelectedIds];
+    if (!ids.length) return;
+
+    if (!window.confirm(`¿Eliminar definitivamente ${ids.length} foto${ids.length > 1 ? "s" : ""} de Multimedia y Supabase?`)) {
+      return;
+    }
+
+    setDeleting(true);
+    try {
+      const response = await fetch("/api/admin/media/delete", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ ids, action: "permanent" }),
+      });
+
+      const data = (await response.json().catch(() => ({}))) as {
+        ok?: boolean;
+        deletedIds?: string[];
+        failedIds?: string[];
+        error?: string;
+      };
+
+      if (response.ok || data.ok) {
+        showToast({
+          type: "success",
+          message: `${data.deletedIds?.length ?? ids.length} foto${ids.length > 1 ? "s" : ""} eliminada${ids.length > 1 ? "s" : ""} correctamente.`,
+        });
+        const deleted = new Set(data.deletedIds ?? ids);
+        setSelectedIds((prev) => {
+          const next = new Set(prev);
+          for (const id of deleted) next.delete(id);
+          return next;
+        });
+        router.refresh();
+        return;
+      }
+
+      showToast({ type: "error", message: data.error || "No se pudieron eliminar las fotos." });
+    } catch {
+      showToast({ type: "error", message: "No se pudo conectar con el servidor. Intenta nuevamente." });
+    } finally {
+      setDeleting(false);
+    }
+  }
+
+  const numSelected = selectableSelectedIds.size;
 
   return (
     <div className="space-y-4">
@@ -96,13 +186,48 @@ export default function MediaGrid({
         </div>
       ) : null}
 
+      {photoAssets.length ? (
+        <div className="media-grid-toolbar">
+          <label className="media-grid-toolbar__select-all">
+            <input
+              type="checkbox"
+              checked={allPhotosSelected}
+              disabled={deleting}
+              onChange={toggleSelectAll}
+            />
+            <span>{allPhotosSelected ? "Quitar selección" : "Seleccionar todas"}</span>
+          </label>
+
+          {numSelected > 0 ? (
+            <span className="media-grid-toolbar__count">
+              {numSelected} seleccionada{numSelected > 1 ? "s" : ""}
+            </span>
+          ) : null}
+
+          {numSelected > 0 ? (
+            <button
+              type="button"
+              className="danger-btn"
+              disabled={deleting}
+              onClick={deleteSelected}
+            >
+              {deleting ? "Eliminando..." : `Eliminar ${numSelected}`}
+            </button>
+          ) : null}
+        </div>
+      ) : null}
+
       <div className="media-grid">
         {assets.map((asset) => {
           const isPhoto = isImage(asset);
-          const isDeleting = deletingId === asset.id;
+          const isSelected = isPhoto && selectedIds.has(asset.id);
+          const isDeleting = deleting;
 
           return (
-            <div key={asset.id} className="media-card">
+            <div
+              key={asset.id}
+              className={`media-card${isSelected ? " media-card--selected" : ""}`}
+            >
               <div className="media-preview relative">
                 {isPhoto ? (
                   isAbsoluteUrl(asset.file_url) ? (
@@ -117,6 +242,18 @@ export default function MediaGrid({
                     <span>{asset.file_type.toUpperCase() || "FILE"}</span>
                   </div>
                 )}
+
+                {isPhoto ? (
+                  <label className="media-card__checkbox" onClick={(e) => e.stopPropagation()}>
+                    <input
+                      type="checkbox"
+                      aria-label={`Seleccionar ${asset.original_name}`}
+                      checked={isSelected}
+                      disabled={deleting}
+                      onChange={() => toggleSelect(asset.id)}
+                    />
+                  </label>
+                ) : null}
               </div>
 
               <div className="media-info">
@@ -140,7 +277,7 @@ export default function MediaGrid({
                 <button
                   type="button"
                   className="secondary-btn"
-                  disabled={Boolean(deletingId)}
+                  disabled={isDeleting}
                   onClick={() => copyUrl(asset.file_url, asset.id)}
                 >
                   {copiedId === asset.id ? "Copiado" : "Copiar URL"}
@@ -149,10 +286,10 @@ export default function MediaGrid({
                   <button
                     type="button"
                     className="danger-btn"
-                    disabled={Boolean(deletingId)}
+                    disabled={isDeleting}
                     onClick={() => deletePhoto(asset)}
                   >
-                    {isDeleting ? "Eliminando..." : "Eliminar foto"}
+                    Eliminar foto
                   </button>
                 ) : null}
               </div>

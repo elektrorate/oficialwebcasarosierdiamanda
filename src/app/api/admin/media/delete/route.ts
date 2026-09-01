@@ -8,10 +8,58 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
-  const { id, action } = await request.json();
-  if (!id) {
+  let body: { id?: string; ids?: string[]; action?: string };
+  try {
+    body = await request.json();
+  } catch {
+    return NextResponse.json({ error: "JSON no válido." }, { status: 400 });
+  }
+
+  const ids = body.ids?.length
+    ? body.ids
+    : body.id
+      ? [body.id]
+      : [];
+
+  if (!ids.length) {
     return NextResponse.json({ error: "Falta el id del asset." }, { status: 400 });
   }
+
+  const { action } = body;
+
+  if (action === "permanent" && ids.length > 1) {
+    const deletedIds: string[] = [];
+    const failedIds: string[] = [];
+
+    for (const assetId of ids) {
+      const asset = await getMediaAssetById(assetId);
+      if (!asset) {
+        failedIds.push(assetId);
+        continue;
+      }
+      if (!isMediaImage(asset)) {
+        failedIds.push(assetId);
+        continue;
+      }
+
+      const deleted = await deleteMediaAsset(assetId);
+      if (deleted) {
+        deletedIds.push(assetId);
+      } else {
+        failedIds.push(assetId);
+      }
+    }
+
+    const allDeleted = failedIds.length === 0;
+    return NextResponse.json({
+      ok: allDeleted,
+      deletedIds,
+      failedIds,
+      error: allDeleted ? undefined : `No se pudieron eliminar ${failedIds.length} de ${ids.length} fotos.`,
+    });
+  }
+
+  const id = ids[0];
 
   if (action === "trash") {
     const asset = await moveMediaToTrash(id, session.userEmail);
