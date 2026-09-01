@@ -37,6 +37,7 @@ export interface RichTextEditorProps extends Omit<HTMLAttributes<HTMLDivElement>
   layout?: "default" | "compact";
   typography?: TypographyState;
   onTypographyChange?: (typography: TypographyState) => void;
+  showLineHeightControl?: boolean;
 }
 
 export type MediaSourceMode = "library" | "upload" | "url";
@@ -46,4 +47,5 @@ export interface TypographyState {
   weight: number;
   width: number;
   fontSize: number;
+  lineHeight?: number;
 }

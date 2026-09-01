@@ -94,6 +94,7 @@ export function HomeCardEditorSection({ offering, form }: HomeCardEditorSectionP
               value={details.homeCard.title}
               placeholder={title || "Título de la tarjeta"}
               typography={titleTypography}
+              showLineHeightControl={!supportsExtendedHomeCopy}
               controls={HOME_CARD_SHORT_TEXT_CONTROLS}
               layout="compact"
               minHeight="68px"

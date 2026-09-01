@@ -11,10 +11,12 @@ export default function TypographyPanel({
   typography,
   onChange,
   variant = "sidebar",
+  showLineHeightControl = false,
 }: {
   typography: TypographyState;
   onChange: Dispatch<SetStateAction<TypographyState>>;
   variant?: "sidebar" | "inline";
+  showLineHeightControl?: boolean;
 }) {
   return (
     <aside
@@ -26,7 +28,7 @@ export default function TypographyPanel({
         <button
           type="button"
           aria-label="Restablecer tipografía del bloque"
-          onClick={() => onChange({ italic: false, weight: 400, width: 100, fontSize: typography.fontSize })}
+          onClick={() => onChange({ italic: false, weight: 400, width: 100, fontSize: typography.fontSize, lineHeight: 1.38 })}
         >
           reset
         </button>
@@ -69,6 +71,21 @@ export default function TypographyPanel({
           onChange={(event) => onChange((current) => ({ ...current, width: Number(event.target.value) }))}
         />
       </label>
+
+      {showLineHeightControl ? (
+        <label className="tiptap-typography-panel__axis">
+          <span>Interlineado <AxisInfo title="Controla la distancia vertical entre las líneas del título." /></span>
+          <output>{(typography.lineHeight ?? 1.38).toFixed(2)}</output>
+          <input
+            type="range"
+            min={0.8}
+            max={2}
+            step={0.01}
+            value={typography.lineHeight ?? 1.38}
+            onChange={(event) => onChange((current) => ({ ...current, lineHeight: Number(event.target.value) }))}
+          />
+        </label>
+      ) : null}
     </aside>
   );
 }

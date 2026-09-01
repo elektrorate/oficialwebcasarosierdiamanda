@@ -9069,7 +9069,7 @@
   font-style: var(--tiptap-preview-font-style, normal);
   font-variation-settings: "wdth" var(--tiptap-preview-font-width, 100), "wght" var(--tiptap-preview-font-weight, 400);
   font-weight: var(--tiptap-preview-font-weight, 400);
-  line-height: 1.3;
+  line-height: var(--tiptap-preview-line-height, 1.38);
   outline: none;
 }
 

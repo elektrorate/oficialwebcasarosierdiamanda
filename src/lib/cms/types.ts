@@ -45,6 +45,7 @@ export interface RichTextTypography {
   weight: number;
   width: number;
   fontSize: number;
+  lineHeight?: number;
 }
 
 export interface ClassOfferingModule {

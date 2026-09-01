@@ -29,6 +29,7 @@ export default function RichTextEditor({
   layout = "default",
   typography: typographyProp,
   onTypographyChange,
+  showLineHeightControl = false,
   style,
   ...props
 }: RichTextEditorProps) {
@@ -47,7 +48,9 @@ export default function RichTextEditor({
 
   const extensions = useMemo(() => editorExtensions(placeholder), [placeholder]);
   const onChangeRef = useRef(onChange);
-  onChangeRef.current = onChange;
+  useEffect(() => {
+    onChangeRef.current = onChange;
+  }, [onChange]);
 
   const editor = useEditor({
     extensions,
@@ -129,10 +132,10 @@ export default function RichTextEditor({
             {layout === "compact" ? (
               <details className="tiptap-typography-drawer">
                 <summary>Tipografía del bloque</summary>
-                <TypographyPanel typography={typography} onChange={setTypography} variant="inline" />
+                <TypographyPanel typography={typography} onChange={setTypography} variant="inline" showLineHeightControl={showLineHeightControl} />
               </details>
             ) : (
-              <TypographyPanel typography={typography} onChange={setTypography} />
+              <TypographyPanel typography={typography} onChange={setTypography} showLineHeightControl={showLineHeightControl} />
             )}
             <div className="tiptap-editor__main">
               <EditorToolbar

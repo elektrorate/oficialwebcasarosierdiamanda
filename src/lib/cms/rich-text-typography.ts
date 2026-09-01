@@ -5,6 +5,7 @@ export interface RichTextTypography {
   weight: number;
   width: number;
   fontSize: number;
+  lineHeight?: number;
 }
 
 export const DEFAULT_RICH_TEXT_TYPOGRAPHY: RichTextTypography = {
@@ -12,6 +13,7 @@ export const DEFAULT_RICH_TEXT_TYPOGRAPHY: RichTextTypography = {
   weight: 400,
   width: 100,
   fontSize: 28,
+  lineHeight: 1.38,
 };
 
 export const RICH_TEXT_FONT_SIZE_MIN = 12;
@@ -25,6 +27,7 @@ export function normalizeRichTextTypography(value: unknown): RichTextTypography 
   const fontSize = Number(source.fontSize);
   const weight = Number(source.weight);
   const width = Number(source.width);
+  const lineHeight = Number(source.lineHeight);
 
   return {
     italic: Boolean(source.italic),
@@ -33,6 +36,9 @@ export function normalizeRichTextTypography(value: unknown): RichTextTypography 
     fontSize: Number.isFinite(fontSize)
       ? Math.min(RICH_TEXT_FONT_SIZE_MAX, Math.max(RICH_TEXT_FONT_SIZE_MIN, fontSize))
       : DEFAULT_RICH_TEXT_TYPOGRAPHY.fontSize,
+    lineHeight: Number.isFinite(lineHeight)
+      ? Math.min(2, Math.max(0.8, lineHeight))
+      : DEFAULT_RICH_TEXT_TYPOGRAPHY.lineHeight,
   };
 }
 
@@ -44,6 +50,7 @@ export function richTextTypographyCssVars(typography: RichTextTypography): CSSPr
     "--tiptap-preview-font-stretch": `${typography.width}%`,
     "--tiptap-preview-font-width": String(typography.width),
     "--tiptap-preview-font-style": typography.italic ? "italic" : "normal",
+    "--tiptap-preview-line-height": String(typography.lineHeight ?? 1.38),
     "--content-card-excerpt-font-size": `${typography.fontSize}px`,
     "--content-card-excerpt-font-weight": String(typography.weight),
     "--content-card-excerpt-font-stretch": `${typography.width}%`,
@@ -71,7 +78,7 @@ export function richTextTypographyStyle(typography: RichTextTypography): CSSProp
 
 export function richTextTypographyRevision(typography: RichTextTypography | undefined | null): string {
   if (!typography) return "";
-  return [typography.fontSize, typography.weight, typography.width, typography.italic ? 1 : 0].join(":");
+  return [typography.fontSize, typography.weight, typography.width, typography.lineHeight ?? 1.38, typography.italic ? 1 : 0].join(":");
 }
 
 export type DetailTextTypographyScope =

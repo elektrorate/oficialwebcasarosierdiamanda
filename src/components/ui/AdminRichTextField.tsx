@@ -25,6 +25,7 @@ export function AdminRichTextField({
   validationKey,
   layout = "default",
   labelPlacement = "field",
+  showLineHeightControl = false,
 }: {
   label: string;
   value: string;
@@ -41,6 +42,7 @@ export function AdminRichTextField({
   validationKey?: string;
   layout?: "default" | "compact";
   labelPlacement?: "field" | "editor";
+  showLineHeightControl?: boolean;
 }) {
   const resolvedTypography = normalizeRichTextTypography(typography ?? DEFAULT_RICH_TEXT_TYPOGRAPHY);
   const showLabelInField = labelPlacement !== "editor";
@@ -66,6 +68,7 @@ export function AdminRichTextField({
         controls={controls}
         typography={resolvedTypography}
         onTypographyChange={onTypographyChange}
+        showLineHeightControl={showLineHeightControl}
       />
     </FormField>
   );
