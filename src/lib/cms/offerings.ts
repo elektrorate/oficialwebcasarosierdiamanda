@@ -409,6 +409,10 @@ function mergeHomeCardSettingsIntoDetails(details: Offering["details"], settings
     italic: typeof row.excerpt_italic === "boolean" ? row.excerpt_italic : Boolean(existingHomeCard.excerptTypography && typeof existingHomeCard.excerptTypography === "object" ? (existingHomeCard.excerptTypography as Record<string, unknown>).italic : false),
   });
   const homeCard = {
+    // The normalized JSON details contain the CMS-only presentation controls
+    // (visibility flags and the complete typography settings). Preserve them
+    // when the legacy home_card_settings row contributes its text fields.
+    ...existingHomeCard,
     image: text("image", String(existingHomeCard.image ?? "")),
     imageAlt: text("image_alt", String(existingHomeCard.imageAlt ?? "")),
     eyebrow: text("eyebrow", String(existingHomeCard.eyebrow ?? "")),
