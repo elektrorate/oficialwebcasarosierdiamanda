@@ -14,8 +14,10 @@ type GalleryImagesSectionProps = {
   form: ClassEditFormState;
 };
 
-function galleryItemKey(item: { image: string; order: number; alt: string }) {
-  return `${item.order}-${item.image}-${item.alt}`;
+function galleryItemKey(item: { image: string; order: number }) {
+  // ALT is editable content and must never be part of the React key: changing
+  // it would remount the row on every keystroke, losing focus and scroll.
+  return `${item.order}-${item.image}`;
 }
 
 function GalleryImagesSectionComponent({ form }: GalleryImagesSectionProps) {
