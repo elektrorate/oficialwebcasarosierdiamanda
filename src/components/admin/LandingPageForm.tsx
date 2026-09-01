@@ -1,153 +1,93 @@
 "use client";
 
+import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useState, useEffect } from "react";
-import type { LandingPage, Header, LandingPageBlock, CampaignType, BlockType } from "@/lib/cms/types";
-import { CAMPAIGN_TYPES, BLOCK_TYPES } from "@/lib/cms/types";
+import { useEffect, useMemo, useState } from "react";
+import { LandingPageView } from "@/features/landing-pages/LandingPageView";
+import type { BlockType, CampaignType, LandingPage, LandingPageBlock } from "@/lib/cms/types";
+import { BLOCK_TYPES, CAMPAIGN_TYPES } from "@/lib/cms/types";
 import MediaSelectField from "./MediaSelectField";
 
-const campLabels: Record<string, string> = { course: "Curso", workshop: "Workshop", experience: "Experiencia", gift_card: "Gift Card", event: "Evento", lead_capture: "Lead Capture", custom: "Custom" };
-const blockLabels: Record<string, string> = { text: "Texto", image: "Imagen", text_image: "Texto + Imagen", gallery: "Galería", cta: "CTA", testimonial: "Testimonial", faq: "FAQ", teacher: "Teacher", promo_banner: "Promo Banner", custom_html: "HTML personalizado" };
+type Tab = "hero" | "information" | "blocks" | "components" | "seo" | "preview";
+type Option = { id: string; label: string };
+type Options = { headers: Option[]; forms: Option[]; galleries: Option[]; testimonials: Option[]; footers: Option[] };
+const tabs: Array<{ id: Tab; label: string }> = [{ id: "hero", label: "Hero" }, { id: "information", label: "Información" }, { id: "blocks", label: "Bloques" }, { id: "components", label: "Componentes" }, { id: "seo", label: "SEO" }, { id: "preview", label: "Vista previa" }];
+const campaignLabels: Record<string, string> = { course: "Curso", workshop: "Workshop", experience: "Experiencia", gift_card: "Gift card", event: "Evento", lead_capture: "Captación", custom: "Personalizada" };
+const blockLabels: Record<string, string> = { text: "Texto", image: "Imagen", text_image: "Texto + imagen", gallery: "Galería", cta: "Llamada a la acción", testimonial: "Testimonio", faq: "Preguntas frecuentes", teacher: "Profesora", promo_banner: "Banner promocional", custom_html: "HTML (texto seguro)" };
+const inputClass = "w-full rounded-xl border border-stone-300 bg-white px-3.5 py-2.5 text-sm text-stone-900 outline-none transition focus:border-stone-700 focus:ring-2 focus:ring-stone-200";
+
+function emptyLanding(): LandingPage {
+  const now = new Date().toISOString();
+  return { id: "", title: "", slug: "", status: "draft", campaign_type: "custom", header_id: null, hero_title: "", hero_subtitle: "", hero_image_id: "", intro_text: "", cta_text: "", cta_url: "", form_id: null, social_gallery_id: null, testimonials_id: null, footer_id: null, seo_title: "", seo_description: "", seo_image: "", blocks: [], created_at: now, updated_at: now, deleted_at: null };
+}
+function slugify(value: string) { return value.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, ""); }
+function Card({ title, description, children }: { title: string; description?: string; children: React.ReactNode }) { return <section className="rounded-2xl border border-black/10 bg-white p-5 shadow-sm md:p-7"><div className="mb-6"><h2 className="text-xl font-semibold text-stone-900">{title}</h2>{description ? <p className="mt-1 text-sm text-stone-500">{description}</p> : null}</div>{children}</section>; }
+function Field({ label, children, wide = false, hint }: { label: string; children: React.ReactNode; wide?: boolean; hint?: string }) { return <label className={wide ? "md:col-span-2" : ""}><span className="mb-2 block text-sm font-medium text-stone-700">{label}</span>{children}{hint ? <span className="mt-1 block text-xs text-stone-500">{hint}</span> : null}</label>; }
 
 export default function LandingPageForm({ mode, item }: { mode: "create" | "edit"; item?: LandingPage }) {
   const router = useRouter();
-  const [title, setTitle] = useState(item?.title ?? "");
-  const [slug, setSlug] = useState(item?.slug ?? "");
-  const [status, setStatus] = useState(item?.status ?? "draft");
-  const [campaignType, setCampaignType] = useState<CampaignType>(item?.campaign_type ?? "custom");
-  const [headerId, setHeaderId] = useState(item?.header_id ?? "");
-  const [heroTitle, setHeroTitle] = useState(item?.hero_title ?? "");
-  const [heroSubtitle, setHeroSubtitle] = useState(item?.hero_subtitle ?? "");
-  const [heroImageId, setHeroImageId] = useState(item?.hero_image_id ?? "");
-  const [introText, setIntroText] = useState(item?.intro_text ?? "");
-  const [ctaText, setCtaText] = useState(item?.cta_text ?? "");
-  const [ctaUrl, setCtaUrl] = useState(item?.cta_url ?? "");
-  const [socialGalleryId, setSocialGalleryId] = useState(item?.social_gallery_id ?? "");
-  const [testimonialsId, setTestimonialsId] = useState(item?.testimonials_id ?? "");
-  const [footerId, setFooterId] = useState(item?.footer_id ?? "");
-  const [seoTitle, setSeoTitle] = useState(item?.seo_title ?? "");
-  const [seoDescription, setSeoDescription] = useState(item?.seo_description ?? "");
-  const [seoImage, setSeoImage] = useState(item?.seo_image ?? "");
-  const [blocks, setBlocks] = useState<LandingPageBlock[]>(item?.blocks ?? []);
-  const [headers, setHeaders] = useState<Header[]>([]);
+  const [landing, setLanding] = useState<LandingPage>(item ?? emptyLanding());
+  const [activeTab, setActiveTab] = useState<Tab>("hero");
+  const [options, setOptions] = useState<Options>({ headers: [], forms: [], galleries: [], testimonials: [], footers: [] });
+  const [isDirty, setIsDirty] = useState(false);
+  const [isSaving, setIsSaving] = useState(false);
+  const [savingIntent, setSavingIntent] = useState<"draft" | "publish" | null>(null);
   const [error, setError] = useState<string | null>(null);
-  const [isLoading, setIsLoading] = useState(false);
 
-  useEffect(() => { fetch("/api/admin/headers").then((r) => r.json()).then((d) => setHeaders(d.headers ?? [])).catch(() => {}); }, []);
+  useEffect(() => {
+    const endpoints = ["/api/admin/headers", "/api/admin/formularios?status=active", "/api/admin/components/social-galleries", "/api/admin/components/testimonials?status=published", "/api/admin/components/footers?status=published"];
+    Promise.all(endpoints.map((url) => fetch(url).then(async (response): Promise<Record<string, unknown>> => response.ok ? await response.json() as Record<string, unknown> : {}))).then(([h, f, g, t, ft]) => setOptions({
+      headers: ((h.headers ?? []) as Array<{ id: string; name: string; status?: string }>).filter((x) => x.status === "published").map((x) => ({ id: x.id, label: x.name })),
+      forms: ((f.forms ?? []) as Array<{ id: string; title?: string; name?: string }>).map((x) => ({ id: x.id, label: x.title || x.name || "Formulario" })),
+      galleries: ((g.socialGalleries ?? []) as Array<{ id: string; name: string }>).map((x) => ({ id: x.id, label: x.name })),
+      testimonials: ((t.testimonials ?? []) as Array<{ id: string; name: string }>).map((x) => ({ id: x.id, label: x.name })),
+      footers: ((ft.footers ?? []) as Array<{ id: string; name: string }>).map((x) => ({ id: x.id, label: x.name })),
+    })).catch(() => undefined);
+  }, []);
+  useEffect(() => { const warn = (event: BeforeUnloadEvent) => { if (isDirty) event.preventDefault(); }; window.addEventListener("beforeunload", warn); return () => window.removeEventListener("beforeunload", warn); }, [isDirty]);
 
-  function addBlock() {
-    setBlocks([...blocks, { id: `new_${Date.now()}`, type: "text", title: "", text: "", image_id: "", cta_text: "", cta_url: "", is_visible: true, sort_order: blocks.length, custom_html: "", created_at: new Date().toISOString(), updated_at: new Date().toISOString() }]);
+  function change<K extends keyof LandingPage>(key: K, value: LandingPage[K]) { setLanding((current) => ({ ...current, [key]: value })); setIsDirty(true); }
+  function addBlock() { const now = new Date().toISOString(); const block: LandingPageBlock = { id: crypto.randomUUID(), type: "text", title: "", text: "", image_id: "", cta_text: "", cta_url: "", is_visible: true, sort_order: landing.blocks.length, custom_html: "", created_at: now, updated_at: now }; change("blocks", [...landing.blocks, block]); }
+  function updateBlock(index: number, patch: Partial<LandingPageBlock>) { change("blocks", landing.blocks.map((block, position) => position === index ? { ...block, ...patch, updated_at: new Date().toISOString() } : block)); }
+  function removeBlock(index: number) { change("blocks", landing.blocks.filter((_, position) => position !== index)); }
+  function moveBlock(index: number, offset: -1 | 1) { const target = index + offset; if (target < 0 || target >= landing.blocks.length) return; const next = [...landing.blocks]; [next[index], next[target]] = [next[target], next[index]]; change("blocks", next.map((block, position) => ({ ...block, sort_order: position }))); }
+
+  async function save(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    const submitter = (event.nativeEvent as SubmitEvent).submitter as HTMLButtonElement | null;
+    const intent = submitter?.value === "publish" ? "publish" : "draft";
+    if (!landing.title.trim()) { setError("Escribe el título de la landing."); setActiveTab("information"); return; }
+    if (!landing.slug.trim()) { setError("Define el slug de la URL."); setActiveTab("information"); return; }
+    setIsSaving(true); setSavingIntent(intent); setError(null);
+    const payload = { ...landing, status: intent === "publish" ? "published" : "draft", blocks: landing.blocks.map((block, index) => ({ ...block, sort_order: index })) };
+    try {
+      const response = await fetch(mode === "create" ? "/api/admin/landing-pages" : `/api/admin/landing-pages/${item?.id}`, { method: mode === "create" ? "POST" : "PUT", headers: { "Content-Type": "application/json" }, body: JSON.stringify(payload) });
+      const data = await response.json(); if (!response.ok) throw new Error(data.error || "No se pudo guardar la landing.");
+      const saved = data.landingPage as LandingPage; setLanding(saved); setIsDirty(false); if (mode === "create") router.replace(`/admin/landing-pages/${saved.id}/edit`); router.refresh();
+    } catch (reason) { setError(reason instanceof Error ? reason.message : "No se pudo guardar la landing."); } finally { setIsSaving(false); setSavingIntent(null); }
   }
-  function updateBlock(idx: number, field: string, value: unknown) { const c = [...blocks]; c[idx] = { ...c[idx], [field]: value }; setBlocks(c); }
-  function removeBlock(idx: number) { setBlocks(blocks.filter((_, i) => i !== idx)); }
-  function moveBlock(idx: number, dir: "up" | "down") { if ((dir === "up" && idx === 0) || (dir === "down" && idx === blocks.length - 1)) return; const c = [...blocks]; [c[idx], c[dir === "up" ? idx - 1 : idx + 1]] = [c[dir === "up" ? idx - 1 : idx + 1], c[idx]]; setBlocks(c); }
+  const previewLanding = useMemo(() => ({ ...landing, hero_title: landing.hero_title || landing.title }), [landing]);
 
-  async function handleSubmit(e: React.FormEvent) {
-    e.preventDefault(); setIsLoading(true); setError(null);
-    if (!title.trim()) { setError("El título es obligatorio."); setIsLoading(false); return; }
-    const res = await fetch(mode === "create" ? "/api/admin/landing-pages" : `/api/admin/landing-pages/${item?.id}`, {
-      method: mode === "create" ? "POST" : "PUT", headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ title, slug, status, campaign_type: campaignType, header_id: headerId || null, hero_title: heroTitle, hero_subtitle: heroSubtitle, hero_image_id: heroImageId, intro_text: introText, cta_text: ctaText, cta_url: ctaUrl, form_id: null, social_gallery_id: socialGalleryId || null, testimonials_id: testimonialsId || null, footer_id: footerId || null, seo_title: seoTitle, seo_description: seoDescription, seo_image: seoImage, blocks: blocks.map((b, i) => ({ ...b, sort_order: i })) }),
-    });
-    if (!res.ok) { const d = await res.json().catch(() => ({ error: "Error" })); setError((d as { error?: string }).error || "Error"); setIsLoading(false); return; }
-    router.push("/admin/landing-pages"); router.refresh();
-  }
-
-  return (
-    <div className="header-form-layout">
-      <div className="menu-form-main">
-        <form className="editor-form" onSubmit={handleSubmit}>
-          <section className="form-block"><h3>Información general</h3>
-            <div className="grid-2">
-              <label className="field span-2"><span>Título</span><input value={title} onChange={(e) => setTitle(e.target.value)} /></label>
-              <label className="field span-2"><span>Slug</span><input value={slug} onChange={(e) => setSlug(e.target.value)} /></label>
-              <label className="field"><span>Estado</span><select value={status} onChange={(e) => setStatus(e.target.value as LandingPage["status"])}><option value="draft">Borrador</option><option value="published">Publicado</option><option value="archived">Archivado</option></select></label>
-              <label className="field"><span>Tipo de campaña</span><select value={campaignType} onChange={(e) => setCampaignType(e.target.value as CampaignType)}>{CAMPAIGN_TYPES.map((t) => <option key={t} value={t}>{campLabels[t]}</option>)}</select></label>
-              <label className="field"><span>Header</span><select value={headerId} onChange={(e) => setHeaderId(e.target.value)}><option value="">Sin header</option>{headers.filter((h) => h.status === "published").map((h) => <option key={h.id} value={h.id}>{h.name}</option>)}</select></label>
-            </div>
-          </section>
-
-          <section className="form-block"><h3>Hero</h3>
-            <div className="grid-2">
-              <label className="field span-2"><span>Título del hero</span><input value={heroTitle} onChange={(e) => setHeroTitle(e.target.value)} /></label>
-              <label className="field span-2"><span>Subtítulo</span><input value={heroSubtitle} onChange={(e) => setHeroSubtitle(e.target.value)} /></label>
-              <MediaSelectField label="Imagen del hero" value={heroImageId} onChange={setHeroImageId} />
-            </div>
-          </section>
-
-          <section className="form-block"><h3>Contenido principal</h3>
-            <div className="grid-2">
-              <label className="field span-2"><span>Texto de introducción</span><textarea rows={4} value={introText} onChange={(e) => setIntroText(e.target.value)} /></label>
-              <label className="field"><span>CTA texto</span><input value={ctaText} onChange={(e) => setCtaText(e.target.value)} /></label>
-              <label className="field"><span>CTA URL</span><input value={ctaUrl} onChange={(e) => setCtaUrl(e.target.value)} /></label>
-            </div>
-          </section>
-
-          <section className="form-block"><h3>Componentes vinculados</h3>
-            <div className="grid-2">
-              <label className="field"><span>Galería social</span><select value={socialGalleryId} onChange={(e) => setSocialGalleryId(e.target.value)}><option value="">Ninguna</option></select></label>
-              <label className="field"><span>Testimonios</span><select value={testimonialsId} onChange={(e) => setTestimonialsId(e.target.value)}><option value="">Ninguno</option></select></label>
-              <label className="field"><span>Footer</span><select value={footerId} onChange={(e) => setFooterId(e.target.value)}><option value="">Ninguno</option></select></label>
-            </div>
-          </section>
-
-          <section className="form-block"><h3>SEO</h3>
-            <div className="grid-2">
-              <label className="field span-2"><span>SEO title</span><input value={seoTitle} onChange={(e) => setSeoTitle(e.target.value)} /></label>
-              <label className="field span-2"><span>SEO description</span><textarea rows={3} value={seoDescription} onChange={(e) => setSeoDescription(e.target.value)} /></label>
-              <MediaSelectField label="SEO image" value={seoImage} onChange={setSeoImage} />
-            </div>
-          </section>
-
-          <section className="form-block">
-            <div className="menu-editor-head"><h3>Bloques ({blocks.length})</h3><button type="button" className="primary-btn" onClick={addBlock}>Añadir bloque</button></div>
-            {blocks.length === 0 ? <p className="muted">Aún no hay bloques.</p> : blocks.map((b, idx) => (
-              <div key={b.id} className="menu-item-form-wrap" style={{ marginBottom: "0.75rem" }}>
-                <div className="menu-item-row" style={{ padding: 0, marginBottom: "0.5rem" }}>
-                  <span className="menu-item-label">{b.title || blockLabels[b.type]}</span>
-                  <span className="entity-badge">{blockLabels[b.type]}</span>
-                  <span className="menu-item-badge">{b.is_visible ? "visible" : "oculto"}</span>
-                  <div className="row-actions" style={{ marginLeft: "auto" }}>
-                    <button type="button" className="secondary-btn" onClick={() => moveBlock(idx, "up")} disabled={idx === 0}>▲</button>
-                    <button type="button" className="secondary-btn" onClick={() => moveBlock(idx, "down")} disabled={idx === blocks.length - 1}>▼</button>
-                    <button type="button" className="danger-btn" onClick={() => removeBlock(idx)}>Eliminar</button>
-                  </div>
-                </div>
-                <div className="grid-2">
-                  <label className="field"><span>Tipo</span><select value={b.type} onChange={(e) => updateBlock(idx, "type", e.target.value as BlockType)}>{BLOCK_TYPES.map((t) => <option key={t} value={t}>{blockLabels[t]}</option>)}</select></label>
-                  <label className="field checkbox-field"><input type="checkbox" checked={b.is_visible} onChange={(e) => updateBlock(idx, "is_visible", e.target.checked)} /><span>Visible</span></label>
-                  <label className="field span-2"><span>Título</span><input value={b.title} onChange={(e) => updateBlock(idx, "title", e.target.value)} /></label>
-                  <label className="field span-2"><span>Texto</span><textarea rows={3} value={b.text} onChange={(e) => updateBlock(idx, "text", e.target.value)} /></label>
-                  {b.type === "image" || b.type === "text_image" ? <MediaSelectField label="Imagen" value={b.image_id} onChange={(url) => updateBlock(idx, "image_id", url)} /> : null}
-                  {b.type === "cta" || b.type === "text_image" ? <><label className="field"><span>CTA texto</span><input value={b.cta_text} onChange={(e) => updateBlock(idx, "cta_text", e.target.value)} /></label><label className="field"><span>CTA URL</span><input value={b.cta_url} onChange={(e) => updateBlock(idx, "cta_url", e.target.value)} /></label></> : null}
-                  {b.type === "custom_html" ? <label className="field span-2"><span>HTML</span><textarea rows={5} value={b.custom_html} onChange={(e) => updateBlock(idx, "custom_html", e.target.value)} /></label> : null}
-                </div>
-              </div>
-            ))}
-          </section>
-
-          {error ? <p className="form-error">{error}</p> : null}
-          <div className="form-actions"><button className="primary-btn" type="submit" disabled={isLoading}>{isLoading ? "Guardando..." : mode === "create" ? "Crear landing" : "Guardar cambios"}</button></div>
-        </form>
-      </div>
-
-      <aside className="menu-preview-sidebar">
-        <h3>Preview</h3>
-        <div className="menu-preview-box">
-          <p className="auth-kicker">{campLabels[campaignType]}</p>
-          <h3 style={{ margin: "0.3rem 0" }}>{heroTitle || title || "Sin título"}</h3>
-          {heroSubtitle ? <p className="muted">{heroSubtitle}</p> : null}
-          <hr style={{ margin: "0.75rem 0", border: "none", borderTop: "1px solid var(--line)" }} />
-          <p className="muted" style={{ fontSize: "0.85rem" }}>{blocks.length} bloque{blocks.length !== 1 ? "s" : ""}</p>
-          {blocks.filter((b) => b.is_visible).map((b, i) => (
-            <div key={b.id} style={{ padding: "0.3rem 0", borderTop: i > 0 ? "1px solid var(--line)" : "none", fontSize: "0.85rem" }}>
-              <span className="entity-badge">{blockLabels[b.type]}</span>
-              {b.title ? <span style={{ marginLeft: "0.4rem" }}>{b.title}</span> : null}
-            </div>
-          ))}
-          {ctaText ? <div style={{ marginTop: "0.75rem" }}><span className="header-preview-cta">{ctaText}</span></div> : null}
-        </div>
-      </aside>
+  return <form onSubmit={save} className="class-edit-form pb-28">
+    <div className="mb-6 flex flex-wrap items-start justify-between gap-4"><div><p className="text-xs font-semibold uppercase tracking-[.18em] text-amber-800">Marketing · Landing pages</p><h1 className="mt-1 text-3xl font-semibold text-stone-900">{mode === "create" ? "Nueva landing page" : landing.title}</h1><p className="mt-1 text-sm text-stone-500">Construye, previsualiza y publica una página de campaña.</p></div><Link href="/admin/landing-pages" className="rounded-xl border border-stone-300 px-4 py-2 text-sm text-stone-700">Volver al listado</Link></div>
+    <nav className="mb-6 flex gap-1 overflow-x-auto rounded-2xl border border-black/10 bg-white p-1.5 shadow-sm" aria-label="Secciones de la landing">{tabs.map((tab) => <button key={tab.id} type="button" onClick={() => setActiveTab(tab.id)} className={`whitespace-nowrap rounded-xl px-4 py-2.5 text-sm font-medium ${activeTab === tab.id ? "bg-stone-900 text-white" : "text-stone-600 hover:bg-stone-100"}`}>{tab.label}{tab.id === "blocks" ? ` (${landing.blocks.length})` : ""}</button>)}</nav>
+    {error ? <div role="alert" className="mb-5 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">{error}</div> : null}
+    <div className="space-y-5">
+      {activeTab === "hero" ? <HeroTab landing={landing} change={change} /> : null}
+      {activeTab === "information" ? <InformationTab landing={landing} change={change} /> : null}
+      {activeTab === "blocks" ? <BlocksTab blocks={landing.blocks} add={addBlock} update={updateBlock} remove={removeBlock} move={moveBlock} /> : null}
+      {activeTab === "components" ? <ComponentsTab landing={landing} options={options} change={change} /> : null}
+      {activeTab === "seo" ? <SeoTab landing={landing} change={change} /> : null}
+      {activeTab === "preview" ? <Card title="Vista previa" description="Esta es la composición que verá el visitante."><div className="overflow-hidden rounded-xl border border-stone-200"><LandingPageView landing={previewLanding} preview /></div></Card> : null}
     </div>
-  );
+    <div className="admin-sticky-actionbar"><span className="admin-sticky-actionbar__meta">{isDirty ? "Cambios sin guardar" : "Cambios al día"}</span>{mode === "edit" && landing.status === "published" ? <Link href={`/landing/${landing.slug}`} target="_blank" className="secondary-btn">Abrir página</Link> : null}<button type="button" className="secondary-btn" onClick={() => setActiveTab("preview")}>Vista previa</button><button type="submit" name="intent" value="draft" className="secondary-btn" disabled={isSaving}>{isSaving && savingIntent === "draft" ? "Guardando…" : "Guardar borrador"}</button><button type="submit" name="intent" value="publish" className="primary-btn" disabled={isSaving}>{isSaving && savingIntent === "publish" ? "Publicando…" : "Publicar"}</button></div>
+  </form>;
 }
+
+type Change = <K extends keyof LandingPage>(key: K, value: LandingPage[K]) => void;
+function HeroTab({ landing, change }: { landing: LandingPage; change: Change }) { return <Card title="Portada de la campaña" description="Es la primera impresión de la landing y debe comunicar una sola idea."><div className="grid gap-5 md:grid-cols-2"><Field label="Título del hero" wide><input className={inputClass} value={landing.hero_title} onChange={(e) => change("hero_title", e.target.value)} /></Field><Field label="Subtítulo" wide><textarea className={inputClass} rows={3} value={landing.hero_subtitle} onChange={(e) => change("hero_subtitle", e.target.value)} /></Field><div className="md:col-span-2"><MediaSelectField label="Imagen del hero" value={landing.hero_image_id} onChange={(value) => change("hero_image_id", value)} folder="landing-pages" /></div><Field label="Texto del botón"><input className={inputClass} value={landing.cta_text} onChange={(e) => change("cta_text", e.target.value)} /></Field><Field label="Destino del botón"><input className={inputClass} value={landing.cta_url} onChange={(e) => change("cta_url", e.target.value)} placeholder="/contacto o https://…" /></Field></div></Card>; }
+function InformationTab({ landing, change }: { landing: LandingPage; change: Change }) { return <><Card title="Información general" description="Datos internos, URL y categoría de campaña."><div className="grid gap-5 md:grid-cols-2"><Field label="Nombre interno" wide><input className={inputClass} value={landing.title} onChange={(e) => { const auto = !landing.slug || landing.slug === slugify(landing.title); change("title", e.target.value); if (auto) change("slug", slugify(e.target.value)); }} /></Field><Field label="Slug" hint={`/landing/${landing.slug || "mi-campana"}`}><input className={inputClass} value={landing.slug} onChange={(e) => change("slug", slugify(e.target.value))} /></Field><Field label="Tipo de campaña"><select className={inputClass} value={landing.campaign_type} onChange={(e) => change("campaign_type", e.target.value as CampaignType)}>{CAMPAIGN_TYPES.map((type) => <option key={type} value={type}>{campaignLabels[type]}</option>)}</select></Field></div></Card><Card title="Introducción"><Field label="Texto principal"><textarea className={inputClass} rows={7} value={landing.intro_text} onChange={(e) => change("intro_text", e.target.value)} /></Field></Card></>; }
+function BlocksTab({ blocks, add, update, remove, move }: { blocks: LandingPageBlock[]; add: () => void; update: (index: number, patch: Partial<LandingPageBlock>) => void; remove: (index: number) => void; move: (index: number, offset: -1 | 1) => void }) { return <Card title="Bloques de contenido" description="Ordena las secciones como aparecerán en la página."><div className="mb-5 flex justify-end"><button type="button" onClick={add} className="rounded-xl bg-stone-900 px-4 py-2.5 text-sm font-medium text-white">+ Añadir bloque</button></div>{blocks.length === 0 ? <div className="rounded-xl border border-dashed border-stone-300 p-10 text-center text-sm text-stone-500">Todavía no hay bloques.</div> : <div className="space-y-4">{blocks.map((block, index) => <div key={block.id} className="rounded-2xl border border-stone-200 bg-stone-50 p-4 md:p-5"><div className="mb-5 flex flex-wrap items-center gap-2"><strong className="mr-auto text-sm">{index + 1}. {block.title || blockLabels[block.type]}</strong><button type="button" disabled={index === 0} onClick={() => move(index, -1)} className="rounded-lg border px-2.5 py-1.5 text-xs disabled:opacity-30">↑</button><button type="button" disabled={index === blocks.length - 1} onClick={() => move(index, 1)} className="rounded-lg border px-2.5 py-1.5 text-xs disabled:opacity-30">↓</button><button type="button" onClick={() => remove(index)} className="rounded-lg border border-red-200 px-2.5 py-1.5 text-xs text-red-700">Eliminar</button></div><div className="grid gap-4 md:grid-cols-2"><Field label="Tipo"><select className={inputClass} value={block.type} onChange={(e) => update(index, { type: e.target.value as BlockType })}>{BLOCK_TYPES.map((type) => <option key={type} value={type}>{blockLabels[type]}</option>)}</select></Field><label className="flex items-center gap-2 self-end pb-3 text-sm"><input type="checkbox" checked={block.is_visible} onChange={(e) => update(index, { is_visible: e.target.checked })} /> Visible</label><Field label="Título" wide><input className={inputClass} value={block.title} onChange={(e) => update(index, { title: e.target.value })} /></Field><Field label="Texto" wide><textarea className={inputClass} rows={5} value={block.text} onChange={(e) => update(index, { text: e.target.value })} /></Field>{["image", "text_image", "gallery", "teacher"].includes(block.type) ? <div className="md:col-span-2"><MediaSelectField label="Imagen del bloque" value={block.image_id} onChange={(value) => update(index, { image_id: value })} folder="landing-pages" /></div> : null}{["cta", "text_image", "promo_banner"].includes(block.type) ? <><Field label="Texto del botón"><input className={inputClass} value={block.cta_text} onChange={(e) => update(index, { cta_text: e.target.value })} /></Field><Field label="Destino"><input className={inputClass} value={block.cta_url} onChange={(e) => update(index, { cta_url: e.target.value })} /></Field></> : null}{block.type === "custom_html" ? <Field label="Código mostrado como texto seguro" wide><textarea className={inputClass} rows={7} value={block.custom_html} onChange={(e) => update(index, { custom_html: e.target.value })} /></Field> : null}</div></div>)}</div>}</Card>; }
+function SelectField({ label, value, options, onChange }: { label: string; value: string | null; options: Option[]; onChange: (value: string | null) => void }) { return <Field label={label}><select className={inputClass} value={value ?? ""} onChange={(e) => onChange(e.target.value || null)}><option value="">No usar</option>{options.map((option) => <option key={option.id} value={option.id}>{option.label}</option>)}</select></Field>; }
+function ComponentsTab({ landing, options, change }: { landing: LandingPage; options: Options; change: Change }) { return <Card title="Componentes vinculados" description="Reutiliza componentes publicados del CMS."><div className="grid gap-5 md:grid-cols-2"><SelectField label="Header" value={landing.header_id} options={options.headers} onChange={(v) => change("header_id", v)} /><SelectField label="Formulario" value={landing.form_id} options={options.forms} onChange={(v) => change("form_id", v)} /><SelectField label="Galería social" value={landing.social_gallery_id} options={options.galleries} onChange={(v) => change("social_gallery_id", v)} /><SelectField label="Testimonio" value={landing.testimonials_id} options={options.testimonials} onChange={(v) => change("testimonials_id", v)} /><SelectField label="Footer" value={landing.footer_id} options={options.footers} onChange={(v) => change("footer_id", v)} /></div></Card>; }
+function SeoTab({ landing, change }: { landing: LandingPage; change: Change }) { return <Card title="SEO y redes sociales" description="Personaliza cómo aparecerá la landing al compartirla."><div className="grid gap-5 md:grid-cols-2"><Field label="Título SEO" wide hint={`${landing.seo_title.length}/60 caracteres`}><input className={inputClass} maxLength={60} value={landing.seo_title} onChange={(e) => change("seo_title", e.target.value)} /></Field><Field label="Descripción SEO" wide hint={`${landing.seo_description.length}/160 caracteres`}><textarea className={inputClass} maxLength={160} rows={4} value={landing.seo_description} onChange={(e) => change("seo_description", e.target.value)} /></Field><div className="md:col-span-2"><MediaSelectField label="Imagen para compartir" value={landing.seo_image} onChange={(value) => change("seo_image", value)} folder="landing-pages" /></div></div></Card>; }

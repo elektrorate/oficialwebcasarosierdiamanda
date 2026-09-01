@@ -4,6 +4,43 @@ import { createAdminClient } from "@/lib/supabase/admin";
 import { ApiRequestError } from "./request-validation";
 export { ApiRequestError, readJsonObject } from "./request-validation";
 
+type LocalRateLimitEntry = {
+  count: number;
+  windowStartedAt: number;
+};
+
+const localRateLimits = new Map<string, LocalRateLimitEntry>();
+
+function shouldUseLocalRateLimit() {
+  return process.env.NODE_ENV !== "production" && !process.env.SUPABASE_SERVICE_ROLE_KEY;
+}
+
+function localRateLimitKey(request: Request, route: string) {
+  return `${route}:${clientIdentifier(request)}`;
+}
+
+function enforceLocalRateLimit(
+  request: Request,
+  input: { route: string; limit: number; windowSeconds: number },
+) {
+  const key = localRateLimitKey(request, input.route);
+  const now = Date.now();
+  const windowMs = input.windowSeconds * 1000;
+  const current = localRateLimits.get(key);
+  const entry = !current || current.windowStartedAt <= now - windowMs
+    ? { count: 1, windowStartedAt: now }
+    : { ...current, count: current.count + 1 };
+
+  localRateLimits.set(key, entry);
+  if (entry.count > input.limit) {
+    const retryAfter = Math.max(1, Math.ceil((entry.windowStartedAt + windowMs - now) / 1000));
+    throw new ApiRequestError(
+      "Demasiadas solicitudes. Intentalo de nuevo mas tarde.",
+      429,
+      String(retryAfter),
+    );
+  }
+}
 
 function clientIdentifier(request: Request) {
   const forwarded = request.headers.get("x-vercel-forwarded-for")
@@ -16,6 +53,11 @@ function clientIdentifier(request: Request) {
 }
 
 export async function resetRateLimit(request: Request, route: string) {
+  if (shouldUseLocalRateLimit()) {
+    localRateLimits.delete(localRateLimitKey(request, route));
+    return;
+  }
+
   const { error } = await createAdminClient().rpc("reset_api_rate_limit", {
     p_route: route,
     p_identifier_hash: clientIdentifier(request),
@@ -27,6 +69,11 @@ export async function enforceRateLimit(
   request: Request,
   input: { route: string; limit: number; windowSeconds: number },
 ) {
+  if (shouldUseLocalRateLimit()) {
+    enforceLocalRateLimit(request, input);
+    return;
+  }
+
   const { data, error } = await createAdminClient().rpc("check_api_rate_limit", {
     p_route: input.route,
     p_identifier_hash: clientIdentifier(request),
