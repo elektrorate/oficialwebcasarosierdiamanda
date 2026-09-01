@@ -1,12 +1,10 @@
-import sharp from "sharp";
-
 const WEBP_QUALITY = 82;
 /** Lower effort speeds up server-side encoding on admin uploads (effort 4–6 was slow on large photos). */
 const WEBP_EFFORT = 2;
 const MAX_IMAGE_DIMENSION = 2560;
 const OPTIMIZABLE_EXTENSIONS = new Set(["jpg", "jpeg", "png", "webp", "avif"]);
 /** Skip re-encode when the client already prepared a reasonably sized photo. */
-const SKIP_REENCODE_MAX_BYTES = 1.5 * 1024 * 1024;
+const SKIP_REENCODE_MAX_BYTES = 4 * 1024 * 1024;
 
 export interface ImageUploadOptimization {
   buffer: Buffer;
@@ -85,6 +83,9 @@ export async function optimizeImageForUpload(input: OptimizeImageUploadInput): P
   }
 
   try {
+    // Load the native dependency only when server-side optimization is actually
+    // needed. Uploads must still work if a deployment cannot load libvips.
+    const { default: sharp } = await import("sharp");
     const source = sharp(input.buffer, { failOn: "none" }).rotate();
     const metadata = await source.metadata();
     const dimensions = scaledDimensions(metadata.width, metadata.height);
