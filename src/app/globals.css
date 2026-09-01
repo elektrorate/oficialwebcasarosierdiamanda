@@ -1744,6 +1744,13 @@ body {
     position: relative;
   }
 
+  .mobile-scroll-menu .mobile-menu__link--submenu {
+    border: 0;
+    background: transparent;
+    text-align: left;
+    cursor: pointer;
+  }
+
   .mobile-scroll-menu .mobile-menu__toggle {
     width: 44px;
     border: 0;

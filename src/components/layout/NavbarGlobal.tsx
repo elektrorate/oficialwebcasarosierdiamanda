@@ -455,6 +455,8 @@ export function NavbarGlobal({
                 item.children?.filter((child) => child.visible) ?? [];
               const open = mobileAccordion === item.label;
               const submenuId = `mobile-submenu-${index}`;
+              const toggleSubmenu = () =>
+                setMobileAccordion(open ? null : item.label);
               return (
                 <li
                   className={classNames(
@@ -464,26 +466,36 @@ export function NavbarGlobal({
                   key={item.label}
                 >
                   <div className="mobile-menu__row">
-                    <Link
-                      className="mobile-menu__link"
-                      href={item.href}
-                      target={item.target}
-                      rel={item.target === "_blank" ? "noopener noreferrer" : undefined}
-                      aria-current={current(item.href) ? "page" : undefined}
-                      onClick={() => setMobileOpen(false)}
-                    >
-                      {item.label}
-                    </Link>
+                    {children.length > 0 ? (
+                      <button
+                        className="mobile-menu__link mobile-menu__link--submenu"
+                        type="button"
+                        aria-expanded={open}
+                        aria-controls={submenuId}
+                        onClick={toggleSubmenu}
+                      >
+                        {item.label}
+                      </button>
+                    ) : (
+                      <Link
+                        className="mobile-menu__link"
+                        href={item.href}
+                        target={item.target}
+                        rel={item.target === "_blank" ? "noopener noreferrer" : undefined}
+                        aria-current={current(item.href) ? "page" : undefined}
+                        onClick={() => setMobileOpen(false)}
+                      >
+                        {item.label}
+                      </Link>
+                    )}
                     {children.length > 0 && (
                       <button
                         className="mobile-menu__toggle"
                         type="button"
                         aria-expanded={open}
                         aria-controls={submenuId}
-                        aria-label={`Abrir submenu de ${item.label}`}
-                        onClick={() =>
-                          setMobileAccordion(open ? null : item.label)
-                        }
+                        aria-label={`${open ? "Cerrar" : "Abrir"} submenu de ${item.label}`}
+                        onClick={toggleSubmenu}
                       >
                         <span aria-hidden="true">{open ? "x" : "+"}</span>
                       </button>
