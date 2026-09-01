@@ -13,6 +13,7 @@ import { DetailMediaSection } from "./DetailMediaSection";
 import { DetailPageSectionNav } from "./DetailPageSectionNav";
 import { GalleryImagesSection } from "./GalleryImagesSection";
 import { PricingSection } from "./PricingSection";
+import { ScheduleSection } from "./ScheduleSection";
 
 type ClassEditDetailPagePanelProps = {
   offering: Offering;
@@ -54,6 +55,9 @@ export function ClassEditDetailPagePanel({ offering, form }: ClassEditDetailPage
           ) : null}
           {sections.activeSection === "pricing" ? (
             <PricingSection form={form} />
+          ) : null}
+          {sections.activeSection === "schedule" ? (
+            <ScheduleSection form={form} />
           ) : null}
           {sections.activeSection === "calendar" ? (
             <CalendarLabelsSection form={form} />

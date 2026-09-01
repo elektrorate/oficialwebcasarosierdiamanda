@@ -9,6 +9,10 @@ export function ClassDetailPriceDuration({ item }: Props) {
   const hasDuration = Boolean(item.duration?.trim()) || item.schedule.length > 0;
   if (!hasPrices && !hasDuration) return null;
 
+  const durationTitle =
+    item.durationSectionTitle === undefined ? "Duracion" : item.durationSectionTitle;
+  const showDurationTitle = item.showDurationSectionTitle !== false && Boolean(durationTitle);
+
   return (
     <section className="class-detail__facts class-detail__facts--fit mt-7.5 grid grid-cols-2 gap-[24px] items-start h-fit max-[992px]:grid-cols-1 max-[640px]:grid-cols-1" aria-label="Precio y duracion">
       {hasPrices ? (
@@ -27,7 +31,7 @@ export function ClassDetailPriceDuration({ item }: Props) {
 
       {hasDuration ? (
         <div className="class-detail__fact-block p-[22px_24px] bg-[#fffdf9] rounded-2xl border border-[rgba(147,124,97,0.14)] max-[992px]:p-[18px_19px]">
-          <h2 className="m-0 mb-3 text-[#3d3935] text-[20px]! [font-family:var(--font-display)] uppercase tracking-[0.03em] max-[992px]:text-[18px]! max-[640px]:text-[16px]!">Duracion</h2>
+          {showDurationTitle ? <h2 className="m-0 mb-3 text-[#3d3935] text-[20px]! [font-family:var(--font-display)] uppercase tracking-[0.03em] max-[992px]:text-[18px]! max-[640px]:text-[16px]!">{durationTitle}</h2> : null}
           {item.duration?.trim() ? <p className="class-detail__duration m-0 mb-3.5 text-[#b87352] text-[13px]! font-normal leading-[1.45]">{item.duration}</p> : null}
           {item.schedule.length ? (
             <div className="class-detail__schedule">

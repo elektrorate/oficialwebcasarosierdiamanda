@@ -42,6 +42,7 @@ export type DetailPageSectionKey =
   | "basic-info"
   | "cta"
   | "pricing"
+  | "schedule"
   | "calendar"
   | "media"
   | "gallery"

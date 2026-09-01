@@ -259,6 +259,8 @@ export interface ClassOfferingDetails {
   /** Compatibilidad con registros anteriores a la tarjeta de Home independiente. */
   homeExcerpt: string;
   durationText: string;
+  durationSectionTitle: string;
+  showDurationSectionTitle: boolean;
   whatsappNumber: string;
   scheduleDescription: string;
   showScheduleOnFrontend: boolean;

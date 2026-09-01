@@ -145,6 +145,8 @@ export interface ExperienceItem {
   giftCardTypeOptions?: string[];
   priceOptions: PriceOption[];
   duration: string;
+  durationSectionTitle?: string;
+  showDurationSectionTitle?: boolean;
   schedule: ScheduleItem[];
   showCalendarLabels?: boolean;
   calendarLabelsTitle?: string;

@@ -358,6 +358,8 @@ export function toClassDetails(offering: Offering): ClassOfferingDetails {
       ),
     },
     durationText: firstText(fromDetails.durationText, offering.duration),
+    durationSectionTitle: firstText(fromDetails.durationSectionTitle) ?? "",
+    showDurationSectionTitle: fromDetails.showDurationSectionTitle ?? true,
     heroImage: fromDetails.heroImage || offering.cover_image_url || DEFAULT_HERO_IMAGE,
     heroImageMobile: fromDetails.heroImageMobile || "",
     heroVideoUrl: firstText(fromDetails.heroVideoUrl),
@@ -661,6 +663,8 @@ export function buildPreviewItem({
     videoUrl: details.videoUrl || undefined,
     priceOptions: priceOptions.length ? priceOptions : [{ label: "Precio", price: "0 EUR" }],
     duration: details.durationText || "Duración pendiente",
+    durationSectionTitle: details.durationSectionTitle ? details.durationSectionTitle.trim() : undefined,
+    showDurationSectionTitle: details.showDurationSectionTitle !== false,
     schedule: previewSchedule(details),
     showCalendarLabels: details.showCalendarLabels === true,
     calendarLabelsTitle: details.calendarLabelsTitle.trim() || DEFAULT_CALENDAR_LABELS_TITLE,
@@ -709,7 +713,6 @@ export function buildPreviewItem({
 
 export function errorTab(errorKey: string): TabKey {
   if (errorKey === "heroTitle") return "hero";
-  if (errorKey.startsWith("schedule-")) return "schedule";
   if (errorKey.startsWith("pricing-") || errorKey === "menuTitle" || errorKey === "title" || errorKey === "slug" || errorKey === "whatsappNumber") return "basic";
   if (errorKey.startsWith("gallery-") || errorKey.startsWith("calendar-label-") || errorKey === "calendarLabels") return "basic";
   return "basic";
@@ -718,6 +721,7 @@ export function errorTab(errorKey: string): TabKey {
 export function detailSectionForError(errorKey: string): import("./types").DetailPageSectionKey {
   if (errorKey.startsWith("pricing-")) return "pricing";
   if (errorKey.startsWith("gallery-")) return "gallery";
+  if (errorKey.startsWith("schedule-")) return "schedule";
   if (errorKey.startsWith("calendar-label-") || errorKey === "calendarLabels") return "calendar";
   if (errorKey === "menuTitle" || errorKey === "title" || errorKey === "slug" || errorKey === "whatsappNumber") return "basic-info";
   return "basic-info";
@@ -1092,6 +1096,8 @@ export function buildOfferingPayload({
         },
         homeExcerpt: details.homeCard.excerpt.trim(),
         durationText: details.durationText.trim(),
+        durationSectionTitle: details.durationSectionTitle.trim(),
+        showDurationSectionTitle: details.showDurationSectionTitle !== false,
         whatsappNumber: details.whatsappNumber.trim(),
         scheduleDescription: details.scheduleDescription.trim(),
         showScheduleOnFrontend: details.showScheduleOnFrontend,

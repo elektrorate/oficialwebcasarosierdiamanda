@@ -167,6 +167,9 @@ export function DetailPage({
   const hasParticipationContent = item.showParticipationSection && hasMeaningfulContent(item.whoCanJoin);
   const showPaymentMethods = item.showPaymentMethodsSection && item.paymentMethods.length > 0;
   const hasCalendarLabels = visibleCalendarLabels(item).length > 0;
+  const durationTitle =
+    item.durationSectionTitle === undefined ? "Duracion" : item.durationSectionTitle;
+  const showDurationTitle = item.showDurationSectionTitle !== false && Boolean(durationTitle);
   const hasSideContent = Boolean(
     item.videoUrl ||
     item.videoCardImage ||
@@ -279,7 +282,7 @@ export function DetailPage({
                   </div>
                 </div>
                 <div className="class-detail__fact-block">
-                  <h2>Duracion</h2>
+                  {showDurationTitle ? <h2>{durationTitle}</h2> : null}
                   <p className="class-detail__duration">{item.duration}</p>
                   {item.schedule.length ? (
                     <div className="class-detail__schedule">

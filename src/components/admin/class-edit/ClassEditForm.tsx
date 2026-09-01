@@ -14,7 +14,6 @@ import { ClassEditAdditionsTab } from "./tabs/ClassEditAdditionsTab";
 import { ClassEditDetailPagePanel } from "./components/ClassEditDetailPagePanel";
 import { ClassEditHomeTab } from "./tabs/ClassEditHomeTab";
 import { ClassEditPreviewTab } from "./tabs/ClassEditPreviewTab";
-import { ClassEditScheduleTab } from "./tabs/ClassEditScheduleTab";
 import { ClassEditSeoTab } from "./tabs/ClassEditSeoTab";
 import { ClassEditTabBar } from "./tabs/ClassEditTabBar";
 import type { ClassEditFormMode } from "./types";
@@ -71,7 +70,6 @@ export default function ClassEditForm({
         {activeTab === "basic" ? (
           <ClassEditDetailPagePanel offering={offering} form={form} />
         ) : null}
-        {activeTab === "schedule" ? <ClassEditScheduleTab form={form} /> : null}
         {activeTab === "seo" ? <ClassEditSeoTab form={form} /> : null}
         {activeTab === "additions" ? <ClassEditAdditionsTab form={form} previewChrome={previewChrome} /> : null}
         {activeTab === "preview" ? (

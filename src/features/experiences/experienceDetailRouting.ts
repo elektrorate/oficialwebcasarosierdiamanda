@@ -413,6 +413,8 @@ function cmsOfferingToExperienceItem(
     giftCardTypeOptions: splitList(details.giftCardTypeOptions),
     priceOptions,
     duration: details.durationText || offering.duration,
+    durationSectionTitle: typeof details.durationSectionTitle === "string" ? details.durationSectionTitle.trim() : undefined,
+    showDurationSectionTitle: details.showDurationSectionTitle !== false,
     schedule,
     showCalendarLabels: details.showCalendarLabels === true,
     calendarLabelsTitle: stringValue(details.calendarLabelsTitle),
