@@ -1,8 +1,12 @@
-import { prepareFileForAdminUpload } from "./media-upload-prepare";
+import {
+  CLIENT_UPLOAD_TARGET_BYTES,
+  prepareFileForAdminUpload,
+} from "./media-upload-prepare";
 
 export const MEDIA_UPLOAD_ENDPOINT = "/api/admin/media/upload";
 
 export const MEDIA_UPLOAD_MAX_BYTES = 10 * 1024 * 1024;
+const MEDIA_REQUEST_SAFE_BYTES = 4 * 1024 * 1024;
 
 export type MediaUploadOptimization = {
   optimized: boolean;
@@ -78,6 +82,15 @@ export async function uploadAdminMediaFile(input: UploadAdminMediaInput): Promis
     return { ok: false, error: validationError };
   }
 
+  if (prepared.file.size > MEDIA_REQUEST_SAFE_BYTES) {
+    return {
+      ok: false,
+      error: prepared.file.type === "application/pdf"
+        ? `El PDF debe pesar menos de ${formatMegabytes(MEDIA_REQUEST_SAFE_BYTES)} para poder subirlo.`
+        : `No se pudo reducir la imagen lo suficiente. Usa una imagen de menos de ${formatMegabytes(CLIENT_UPLOAD_TARGET_BYTES)} o guárdala como JPG/WebP.`,
+    };
+  }
+
   const formData = new FormData();
   formData.append("file", prepared.file);
   formData.append("folder", input.folder);
@@ -100,7 +113,10 @@ export async function uploadAdminMediaFile(input: UploadAdminMediaInput): Promis
     };
 
     if (!response.ok || !data.asset?.file_url) {
-      return { ok: false, error: data.error || "No se pudo subir el archivo." };
+      const fallbackError = response.status === 413
+        ? "La imagen sigue siendo demasiado pesada para el servidor. Redúcela a menos de 3.5 MB."
+        : `No se pudo subir el archivo (error ${response.status || "de conexión"}).`;
+      return { ok: false, error: data.error || fallbackError };
     }
 
     if (prepared.file.type.startsWith("image/") && !(await canDisplayUploadedImage(data.asset.file_url))) {
