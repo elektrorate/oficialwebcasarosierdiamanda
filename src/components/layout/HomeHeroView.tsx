@@ -239,11 +239,13 @@ export function HomeHeroView({
         />
       ) : null}
       {hasHeroVideo && mobileVideo && mobileVideo !== desktopVideo && mobileVideoEmbed && isVimeoEmbed(mobileVideoEmbed) ? (
-        <HeroVimeoVideo
-          className="hero__video hero__video--embed hero__video--mobile"
-          src={mobileVideoEmbed}
-          title="Video de fondo movil del hero"
-        />
+        <div className="hero__video hero__video--embed hero__video--mobile hero__video-frame">
+          <HeroVimeoVideo
+            className="hero__video-player"
+            src={mobileVideoEmbed}
+            title="Video de fondo movil del hero"
+          />
+        </div>
       ) : hasHeroVideo && mobileVideo && mobileVideo !== desktopVideo && mobileVideoEmbed ? (
         <iframe
           className="hero__video hero__video--embed hero__video--mobile"
