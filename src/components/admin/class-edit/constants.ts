@@ -191,6 +191,7 @@ export const defaultClassDetails: ClassOfferingDetails = {
   homeCard: {
     image: "",
     imageAlt: "",
+    showEyebrow: true,
     eyebrow: "",
     eyebrowTypography: { ...DEFAULT_RICH_TEXT_TYPOGRAPHY, fontSize: 14 },
     title: "",

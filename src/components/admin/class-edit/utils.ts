@@ -339,6 +339,7 @@ export function toClassDetails(offering: Offering): ClassOfferingDetails {
     homeCard: {
       image: firstText(persistedHomeCard.image),
       imageAlt: firstText(persistedHomeCard.imageAlt),
+      showEyebrow: persistedHomeCard.showEyebrow !== false,
       eyebrow: firstText(persistedHomeCard.eyebrow),
       eyebrowTypography: normalizeRichTextTypography(
         persistedHomeCard.eyebrowTypography ?? { ...DEFAULT_RICH_TEXT_TYPOGRAPHY, fontSize: 14 },
@@ -549,6 +550,7 @@ export function buildPreviewItem({
     coverImage,
     homeImage: details.homeCard.image.trim() || galleryImages[0] || coverImage,
     homeImageAlt: details.homeCard.imageAlt || details.homeCard.title || title || "Tarjeta destacada",
+    showHomeEyebrow: details.homeCard.showEyebrow !== false,
     homeEyebrow: details.homeCard.eyebrow || details.heroSubtitle || offeringType,
     homeEyebrowTypography: normalizeRichTextTypography(
       details.homeCard.eyebrowTypography ?? { ...DEFAULT_RICH_TEXT_TYPOGRAPHY, fontSize: 14 },
@@ -1065,6 +1067,7 @@ export function buildOfferingPayload({
         homeCard: {
           image: details.homeCard.image.trim(),
           imageAlt: details.homeCard.imageAlt.trim(),
+          showEyebrow: details.homeCard.showEyebrow !== false,
           eyebrow: details.homeCard.eyebrow.trim(),
           eyebrowTypography: normalizeRichTextTypography(details.homeCard.eyebrowTypography ?? {
             ...DEFAULT_RICH_TEXT_TYPOGRAPHY,

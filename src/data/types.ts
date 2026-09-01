@@ -36,6 +36,7 @@ export interface ExperienceItem {
   coverImage: string;
   homeImage?: string;
   homeImageAlt?: string;
+  showHomeEyebrow?: boolean;
   homeEyebrow?: string;
   homeEyebrowTypography?: RichTextTypography;
   homeTitle?: string;

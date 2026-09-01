@@ -58,6 +58,7 @@ export interface ClassOfferingModule {
 export interface ClassHomeCard {
   image: string;
   imageAlt: string;
+  showEyebrow: boolean;
   eyebrow: string;
   eyebrowTypography?: RichTextTypography;
   title: string;

@@ -53,7 +53,9 @@ interface GiftCarouselProps {
 }
 
 function giftHomeContent(item: ExperienceItem) {
-  const eyebrow = (item.homeEyebrow || item.category || "").trim();
+  const eyebrow = item.showHomeEyebrow === false
+    ? ""
+    : (item.homeEyebrow || item.category || "").trim();
   const tagline = (item.homeTagline || item.subtitle || "").trim();
   return {
     image: item.homeImage || item.coverImage,

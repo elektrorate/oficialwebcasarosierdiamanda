@@ -299,6 +299,7 @@ function cmsOfferingToExperienceItem(
     coverImage: defaultHomeImage,
     homeImage: stringValue(homeCard?.image) || defaultHomeImage,
     homeImageAlt: stringValue(homeCard?.imageAlt) || stringValue(homeCard?.title) || offering.title,
+    showHomeEyebrow: homeCard?.showEyebrow !== false,
     homeEyebrow: stringValue(homeCard?.eyebrow) || defaultHomeEyebrow,
     homeEyebrowTypography: normalizeRichTextTypography(
       homeCard?.eyebrowTypography ?? { ...DEFAULT_RICH_TEXT_TYPOGRAPHY, fontSize: 14 },

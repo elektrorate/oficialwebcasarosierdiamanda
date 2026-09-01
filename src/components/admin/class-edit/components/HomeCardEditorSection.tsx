@@ -2,6 +2,7 @@
 
 import { AdminInput } from "@/components/ui/AdminField";
 import { AdminRichTextField } from "@/components/ui/AdminRichTextField";
+import Switch from "@/components/ui/Switch";
 import {
   DEFAULT_DESCRIPTION_TYPOGRAPHY,
   DEFAULT_RICH_TEXT_TYPOGRAPHY,
@@ -64,19 +65,27 @@ export function HomeCardEditorSection({ offering, form }: HomeCardEditorSectionP
         </div>
 
         <div className="class-edit-home-editor-grid__copy space-y-4">
+          <Switch
+            checked={details.homeCard.showEyebrow !== false}
+            label="Mostrar etiqueta superior"
+            description="Si la desactivas, la tarjeta publicada no mostrará esta etiqueta ni utilizará un texto automático."
+            onCheckedChange={(showEyebrow) => updateHomeCard({ showEyebrow })}
+          />
           <div className="class-edit-home-text-fields">
-            <AdminRichTextField
-              label="Etiqueta superior"
-              value={details.homeCard.eyebrow}
-              placeholder={details.heroSubtitle || offering.type}
-              typography={eyebrowTypography}
-              controls={HOME_CARD_SHORT_TEXT_CONTROLS}
-              layout="compact"
-              minHeight="58px"
-              help="Ejemplo: CLASES · INICIACIÓN."
-              onChange={(value) => updateHomeCard({ eyebrow: value })}
-              onTypographyChange={(next) => updateHomeCard({ eyebrowTypography: next })}
-            />
+            {details.homeCard.showEyebrow !== false ? (
+              <AdminRichTextField
+                label="Etiqueta superior"
+                value={details.homeCard.eyebrow}
+                placeholder={details.heroSubtitle || offering.type}
+                typography={eyebrowTypography}
+                controls={HOME_CARD_SHORT_TEXT_CONTROLS}
+                layout="compact"
+                minHeight="58px"
+                help="Ejemplo: CLASES · INICIACIÓN."
+                onChange={(value) => updateHomeCard({ eyebrow: value })}
+                onTypographyChange={(next) => updateHomeCard({ eyebrowTypography: next })}
+              />
+            ) : null}
             <AdminRichTextField
               label="Título para Home"
               value={details.homeCard.title}
