@@ -31,8 +31,14 @@ function DetailMediaSectionComponent({ form }: DetailMediaSectionProps) {
     <SectionCard compact>
       <div className="class-edit-media-layout">
         <div className="class-edit-media-layout__copy class-edit-rich-text-stack">
+          <AdminInput
+            label="Título de la sección"
+            value={form.details.includedSectionTitle}
+            placeholder="Incluye"
+            onChange={(event) => form.updateDetails({ includedSectionTitle: event.target.value })}
+          />
           <AdminRichTextField
-            label="Qué incluye"
+            label="Contenido de la sección"
             labelPlacement="editor"
             layout="compact"
             value={media.includedItemsText}
@@ -46,7 +52,7 @@ function DetailMediaSectionComponent({ form }: DetailMediaSectionProps) {
           />
           <Switch
             checked={media.showIncludedSection}
-            label="Mostrar Qué incluye en la página pública"
+            label={`Mostrar ${form.details.includedSectionTitle.trim() || "Incluye"} en la página pública`}
             description="Activa o desactiva únicamente esta sección en el frontend público."
             onCheckedChange={media.setShowIncludedSection}
           />

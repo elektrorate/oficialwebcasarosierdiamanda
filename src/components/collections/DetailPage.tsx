@@ -303,7 +303,7 @@ export function DetailPage({
                 <section className="class-detail__includes">
                   {showIncluded ? (
                     <>
-                      <h2>Incluye</h2>
+                      <h2>{item.includedSectionTitle || "Incluye"}</h2>
                       <MarkdownContent
                         source={includedMarkdownSource(item.included)}
                         className="class-detail__includes-copy"

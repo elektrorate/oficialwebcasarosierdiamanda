@@ -370,6 +370,7 @@ export function toClassDetails(offering: Offering): ClassOfferingDetails {
     showIncludedSection: typeof fromDetails.showIncludedSection === "boolean"
       ? fromDetails.showIncludedSection
       : false,
+    includedSectionTitle: firstText(fromDetails.includedSectionTitle) || "Incluye",
     includedItems,
     includedItemsTypography: normalizeRichTextTypography(
       fromDetails.includedItemsTypography ?? defaultClassDetails.includedItemsTypography,
@@ -667,6 +668,7 @@ export function buildPreviewItem({
     calendarLabels,
     // Preserve blank lines — TipTap markdown uses them as block separators.
     included: [...details.includedItems],
+    includedSectionTitle: details.includedSectionTitle.trim() || "Incluye",
     includedTypography: normalizeRichTextTypography(
       details.includedItemsTypography ?? defaultClassDetails.includedItemsTypography ?? DEFAULT_RICH_TEXT_TYPOGRAPHY,
     ),
@@ -889,11 +891,12 @@ function normalizeAdditionsFieldsForPersist(
 
 function normalizeMediaFieldsForPersist(
   details: ClassOfferingDetails,
-): Pick<ClassOfferingDetails, "videoUrl" | "videoPoster" | "showIncludedSection" | "includedItems" | "includedItemsTypography"> {
+): Pick<ClassOfferingDetails, "videoUrl" | "videoPoster" | "showIncludedSection" | "includedSectionTitle" | "includedItems" | "includedItemsTypography"> {
   return {
     videoUrl: details.videoUrl.trim(),
     videoPoster: details.videoPoster.trim(),
     showIncludedSection: Boolean(details.showIncludedSection),
+    includedSectionTitle: details.includedSectionTitle.trim() || "Incluye",
     // Keep blank lines — TipTap uses them as block separators for lists/paragraphs.
     includedItems: markdownToIncludedItems(includedItemsToMarkdown(details.includedItems).replace(/\s+$/g, "")),
     includedItemsTypography: normalizeRichTextTypography(
@@ -1056,6 +1059,7 @@ export function buildOfferingPayload({
         includedItems: mediaFields.includedItems,
         includedItemsTypography: mediaFields.includedItemsTypography,
         showIncludedSection: mediaFields.showIncludedSection,
+        includedSectionTitle: mediaFields.includedSectionTitle,
         heroTitle: details.heroTitle.trim(),
         heroSubtitle: details.heroSubtitle.trim(),
         detailQuestion: details.detailQuestion.trim(),

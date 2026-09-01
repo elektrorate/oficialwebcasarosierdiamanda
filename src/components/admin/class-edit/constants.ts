@@ -278,6 +278,7 @@ export const defaultClassDetails: ClassOfferingDetails = {
   videoUrl: "",
   videoPoster: "",
   showIncludedSection: false,
+  includedSectionTitle: "Incluye",
   includedItems: [],
   includedItemsTypography: { ...DEFAULT_RICH_TEXT_TYPOGRAPHY, fontSize: 16 },
   pricing: [],

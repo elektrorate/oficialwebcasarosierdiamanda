@@ -30,7 +30,7 @@ export function ClassDetailBodySections({
     <div className="class-detail__body-stack">
       {showIncluded ? (
         <section className="class-detail__includes class-detail__includes--editorial mt-0 pt-[clamp(28px,3.5vw,36px)] pb-[clamp(20px,3vw,32px)]">
-          <h2 className="m-0 mb-3.5 text-[#3d3935] text-[20px]! [font-family:var(--font-display)] font-normal uppercase tracking-[0.04em] max-[992px]:text-[18px]! max-[640px]:text-[16px]!">Incluye</h2>
+          <h2 className="m-0 mb-3.5 text-[#3d3935] text-[20px]! [font-family:var(--font-display)] font-normal uppercase tracking-[0.04em] max-[992px]:text-[18px]! max-[640px]:text-[16px]!">{item.includedSectionTitle || "Incluye"}</h2>
           <ClassDetailIncludesList
             included={item.included}
             typography={item.includedTypography ?? { ...DEFAULT_RICH_TEXT_TYPOGRAPHY, fontSize: 16 }}

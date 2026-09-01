@@ -332,6 +332,7 @@ export interface ClassOfferingDetails {
   videoUrl: string;
   videoPoster: string;
   showIncludedSection: boolean;
+  includedSectionTitle: string;
   includedItems: string[];
   includedItemsTypography?: RichTextTypography;
   pricing: OfferingPriceOption[];

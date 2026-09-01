@@ -151,6 +151,7 @@ export interface ExperienceItem {
   calendarLabelsDescription?: string;
   calendarLabels?: CalendarLabel[];
   included: string[];
+  includedSectionTitle?: string;
   includedTypography?: RichTextTypography;
   showIncludedSection: boolean;
   program: ProgramItem[];

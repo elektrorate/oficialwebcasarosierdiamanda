@@ -417,6 +417,7 @@ function cmsOfferingToExperienceItem(
     calendarLabelsDescription: stringValue(details.calendarLabelsDescription),
     calendarLabels,
     included,
+    includedSectionTitle: stringValue(details.includedSectionTitle) || "Incluye",
     includedTypography: normalizeRichTextTypography(
       details.includedItemsTypography ?? { ...DEFAULT_RICH_TEXT_TYPOGRAPHY, fontSize: 16 },
     ),
