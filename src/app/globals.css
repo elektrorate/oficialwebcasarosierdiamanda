@@ -1582,7 +1582,7 @@ body {
   .mobile-scroll-nav__logo-tint {
     width: var(--hero-logo-tablet-width, var(--hero-logo-width, 112px)) !important;
     height: auto;
-    aspect-ratio: 2.2 / 1;
+    aspect-ratio: 2340 / 1221;
     display: block;
     background: var(--site-scroll-logo-tint, var(--site-scroll-menu-icon, #fff9f1));
     mask-position: center;
@@ -1934,7 +1934,7 @@ body {
     width: clamp(76px, 24vw, 92px) !important;
     height: auto;
     min-height: 0;
-    aspect-ratio: 2.2 / 1;
+    aspect-ratio: 2340 / 1221;
     flex-shrink: 0;
     -webkit-mask-size: contain;
     -webkit-mask-position: center center;

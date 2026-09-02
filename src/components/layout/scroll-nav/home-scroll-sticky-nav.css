@@ -19,10 +19,11 @@
   }
 
   .desktop-sticky-nav-portal.is-sticky-active {
-    transform: translateY(0);
+    transform: none;
     opacity: 1;
     visibility: visible;
     pointer-events: auto;
+    will-change: auto;
     transition:
       transform 480ms cubic-bezier(0.22, 1, 0.36, 1),
       opacity 380ms ease,
@@ -107,7 +108,9 @@
   .desktop-sticky-nav-portal .mobile-scroll-nav__logo-tint {
     display: block;
     width: clamp(118px, 8vw, 136px) !important;
-    height: 58px !important;
+    height: auto !important;
+    max-height: none !important;
+    aspect-ratio: 2340 / 1221;
     background: #403b36 !important;
     mask-position: center;
     mask-repeat: no-repeat;
@@ -240,6 +243,12 @@
   .desktop-sticky-nav-portal .mobile-scroll-nav__logo-tint {
     width: 108px !important;
     max-height: 50px !important;
+  }
+
+  .desktop-sticky-nav-portal .mobile-scroll-nav__logo-tint {
+    width: 118px !important;
+    height: auto !important;
+    max-height: none !important;
   }
 
   .desktop-sticky-nav-portal .scroll-desktop-nav__link {
