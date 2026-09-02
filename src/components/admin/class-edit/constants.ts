@@ -210,7 +210,7 @@ homeCard: {
   },
   homeExcerpt: "",
   durationText: "",
-  durationSectionTitle: "",
+  durationSectionTitle: "Duración",
   showDurationSectionTitle: true,
   scheduleLabel: "Horario",
   whatsappNumber: "",

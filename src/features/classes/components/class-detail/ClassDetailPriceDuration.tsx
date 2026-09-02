@@ -9,9 +9,8 @@ export function ClassDetailPriceDuration({ item }: Props) {
   const hasDuration = Boolean(item.duration?.trim()) || item.schedule.length > 0;
   if (!hasPrices && !hasDuration) return null;
 
-  const durationTitle =
-    item.durationSectionTitle === undefined ? "Duracion" : item.durationSectionTitle;
-  const showDurationTitle = item.showDurationSectionTitle !== false && Boolean(durationTitle);
+  const durationTitle = item.durationSectionTitle?.trim() ?? "";
+  const showDurationTitle = item.showDurationSectionTitle !== false && durationTitle.length > 0;
 
   return (
     <section className="class-detail__facts class-detail__facts--fit" aria-label="Precio y duración">

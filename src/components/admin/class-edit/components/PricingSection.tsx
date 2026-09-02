@@ -3,7 +3,6 @@
 import { memo } from "react";
 import Button from "@/components/ui/Button";
 import { AdminInput } from "@/components/ui/AdminField";
-import Switch from "@/components/ui/Switch";
 import type { ClassEditFormState } from "../hooks/useClassEditForm";
 import { ListItemActions } from "./ListItemActions";
 import { SectionCard } from "./SectionCard";
@@ -81,25 +80,6 @@ function PricingSectionComponent({ form }: PricingSectionProps) {
         )) : (
           <p className="text-body-md text-on-surface-variant">No hay opciones de precio cargadas.</p>
         )}
-      </div>
-
-      <div className="mt-5 rounded-xl border border-outline-variant p-4">
-        <p className="mb-3 text-body-md font-semibold text-on-surface">Bloque de duración</p>
-        <div className="space-y-3">
-          <AdminInput
-            label="Título del bloque de duración"
-            placeholder="Duración"
-            value={details.durationSectionTitle}
-            disabled={details.showDurationSectionTitle === false}
-            onChange={(event) => updateDetails({ durationSectionTitle: event.target.value })}
-          />
-          <Switch
-            checked={details.showDurationSectionTitle !== false}
-            label="Mostrar título de duración en la página pública"
-            description="Al desactivarlo, el valor de duración se mantiene visible pero oculta su título."
-            onCheckedChange={(checked) => updateDetails({ showDurationSectionTitle: checked })}
-          />
-        </div>
       </div>
     </SectionCard>
   );

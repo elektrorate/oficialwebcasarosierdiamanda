@@ -23,6 +23,13 @@ export function ScheduleSection({ form }: { form: ClassEditFormState }) {
         value={details.scheduleLabel}
         onChange={(event) => updateDetails({ scheduleLabel: event.target.value })}
       />
+      <AdminInput
+        label="Título de la tarjeta de horario"
+        placeholder="Duración"
+        value={details.durationSectionTitle}
+        disabled={details.showDurationSectionTitle === false}
+        onChange={(event) => updateDetails({ durationSectionTitle: event.target.value })}
+      />
       <TextAreaField
         label="Horario en texto"
         value={details.scheduleDescription}
@@ -34,6 +41,12 @@ export function ScheduleSection({ form }: { form: ClassEditFormState }) {
         label="Mostrar horarios en la página pública"
         description="Controla si el texto de horario aparece dentro de la ficha del producto."
         onCheckedChange={(checked) => updateDetails({ showScheduleOnFrontend: checked })}
+      />
+      <Switch
+        checked={details.showDurationSectionTitle !== false}
+        label="Mostrar título en la página pública"
+        description="Controla el encabezado de la tarjeta que contiene la duración y los horarios"
+        onCheckedChange={(checked) => updateDetails({ showDurationSectionTitle: checked })}
       />
     </Card>
   );

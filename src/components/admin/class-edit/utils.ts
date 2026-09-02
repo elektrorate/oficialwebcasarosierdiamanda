@@ -361,7 +361,7 @@ export function toClassDetails(offering: Offering): ClassOfferingDetails {
       ctaLabel: firstText(persistedHomeCard.ctaLabel) || "ver más",
     },
     durationText: firstText(fromDetails.durationText, offering.duration),
-    durationSectionTitle: firstText(fromDetails.durationSectionTitle) ?? "",
+    durationSectionTitle: typeof fromDetails.durationSectionTitle === "string" ? fromDetails.durationSectionTitle : "Duración",
     showDurationSectionTitle: fromDetails.showDurationSectionTitle ?? true,
     scheduleLabel: firstText(fromDetails.scheduleLabel) || "Horario",
     heroImage: fromDetails.heroImage || offering.cover_image_url || DEFAULT_HERO_IMAGE,
