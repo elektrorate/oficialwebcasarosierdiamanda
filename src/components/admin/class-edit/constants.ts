@@ -1,6 +1,6 @@
 import { defaultContent } from "@/components/admin/class-content/defaultContent";
 import { DEFAULT_RICH_TEXT_TYPOGRAPHY, DEFAULT_DESCRIPTION_TYPOGRAPHY } from "@/lib/cms/rich-text-typography";
-import type { ClassOfferingDetails } from "@/lib/cms/types";
+import { DEFAULT_CALENDAR_UI, type ClassOfferingDetails } from "@/lib/cms/types";
 import type { NavigationItem } from "@/data/types";
 import type { ClassEditorPreviewChrome } from "@/lib/cms/class-editor-preview";
 import type { PreviewDevice, TabKey } from "./types";
@@ -194,7 +194,7 @@ export const defaultClassDetails: ClassOfferingDetails = {
   detailQuestionTypography: { ...DEFAULT_RICH_TEXT_TYPOGRAPHY },
   highlightDescriptionTypography: { ...DEFAULT_RICH_TEXT_TYPOGRAPHY },
   descriptionTypography: { ...DEFAULT_DESCRIPTION_TYPOGRAPHY },
-  homeCard: {
+homeCard: {
     image: "",
     imageAlt: "",
     showEyebrow: true,
@@ -206,11 +206,13 @@ export const defaultClassDetails: ClassOfferingDetails = {
     taglineTypography: { ...DEFAULT_RICH_TEXT_TYPOGRAPHY, fontSize: 21 },
     excerpt: "",
     excerptTypography: { ...DEFAULT_DESCRIPTION_TYPOGRAPHY },
+    ctaLabel: "ver más",
   },
   homeExcerpt: "",
   durationText: "",
   durationSectionTitle: "",
   showDurationSectionTitle: true,
+  scheduleLabel: "Horario",
   whatsappNumber: "",
   scheduleDescription: "",
   showScheduleOnFrontend: true,
@@ -219,6 +221,8 @@ export const defaultClassDetails: ClassOfferingDetails = {
   calendarLabelsTitle: DEFAULT_CALENDAR_LABELS_TITLE,
   calendarLabelsDescription: DEFAULT_CALENDAR_LABELS_DESCRIPTION,
   calendarLabels: [],
+  calendarUi: DEFAULT_CALENDAR_UI,
+  priceSectionTitle: "Precio",
   menuPlacement: ["classes"],
   homeSections: [],
   heroImage: DEFAULT_HERO_IMAGE,

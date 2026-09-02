@@ -68,6 +68,47 @@ export interface ClassHomeCard {
   taglineTypography?: RichTextTypography;
   excerpt: string;
   excerptTypography?: RichTextTypography;
+  ctaLabel: string;
+}
+
+export interface CalendarUiSettings {
+  collapseLabel: string;
+  expandLabel: string;
+  daySingular: string;
+  dayPlural: string;
+  monthNames: string[];
+  weekdayLabels: string[];
+}
+
+export const DEFAULT_CALENDAR_UI: CalendarUiSettings = {
+  collapseLabel: "ocultar fechas",
+  expandLabel: "ver otras fechas",
+  daySingular: "día",
+  dayPlural: "días",
+  monthNames: [
+    "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
+    "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre",
+  ],
+  weekdayLabels: ["Lun", "Mar", "Mié", "Jue", "Vie", "Sáb", "Dom"],
+};
+
+export function normalizeCalendarUi(value: Partial<CalendarUiSettings> | undefined): CalendarUiSettings {
+  if (!value || typeof value !== "object") return DEFAULT_CALENDAR_UI;
+  const months = Array.isArray(value.monthNames) ? value.monthNames.map(normalizeNonEmptyLines) : [];
+  const weekdays = Array.isArray(value.weekdayLabels) ? value.weekdayLabels.map(normalizeNonEmptyLines) : [];
+  return {
+    collapseLabel: normalizeNonEmptyLines(value.collapseLabel) || DEFAULT_CALENDAR_UI.collapseLabel,
+    expandLabel: normalizeNonEmptyLines(value.expandLabel) || DEFAULT_CALENDAR_UI.expandLabel,
+    daySingular: normalizeNonEmptyLines(value.daySingular) || DEFAULT_CALENDAR_UI.daySingular,
+    dayPlural: normalizeNonEmptyLines(value.dayPlural) || DEFAULT_CALENDAR_UI.dayPlural,
+    monthNames: months.length === 12 ? months : DEFAULT_CALENDAR_UI.monthNames,
+    weekdayLabels: weekdays.length === 7 ? weekdays : DEFAULT_CALENDAR_UI.weekdayLabels,
+  };
+}
+
+function normalizeNonEmptyLines(value: unknown): string {
+  if (typeof value !== "string") return "";
+  return value.split("\n").map((line) => line.trim()).filter(Boolean).join("\n");
 }
 
 export interface ClassOfferingActivityItem {
@@ -93,6 +134,7 @@ export interface ClassOfferingContent {
   participationContentTypography?: RichTextTypography;
   paymentMethods: string;
   paymentMethodsList: string[];
+  paymentMethodsSectionTitle: string;
   contactWhatsapp: string;
   contactEmail: string;
   extraInfo: string;
@@ -261,6 +303,7 @@ export interface ClassOfferingDetails {
   durationText: string;
   durationSectionTitle: string;
   showDurationSectionTitle: boolean;
+  scheduleLabel: string;
   whatsappNumber: string;
   scheduleDescription: string;
   showScheduleOnFrontend: boolean;
@@ -269,6 +312,8 @@ export interface ClassOfferingDetails {
   calendarLabelsTitle: string;
   calendarLabelsDescription: string;
   calendarLabels: CalendarLabel[];
+  calendarUi: CalendarUiSettings;
+  priceSectionTitle: string;
   menuPlacement: string[];
   homeSections: string[];
   heroImage: string;

@@ -1931,10 +1931,17 @@ body {
   }
 
   .mobile-scroll-nav:not(.is-at-top) .mobile-scroll-nav__logo-tint {
-    aspect-ratio: 1.55 / 1;
-    min-height: 40px;
+    width: clamp(76px, 24vw, 92px) !important;
+    height: auto;
+    min-height: 0;
+    aspect-ratio: 2.2 / 1;
+    flex-shrink: 0;
+    -webkit-mask-size: contain;
     -webkit-mask-position: center center;
+    -webkit-mask-repeat: no-repeat;
+    mask-size: contain;
     mask-position: center center;
+    mask-repeat: no-repeat;
   }
 
   .mobile-scroll-nav:not(.is-at-top) .mobile-scroll-nav__toggle {

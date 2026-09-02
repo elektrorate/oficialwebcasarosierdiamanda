@@ -1,9 +1,9 @@
 "use client";
 
 import { useCallback, useMemo, useRef } from "react";
-import type { ClassOfferingContent, ClassOfferingModule } from "@/lib/cms/types";
+import type { ClassOfferingActivityItem, ClassOfferingContent, ClassOfferingModule } from "@/lib/cms/types";
 import { DEFAULT_DESCRIPTION_TYPOGRAPHY } from "@/lib/cms/rich-text-typography";
-import { createModuleId } from "../defaultContent";
+import { createActivityId, createModuleId } from "../defaultContent";
 import { resolveContentTypography } from "../typography";
 
 export type ClassContentEditorProps = {
@@ -139,6 +139,53 @@ export function useClassContentEditor({ content, onChange, onDirty }: ClassConte
     [setPaymentMethods],
   );
 
+  const updateActivitiesSection = useCallback(
+    (patch: Partial<ClassOfferingContent["activitiesSection"]>) => {
+      const current = contentRef.current;
+      commit({ ...current, activitiesSection: { ...current.activitiesSection, ...patch } });
+    },
+    [commit],
+  );
+
+  const addActivity = useCallback(() => {
+    const current = contentRef.current;
+    const items = [...current.activitiesSection.items, { id: createActivityId(), title: "", description: "", image: "", order: current.activitiesSection.items.length }];
+    updateActivitiesSection({ items });
+  }, [updateActivitiesSection]);
+
+  const updateActivity = useCallback(
+    (index: number, patch: Partial<ClassOfferingActivityItem>) => {
+      const current = contentRef.current;
+      updateActivitiesSection({
+        items: current.activitiesSection.items.map((item, i) => (i === index ? { ...item, ...patch } : item)),
+      });
+    },
+    [updateActivitiesSection],
+  );
+
+  const moveActivity = useCallback(
+    (from: number, to: number) => {
+      const current = contentRef.current;
+      const items = [...current.activitiesSection.items];
+      if (to < 0 || to >= items.length || from === to) return;
+      const [moved] = items.splice(from, 1);
+      items.splice(to, 0, moved);
+      updateActivitiesSection({ items: items.map((item, order) => ({ ...item, order })) });
+    },
+    [updateActivitiesSection],
+  );
+
+  const removeActivity = useCallback(
+    (index: number) => {
+      if (!window.confirm("¿Eliminar esta actividad?")) return;
+      const current = contentRef.current;
+      updateActivitiesSection({
+        items: current.activitiesSection.items.filter((_, i) => i !== index).map((item, order) => ({ ...item, order })),
+      });
+    },
+    [updateActivitiesSection],
+  );
+
   const typography = useMemo(
     () => ({
       learning: resolveContentTypography(content.learningContentTypography),
@@ -165,18 +212,28 @@ export function useClassContentEditor({ content, onChange, onDirty }: ClassConte
       addPaymentMethod,
       updatePaymentMethod,
       removePaymentMethod,
+      updateActivitiesSection,
+      addActivity,
+      updateActivity,
+      moveActivity,
+      removeActivity,
       resolveModuleTypography: resolveContentTypography,
     }),
     [
+      addActivity,
       addModule,
       addPaymentMethod,
       content,
       duplicateModule,
+      moveActivity,
       paymentMethods,
+      removeActivity,
       removeModule,
       removePaymentMethod,
       setField,
       typography,
+      updateActivity,
+      updateActivitiesSection,
       updateModule,
       updatePaymentMethod,
     ],

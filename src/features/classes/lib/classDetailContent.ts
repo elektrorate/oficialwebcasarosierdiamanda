@@ -29,7 +29,13 @@ export function includedMarkdownSource(items: string[]) {
 
 export function hasMeaningfulContent(value: string | string[] | undefined) {
   const values = Array.isArray(value) ? value : [value ?? ""];
-  return values.some((entry) => entry.trim().length > 0);
+  return values.some((entry) =>
+    entry
+      .replace(/<br\s*\/?\s*>/gi, "")
+      .replace(/<[^>]+>/g, "")
+      .replace(/&nbsp;|&#160;/gi, " ")
+      .trim().length > 0,
+  );
 }
 
 export function titleMarkdownToInline(source: string) {

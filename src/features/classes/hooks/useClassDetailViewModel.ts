@@ -20,7 +20,7 @@ export function useClassDetailViewModel(item: ExperienceItem) {
     const hasCalendarLabels = calendarLabels.length > 0;
     const hasSideContent = Boolean(
       showPaymentMethods ||
-        item.additionalInfo.trim() ||
+        (item.showAdditionalInfoSection !== false && hasMeaningfulContent(item.additionalInfo)) ||
         hasCalendarLabels,
     );
 
@@ -29,6 +29,8 @@ export function useClassDetailViewModel(item: ExperienceItem) {
     const isGiftCard = item.kind === "gift-card";
     const consultLabel = item.ctaConsultLabel || (isGiftCard ? "Comprar" : "Consultar");
     const enrollLabel = item.ctaEnrollLabel || (isGiftCard ? "Anadir al carrito" : "Inscribirse");
+    const showEnrollAction = item.showEnrollCta !== false && Boolean(enrollHref);
+    const showEnrollAtEnd = item.showEnrollButtonAtEnd === true;
 
     return {
       programItems,
@@ -44,6 +46,8 @@ export function useClassDetailViewModel(item: ExperienceItem) {
       enrollHref,
       consultLabel,
       enrollLabel,
+      showEnrollAction,
+      showEnrollAtEnd,
     };
   }, [item]);
 }

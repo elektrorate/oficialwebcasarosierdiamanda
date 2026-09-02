@@ -21,6 +21,7 @@ import "./legacy/promo-entry.css";
 import "./legacy/footer.css";
 import "./globals.css";
 import "./responsive-tuning.css";
+import "../features/classes/components/class-detail/offering-detail-redesign.css";
 import "./public-header-desktop.css";
 import "./admin-offerings-table.css";
 import "../components/home/gift-carousel.css";

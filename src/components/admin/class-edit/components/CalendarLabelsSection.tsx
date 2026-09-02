@@ -30,7 +30,11 @@ function CalendarLabelsSectionComponent({ form }: CalendarLabelsSectionProps) {
     setShowCalendarLabels,
     setCalendarLabelsTitle,
     setCalendarLabelsDescription,
+    updateDetails,
   } = useCalendarSectionHandlers(form);
+
+  const updateCalendarUi = (patch: Partial<typeof details.calendarUi>) =>
+    updateDetails({ calendarUi: { ...details.calendarUi, ...patch } });
 
   return (
     <SectionCard
@@ -68,6 +72,39 @@ function CalendarLabelsSectionComponent({ form }: CalendarLabelsSectionProps) {
           onChange={(event) => setCalendarLabelsDescription(event.target.value)}
           className="min-h-[120px]"
         />
+      </div>
+
+      <div className="rounded-xl border border-outline-variant p-4">
+        <p className="mb-3 text-body-md font-semibold text-on-surface">Textos del calendario</p>
+        <div className="grid gap-4 md:grid-cols-2">
+          <AdminInput
+            label="Etiqueta para ocultar fechas"
+            placeholder="ocultar fechas"
+            value={details.calendarUi.collapseLabel}
+            onChange={(event) => updateCalendarUi({ collapseLabel: event.target.value })}
+          />
+          <AdminInput
+            label="Etiqueta para ver otras fechas"
+            placeholder="ver otras fechas"
+            value={details.calendarUi.expandLabel}
+            onChange={(event) => updateCalendarUi({ expandLabel: event.target.value })}
+          />
+          <AdminInput
+            label="Día (singular)"
+            placeholder="día"
+            value={details.calendarUi.daySingular}
+            onChange={(event) => updateCalendarUi({ daySingular: event.target.value })}
+          />
+          <AdminInput
+            label="Días (plural)"
+            placeholder="días"
+            value={details.calendarUi.dayPlural}
+            onChange={(event) => updateCalendarUi({ dayPlural: event.target.value })}
+          />
+        </div>
+        <p className="mt-3 text-body-sm text-on-surface-variant">
+          El calendario público siempre muestra 12 meses y 7 días por fila. Las etiquetas de aquí solo cambian los textos que lo acompañan.
+        </p>
       </div>
 
       {errors.calendarLabels ? (

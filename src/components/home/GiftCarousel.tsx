@@ -114,7 +114,7 @@ function GiftCard({ item }: { item: ExperienceItem }) {
           aria-hidden="true"
           className="mt-[clamp(14px,1.75vw,18px)] inline-flex items-center justify-center border border-[#c4c4c4] bg-transparent px-6.5 py-2.5 font-medium text-[14px]/[1] leading-none lowercase text-[#707070] [font-family:var(--font-primary)] transition-[border-color,color,background-color] duration-180 ease-in-out group-hover:border-[#707070] group-hover:text-black group-focus-visible:border-[#707070] group-focus-visible:text-black max-[720px]:mx-auto"
         >
-          ver más
+          {item.ctaLabel || "ver más"}
         </span>
       </div>
     </Link>

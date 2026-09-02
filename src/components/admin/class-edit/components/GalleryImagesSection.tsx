@@ -73,6 +73,8 @@ function GalleryImagesSectionComponent({ form }: GalleryImagesSectionProps) {
             onRemove={() => removeGalleryImage(index)}
             onReplace={() => setPickerTarget(`gallery:${index}`)}
             onAltChange={(alt) => updateGalleryImage(index, { alt })}
+            onSeoTitleChange={(seoTitle) => updateGalleryImage(index, { seoTitle })}
+            onSeoDescriptionChange={(seoDescription) => updateGalleryImage(index, { seoDescription })}
           />
         ))}
       </div>
@@ -130,8 +132,10 @@ const GalleryImageRow = memo(function GalleryImageRow({
   onRemove,
   onReplace,
   onAltChange,
+  onSeoTitleChange,
+  onSeoDescriptionChange,
 }: {
-  item: { image: string; alt: string };
+  item: { image: string; alt: string; seoTitle?: string; seoDescription?: string };
   index: number;
   error?: string;
   uploadInfo?: { originalSize: number; finalSize: number; reductionPercent: number };
@@ -143,6 +147,8 @@ const GalleryImageRow = memo(function GalleryImageRow({
   onRemove: () => void;
   onReplace: () => void;
   onAltChange: (alt: string) => void;
+  onSeoTitleChange: (seoTitle: string) => void;
+  onSeoDescriptionChange: (seoDescription: string) => void;
 }) {
   return (
     <div
@@ -189,6 +195,18 @@ const GalleryImageRow = memo(function GalleryImageRow({
           error={error}
           validationKey={`gallery-${index}`}
           onChange={(event) => onAltChange(event.target.value)}
+        />
+        <AdminInput
+          label="SEO title (opcional)"
+          placeholder="Título para SEO de esta imagen"
+          value={item.seoTitle ?? ""}
+          onChange={(event) => onSeoTitleChange(event.target.value)}
+        />
+        <AdminInput
+          label="SEO description (opcional)"
+          placeholder="Descripción para SEO de esta imagen"
+          value={item.seoDescription ?? ""}
+          onChange={(event) => onSeoDescriptionChange(event.target.value)}
         />
       </div>
     </div>

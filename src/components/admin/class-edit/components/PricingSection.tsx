@@ -17,7 +17,7 @@ function pricingRowKey(item: { description: string; price: number | null; order:
 }
 
 function PricingSectionComponent({ form }: PricingSectionProps) {
-  const { details, errors, addPricing, updatePricing, removePricing, updateDetails } = form;
+  const { details, errors, addPricing, updatePricing, removePricing, updateDetails, currency, setCurrency } = form;
 
   return (
     <SectionCard
@@ -28,6 +28,26 @@ function PricingSectionComponent({ form }: PricingSectionProps) {
         </Button>
       )}
     >
+      <div className="mb-5 grid grid-cols-1 gap-4 rounded-xl border border-outline-variant p-4 md:grid-cols-2">
+        <AdminInput
+          label="Título del bloque de precios"
+          placeholder="Precio"
+          value={details.priceSectionTitle}
+          onChange={(event) => updateDetails({ priceSectionTitle: event.target.value })}
+        />
+        <label className="flex flex-col gap-1.5 text-body-sm font-medium text-on-surface">
+          Moneda
+          <select
+            value={currency}
+            onChange={(event) => setCurrency(event.target.value)}
+            className="rounded-lg border border-outline-variant bg-surface-container-lowest px-3 py-2.5 text-body-md text-on-surface focus:outline-none focus:ring-2 focus:ring-secondary-container"
+          >
+            <option value="EUR">EUR</option>
+            <option value="USD">USD</option>
+            <option value="GBP">GBP</option>
+          </select>
+        </label>
+      </div>
       <div className="space-y-3">
         {details.pricing.length ? details.pricing.map((item, index) => (
           <div

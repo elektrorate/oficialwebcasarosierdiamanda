@@ -63,6 +63,13 @@ export function HomeCardEditorSection({ offering, form }: HomeCardEditorSectionP
             help="Si queda vacío, se utilizará el título de la tarjeta."
             onChange={(event) => updateHomeCard({ imageAlt: event.target.value })}
           />
+          <AdminInput
+            label="Texto del botón de la tarjeta"
+            value={details.homeCard.ctaLabel}
+            placeholder="ver más"
+            help="Si queda vacío, se usará el texto por defecto."
+            onChange={(event) => updateHomeCard({ ctaLabel: event.target.value })}
+          />
         </div>
 
         <div className="class-edit-home-editor-grid__copy space-y-4">

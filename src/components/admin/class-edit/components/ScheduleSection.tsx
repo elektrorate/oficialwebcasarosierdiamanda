@@ -2,6 +2,7 @@
 
 import Card from "@/components/ui/Card";
 import Switch from "@/components/ui/Switch";
+import { AdminInput } from "@/components/ui/AdminField";
 import { TextAreaField } from "../fields";
 import type { ClassEditFormState } from "../hooks/useClassEditForm";
 
@@ -16,6 +17,12 @@ export function ScheduleSection({ form }: { form: ClassEditFormState }) {
           Escribe el horario como texto libre y define si debe mostrarse en la página pública.
         </p>
       </div>
+      <AdminInput
+        label="Etiqueta del bloque de horario"
+        placeholder="Horario"
+        value={details.scheduleLabel}
+        onChange={(event) => updateDetails({ scheduleLabel: event.target.value })}
+      />
       <TextAreaField
         label="Horario en texto"
         value={details.scheduleDescription}

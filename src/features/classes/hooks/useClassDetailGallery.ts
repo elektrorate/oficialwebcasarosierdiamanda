@@ -7,28 +7,33 @@ export type ClassDetailGalleryItem = {
   id: string;
   kind: "image" | "video";
   poster: string;
+  alt: string;
+  seoTitle?: string;
   videoUrl?: string;
 };
 
 export function buildClassDetailGalleryItems(item: ExperienceItem): ClassDetailGalleryItem[] {
-  const images = item.galleryImages.filter(Boolean);
+  const images = item.galleryImages.filter((entry) => Boolean(entry.image));
   const videoUrl = item.videoUrl?.trim();
 
   if (videoUrl) {
-    const poster = item.videoCardImage || images[0] || item.coverImage || "";
+    const poster = item.videoCardImage || images[0]?.image || item.coverImage || "";
+    const alt = images[0]?.alt || item.title;
     const entries: ClassDetailGalleryItem[] = [
-      { id: "featured-video", kind: "video", poster, videoUrl },
+      { id: "featured-video", kind: "video", poster, alt, seoTitle: images[0]?.seoTitle, videoUrl },
     ];
-    images.forEach((image, index) => {
-      entries.push({ id: `image-${index}`, kind: "image", poster: image });
+    images.forEach((entry, index) => {
+      entries.push({ id: `image-${index}`, kind: "image", poster: entry.image, alt: entry.alt, seoTitle: entry.seoTitle });
     });
     return entries;
   }
 
-  return images.map((image, index) => ({
+  return images.map((entry, index) => ({
     id: `image-${index}`,
     kind: "image",
-    poster: image,
+    poster: entry.image,
+    alt: entry.alt,
+    seoTitle: entry.seoTitle,
   }));
 }
 

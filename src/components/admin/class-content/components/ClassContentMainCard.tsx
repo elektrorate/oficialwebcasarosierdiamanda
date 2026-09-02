@@ -113,6 +113,31 @@ function ClassContentMainCardComponent({
         onChange={(value) => setField("extraInfo", value)}
         onTypographyChange={(extraInfoTypography) => setField("extraInfoTypography", extraInfoTypography)}
       />
+
+      <div className="space-y-3 rounded-xl border border-outline-variant p-4">
+        <p className="text-body-md font-semibold text-on-surface">Contacto</p>
+        <ClassContentTextField
+          label="WhatsApp de contacto"
+          value={content.contactWhatsapp}
+          placeholder="34633788860"
+          help="Sin espacios ni símbolos. Se usa como fallback en el botón de inscripción."
+          onChange={(event) => setField("contactWhatsapp", event.target.value)}
+        />
+        <ClassContentTextField
+          label="Email de contacto"
+          value={content.contactEmail}
+          placeholder="hola@casarosier.es"
+          help="Se usa como último recurso de contacto si no hay WhatsApp disponible."
+          onChange={(event) => setField("contactEmail", event.target.value)}
+        />
+      </div>
+
+      <Switch
+        checked={content.showEnrollButtonAtEnd}
+        label="Botón de inscripción al final de la ficha"
+        description="Si está activo, el botón de inscribirse se muestra tras el contenido; si no, se muestra junto a las acciones principales."
+        onCheckedChange={(checked) => setField("showEnrollButtonAtEnd", checked)}
+      />
     </Card>
   );
 }

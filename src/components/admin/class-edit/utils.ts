@@ -6,6 +6,7 @@ import type {
   Offering,
   OfferingGalleryImage,
 } from "@/lib/cms/types";
+import { normalizeCalendarUi } from "@/lib/cms/types";
 import {
   DEFAULT_CALENDAR_LABELS_DESCRIPTION,
   DEFAULT_CALENDAR_LABELS_TITLE,
@@ -242,6 +243,7 @@ export function toClassDetails(offering: Offering): ClassOfferingDetails {
     paymentMethodsList: Array.isArray(persistedContentFields.paymentMethodsList)
       ? persistedContentFields.paymentMethodsList.map((item) => String(item).trim()).filter(Boolean)
       : textList(hasPersistedPaymentMethods ? firstText(persistedContentFields.paymentMethods) : legacyContent.paymentMethods),
+    paymentMethodsSectionTitle: firstText(persistedContentFields.paymentMethodsSectionTitle) || legacyContent.paymentMethodsSectionTitle || "Métodos de pago",
     extraInfo: hasPersistedExtraInfo ? firstText(persistedContentFields.extraInfo) : legacyContent.extraInfo,
     extraInfoTypography: normalizeRichTextTypography(
       persistedContentFields.extraInfoTypography ?? legacyContent.extraInfoTypography ?? DEFAULT_DESCRIPTION_TYPOGRAPHY,
@@ -356,10 +358,12 @@ export function toClassDetails(offering: Offering): ClassOfferingDetails {
       excerptTypography: normalizeRichTextTypography(
         persistedHomeCard.excerptTypography ?? DEFAULT_DESCRIPTION_TYPOGRAPHY,
       ),
+      ctaLabel: firstText(persistedHomeCard.ctaLabel) || "ver más",
     },
     durationText: firstText(fromDetails.durationText, offering.duration),
     durationSectionTitle: firstText(fromDetails.durationSectionTitle) ?? "",
     showDurationSectionTitle: fromDetails.showDurationSectionTitle ?? true,
+    scheduleLabel: firstText(fromDetails.scheduleLabel) || "Horario",
     heroImage: fromDetails.heroImage || offering.cover_image_url || DEFAULT_HERO_IMAGE,
     heroImageMobile: fromDetails.heroImageMobile || "",
     heroVideoUrl: firstText(fromDetails.heroVideoUrl),
@@ -378,13 +382,17 @@ export function toClassDetails(offering: Offering): ClassOfferingDetails {
       fromDetails.includedItemsTypography ?? defaultClassDetails.includedItemsTypography,
     ),
     galleryImages: galleryImages
-      .map((item, index) => ({
-        image: item.image || "",
-        alt: item.alt || "",
-        seoTitle: item.seoTitle || "",
-        seoDescription: item.seoDescription || "",
-        order: item.order ?? index,
-      }))
+      .map((item, index) => {
+        const raw = item as unknown;
+        const entry = typeof raw === "string" ? { image: raw } : (raw as Partial<OfferingGalleryImage>) ?? {};
+        return {
+          image: typeof entry.image === "string" ? entry.image : "",
+          alt: typeof entry.alt === "string" ? entry.alt : "",
+          seoTitle: typeof entry.seoTitle === "string" ? entry.seoTitle : "",
+          seoDescription: typeof entry.seoDescription === "string" ? entry.seoDescription : "",
+          order: typeof entry.order === "number" ? entry.order : index,
+        };
+      })
       .sort((a, b) => a.order - b.order),
     pricing: pricing.map((item, index) => ({ description: item.description || "", price: item.price ?? null, order: item.order ?? index })),
     scheduleDescription: firstText(fromDetails.scheduleDescription, offering.schedule.join("\n")),
@@ -393,6 +401,8 @@ export function toClassDetails(offering: Offering): ClassOfferingDetails {
     calendarLabelsTitle: firstText(fromDetails.calendarLabelsTitle, DEFAULT_CALENDAR_LABELS_TITLE),
     calendarLabelsDescription: firstText(fromDetails.calendarLabelsDescription, DEFAULT_CALENDAR_LABELS_DESCRIPTION),
     calendarLabels,
+    calendarUi: normalizeCalendarUi(fromDetails.calendarUi),
+    priceSectionTitle: firstText(fromDetails.priceSectionTitle) || "Precio",
     scheduleDays: scheduleDays
       .map((item, index) => ({
         id: item.id || `schedule-${index}`,
@@ -515,13 +525,13 @@ export function buildPreviewItem({
   const galleryImages = details.galleryImages
     .filter((item) => item.image)
     .sort((a, b) => (a.order ?? 0) - (b.order ?? 0))
-    .map((item) => item.image);
+    .map((item) => ({ image: item.image, alt: item.alt }));
   const heroImage = details.heroVariant === "image" || details.heroVariant === "presentation"
     ? details.heroImage || DEFAULT_HERO_IMAGE
-    : galleryImages[0] || details.videoPoster || details.heroImage || DEFAULT_HERO_IMAGE;
+    : galleryImages[0]?.image || details.videoPoster || details.heroImage || DEFAULT_HERO_IMAGE;
   const coverImage = details.heroVariant === "image" || details.heroVariant === "presentation"
     ? details.heroImage || DEFAULT_HERO_IMAGE
-    : galleryImages[0] || details.videoPoster || details.heroImage || DEFAULT_HERO_IMAGE;
+    : galleryImages[0]?.image || details.videoPoster || details.heroImage || DEFAULT_HERO_IMAGE;
   const fallbackCta = defaultCtaHref(details);
   const consultHref = details.showConsultCta === false ? "" : details.ctaConsultHref || details.ctaHref || fallbackCta;
   const enrollHref = details.showEnrollCta === false ? "" : details.ctaEnrollHref || details.ctaHref || fallbackCta;
@@ -551,7 +561,7 @@ export function buildPreviewItem({
     excerpt: details.highlightDescription,
     description: toLines(description),
     coverImage,
-    homeImage: details.homeCard.image.trim() || galleryImages[0] || coverImage,
+    homeImage: details.homeCard.image.trim() || galleryImages[0]?.image || coverImage,
     homeImageAlt: details.homeCard.imageAlt || details.homeCard.title || title || "Tarjeta destacada",
     showHomeEyebrow: details.homeCard.showEyebrow !== false,
     homeEyebrow: details.homeCard.eyebrow || details.heroSubtitle || offeringType,
@@ -657,7 +667,7 @@ export function buildPreviewItem({
     presentationImageScale: details.presentationImageScale,
     presentationImageScaleTablet: details.presentationImageScaleTablet,
     presentationImageScaleMobile: details.presentationImageScaleMobile,
-    galleryImages: galleryImages.length ? galleryImages : [coverImage],
+    galleryImages: galleryImages.length ? galleryImages : [{ image: coverImage, alt: "" }],
     videoCardImage: details.videoPoster || undefined,
     videoCardLabel: details.videoUrl ? "VIDEO" : details.videoPoster ? "IMAGEN" : "",
     videoUrl: details.videoUrl || undefined,
@@ -967,6 +977,7 @@ export function buildOfferingPayload({
   nextStatus,
   seoTitle,
   seoDescription,
+  currency,
 }: {
   offering: Offering;
   title: string;
@@ -977,6 +988,7 @@ export function buildOfferingPayload({
   nextStatus: "draft" | "published";
   seoTitle: string;
   seoDescription: string;
+  currency?: string;
 }) {
   const pricing = normalizePricingForPersist(details);
   const galleryImages = normalizeGalleryImagesForPersist(details);
@@ -1007,7 +1019,7 @@ export function buildOfferingPayload({
     type: offering.type,
     status: nextStatus,
     price: primaryPrice,
-    currency: "EUR",
+    currency: (currency ?? "EUR").trim().toUpperCase() || "EUR",
     cover_image_url: coverImage,
     gallery: galleryImages.map((item) => item.image),
     seo_title: seoFields.seoTitle,

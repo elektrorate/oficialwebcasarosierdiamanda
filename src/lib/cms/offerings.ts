@@ -142,7 +142,7 @@ function normalizeOffering(input: OfferingInput, existing?: Offering, allItems: 
     excerpt: String(input.excerpt ?? existing?.excerpt ?? "").trim(),
     description: String(input.description ?? existing?.description ?? "").trim(),
     price: input.price === undefined ? existing?.price ?? null : input.price === null ? null : Number(input.price),
-    currency: String(input.currency ?? existing?.currency ?? "USD").trim().toUpperCase() || "USD",
+    currency: String(input.currency ?? existing?.currency ?? "EUR").trim().toUpperCase() || "EUR",
     status,
     featured: Boolean(input.featured ?? existing?.featured ?? false),
     header_id: input.header_id !== undefined ? (input.header_id || null) : existing?.header_id ?? null,

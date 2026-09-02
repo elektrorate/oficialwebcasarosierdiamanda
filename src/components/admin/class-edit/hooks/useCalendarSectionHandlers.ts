@@ -42,6 +42,7 @@ export function useCalendarSectionHandlers(form: ClassEditFormState) {
       setShowCalendarLabels,
       setCalendarLabelsTitle,
       setCalendarLabelsDescription,
+      updateDetails,
     }),
     [
       addCalendarLabel,
@@ -54,6 +55,7 @@ export function useCalendarSectionHandlers(form: ClassEditFormState) {
       setShowCalendarLabels,
       toggleCalendarDay,
       updateCalendarLabel,
+      updateDetails,
     ],
   );
 }

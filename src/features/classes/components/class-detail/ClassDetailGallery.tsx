@@ -93,7 +93,7 @@ function GalleryMainMedia({
   return (
     <div className="class-gallery__main-wrap">
       <img className="class-gallery__main-ghost" src={posterSrc} alt="" aria-hidden="true" />
-      <img className="class-gallery__main" src={posterSrc} alt={title} />
+      <img className="class-gallery__main" src={posterSrc} alt={item.alt || title} title={item.seoTitle || undefined} />
       {previousPosterSrc ? (
         <img
           className="class-gallery__main class-gallery__main--previous"
@@ -145,7 +145,7 @@ export function ClassDetailGallery({ item }: Props) {
                   aria-current={isActive ? "true" : undefined}
                   onClick={() => gallery.selectIndex(index)}
                 >
-                  <img src={assetPath(mediaItem.poster)} alt="" className="w-full aspect-square object-cover" />
+                  <img src={assetPath(mediaItem.poster)} alt={mediaItem.alt || item.title} title={mediaItem.seoTitle || undefined} className="w-full aspect-square object-cover" />
                   {mediaItem.kind === "video" ? (
                     <span className="class-gallery__thumb-play" aria-hidden="true" />
                   ) : null}

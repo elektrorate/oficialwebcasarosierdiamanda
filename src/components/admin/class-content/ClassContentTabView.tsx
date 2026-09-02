@@ -1,6 +1,7 @@
 "use client";
 
 import { memo } from "react";
+import { ClassContentActivitiesCard } from "./components/ClassContentActivitiesCard";
 import { ClassContentMainCard } from "./components/ClassContentMainCard";
 import { ClassContentModulesCard } from "./components/ClassContentModulesCard";
 import { useClassContentEditor, type ClassContentEditorProps } from "./hooks/useClassContentEditor";
@@ -27,6 +28,14 @@ function ClassContentTabViewComponent(props: ClassContentEditorProps) {
         duplicateModule={editor.duplicateModule}
         removeModule={editor.removeModule}
         resolveModuleTypography={editor.resolveModuleTypography}
+      />
+      <ClassContentActivitiesCard
+        content={editor.content}
+        updateActivitiesSection={editor.updateActivitiesSection}
+        addActivity={editor.addActivity}
+        updateActivity={editor.updateActivity}
+        moveActivity={editor.moveActivity}
+        removeActivity={editor.removeActivity}
       />
     </div>
   );

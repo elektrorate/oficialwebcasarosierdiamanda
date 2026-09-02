@@ -5,24 +5,42 @@ const OUTLINE_BTN = "class-detail__button class-detail__button--outline box-cont
 type Props = {
   consultHref?: string;
   consultLabel: string;
+  enrollHref?: string;
+  enrollLabel?: string;
+  showEnroll?: boolean;
 };
 
 export function ClassDetailEnrollActions({
   consultHref,
   consultLabel,
+  enrollHref,
+  enrollLabel = "Inscribirse",
+  showEnroll = false,
 }: Props) {
-  if (!consultHref) return null;
+  if (!consultHref && !(showEnroll && enrollHref)) return null;
 
   return (
     <div className="class-detail__actions flex flex-col items-start gap-3 w-full mt-[clamp(18px,2.5vw,24px)] mb-[clamp(36px,4.5vw,48px)] max-[640px]:pl-[clamp(28px,18vw,112px)]">
-      <a
-        className={OUTLINE_BTN}
-        href={consultHref}
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        {consultLabel}
-      </a>
+      {consultHref ? (
+        <a
+          className={OUTLINE_BTN}
+          href={consultHref}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          {consultLabel}
+        </a>
+      ) : null}
+      {showEnroll && enrollHref ? (
+        <a
+          className={OUTLINE_BTN}
+          href={enrollHref}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          {enrollLabel}
+        </a>
+      ) : null}
     </div>
   );
 }

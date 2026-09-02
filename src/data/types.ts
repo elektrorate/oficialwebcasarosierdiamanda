@@ -23,6 +23,36 @@ export interface ProgramItem {
   points?: string[];
 }
 
+export interface ExperienceGalleryItem {
+  image: string;
+  alt: string;
+  seoTitle?: string;
+  seoDescription?: string;
+}
+
+export interface CalendarUiTexts {
+  collapseLabel: string;
+  expandLabel: string;
+  daySingular: string;
+  dayPlural: string;
+  monthNames: string[];
+  weekdayLabels: string[];
+}
+
+export interface ExperienceActivityItem {
+  id: string;
+  title: string;
+  description: string;
+  image: string;
+}
+
+export interface ExperienceActivitiesSection {
+  enabled: boolean;
+  title: string;
+  content: string;
+  items: ExperienceActivityItem[];
+}
+
 export interface ExperienceItem {
   id: string;
   kind: ExperienceKind;
@@ -45,6 +75,7 @@ export interface ExperienceItem {
   homeTaglineTypography?: RichTextTypography;
   homeExcerpt?: string;
   homeExcerptTypography?: RichTextTypography;
+  ctaLabel?: string;
   heroImage: string;
   heroImageMobile?: string;
   heroVideoUrl?: string;
@@ -137,20 +168,24 @@ export interface ExperienceItem {
   introHighlight: string;
   introHighlightTypography?: import("@/lib/cms/rich-text-typography").RichTextTypography;
   descriptionTypography?: import("@/lib/cms/rich-text-typography").RichTextTypography;
-  galleryImages: string[];
+  galleryImages: ExperienceGalleryItem[];
   videoCardImage?: string;
   videoCardLabel: string;
   videoUrl?: string;
   giftCardTypeLabel?: string;
   giftCardTypeOptions?: string[];
+  priceSectionTitle?: string;
+  currency?: string;
   priceOptions: PriceOption[];
   duration: string;
   durationSectionTitle?: string;
   showDurationSectionTitle?: boolean;
+  scheduleLabel?: string;
   schedule: ScheduleItem[];
   showCalendarLabels?: boolean;
   calendarLabelsTitle?: string;
   calendarLabelsDescription?: string;
+  calendarUi?: CalendarUiTexts;
   calendarLabels?: CalendarLabel[];
   included: string[];
   includedSectionTitle?: string;
@@ -168,17 +203,23 @@ export interface ExperienceItem {
   participationSectionTitle?: string;
   whoCanJoin: string[];
   whoCanJoinTypography?: RichTextTypography;
+  paymentMethodsSectionTitle?: string;
   paymentMethods: string[];
   additionalInfo: string;
   additionalInfoTitle?: string;
   showAdditionalInfoSection?: boolean;
   additionalInfoTypography?: RichTextTypography;
+  contactEmail?: string;
+  modulesAccordionTitle?: string;
+  activitiesSection?: ExperienceActivitiesSection;
+  showEnrollButtonAtEnd?: boolean;
   showIdeaPromptSection?: boolean;
   ctaHref: string;
   ctaConsultHref: string;
   ctaEnrollHref: string;
   ctaConsultLabel: string;
   ctaEnrollLabel: string;
+  showEnrollCta?: boolean;
   seoTitle: string;
   seoDescription: string;
   isPublished: boolean;

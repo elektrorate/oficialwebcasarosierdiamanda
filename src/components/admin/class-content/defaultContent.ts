@@ -16,6 +16,7 @@ export function defaultContent(): ClassOfferingContent {
     participationContentTypography: { ...DEFAULT_DESCRIPTION_TYPOGRAPHY },
     paymentMethods: "",
     paymentMethodsList: [],
+    paymentMethodsSectionTitle: "Métodos de pago",
     contactWhatsapp: "",
     contactEmail: "",
     extraInfo: "",
@@ -34,4 +35,10 @@ export function createModuleId() {
   return typeof crypto !== "undefined" && "randomUUID" in crypto
     ? crypto.randomUUID()
     : `mod-${Date.now()}-${Math.random().toString(36).slice(2)}`;
+}
+
+export function createActivityId() {
+  return typeof crypto !== "undefined" && "randomUUID" in crypto
+    ? crypto.randomUUID()
+    : `act-${Date.now()}-${Math.random().toString(36).slice(2)}`;
 }

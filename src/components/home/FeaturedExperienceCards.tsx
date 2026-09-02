@@ -23,6 +23,7 @@ export function FeaturedExperienceCards({ items }: { items: readonly ExperienceI
         const image = item.homeImage || item.coverImage;
         const resolvedImage = assetPath(image);
         const label = item.homeTitle || item.title;
+        const imageAlt = item.homeImageAlt || item.homeTitle || item.title;
         const excerptTypography = normalizeRichTextTypography(
           item.homeExcerptTypography ?? DEFAULT_RICH_TEXT_TYPOGRAPHY,
         );
@@ -45,7 +46,7 @@ export function FeaturedExperienceCards({ items }: { items: readonly ExperienceI
                         resolvedImage !== `/${image}` && "asset-fallback",
                       )}
                       src={resolvedImage}
-                      alt=""
+                      alt={imageAlt}
                       loading="lazy"
                       decoding="async"
                     />

@@ -46,6 +46,13 @@ function ClassContentModulesCardComponent({
         onChange={(event) => setField("modulesSectionTitle", event.target.value)}
       />
 
+      <ClassContentTextField
+        label="Título del acordeón de módulos"
+        value={content.modulesAccordionTitle || ""}
+        placeholder="programa del curso"
+        onChange={(event) => setField("modulesAccordionTitle", event.target.value)}
+      />
+
       <div className="space-y-4">
         <div className="flex items-center justify-between">
           <ClassContentFieldLabel>Módulos</ClassContentFieldLabel>

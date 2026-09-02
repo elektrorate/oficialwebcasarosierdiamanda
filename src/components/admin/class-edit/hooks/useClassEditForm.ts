@@ -55,6 +55,7 @@ export function useClassEditForm({
   const [draggedGalleryIndex, setDraggedGalleryIndex] = useState<number | null>(null);
   const [uploadingTarget, setUploadingTarget] = useState<UploadTarget | null>(null);
   const [galleryUploadInfo, setGalleryUploadInfo] = useState<Record<string, UploadOptimization>>({});
+  const [currency, setCurrency] = useState<string>((offering.currency || "EUR").trim().toUpperCase() || "EUR");
 
   useEffect(() => {
     const handler = (event: BeforeUnloadEvent) => {
@@ -322,6 +323,7 @@ export function useClassEditForm({
             nextStatus,
             seoTitle,
             seoDescription,
+            currency,
           })),
         },
       );
@@ -350,7 +352,7 @@ export function useClassEditForm({
       setIsSaving(false);
       setSavingIntent(null);
     }
-  }, [basePath, description, details, mode, offering, router, seoDescription, seoTitle, slug, subtitle, title]);
+  }, [basePath, currency, description, details, mode, offering, router, seoDescription, seoTitle, slug, subtitle, title]);
 
   const handleCancel = useCallback(() => {
     if (isDirty && !window.confirm("Hay cambios sin guardar. ¿Salir igualmente?")) return;
@@ -396,6 +398,8 @@ export function useClassEditForm({
     setDraggedGalleryIndex,
     uploadingTarget,
     galleryUploadInfo,
+    currency,
+    setCurrency,
     updateDetails,
     updateHomeCard,
     updatePricing,

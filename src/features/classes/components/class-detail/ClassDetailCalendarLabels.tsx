@@ -27,6 +27,13 @@ export function ClassDetailCalendarLabels({ item, labels }: Props) {
   const title = item.calendarLabelsTitle?.trim() || DEFAULT_TITLE;
   const description = item.calendarLabelsDescription?.trim() || DEFAULT_DESCRIPTION;
   const panelId = `class-calendar-labels-${item.id}`;
+  const calendarUi = item.calendarUi;
+  const monthNames = calendarUi?.monthNames?.length ? calendarUi.monthNames : CLASS_DETAIL_MONTH_NAMES;
+  const weekdayLabels = calendarUi?.weekdayLabels?.length ? calendarUi.weekdayLabels : CLASS_DETAIL_WEEKDAY_LABELS;
+  const collapseLabel = calendarUi?.collapseLabel || "ocultar fechas";
+  const expandLabel = calendarUi?.expandLabel || "ver otras fechas";
+  const daySingular = calendarUi?.daySingular || "día";
+  const dayPlural = calendarUi?.dayPlural || "días";
 
   return (
     <section className={open ? "class-calendar-labels is-open" : "class-calendar-labels"}>
@@ -42,14 +49,14 @@ export function ClassDetailCalendarLabels({ item, labels }: Props) {
           aria-controls={panelId}
           onClick={() => setOpen((current) => !current)}
         >
-          <span>{open ? "ocultar fechas" : "ver otras fechas"}</span>
+          <span>{open ? collapseLabel : expandLabel}</span>
           <span className="class-calendar-labels__arrow-icon" aria-hidden="true" />
         </button>
       </div>
       {open ? (
         <div className="class-calendar-labels__grid" id={panelId}>
           {labels.map((label) => {
-            const monthName = CLASS_DETAIL_MONTH_NAMES[label.month - 1] || "Mes";
+            const monthName = monthNames[label.month - 1] || "Mes";
             const selectedDays = [...label.days].sort((a, b) => a - b);
             const cells = calendarMonthCells(label.year, label.month);
 
@@ -63,7 +70,7 @@ export function ClassDetailCalendarLabels({ item, labels }: Props) {
                   <span aria-hidden="true">&rsaquo;</span>
                 </div>
                 <div className="class-calendar-card__weekdays">
-                  {CLASS_DETAIL_WEEKDAY_LABELS.map((day) => (
+                  {weekdayLabels.map((day) => (
                     <span key={day}>{day}</span>
                   ))}
                 </div>
@@ -84,7 +91,7 @@ export function ClassDetailCalendarLabels({ item, labels }: Props) {
                   </h4>
                   <p>
                     <span>
-                      {selectedDays.length} {selectedDays.length === 1 ? "dia" : "dias"}
+                      {selectedDays.length} {selectedDays.length === 1 ? daySingular : dayPlural}
                     </span>{" "}
                     <strong>{formatCalendarDays(selectedDays)}</strong>
                   </p>

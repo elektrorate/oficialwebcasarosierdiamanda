@@ -8,6 +8,7 @@ import {
   normalizeRichTextTypography,
 } from "@/lib/cms/rich-text-typography";
 import type { CalendarLabel, ClassOfferingDetails, Offering } from "@/lib/cms/types";
+import { normalizeCalendarUi } from "@/lib/cms/types";
 import { DEFAULT_WHATSAPP_NUMBER, getWhatsappNumber } from "@/lib/whatsapp";
 
 type LegacyProgramItem = {
@@ -42,6 +43,36 @@ function stringValue(value: unknown) {
   return typeof value === "string" ? value.trim() : "";
 }
 
+function normalizeImageEntry(value: unknown) {
+  if (typeof value === "string") return { image: value, alt: "", seoTitle: "", seoDescription: "" };
+  const source = value && typeof value === "object" ? (value as Record<string, unknown>) : {};
+  return {
+    image: stringValue(source.image),
+    alt: stringValue(source.alt),
+    seoTitle: stringValue(source.seoTitle),
+    seoDescription: stringValue(source.seoDescription),
+  };
+}
+
+function normalizeActivities(value: unknown) {
+  const source = value && typeof value === "object" ? (value as Record<string, unknown>) : {};
+  const items = Array.isArray(source.items) ? source.items : [];
+  return {
+    enabled: source.enabled === true ? true : false,
+    title: stringValue(source.title),
+    content: stringValue(source.content),
+    items: items.map((item) => {
+      const entry = item && typeof item === "object" ? (item as Record<string, unknown>) : {};
+      return {
+        id: stringValue(entry.id),
+        title: stringValue(entry.title),
+        description: stringValue(entry.description),
+        image: stringValue(entry.image),
+      };
+    }),
+  };
+}
+
 function splitParagraphs(value: unknown) {
   if (Array.isArray(value)) return value.map((item) => String(item).trim()).filter(Boolean);
   return stringValue(value)
@@ -71,8 +102,13 @@ function kindFromOffering(type: Offering["type"]): ExperienceKind {
   return "class";
 }
 
-function formatPrice(value: number | null) {
-  return value === null ? "" : `${value} EUR`;
+function formatPrice(value: number | null, currency = "EUR") {
+  if (value === null) return "";
+  const amount = new Intl.NumberFormat("es-ES", {
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 2,
+  }).format(value);
+  return `${amount} ${currency}`;
 }
 
 function fallbackWhatsappHref(
@@ -176,9 +212,10 @@ function scheduleForOffering(offering: Offering, details: LegacyOfferingDetails)
   if (details.showScheduleOnFrontend === false) return [];
 
   const scheduleDescription = stringValue(details.scheduleDescription);
+  const scheduleLabel = stringValue(details.scheduleLabel) || "Horario";
   if (scheduleDescription) {
     return [{
-      day: "Horario",
+      day: scheduleLabel,
       slots: scheduleDescription.split(/\r?\n/).map((item) => item.trim()).filter(Boolean),
     }];
   }
@@ -245,13 +282,21 @@ function cmsOfferingToExperienceItem(
     Object.prototype.hasOwnProperty.call(classContent, "paymentMethodsList")
   ));
   const hasClassExtraInfo = Boolean(classContent && Object.prototype.hasOwnProperty.call(classContent, "extraInfo"));
-  const galleryImages = (details.galleryImages?.length ? details.galleryImages : offering.gallery.map((image, order) => ({ image, alt: "", order })))
+  const galleryImages = (details.galleryImages?.length
+    ? details.galleryImages
+    : offering.gallery.map((image, order) => ({ image, alt: "", order })))
     .sort((a, b) => (a.order ?? 0) - (b.order ?? 0))
-    .map((item) => item.image)
-    .filter(Boolean);
+    .map((item) => ({
+      image: normalizeImageEntry(item).image,
+      alt: normalizeImageEntry(item).alt,
+      seoTitle: normalizeImageEntry(item).seoTitle,
+      seoDescription: normalizeImageEntry(item).seoDescription,
+    }))
+    .filter((entry) => Boolean(entry.image));
+  const currency = stringValue(offering.currency) || "EUR";
   const priceOptions = (details.pricing?.length ? details.pricing : offering.price !== null ? [{ description: "Precio base", price: offering.price, order: 0 }] : [])
     .sort((a, b) => (a.order ?? 0) - (b.order ?? 0))
-    .map((item) => ({ label: item.description || "Precio", price: formatPrice(item.price) }));
+    .map((item) => ({ label: item.description || "Precio", price: formatPrice(item.price, currency) }));
   const schedule = scheduleForOffering(offering, details);
   const calendarLabels = details.showCalendarLabels === true
     ? normalizeCalendarLabels(details.calendarLabels).filter((label) => label.active)
@@ -284,7 +329,7 @@ function cmsOfferingToExperienceItem(
       ? classContent.showCourseContent
       : program.length > 0;
   const homeCard = classDetails?.homeCard;
-  const defaultHomeImage = offering.cover_image_url || galleryImages[0] || details.heroImage || "img/hero-bg.jpg";
+  const defaultHomeImage = offering.cover_image_url || galleryImages[0]?.image || details.heroImage || "img/hero-bg.jpg";
   const defaultHomeEyebrow = details.heroSubtitle || stringValue(details.category) || offering.type;
   const detailQuestion = stringValue(details.detailQuestion) || "Te apasiona la creatividad y deseas explorar el mundo de la ceramica?";
 
@@ -316,6 +361,7 @@ function cmsOfferingToExperienceItem(
     ),
     homeExcerpt: stringValue(homeCard?.excerpt) || stringValue(classDetails?.homeExcerpt) || offering.excerpt,
     homeExcerptTypography: normalizeRichTextTypography(homeCard?.excerptTypography ?? DEFAULT_DESCRIPTION_TYPOGRAPHY),
+    ctaLabel: stringValue(homeCard?.ctaLabel) || "ver más",
     heroImage: hero.heroImage || offering.cover_image_url || "img/hero-bg.jpg",
     heroImageMobile: hero.heroImageMobile || undefined,
     heroVideoUrl: hero.heroVideoUrl || undefined,
@@ -405,21 +451,25 @@ function cmsOfferingToExperienceItem(
     introHighlight: details.highlightDescription || stringValue(details.introHighlight) || offering.excerpt,
     introHighlightTypography: normalizeRichTextTypography(details.highlightDescriptionTypography ?? DEFAULT_RICH_TEXT_TYPOGRAPHY),
     descriptionTypography: normalizeRichTextTypography(details.descriptionTypography ?? DEFAULT_DESCRIPTION_TYPOGRAPHY),
-    galleryImages: galleryImages.length ? galleryImages : [offering.cover_image_url || details.heroImage || "img/hero-bg.jpg"],
+    galleryImages: galleryImages.length ? galleryImages : [{ image: offering.cover_image_url || details.heroImage || "img/hero-bg.jpg", alt: "" }],
     videoCardImage: details.videoPoster || stringValue(details.videoCardImage) || undefined,
     videoCardLabel: details.videoUrl ? "VIDEO" : details.videoPoster || stringValue(details.videoCardImage) ? stringValue(details.videoCardLabel) || "IMAGEN" : "",
     videoUrl: details.videoUrl || undefined,
     giftCardTypeLabel: stringValue(details.giftCardTypeLabel) || undefined,
     giftCardTypeOptions: splitList(details.giftCardTypeOptions),
     priceOptions,
+    priceSectionTitle: stringValue(details.priceSectionTitle) || "Precio",
+    currency,
     duration: details.durationText || offering.duration,
     durationSectionTitle: typeof details.durationSectionTitle === "string" ? details.durationSectionTitle.trim() : undefined,
     showDurationSectionTitle: details.showDurationSectionTitle !== false,
     schedule,
+    scheduleLabel: stringValue(details.scheduleLabel) || "Horario",
     showCalendarLabels: details.showCalendarLabels === true,
     calendarLabelsTitle: stringValue(details.calendarLabelsTitle),
     calendarLabelsDescription: stringValue(details.calendarLabelsDescription),
     calendarLabels,
+    calendarUi: normalizeCalendarUi(details.calendarUi),
     included,
     includedSectionTitle: stringValue(details.includedSectionTitle) || "Incluye",
     includedTypography: normalizeRichTextTypography(
@@ -443,12 +493,17 @@ function cmsOfferingToExperienceItem(
       content.participationContentTypography ?? DEFAULT_DESCRIPTION_TYPOGRAPHY,
     ),
     paymentMethods,
+    paymentMethodsSectionTitle: stringValue(content.paymentMethodsSectionTitle) || "Métodos de pago",
     additionalInfo: hasClassExtraInfo ? stringValue(content.extraInfo) : stringValue(content.extraInfo) || stringValue(details.additionalInfo),
     additionalInfoTitle: stringValue(content.extraInfoTitle),
     showAdditionalInfoSection: content.showExtraInfoSection === true,
     additionalInfoTypography: normalizeRichTextTypography(
       content.extraInfoTypography ?? DEFAULT_DESCRIPTION_TYPOGRAPHY,
     ),
+    contactEmail: stringValue(content.contactEmail),
+    modulesAccordionTitle: stringValue(content.modulesAccordionTitle),
+    activitiesSection: normalizeActivities(content.activitiesSection),
+    showEnrollButtonAtEnd: content.showEnrollButtonAtEnd !== false,
     showIdeaPromptSection: typeof classDetails?.showIdeaPromptSection === "boolean"
       ? classDetails.showIdeaPromptSection
       : true,
@@ -457,6 +512,7 @@ function cmsOfferingToExperienceItem(
     ctaEnrollHref: enrollHref,
     ctaConsultLabel: ctaConsultLabel(details, offering.type),
     ctaEnrollLabel: ctaEnrollLabel(details, offering.type),
+    showEnrollCta: details.showEnrollCta !== false,
     seoTitle: offering.seo_title || `${offering.title} | Casa Rosier`,
     seoDescription: offering.seo_description || offering.excerpt,
     isPublished: offering.status === "published",

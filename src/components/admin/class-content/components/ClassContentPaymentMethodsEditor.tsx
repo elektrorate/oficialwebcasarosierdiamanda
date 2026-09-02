@@ -32,6 +32,12 @@ function ClassContentPaymentMethodsEditorComponent({
         description="Las formas permanecen guardadas aunque esta sección esté oculta."
         onCheckedChange={(checked) => setField("showPaymentMethodsSection", checked)}
       />
+      <ClassContentTextField
+        label="Título de la sección de pago"
+        value={content.paymentMethodsSectionTitle || "Métodos de pago"}
+        placeholder="Métodos de pago"
+        onChange={(event) => setField("paymentMethodsSectionTitle", event.target.value)}
+      />
       <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <ClassContentFieldLabel>Formas de pago</ClassContentFieldLabel>
