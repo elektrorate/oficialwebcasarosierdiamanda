@@ -25,50 +25,60 @@ export function ClassDetailSection({ item, titleLevel = "h1" }: Props) {
     <section className="class-detail class-detail--proposal section">
       <div className="container class-detail__container">
         <div className="class-detail__layout">
-          <section className="class-detail__media-column">
-            <ClassDetailGallery item={item} />
-          </section>
-          <section className="class-detail__intro-column">
-            <ClassDetailIntro item={item} titleLevel={titleLevel} />
-            <ClassDetailLeadIntro item={item} />
-            <div className="class-detail__description-desktop">
-              <ClassDetailDescription item={item} />
-            </div>
-          </section>
-          <ClassDetailSidebarColumn item={item} showPaymentMethods={viewModel.showPaymentMethods} hasSideContent={viewModel.hasSideContent} calendarLabels={viewModel.calendarLabels} />
-          <section className="class-detail__content-column">
-            <div className="class-detail__description-mobile">
-              <ClassDetailDescription item={item} />
-            </div>
-            <ClassDetailLearningSection
+          <div className="class-detail__left-column">
+            <section className="class-detail__media-column">
+              <ClassDetailGallery item={item} />
+            </section>
+            <ClassDetailSidebarColumn
               item={item}
-              hasLearningContent={viewModel.hasLearningContent}
+              showPaymentMethods={viewModel.showPaymentMethods}
+              hasSideContent={viewModel.hasSideContent}
+              calendarLabels={viewModel.calendarLabels}
             />
-<ClassDetailPriceDuration item={item} />
-            <ClassDetailEnrollActions
-              consultHref={viewModel.consultHref}
-              consultLabel={viewModel.consultLabel}
-              enrollHref={viewModel.enrollHref}
-              enrollLabel={viewModel.enrollLabel}
-              showEnroll={viewModel.showEnrollAction && !viewModel.showEnrollAtEnd}
-            />
-            <ClassDetailPostFactsSections
-              item={item}
-              showIncluded={viewModel.showIncluded}
-              hasParticipationContent={viewModel.hasParticipationContent}
-              showProgram={viewModel.showProgram}
-              programItems={viewModel.programItems}
-            />
-            {viewModel.showEnrollAction && viewModel.showEnrollAtEnd ? (
+          </div>
+
+          <div className="class-detail__right-column">
+            <section className="class-detail__intro-column">
+              <ClassDetailIntro item={item} titleLevel={titleLevel} />
+              <ClassDetailLeadIntro item={item} />
+              <div className="class-detail__description-desktop">
+                <ClassDetailDescription item={item} />
+              </div>
+            </section>
+            <section className="class-detail__content-column">
+              <div className="class-detail__description-mobile">
+                <ClassDetailDescription item={item} />
+              </div>
+              <ClassDetailLearningSection
+                item={item}
+                hasLearningContent={viewModel.hasLearningContent}
+              />
+              <ClassDetailPriceDuration item={item} />
               <ClassDetailEnrollActions
-                consultHref=""
+                consultHref={viewModel.consultHref}
                 consultLabel={viewModel.consultLabel}
                 enrollHref={viewModel.enrollHref}
                 enrollLabel={viewModel.enrollLabel}
-                showEnroll
+                showEnroll={viewModel.showEnrollAction && !viewModel.showEnrollAtEnd}
               />
-            ) : null}
-          </section>
+              <ClassDetailPostFactsSections
+                item={item}
+                showIncluded={viewModel.showIncluded}
+                hasParticipationContent={viewModel.hasParticipationContent}
+                showProgram={viewModel.showProgram}
+                programItems={viewModel.programItems}
+              />
+              {viewModel.showEnrollAction && viewModel.showEnrollAtEnd ? (
+                <ClassDetailEnrollActions
+                  consultHref=""
+                  consultLabel={viewModel.consultLabel}
+                  enrollHref={viewModel.enrollHref}
+                  enrollLabel={viewModel.enrollLabel}
+                  showEnroll
+                />
+              ) : null}
+            </section>
+          </div>
         </div>
       </div>
     </section>
