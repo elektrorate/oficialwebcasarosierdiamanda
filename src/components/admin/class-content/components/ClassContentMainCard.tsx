@@ -33,31 +33,6 @@ function ClassContentMainCardComponent({
       <h2 className="text-headline-sm text-on-surface">Contenido del Curso</h2>
 
       <Switch
-        checked={content.showLearningSection}
-        label="Mostrar ¿Qué aprenderás? en la página pública"
-        description="El texto permanece guardado aunque esta sección esté oculta."
-        onCheckedChange={(checked) => setField("showLearningSection", checked)}
-      />
-
-      <ClassContentTextField
-        label="Título de la sección '¿Qué aprenderás?'"
-        value={content.learningSectionTitle}
-        placeholder="Estructura por módulos"
-        onChange={(event) => setField("learningSectionTitle", event.target.value)}
-      />
-
-      <ClassContentRichTextField
-        label="¿Qué aprenderás?"
-        value={content.learningContent}
-        typography={typography.learning}
-        minHeight="200px"
-        placeholder="Módulo 1. Arcillas y propiedades de la materia cerámica.&#10;Módulo 2. Modelado manual y técnicas constructivas básicas."
-        help="Tipografía del bloque en el panel. Negrita/cursiva del toolbar para énfasis parcial."
-        onChange={(value) => setField("learningContent", value)}
-        onTypographyChange={(learningContentTypography) => setField("learningContentTypography", learningContentTypography)}
-      />
-
-      <Switch
         checked={content.showParticipationSection}
         label="Mostrar ¿Quién puede participar? en la página pública"
         description="El texto permanece guardado aunque esta sección esté oculta."

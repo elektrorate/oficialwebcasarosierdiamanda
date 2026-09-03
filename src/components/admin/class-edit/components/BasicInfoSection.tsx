@@ -2,6 +2,9 @@
 
 import { AdminInput } from "@/components/ui/AdminField";
 import { AdminRichTextField } from "@/components/ui/AdminRichTextField";
+import { ClassContentLearningFields } from "@/components/admin/class-content/components/ClassContentLearningFields";
+import { resolveContentTypography } from "@/components/admin/class-content/typography";
+import type { ClassOfferingContent } from "@/lib/cms/types";
 import type { ClassEditFormState } from "../hooks/useClassEditForm";
 import { useBasicInfoFields } from "../hooks/useBasicInfoFields";
 import { useBasicInfoTypography } from "../hooks/useBasicInfoTypography";
@@ -13,7 +16,7 @@ type BasicInfoSectionProps = {
 };
 
 export function BasicInfoSection({ form }: BasicInfoSectionProps) {
-  const { title, slug, subtitle, description, details, errors } = form;
+  const { title, slug, subtitle, description, details, errors, handleContentChange } = form;
   const typography = useBasicInfoTypography(details);
   const {
     handleSlugBlur,
@@ -24,6 +27,13 @@ export function BasicInfoSection({ form }: BasicInfoSectionProps) {
     updateMenuTitle,
     updateDetails,
   } = useBasicInfoFields(form);
+
+  const setContentField = <K extends keyof ClassOfferingContent>(
+    field: K,
+    value: ClassOfferingContent[K],
+  ) => {
+    handleContentChange({ ...details.content, [field]: value });
+  };
 
   return (
     <SectionCard compact>
@@ -104,6 +114,13 @@ export function BasicInfoSection({ form }: BasicInfoSectionProps) {
           onTypographyChange={(next) => updateDetails({ descriptionTypography: next })}
           minHeight="130px"
         />
+        <div className="border-t border-outline-variant pt-5">
+          <ClassContentLearningFields
+            content={details.content}
+            typography={resolveContentTypography(details.content.learningContentTypography)}
+            setField={setContentField}
+          />
+        </div>
       </div>
 
       <div className="class-edit-field-grid class-edit-field-grid--meta">
