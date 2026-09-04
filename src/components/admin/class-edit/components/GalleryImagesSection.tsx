@@ -77,6 +77,8 @@ function GalleryImagesSectionComponent({ form }: GalleryImagesSectionProps) {
             onMoveDown={() => moveGalleryImage(index, index + 1)}
             onRemove={() => removeGalleryImage(index)}
             onReplace={() => setPickerTarget(`gallery:${index}`)}
+            onUploadFile={(file) => uploadImage(`gallery:${index}`, file)}
+            isUploading={uploadingTarget === `gallery:${index}`}
             onAltChange={(alt) => updateGalleryImage(index, { alt })}
             onSeoTitleChange={(seoTitle) => updateGalleryImage(index, { seoTitle })}
             onSeoDescriptionChange={(seoDescription) => updateGalleryImage(index, { seoDescription })}
@@ -143,6 +145,8 @@ const GalleryImageRow = memo(function GalleryImageRow({
   onMoveDown,
   onRemove,
   onReplace,
+  onUploadFile,
+  isUploading,
   onAltChange,
   onSeoTitleChange,
   onSeoDescriptionChange,
@@ -163,6 +167,8 @@ const GalleryImageRow = memo(function GalleryImageRow({
   onMoveDown: () => void;
   onRemove: () => void;
   onReplace: () => void;
+  onUploadFile: (file: File) => void;
+  isUploading: boolean;
   onAltChange: (alt: string) => void;
   onSeoTitleChange: (seoTitle: string) => void;
   onSeoDescriptionChange: (seoDescription: string) => void;
@@ -206,6 +212,24 @@ const GalleryImageRow = memo(function GalleryImageRow({
               {uploadInfo.reductionPercent}% menos).
             </p>
           ) : null}
+          <label
+            className={`secondary-btn cms-hero-image-field__button ${isUploading ? "pointer-events-none cursor-not-allowed opacity-50" : ""}`}
+            htmlFor={`gallery-upload-${index}`}
+          >
+            {isUploading ? "Subiendo..." : "Subir imagen"}
+          </label>
+          <input
+            id={`gallery-upload-${index}`}
+            type="file"
+            accept="image/jpeg,image/png,image/webp,image/avif"
+            className="sr-only"
+            disabled={isUploading}
+            onChange={(event) => {
+              const file = event.target.files?.[0];
+              if (file) onUploadFile(file);
+              event.target.value = "";
+            }}
+          />
           <Button type="button" variant="outlined" size="sm" className="w-full" onClick={onReplace}>
             Sustituir
           </Button>

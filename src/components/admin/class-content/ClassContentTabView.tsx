@@ -19,6 +19,11 @@ function ClassContentTabViewComponent(props: ClassContentEditorProps) {
         addPaymentMethod={editor.addPaymentMethod}
         updatePaymentMethod={editor.updatePaymentMethod}
         removePaymentMethod={editor.removePaymentMethod}
+        addExtraInfoBlock={editor.addExtraInfoBlock}
+        updateExtraInfoBlock={editor.updateExtraInfoBlock}
+        moveExtraInfoBlock={editor.moveExtraInfoBlock}
+        removeExtraInfoBlock={editor.removeExtraInfoBlock}
+        resolveModuleTypography={editor.resolveModuleTypography}
       />
       <ClassContentModulesCard
         content={editor.content}

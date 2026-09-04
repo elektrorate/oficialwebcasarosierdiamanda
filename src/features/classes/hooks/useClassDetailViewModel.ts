@@ -18,9 +18,13 @@ export function useClassDetailViewModel(item: ExperienceItem) {
     const hasLearningContent = item.showLearningSection && hasMeaningfulContent(item.whatYouWillLearn);
     const hasParticipationContent = item.showParticipationSection && hasMeaningfulContent(item.whoCanJoin);
     const hasCalendarLabels = calendarLabels.length > 0;
+    const hasAdditionalInfoBlocks = (item.additionalInfoBlocks ?? []).some(
+      (block) => block.enabled && hasMeaningfulContent([block.title, block.content]),
+    );
     const hasSideContent = Boolean(
       showPaymentMethods ||
         (item.showAdditionalInfoSection !== false && hasMeaningfulContent(item.additionalInfo)) ||
+        hasAdditionalInfoBlocks ||
         hasCalendarLabels,
     );
 

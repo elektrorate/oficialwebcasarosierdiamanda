@@ -2,6 +2,7 @@ import type { ExperienceItem, ExperienceKind } from "@/data/types";
 import type {
   CalendarLabel,
   ClassOfferingDetails,
+  ClassOfferingExtraInfoBlock,
   ClassScheduleDay,
   Offering,
   OfferingGalleryImage,
@@ -160,6 +161,28 @@ export function calendarMonthCells(year: number, month: number) {
   ];
 }
 
+function normalizeExtraInfoBlocks(value: unknown): ClassOfferingExtraInfoBlock[] {
+  if (!Array.isArray(value)) return [];
+  return value
+    .map((entry, index) => {
+      const source = entry && typeof entry === "object"
+        ? (entry as Partial<ClassOfferingExtraInfoBlock>)
+        : {};
+      return {
+        id: firstText(source.id) || createId("extra-info"),
+        title: firstText(source.title),
+        content: firstText(source.content),
+        contentTypography: normalizeRichTextTypography(
+          source.contentTypography ?? DEFAULT_DESCRIPTION_TYPOGRAPHY,
+        ),
+        enabled: source.enabled !== false,
+        order: Number.isFinite(Number(source.order)) ? Number(source.order) : index,
+      };
+    })
+    .sort((a, b) => a.order - b.order)
+    .map((entry, order) => ({ ...entry, order }));
+}
+
 function sanitizeCalendarLabel(entry: unknown, index: number): CalendarLabel | null {
   const source = entry && typeof entry === "object" ? (entry as Partial<CalendarLabel>) : {};
   const now = new Date();
@@ -248,6 +271,7 @@ export function toClassDetails(offering: Offering): ClassOfferingDetails {
     extraInfoTypography: normalizeRichTextTypography(
       persistedContentFields.extraInfoTypography ?? legacyContent.extraInfoTypography ?? DEFAULT_DESCRIPTION_TYPOGRAPHY,
     ),
+    extraInfoBlocks: normalizeExtraInfoBlocks(persistedContentFields.extraInfoBlocks),
     modules: (
       Array.isArray((persistedContent as Partial<ClassOfferingDetails["content"]>).modules) && (persistedContent as Partial<ClassOfferingDetails["content"]>).modules?.length
         ? (persistedContent as ClassOfferingDetails["content"]).modules
@@ -723,9 +747,12 @@ export function buildPreviewItem({
     ),
     paymentMethods: paymentMethods.map((method) => method.trim()).filter(Boolean),
     additionalInfo: details.content.extraInfo.trim(),
+    additionalInfoTitle: details.content.extraInfoTitle?.trim(),
+    showAdditionalInfoSection: details.content.showExtraInfoSection === true,
     additionalInfoTypography: normalizeRichTextTypography(
       details.content.extraInfoTypography ?? DEFAULT_DESCRIPTION_TYPOGRAPHY,
     ),
+    additionalInfoBlocks: normalizeExtraInfoBlocks(details.content.extraInfoBlocks),
     showIdeaPromptSection: details.showIdeaPromptSection === true,
     ctaHref: consultHref,
     ctaConsultHref: consultHref,
@@ -969,7 +996,16 @@ function normalizeContentForPersist(content: ClassOfferingDetails["content"]): C
     contactWhatsapp: content.contactWhatsapp.trim(),
     contactEmail: content.contactEmail.trim(),
     extraInfo: content.extraInfo.trim(),
+    extraInfoTitle: content.extraInfoTitle?.trim(),
+    showExtraInfoSection: content.showExtraInfoSection === true,
     extraInfoTypography: normalizeContentTypography(content.extraInfoTypography),
+    extraInfoBlocks: normalizeExtraInfoBlocks(content.extraInfoBlocks).map((block, order) => ({
+      ...block,
+      title: block.title.trim(),
+      content: block.content.trim(),
+      contentTypography: normalizeContentTypography(block.contentTypography),
+      order,
+    })),
     modulesSectionTitle: content.modulesSectionTitle.trim(),
     modulesAccordionTitle: content.modulesAccordionTitle.trim(),
     modules: content.modules.map((mod, order) => ({

@@ -26,6 +26,7 @@ export function defaultContent(): ClassOfferingContent {
     extraInfoTitle: "",
     showExtraInfoSection: false,
     extraInfoTypography: { ...DEFAULT_DESCRIPTION_TYPOGRAPHY },
+    extraInfoBlocks: [],
     showEnrollButtonAtEnd: true,
     activitiesSection: { enabled: false, title: "", content: "", items: [] },
     modulesSectionTitle: "",
@@ -44,4 +45,10 @@ export function createActivityId() {
   return typeof crypto !== "undefined" && "randomUUID" in crypto
     ? crypto.randomUUID()
     : `act-${Date.now()}-${Math.random().toString(36).slice(2)}`;
+}
+
+export function createExtraInfoBlockId() {
+  return typeof crypto !== "undefined" && "randomUUID" in crypto
+    ? crypto.randomUUID()
+    : `extra-${Date.now()}-${Math.random().toString(36).slice(2)}`;
 }

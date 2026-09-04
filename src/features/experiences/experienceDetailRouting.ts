@@ -88,6 +88,27 @@ function normalizeActivities(value: unknown) {
   };
 }
 
+function normalizeAdditionalInfoBlocks(value: unknown) {
+  if (!Array.isArray(value)) return [];
+  return value
+    .map((item, index) => {
+      const entry = item && typeof item === "object" ? (item as Record<string, unknown>) : {};
+      return {
+        id: stringValue(entry.id) || `extra-info-${index}`,
+        title: stringValue(entry.title),
+        content: stringValue(entry.content),
+        contentTypography: normalizeRichTextTypography(
+          entry.contentTypography as Parameters<typeof normalizeRichTextTypography>[0],
+        ),
+        enabled: entry.enabled !== false,
+        order: Number.isFinite(Number(entry.order)) ? Number(entry.order) : index,
+      };
+    })
+    .filter((item) => Boolean(item.title || item.content))
+    .sort((a, b) => a.order - b.order)
+    .map((item, order) => ({ ...item, order }));
+}
+
 function splitParagraphs(value: unknown) {
   if (Array.isArray(value)) return value.map((item) => String(item).trim()).filter(Boolean);
   return stringValue(value)
@@ -513,6 +534,7 @@ function cmsOfferingToExperienceItem(
     additionalInfoTypography: normalizeRichTextTypography(
       content.extraInfoTypography ?? DEFAULT_DESCRIPTION_TYPOGRAPHY,
     ),
+    additionalInfoBlocks: normalizeAdditionalInfoBlocks(content.extraInfoBlocks),
     contactEmail: stringValue(content.contactEmail),
     modulesAccordionTitle: stringValue(content.modulesAccordionTitle),
     activitiesSection: normalizeActivities(content.activitiesSection),

@@ -124,6 +124,15 @@ export interface ClassOfferingActivityItem {
   order: number;
 }
 
+export interface ClassOfferingExtraInfoBlock {
+  id: string;
+  title: string;
+  content: string;
+  contentTypography?: RichTextTypography;
+  enabled: boolean;
+  order: number;
+}
+
 export interface ClassOfferingContent {
   /** Compatibilidad con registros creados antes de los controles independientes. */
   showCourseContent?: boolean;
@@ -149,6 +158,7 @@ export interface ClassOfferingContent {
   extraInfoTitle?: string;
   showExtraInfoSection?: boolean;
   extraInfoTypography?: RichTextTypography;
+  extraInfoBlocks: ClassOfferingExtraInfoBlock[];
   showEnrollButtonAtEnd: boolean;
   activitiesSection: {
     enabled: boolean;

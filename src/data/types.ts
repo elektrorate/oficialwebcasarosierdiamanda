@@ -58,6 +58,15 @@ export interface ExperienceActivitiesSection {
   items: ExperienceActivityItem[];
 }
 
+export interface ExperienceAdditionalInfoBlock {
+  id: string;
+  title: string;
+  content: string;
+  contentTypography?: RichTextTypography;
+  enabled: boolean;
+  order: number;
+}
+
 export interface ExperienceItem {
   id: string;
   kind: ExperienceKind;
@@ -217,6 +226,7 @@ export interface ExperienceItem {
   additionalInfoTitle?: string;
   showAdditionalInfoSection?: boolean;
   additionalInfoTypography?: RichTextTypography;
+  additionalInfoBlocks?: ExperienceAdditionalInfoBlock[];
   contactEmail?: string;
   modulesAccordionTitle?: string;
   activitiesSection?: ExperienceActivitiesSection;

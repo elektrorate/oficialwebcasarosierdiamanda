@@ -125,12 +125,6 @@ export function BasicInfoSection({ form }: BasicInfoSectionProps) {
 
       <div className="class-edit-field-grid class-edit-field-grid--meta">
         <AdminInput
-          label="Duración"
-          value={details.durationText}
-          placeholder="Sesiones de 2 h."
-          onChange={(event) => updateDetails({ durationText: event.target.value })}
-        />
-        <AdminInput
           label="WhatsApp"
           value={details.whatsappNumber}
           error={errors.whatsappNumber}
