@@ -4,6 +4,11 @@
  * older class-detail rules while the CMS data model remains unchanged.
  */
 
+html:has(> body.class-detail-page),
+body.class-detail-page {
+  overflow-x: clip;
+}
+
 .class-detail-page:is([data-promo-page="class"], [data-promo-page="workshop"], [data-promo-page="experience"], [data-promo-page="gift-card"]) .class-detail--proposal {
   --offering-ink: #2f2925;
   --offering-copy: #655a53;
@@ -24,8 +29,11 @@
 .class-detail-page:is([data-promo-page="class"], [data-promo-page="workshop"], [data-promo-page="experience"], [data-promo-page="gift-card"]) .class-detail--proposal .class-detail__layout {
   display: grid;
   grid-template-columns: minmax(286px, 354px) minmax(0, 1fr);
+  grid-template-areas:
+    "media intro"
+    "side content";
   column-gap: clamp(30px, 4vw, 50px);
-  row-gap: 0;
+  row-gap: 28px;
   align-items: start;
 }
 
@@ -61,6 +69,44 @@
   margin-top: 0;
 }
 
+.class-detail-page:is([data-promo-page="class"], [data-promo-page="workshop"], [data-promo-page="experience"], [data-promo-page="gift-card"]) .class-detail--proposal .class-detail__media-column {
+  grid-area: media;
+  align-self: stretch;
+}
+
+.class-detail-page:is([data-promo-page="class"], [data-promo-page="workshop"], [data-promo-page="experience"], [data-promo-page="gift-card"]) .class-detail--proposal .class-detail__intro-column {
+  grid-area: intro;
+}
+
+.class-detail-page:is([data-promo-page="class"], [data-promo-page="workshop"], [data-promo-page="experience"], [data-promo-page="gift-card"]) .class-detail--proposal .class-detail__content-column {
+  grid-area: content;
+}
+
+.class-detail-page:is([data-promo-page="class"], [data-promo-page="workshop"], [data-promo-page="experience"], [data-promo-page="gift-card"]) .class-detail--proposal .class-detail__side-column {
+  grid-area: side;
+}
+
+.class-detail-page:is([data-promo-page="class"], [data-promo-page="workshop"], [data-promo-page="experience"], [data-promo-page="gift-card"]) .class-detail--proposal .class-detail__learning-placement--mobile {
+  display: none;
+}
+
+.class-detail-page:is([data-promo-page="class"], [data-promo-page="workshop"], [data-promo-page="experience"], [data-promo-page="gift-card"]) .class-detail--proposal .class-detail__learning-placement--desktop .class-detail__learning-section {
+  margin-bottom: 0;
+}
+
+@media (min-width: 1025px) {
+  .class-detail-page:is([data-promo-page="class"], [data-promo-page="workshop"], [data-promo-page="experience"], [data-promo-page="gift-card"]) .class-detail--proposal .class-detail__gallery-sticky {
+    position: sticky;
+    top: 174px;
+  }
+}
+
+@media (min-width: 1025px) and (max-width: 1280px) {
+  .class-detail-page:is([data-promo-page="class"], [data-promo-page="workshop"], [data-promo-page="experience"], [data-promo-page="gift-card"]) .class-detail--proposal .class-detail__gallery-sticky {
+    top: 148px;
+  }
+}
+
 .class-detail-page:is([data-promo-page="class"], [data-promo-page="workshop"], [data-promo-page="experience"], [data-promo-page="gift-card"]) .class-detail--proposal .class-detail__description-desktop {
   display: block;
   width: min(90%, 644px);
@@ -79,7 +125,8 @@
 }
 
 .class-detail-page:is([data-promo-page="class"], [data-promo-page="workshop"], [data-promo-page="experience"], [data-promo-page="gift-card"]) .class-detail--proposal .class-gallery__main-wrap {
-  aspect-ratio: 1 / 1;
+  height: 300px;
+  aspect-ratio: auto;
   border-radius: 8px;
   background: #e8dfd8;
 }
@@ -101,17 +148,41 @@
   transform: scale(1.025);
 }
 
+.class-detail-page:is([data-promo-page="class"], [data-promo-page="workshop"], [data-promo-page="experience"], [data-promo-page="gift-card"]) .class-detail--proposal .class-gallery__expand {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  border: 0;
+  border-radius: inherit;
+  background: transparent;
+  cursor: zoom-in;
+}
+
+.class-detail-page:is([data-promo-page="class"], [data-promo-page="workshop"], [data-promo-page="experience"], [data-promo-page="gift-card"]) .class-detail--proposal .class-gallery__expand:focus-visible {
+  outline: 2px solid rgba(173, 63, 20, 0.75);
+  outline-offset: -4px;
+}
+
+.offering-gallery-modal .ig-modal__media img {
+  object-position: center;
+}
+
+.offering-gallery-modal .ig-modal__body {
+  white-space: pre-line;
+}
+
 .class-detail-page:is([data-promo-page="class"], [data-promo-page="workshop"], [data-promo-page="experience"], [data-promo-page="gift-card"]) .class-detail--proposal .class-gallery__thumbs {
-  grid-template-columns: none;
-  grid-auto-flow: column;
-  grid-auto-columns: calc((100% - 28px) / 3);
+  grid-template-columns: repeat(4, 50px);
+  grid-auto-flow: row;
+  grid-auto-columns: initial;
   gap: 14px;
   width: 100%;
   max-width: none;
-  overflow-x: auto;
-  overscroll-behavior-inline: contain;
-  scrollbar-width: none;
-  scroll-snap-type: inline proximity;
+  justify-content: center;
+  overflow: visible;
 }
 
 .class-detail-page:is([data-promo-page="class"], [data-promo-page="workshop"], [data-promo-page="experience"], [data-promo-page="gift-card"]) .class-detail--proposal .class-gallery__thumbs::-webkit-scrollbar {
@@ -126,6 +197,7 @@
   width: 100%;
   border: 0;
   border-radius: 7px;
+  background: transparent;
   opacity: 0.72;
   transition: opacity 180ms ease, box-shadow 180ms ease, transform 180ms ease;
 }
@@ -135,7 +207,7 @@
 .class-detail-page:is([data-promo-page="class"], [data-promo-page="workshop"], [data-promo-page="experience"], [data-promo-page="gift-card"]) .class-detail--proposal .class-gallery__thumb.is-active {
   opacity: 1;
   transform: translateY(-1px);
-  box-shadow: 0 0 0 2px var(--offering-surface), 0 0 0 3px rgba(173, 63, 20, 0.55);
+  box-shadow: 0 0 0 1px rgba(173, 63, 20, 0.65);
 }
 
 /* Editorial heading and lead */
@@ -619,6 +691,30 @@
 }
 
 @media (max-width: 900px) {
+  .class-detail-page:is([data-promo-page="class"], [data-promo-page="workshop"], [data-promo-page="experience"], [data-promo-page="gift-card"]) .class-detail--proposal .class-gallery__main-wrap {
+    height: auto;
+    aspect-ratio: 1 / 1;
+  }
+
+  .class-detail-page:is([data-promo-page="class"], [data-promo-page="workshop"], [data-promo-page="experience"], [data-promo-page="gift-card"]) .class-detail--proposal .class-detail__learning-placement--desktop {
+    display: none;
+  }
+
+  .class-detail-page:is([data-promo-page="class"], [data-promo-page="workshop"], [data-promo-page="experience"], [data-promo-page="gift-card"]) .class-detail--proposal .class-detail__learning-placement--mobile {
+    display: block;
+  }
+
+  .class-detail-page:is([data-promo-page="class"], [data-promo-page="workshop"], [data-promo-page="experience"], [data-promo-page="gift-card"]) .class-detail--proposal .class-gallery__thumbs {
+    grid-template-columns: none;
+    grid-auto-flow: column;
+    grid-auto-columns: calc((100% - 28px) / 3);
+    justify-content: initial;
+    overflow-x: auto;
+    overscroll-behavior-inline: contain;
+    scrollbar-width: none;
+    scroll-snap-type: inline proximity;
+  }
+
   .class-detail-page:is([data-promo-page="class"], [data-promo-page="workshop"], [data-promo-page="experience"], [data-promo-page="gift-card"]) .class-detail--proposal .class-detail__enroll-placement--desktop {
     display: none;
   }

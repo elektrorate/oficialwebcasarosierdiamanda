@@ -2,13 +2,16 @@
 
 import { memo, useCallback, type DragEvent } from "react";
 import Button from "@/components/ui/Button";
-import { AdminInput } from "@/components/ui/AdminField";
+import { AdminInput, AdminTextarea } from "@/components/ui/AdminField";
+import Switch from "@/components/ui/Switch";
+import type { OfferingGalleryImage } from "@/lib/cms/types";
 import type { ClassEditFormState } from "../hooks/useClassEditForm";
 import { useGalleryDragDrop } from "../hooks/useGalleryDragDrop";
 import { formatFileSize } from "../utils";
 import { ImagePreview } from "../fields/ImagePreview";
 import { ListItemActions } from "./ListItemActions";
 import { SectionCard } from "./SectionCard";
+import { MAX_GALLERY_IMAGES } from "../constants";
 
 type GalleryImagesSectionProps = {
   form: ClassEditFormState;
@@ -34,6 +37,7 @@ function GalleryImagesSectionComponent({ form }: GalleryImagesSectionProps) {
   } = form;
 
   const dragDrop = useGalleryDragDrop(form);
+  const isAtLimit = details.galleryImages.length >= MAX_GALLERY_IMAGES;
 
   const openGalleryLibrary = useCallback(
     () => setPickerTarget("gallery"),
@@ -48,10 +52,11 @@ function GalleryImagesSectionComponent({ form }: GalleryImagesSectionProps) {
   return (
     <SectionCard
       compact
-      description="Ordena las imágenes y agrega un texto alternativo breve para accesibilidad."
+      description={`Ordena las imágenes y agrega un texto alternativo breve para accesibilidad. ${details.galleryImages.length}/${MAX_GALLERY_IMAGES} imágenes.`}
       action={(
         <GalleryUploadActions
           isUploading={uploadingTarget === "gallery:new"}
+          isAtLimit={isAtLimit}
           onOpenLibrary={openGalleryLibrary}
           onUpload={uploadNewGalleryImage}
         />
@@ -75,6 +80,11 @@ function GalleryImagesSectionComponent({ form }: GalleryImagesSectionProps) {
             onAltChange={(alt) => updateGalleryImage(index, { alt })}
             onSeoTitleChange={(seoTitle) => updateGalleryImage(index, { seoTitle })}
             onSeoDescriptionChange={(seoDescription) => updateGalleryImage(index, { seoDescription })}
+            onModalDescriptionChange={(modalDescription) => updateGalleryImage(index, { modalDescription })}
+            onShowCtaChange={(showCta) => updateGalleryImage(index, { showCta })}
+            onCtaLabelChange={(ctaLabel) => updateGalleryImage(index, { ctaLabel })}
+            onCtaHrefChange={(ctaHref) => updateGalleryImage(index, { ctaHref })}
+            onCtaNewTabChange={(ctaNewTab) => updateGalleryImage(index, { ctaNewTab })}
           />
         ))}
       </div>
@@ -84,35 +94,37 @@ function GalleryImagesSectionComponent({ form }: GalleryImagesSectionProps) {
 
 const GalleryUploadActions = memo(function GalleryUploadActions({
   isUploading,
+  isAtLimit,
   onOpenLibrary,
   onUpload,
 }: {
   isUploading: boolean;
+  isAtLimit: boolean;
   onOpenLibrary: () => void;
   onUpload: (file: File) => void;
 }) {
   return (
     <div className="flex flex-wrap gap-2">
       <label
-        className="secondary-btn cms-hero-image-field__button"
+        className={`secondary-btn cms-hero-image-field__button ${isAtLimit ? "pointer-events-none cursor-not-allowed opacity-50" : ""}`}
         htmlFor="gallery-new-upload"
-        aria-disabled={isUploading}
+        aria-disabled={isUploading || isAtLimit}
       >
-        {isUploading ? "Subiendo..." : "Subir imagen"}
+        {isUploading ? "Subiendo..." : isAtLimit ? "Límite alcanzado" : "Subir imagen"}
       </label>
       <input
         id="gallery-new-upload"
         type="file"
         accept="image/jpeg,image/png,image/webp,image/avif"
         className="sr-only"
-        disabled={isUploading}
+        disabled={isUploading || isAtLimit}
         onChange={(event) => {
           const file = event.target.files?.[0];
           if (file) onUpload(file);
           event.target.value = "";
         }}
       />
-      <Button type="button" variant="outlined" onClick={onOpenLibrary}>
+      <Button type="button" variant="outlined" disabled={isUploading || isAtLimit} onClick={onOpenLibrary}>
         Anadir imagen
       </Button>
     </div>
@@ -134,8 +146,13 @@ const GalleryImageRow = memo(function GalleryImageRow({
   onAltChange,
   onSeoTitleChange,
   onSeoDescriptionChange,
+  onModalDescriptionChange,
+  onShowCtaChange,
+  onCtaLabelChange,
+  onCtaHrefChange,
+  onCtaNewTabChange,
 }: {
-  item: { image: string; alt: string; seoTitle?: string; seoDescription?: string };
+  item: OfferingGalleryImage;
   index: number;
   error?: string;
   uploadInfo?: { originalSize: number; finalSize: number; reductionPercent: number };
@@ -149,6 +166,11 @@ const GalleryImageRow = memo(function GalleryImageRow({
   onAltChange: (alt: string) => void;
   onSeoTitleChange: (seoTitle: string) => void;
   onSeoDescriptionChange: (seoDescription: string) => void;
+  onModalDescriptionChange: (modalDescription: string) => void;
+  onShowCtaChange: (showCta: boolean) => void;
+  onCtaLabelChange: (ctaLabel: string) => void;
+  onCtaHrefChange: (ctaHref: string) => void;
+  onCtaNewTabChange: (ctaNewTab: boolean) => void;
 }) {
   return (
     <div
@@ -208,6 +230,44 @@ const GalleryImageRow = memo(function GalleryImageRow({
           value={item.seoDescription ?? ""}
           onChange={(event) => onSeoDescriptionChange(event.target.value)}
         />
+        <AdminTextarea
+          label="Descripción pública de la imagen"
+          help="Se mostrará junto a la imagen cuando se abra la galería ampliada."
+          placeholder="Describe la imagen, la pieza o el proceso..."
+          value={item.modalDescription ?? ""}
+          onChange={(event) => onModalDescriptionChange(event.target.value)}
+        />
+        <div className="grid gap-3 md:col-start-2">
+          <Switch
+            checked={item.showCta === true}
+            label="Mostrar botón CTA"
+            description="Añade una acción opcional dentro del modal de esta imagen."
+            onCheckedChange={onShowCtaChange}
+          />
+          {item.showCta ? (
+            <>
+              <div className="grid gap-3 md:grid-cols-2">
+                <AdminInput
+                  label="Texto del botón CTA"
+                  placeholder="Más información"
+                  value={item.ctaLabel ?? ""}
+                  onChange={(event) => onCtaLabelChange(event.target.value)}
+                />
+                <AdminInput
+                  label="Enlace del botón CTA"
+                  placeholder="/contacto o https://..."
+                  value={item.ctaHref ?? ""}
+                  onChange={(event) => onCtaHrefChange(event.target.value)}
+                />
+              </div>
+              <Switch
+                checked={item.ctaNewTab === true}
+                label="Abrir CTA en una pestaña nueva"
+                onCheckedChange={onCtaNewTabChange}
+              />
+            </>
+          ) : null}
+        </div>
       </div>
     </div>
   );

@@ -28,6 +28,11 @@ export interface ExperienceGalleryItem {
   alt: string;
   seoTitle?: string;
   seoDescription?: string;
+  modalDescription?: string;
+  showCta?: boolean;
+  ctaLabel?: string;
+  ctaHref?: string;
+  ctaNewTab?: boolean;
 }
 
 export interface CalendarUiTexts {

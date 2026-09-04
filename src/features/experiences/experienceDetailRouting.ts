@@ -44,13 +44,28 @@ function stringValue(value: unknown) {
 }
 
 function normalizeImageEntry(value: unknown) {
-  if (typeof value === "string") return { image: value, alt: "", seoTitle: "", seoDescription: "" };
+  if (typeof value === "string") return {
+    image: value,
+    alt: "",
+    seoTitle: "",
+    seoDescription: "",
+    modalDescription: "",
+    showCta: false,
+    ctaLabel: "",
+    ctaHref: "",
+    ctaNewTab: false,
+  };
   const source = value && typeof value === "object" ? (value as Record<string, unknown>) : {};
   return {
     image: stringValue(source.image),
     alt: stringValue(source.alt),
     seoTitle: stringValue(source.seoTitle),
     seoDescription: stringValue(source.seoDescription),
+    modalDescription: stringValue(source.modalDescription),
+    showCta: source.showCta === true,
+    ctaLabel: stringValue(source.ctaLabel),
+    ctaHref: stringValue(source.ctaHref),
+    ctaNewTab: source.ctaNewTab === true,
   };
 }
 
@@ -286,12 +301,7 @@ function cmsOfferingToExperienceItem(
     ? details.galleryImages
     : offering.gallery.map((image, order) => ({ image, alt: "", order })))
     .sort((a, b) => (a.order ?? 0) - (b.order ?? 0))
-    .map((item) => ({
-      image: normalizeImageEntry(item).image,
-      alt: normalizeImageEntry(item).alt,
-      seoTitle: normalizeImageEntry(item).seoTitle,
-      seoDescription: normalizeImageEntry(item).seoDescription,
-    }))
+    .map((item) => normalizeImageEntry(item))
     .filter((entry) => Boolean(entry.image));
   const currency = stringValue(offering.currency) || "EUR";
   const priceOptions = (details.pricing?.length ? details.pricing : offering.price !== null ? [{ description: "Precio base", price: offering.price, order: 0 }] : [])

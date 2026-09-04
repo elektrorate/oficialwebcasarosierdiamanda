@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useState, type FormEvent } from "react";
 import type { ClassHomeCard, ClassOfferingContent, ClassOfferingDetails, Offering } from "@/lib/cms/types";
 import { uploadAdminMediaFile } from "@/lib/admin/media-upload-client";
-import { MAX_CALENDAR_LABELS } from "../constants";
+import { MAX_CALENDAR_LABELS, MAX_GALLERY_IMAGES } from "../constants";
 import type {
   FormNotice,
   PickerTarget,
@@ -227,14 +227,40 @@ export function useClassEditForm({
     if (target === "gallery") {
       setDetails((current) => ({
         ...current,
-        galleryImages: [...current.galleryImages, { image: url, alt: "", seoTitle: "", seoDescription: "", order: current.galleryImages.length }],
+        galleryImages: current.galleryImages.length >= MAX_GALLERY_IMAGES
+          ? current.galleryImages
+          : [...current.galleryImages, {
+              image: url,
+              alt: "",
+              seoTitle: "",
+              seoDescription: "",
+              modalDescription: "",
+              showCta: false,
+              ctaLabel: "Más información",
+              ctaHref: "",
+              ctaNewTab: false,
+              order: current.galleryImages.length,
+            }],
       }));
       setIsDirty(true);
     }
     if (target === "gallery:new") {
       setDetails((current) => ({
         ...current,
-        galleryImages: [...current.galleryImages, { image: url, alt: "", seoTitle: "", seoDescription: "", order: current.galleryImages.length }],
+        galleryImages: current.galleryImages.length >= MAX_GALLERY_IMAGES
+          ? current.galleryImages
+          : [...current.galleryImages, {
+              image: url,
+              alt: "",
+              seoTitle: "",
+              seoDescription: "",
+              modalDescription: "",
+              showCta: false,
+              ctaLabel: "Más información",
+              ctaHref: "",
+              ctaNewTab: false,
+              order: current.galleryImages.length,
+            }],
       }));
       setIsDirty(true);
     }

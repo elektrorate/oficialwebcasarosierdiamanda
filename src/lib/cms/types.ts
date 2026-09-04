@@ -15,6 +15,11 @@ export interface OfferingGalleryImage {
   alt: string;
   seoTitle?: string;
   seoDescription?: string;
+  modalDescription?: string;
+  showCta?: boolean;
+  ctaLabel?: string;
+  ctaHref?: string;
+  ctaNewTab?: boolean;
   order: number;
 }
 

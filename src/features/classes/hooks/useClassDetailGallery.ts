@@ -9,11 +9,16 @@ export type ClassDetailGalleryItem = {
   poster: string;
   alt: string;
   seoTitle?: string;
+  modalDescription?: string;
+  showCta?: boolean;
+  ctaLabel?: string;
+  ctaHref?: string;
+  ctaNewTab?: boolean;
   videoUrl?: string;
 };
 
 export function buildClassDetailGalleryItems(item: ExperienceItem): ClassDetailGalleryItem[] {
-  const images = item.galleryImages.filter((entry) => Boolean(entry.image));
+  const images = item.galleryImages.filter((entry) => Boolean(entry.image)).slice(0, 8);
   const videoUrl = item.videoUrl?.trim();
 
   if (videoUrl) {
@@ -23,7 +28,18 @@ export function buildClassDetailGalleryItems(item: ExperienceItem): ClassDetailG
       { id: "featured-video", kind: "video", poster, alt, seoTitle: images[0]?.seoTitle, videoUrl },
     ];
     images.forEach((entry, index) => {
-      entries.push({ id: `image-${index}`, kind: "image", poster: entry.image, alt: entry.alt, seoTitle: entry.seoTitle });
+      entries.push({
+        id: `image-${index}`,
+        kind: "image",
+        poster: entry.image,
+        alt: entry.alt,
+        seoTitle: entry.seoTitle,
+        modalDescription: entry.modalDescription,
+        showCta: entry.showCta,
+        ctaLabel: entry.ctaLabel,
+        ctaHref: entry.ctaHref,
+        ctaNewTab: entry.ctaNewTab,
+      });
     });
     return entries;
   }
@@ -34,6 +50,11 @@ export function buildClassDetailGalleryItems(item: ExperienceItem): ClassDetailG
     poster: entry.image,
     alt: entry.alt,
     seoTitle: entry.seoTitle,
+    modalDescription: entry.modalDescription,
+    showCta: entry.showCta,
+    ctaLabel: entry.ctaLabel,
+    ctaHref: entry.ctaHref,
+    ctaNewTab: entry.ctaNewTab,
   }));
 }
 

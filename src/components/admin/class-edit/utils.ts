@@ -390,6 +390,11 @@ export function toClassDetails(offering: Offering): ClassOfferingDetails {
           alt: typeof entry.alt === "string" ? entry.alt : "",
           seoTitle: typeof entry.seoTitle === "string" ? entry.seoTitle : "",
           seoDescription: typeof entry.seoDescription === "string" ? entry.seoDescription : "",
+          modalDescription: typeof entry.modalDescription === "string" ? entry.modalDescription : "",
+          showCta: entry.showCta === true,
+          ctaLabel: typeof entry.ctaLabel === "string" ? entry.ctaLabel : "Más información",
+          ctaHref: typeof entry.ctaHref === "string" ? entry.ctaHref : "",
+          ctaNewTab: entry.ctaNewTab === true,
           order: typeof entry.order === "number" ? entry.order : index,
         };
       })
@@ -525,7 +530,17 @@ export function buildPreviewItem({
   const galleryImages = details.galleryImages
     .filter((item) => item.image)
     .sort((a, b) => (a.order ?? 0) - (b.order ?? 0))
-    .map((item) => ({ image: item.image, alt: item.alt }));
+    .map((item) => ({
+      image: item.image,
+      alt: item.alt,
+      seoTitle: item.seoTitle,
+      seoDescription: item.seoDescription,
+      modalDescription: item.modalDescription,
+      showCta: item.showCta,
+      ctaLabel: item.ctaLabel,
+      ctaHref: item.ctaHref,
+      ctaNewTab: item.ctaNewTab,
+    }));
   const heroImage = details.heroVariant === "image" || details.heroVariant === "presentation"
     ? details.heroImage || DEFAULT_HERO_IMAGE
     : galleryImages[0]?.image || details.videoPoster || details.heroImage || DEFAULT_HERO_IMAGE;
@@ -882,6 +897,11 @@ function normalizeGalleryImagesForPersist(details: ClassOfferingDetails): ClassO
       alt: item.alt.trim(),
       seoTitle: item.seoTitle?.trim() ?? "",
       seoDescription: item.seoDescription?.trim() ?? "",
+      modalDescription: item.modalDescription?.trim() ?? "",
+      showCta: item.showCta === true,
+      ctaLabel: item.ctaLabel?.trim() ?? "",
+      ctaHref: item.ctaHref?.trim() ?? "",
+      ctaNewTab: item.ctaNewTab === true,
       order,
     }));
 }

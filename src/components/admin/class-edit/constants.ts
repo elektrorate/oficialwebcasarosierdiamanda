@@ -7,6 +7,7 @@ import type { PreviewDevice, TabKey } from "./types";
 
 export const DEFAULT_HERO_IMAGE = "/img/hero-bg.jpg";
 export const MAX_CALENDAR_LABELS = 6;
+export const MAX_GALLERY_IMAGES = 8;
 export const FORM_ID = "class-edit-form";
 export const SEO_MAX_TITLE_LENGTH = 70;
 export const SEO_MAX_DESCRIPTION_LENGTH = 160;

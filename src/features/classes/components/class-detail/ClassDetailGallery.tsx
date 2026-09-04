@@ -1,10 +1,11 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState, type RefObject } from "react";
 import type { ExperienceItem } from "@/data/types";
 import { assetPath } from "@/lib/assets";
 import { classNames } from "@/lib/utils";
 import { useClassDetailGallery, type ClassDetailGalleryItem } from "../../hooks/useClassDetailGallery";
+import { ClassDetailGalleryModal } from "./ClassDetailGalleryModal";
 import {
   isDirectVideoFile,
   offeringVideoEmbedUrl,
@@ -24,11 +25,15 @@ function GalleryMainMedia({
   title,
   isPlaying,
   onPlay,
+  onOpen,
+  openButtonRef,
 }: {
   item: ClassDetailGalleryItem;
   title: string;
   isPlaying: boolean;
   onPlay: () => void;
+  onOpen?: () => void;
+  openButtonRef: RefObject<HTMLButtonElement | null>;
 }) {
   const posterSrc = assetPath(item.poster);
   const lastPosterSrc = useRef(posterSrc);
@@ -105,6 +110,15 @@ function GalleryMainMedia({
       {showPlay ? (
         <GalleryPlayButton label={`Reproducir video de ${title}`} onClick={onPlay} />
       ) : null}
+      {onOpen ? (
+        <button
+          ref={openButtonRef}
+          className="class-gallery__expand"
+          type="button"
+          aria-label={`Ampliar imagen de ${title}`}
+          onClick={onOpen}
+        />
+      ) : null}
     </div>
   );
 }
@@ -115,6 +129,12 @@ type Props = {
 
 export function ClassDetailGallery({ item }: Props) {
   const gallery = useClassDetailGallery(item);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const openButtonRef = useRef<HTMLButtonElement>(null);
+  const closeModal = useCallback(() => {
+    setIsModalOpen(false);
+    window.requestAnimationFrame(() => openButtonRef.current?.focus());
+  }, []);
 
   if (!gallery.items.length || !gallery.activeItem) return null;
 
@@ -126,6 +146,8 @@ export function ClassDetailGallery({ item }: Props) {
           title={item.title}
           isPlaying={gallery.isPlaying}
           onPlay={gallery.startPlayback}
+          onOpen={gallery.activeItem.kind === "image" ? () => setIsModalOpen(true) : undefined}
+          openButtonRef={openButtonRef}
         />
       </div>
       {gallery.items.length > 1 ? (
@@ -145,7 +167,7 @@ export function ClassDetailGallery({ item }: Props) {
                   aria-current={isActive ? "true" : undefined}
                   onClick={() => gallery.selectIndex(index)}
                 >
-                  <img src={assetPath(mediaItem.poster)} alt={mediaItem.alt || item.title} title={mediaItem.seoTitle || undefined} className="w-full aspect-square object-cover" />
+                  <img src={assetPath(mediaItem.poster)} alt={mediaItem.alt || item.title} title={mediaItem.seoTitle || undefined} loading="lazy" decoding="async" className="w-full aspect-square object-cover" />
                   {mediaItem.kind === "video" ? (
                     <span className="class-gallery__thumb-play" aria-hidden="true" />
                   ) : null}
@@ -154,6 +176,15 @@ export function ClassDetailGallery({ item }: Props) {
             );
           })}
         </div>
+      ) : null}
+      {isModalOpen ? (
+        <ClassDetailGalleryModal
+          activeIndex={gallery.activeIndex}
+          items={gallery.items}
+          offeringTitle={item.title}
+          onClose={closeModal}
+          onSelect={gallery.selectIndex}
+        />
       ) : null}
     </div>
   );
