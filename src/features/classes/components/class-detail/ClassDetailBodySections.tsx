@@ -40,6 +40,20 @@ export function ClassDetailLearningSection({
   );
 }
 
+export function ClassDetailPostLearningSection({ item }: { item: ExperienceItem }) {
+  const title = item.postLearningTitle?.trim() ?? "";
+  const description = item.postLearningDescription?.trim() ?? "";
+
+  if (item.showPostLearningSection !== true || (!title && !description)) return null;
+
+  return (
+    <section className="class-detail__text-block class-detail__post-learning-section">
+      {title ? <h2>{title}</h2> : null}
+      {description ? <p>{description}</p> : null}
+    </section>
+  );
+}
+
 export function ClassDetailPostFactsSections({
   item,
   showIncluded,

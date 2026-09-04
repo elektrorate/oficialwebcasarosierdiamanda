@@ -200,6 +200,9 @@ export interface ExperienceItem {
   learningSectionTitle?: string;
   whatYouWillLearn: string[];
   whatYouWillLearnTypography?: RichTextTypography;
+  showPostLearningSection?: boolean;
+  postLearningTitle?: string;
+  postLearningDescription?: string;
   participationSectionTitle?: string;
   whoCanJoin: string[];
   whoCanJoinTypography?: RichTextTypography;

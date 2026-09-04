@@ -698,6 +698,9 @@ export function buildPreviewItem({
     whatYouWillLearnTypography: normalizeRichTextTypography(
       details.content.learningContentTypography ?? DEFAULT_DESCRIPTION_TYPOGRAPHY,
     ),
+    showPostLearningSection: details.content.showPostLearningSection === true,
+    postLearningTitle: details.content.postLearningTitle.trim(),
+    postLearningDescription: details.content.postLearningDescription.trim(),
     participationSectionTitle: details.content.participationSectionTitle.trim() || "¿Quién puede participar?",
     whoCanJoin: toLines(details.content.participationContent),
     whoCanJoinTypography: normalizeRichTextTypography(
@@ -935,6 +938,9 @@ function normalizeContentForPersist(content: ClassOfferingDetails["content"]): C
     learningSectionTitle: content.learningSectionTitle.trim(),
     learningContent: content.learningContent.trim(),
     learningContentTypography: normalizeContentTypography(content.learningContentTypography),
+    showPostLearningSection: content.showPostLearningSection === true,
+    postLearningTitle: content.postLearningTitle.trim(),
+    postLearningDescription: content.postLearningDescription.trim(),
     participationSectionTitle: content.participationSectionTitle.trim(),
     participationContent: content.participationContent.trim(),
     participationContentTypography: normalizeContentTypography(content.participationContentTypography),

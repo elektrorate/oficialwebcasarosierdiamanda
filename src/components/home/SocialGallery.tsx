@@ -126,7 +126,7 @@ export function SocialGallery({
       >
         <div className="container max-w-[980px] mx-auto">
           <header className="text-center mb-[clamp(22px,3vw,34px)]">
-            <h2 className="m-0 text-transform-none tracking-[0.01em] text-[clamp(26px,3vw,38px)] leading-[1.12] font-light text-[#2e2e2e] [font-family:var(--font-display)]">
+            <h2 className="m-0 text-transform-none tracking-[0.01em] text-[clamp(22.1px,2.55vw,32.3px)] leading-[1.12] font-light text-[#2e2e2e] [font-family:var(--font-display)]">
               {title.split("\n").map((line, index, lines) => (
                 <span key={line}>
                   {line}

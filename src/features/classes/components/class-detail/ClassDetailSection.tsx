@@ -4,6 +4,7 @@ import type { ExperienceItem } from "@/data/types";
 import { useClassDetailViewModel } from "../../hooks/useClassDetailViewModel";
 import {
   ClassDetailLearningSection,
+  ClassDetailPostLearningSection,
   ClassDetailPostFactsSections,
 } from "./ClassDetailBodySections";
 import { ClassDetailEnrollActions } from "./ClassDetailEnrollActions";
@@ -53,7 +54,19 @@ export function ClassDetailSection({ item, titleLevel = "h1" }: Props) {
                 item={item}
                 hasLearningContent={viewModel.hasLearningContent}
               />
+              <ClassDetailPostLearningSection item={item} />
               <ClassDetailPriceDuration item={item} />
+              {viewModel.showEnrollAction && viewModel.showEnrollAtEnd ? (
+                <div className="class-detail__enroll-placement class-detail__enroll-placement--desktop">
+                  <ClassDetailEnrollActions
+                    consultHref=""
+                    consultLabel={viewModel.consultLabel}
+                    enrollHref={viewModel.enrollHref}
+                    enrollLabel={viewModel.enrollLabel}
+                    showEnroll
+                  />
+                </div>
+              ) : null}
               <ClassDetailEnrollActions
                 consultHref={viewModel.consultHref}
                 consultLabel={viewModel.consultLabel}
@@ -69,13 +82,15 @@ export function ClassDetailSection({ item, titleLevel = "h1" }: Props) {
                 programItems={viewModel.programItems}
               />
               {viewModel.showEnrollAction && viewModel.showEnrollAtEnd ? (
-                <ClassDetailEnrollActions
-                  consultHref=""
-                  consultLabel={viewModel.consultLabel}
-                  enrollHref={viewModel.enrollHref}
-                  enrollLabel={viewModel.enrollLabel}
-                  showEnroll
-                />
+                <div className="class-detail__enroll-placement class-detail__enroll-placement--mobile">
+                  <ClassDetailEnrollActions
+                    consultHref=""
+                    consultLabel={viewModel.consultLabel}
+                    enrollHref={viewModel.enrollHref}
+                    enrollLabel={viewModel.enrollLabel}
+                    showEnroll
+                  />
+                </div>
               ) : null}
             </section>
           </div>

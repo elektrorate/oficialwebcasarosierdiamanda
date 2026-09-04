@@ -487,6 +487,9 @@ function cmsOfferingToExperienceItem(
     whatYouWillLearnTypography: normalizeRichTextTypography(
       content.learningContentTypography ?? DEFAULT_DESCRIPTION_TYPOGRAPHY,
     ),
+    showPostLearningSection: content.showPostLearningSection === true,
+    postLearningTitle: stringValue(content.postLearningTitle),
+    postLearningDescription: stringValue(content.postLearningDescription),
     participationSectionTitle: stringValue(content.participationSectionTitle) || "¿Quién puede participar?",
     whoCanJoin: markdownLines(hasClassParticipationContent ? content.participationContent : content.participationContent || details.whoCanJoin),
     whoCanJoinTypography: normalizeRichTextTypography(

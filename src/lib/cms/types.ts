@@ -129,6 +129,9 @@ export interface ClassOfferingContent {
   learningSectionTitle: string;
   learningContent: string;
   learningContentTypography?: RichTextTypography;
+  showPostLearningSection: boolean;
+  postLearningTitle: string;
+  postLearningDescription: string;
   participationSectionTitle: string;
   participationContent: string;
   participationContentTypography?: RichTextTypography;

@@ -1,6 +1,7 @@
 "use client";
 
 import { memo } from "react";
+import { TextAreaField } from "@/components/admin/class-edit/fields";
 import Switch from "@/components/ui/Switch";
 import type { ClassOfferingContent } from "@/lib/cms/types";
 import type { RichTextTypography } from "@/lib/cms/rich-text-typography";
@@ -51,6 +52,30 @@ function ClassContentLearningFieldsComponent({
           setField("learningContentTypography", learningContentTypography)
         }
       />
+
+      <div className="space-y-5 border-t border-outline-variant pt-5">
+        <Switch
+          checked={content.showPostLearningSection}
+          label="Mostrar bloque adicional después de ¿Qué aprenderás?"
+          description="El título y la descripción permanecen guardados aunque el bloque esté oculto."
+          onCheckedChange={(checked) => setField("showPostLearningSection", checked)}
+        />
+
+        <ClassContentTextField
+          label="Título del bloque adicional"
+          value={content.postLearningTitle}
+          placeholder="Escribe el título"
+          onChange={(event) => setField("postLearningTitle", event.target.value)}
+        />
+
+        <TextAreaField
+          label="Descripción del bloque adicional"
+          value={content.postLearningDescription}
+          placeholder="Escribe la descripción"
+          className="min-h-[140px]"
+          onChange={(event) => setField("postLearningDescription", event.target.value)}
+        />
+      </div>
     </div>
   );
 }
