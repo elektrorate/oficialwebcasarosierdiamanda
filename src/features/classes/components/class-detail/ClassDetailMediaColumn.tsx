@@ -1,5 +1,5 @@
 import { MarkdownContent } from "@/components/ui/MarkdownContent";
-import type { ExperienceAdditionalInfoBlock, ExperienceItem } from "@/data/types";
+import type { ExperienceItem } from "@/data/types";
 import type { CalendarLabel } from "@/lib/cms/types";
 import {
   DEFAULT_DESCRIPTION_TYPOGRAPHY,
@@ -14,23 +14,6 @@ type Props = {
   calendarLabels: CalendarLabel[];
 };
 
-function AdditionalInfoCard({ block }: { block: ExperienceAdditionalInfoBlock }) {
-  return (
-    <div className="class-sidecard class-sidecard--soft">
-      {block.title.trim() ? <h3>{block.title}</h3> : null}
-      {block.content.trim() ? (
-        <MarkdownContent
-          source={block.content}
-          className="class-detail__content-copy"
-          style={richTextTypographyStyle(
-            normalizeRichTextTypography(block.contentTypography ?? DEFAULT_DESCRIPTION_TYPOGRAPHY),
-          )}
-        />
-      ) : null}
-    </div>
-  );
-}
-
 export function ClassDetailSidebarColumn({
   item,
   showPaymentMethods,
@@ -38,22 +21,6 @@ export function ClassDetailSidebarColumn({
   calendarLabels,
 }: Props) {
   if (!hasSideContent) return null;
-
-  const additionalInfoBlocks: ExperienceAdditionalInfoBlock[] = [
-    ...(item.showAdditionalInfoSection !== false && item.additionalInfo.trim()
-      ? [{
-          id: "primary-additional-info",
-          title: item.additionalInfoTitle?.trim() || "Informacion adicional",
-          content: item.additionalInfo,
-          contentTypography: item.additionalInfoTypography,
-          enabled: true,
-          order: -1,
-        }]
-      : []),
-    ...(item.additionalInfoBlocks ?? []).filter(
-      (block) => block.enabled && Boolean(block.title.trim() || block.content.trim()),
-    ),
-  ];
 
   return (
     <aside className="class-detail__side-column">
@@ -68,7 +35,18 @@ export function ClassDetailSidebarColumn({
         </div>
       ) : null}
 
-      {additionalInfoBlocks.map((block) => <AdditionalInfoCard key={block.id} block={block} />)}
+      {item.showAdditionalInfoSection !== false && item.additionalInfo.trim() ? (
+        <div className="class-sidecard class-sidecard--soft">
+          <h3>{item.additionalInfoTitle?.trim() || "Informacion adicional"}</h3>
+          <MarkdownContent
+            source={item.additionalInfo}
+            className="class-detail__content-copy"
+            style={richTextTypographyStyle(
+              normalizeRichTextTypography(item.additionalInfoTypography ?? DEFAULT_DESCRIPTION_TYPOGRAPHY),
+            )}
+          />
+        </div>
+      ) : null}
 
       <ClassDetailCalendarLabels item={item} labels={calendarLabels} />
     </aside>

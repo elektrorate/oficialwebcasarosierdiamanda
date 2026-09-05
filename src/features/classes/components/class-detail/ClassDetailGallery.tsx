@@ -151,7 +151,7 @@ export function ClassDetailGallery({ item }: Props) {
         />
       </div>
       {gallery.items.length > 1 ? (
-        <div className={classNames("thumbnail-carousel__thumbs", "class-gallery__thumbs grid grid-cols-4 gap-2.5 justify-self-center w-full")}>
+        <div className={classNames("thumbnail-carousel__thumbs", "class-gallery__thumbs")}>
           {gallery.items.map((mediaItem, index) => {
             const isActive = index === gallery.activeIndex;
             return (

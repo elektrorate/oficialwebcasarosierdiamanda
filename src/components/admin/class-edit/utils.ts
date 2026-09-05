@@ -2,7 +2,7 @@ import type { ExperienceItem, ExperienceKind } from "@/data/types";
 import type {
   CalendarLabel,
   ClassOfferingDetails,
-  ClassOfferingExtraInfoBlock,
+  ClassOfferingPostLearningBlock,
   ClassScheduleDay,
   Offering,
   OfferingGalleryImage,
@@ -161,20 +161,17 @@ export function calendarMonthCells(year: number, month: number) {
   ];
 }
 
-function normalizeExtraInfoBlocks(value: unknown): ClassOfferingExtraInfoBlock[] {
+function normalizePostLearningBlocks(value: unknown): ClassOfferingPostLearningBlock[] {
   if (!Array.isArray(value)) return [];
   return value
     .map((entry, index) => {
       const source = entry && typeof entry === "object"
-        ? (entry as Partial<ClassOfferingExtraInfoBlock>)
+        ? (entry as Partial<ClassOfferingPostLearningBlock>)
         : {};
       return {
-        id: firstText(source.id) || createId("extra-info"),
+        id: firstText(source.id) || createId("post-learning"),
         title: firstText(source.title),
-        content: firstText(source.content),
-        contentTypography: normalizeRichTextTypography(
-          source.contentTypography ?? DEFAULT_DESCRIPTION_TYPOGRAPHY,
-        ),
+        description: firstText(source.description),
         enabled: source.enabled !== false,
         order: Number.isFinite(Number(source.order)) ? Number(source.order) : index,
       };
@@ -271,7 +268,7 @@ export function toClassDetails(offering: Offering): ClassOfferingDetails {
     extraInfoTypography: normalizeRichTextTypography(
       persistedContentFields.extraInfoTypography ?? legacyContent.extraInfoTypography ?? DEFAULT_DESCRIPTION_TYPOGRAPHY,
     ),
-    extraInfoBlocks: normalizeExtraInfoBlocks(persistedContentFields.extraInfoBlocks),
+    postLearningBlocks: normalizePostLearningBlocks(persistedContentFields.postLearningBlocks),
     modules: (
       Array.isArray((persistedContent as Partial<ClassOfferingDetails["content"]>).modules) && (persistedContent as Partial<ClassOfferingDetails["content"]>).modules?.length
         ? (persistedContent as ClassOfferingDetails["content"]).modules
@@ -740,6 +737,7 @@ export function buildPreviewItem({
     showPostLearningSection: details.content.showPostLearningSection === true,
     postLearningTitle: details.content.postLearningTitle.trim(),
     postLearningDescription: details.content.postLearningDescription.trim(),
+    postLearningBlocks: normalizePostLearningBlocks(details.content.postLearningBlocks),
     participationSectionTitle: details.content.participationSectionTitle.trim() || "¿Quién puede participar?",
     whoCanJoin: toLines(details.content.participationContent),
     whoCanJoinTypography: normalizeRichTextTypography(
@@ -752,7 +750,6 @@ export function buildPreviewItem({
     additionalInfoTypography: normalizeRichTextTypography(
       details.content.extraInfoTypography ?? DEFAULT_DESCRIPTION_TYPOGRAPHY,
     ),
-    additionalInfoBlocks: normalizeExtraInfoBlocks(details.content.extraInfoBlocks),
     showIdeaPromptSection: details.showIdeaPromptSection === true,
     ctaHref: consultHref,
     ctaConsultHref: consultHref,
@@ -988,6 +985,12 @@ function normalizeContentForPersist(content: ClassOfferingDetails["content"]): C
     showPostLearningSection: content.showPostLearningSection === true,
     postLearningTitle: content.postLearningTitle.trim(),
     postLearningDescription: content.postLearningDescription.trim(),
+    postLearningBlocks: normalizePostLearningBlocks(content.postLearningBlocks).map((block, order) => ({
+      ...block,
+      title: block.title.trim(),
+      description: block.description.trim(),
+      order,
+    })),
     participationSectionTitle: content.participationSectionTitle.trim(),
     participationContent: content.participationContent.trim(),
     participationContentTypography: normalizeContentTypography(content.participationContentTypography),
@@ -999,13 +1002,6 @@ function normalizeContentForPersist(content: ClassOfferingDetails["content"]): C
     extraInfoTitle: content.extraInfoTitle?.trim(),
     showExtraInfoSection: content.showExtraInfoSection === true,
     extraInfoTypography: normalizeContentTypography(content.extraInfoTypography),
-    extraInfoBlocks: normalizeExtraInfoBlocks(content.extraInfoBlocks).map((block, order) => ({
-      ...block,
-      title: block.title.trim(),
-      content: block.content.trim(),
-      contentTypography: normalizeContentTypography(block.contentTypography),
-      order,
-    })),
     modulesSectionTitle: content.modulesSectionTitle.trim(),
     modulesAccordionTitle: content.modulesAccordionTitle.trim(),
     modules: content.modules.map((mod, order) => ({

@@ -88,23 +88,20 @@ function normalizeActivities(value: unknown) {
   };
 }
 
-function normalizeAdditionalInfoBlocks(value: unknown) {
+function normalizePostLearningBlocks(value: unknown) {
   if (!Array.isArray(value)) return [];
   return value
     .map((item, index) => {
       const entry = item && typeof item === "object" ? (item as Record<string, unknown>) : {};
       return {
-        id: stringValue(entry.id) || `extra-info-${index}`,
+        id: stringValue(entry.id) || `post-learning-${index}`,
         title: stringValue(entry.title),
-        content: stringValue(entry.content),
-        contentTypography: normalizeRichTextTypography(
-          entry.contentTypography as Parameters<typeof normalizeRichTextTypography>[0],
-        ),
+        description: stringValue(entry.description),
         enabled: entry.enabled !== false,
         order: Number.isFinite(Number(entry.order)) ? Number(entry.order) : index,
       };
     })
-    .filter((item) => Boolean(item.title || item.content))
+    .filter((item) => Boolean(item.title || item.description))
     .sort((a, b) => a.order - b.order)
     .map((item, order) => ({ ...item, order }));
 }
@@ -521,6 +518,7 @@ function cmsOfferingToExperienceItem(
     showPostLearningSection: content.showPostLearningSection === true,
     postLearningTitle: stringValue(content.postLearningTitle),
     postLearningDescription: stringValue(content.postLearningDescription),
+    postLearningBlocks: normalizePostLearningBlocks(content.postLearningBlocks),
     participationSectionTitle: stringValue(content.participationSectionTitle) || "¿Quién puede participar?",
     whoCanJoin: markdownLines(hasClassParticipationContent ? content.participationContent : content.participationContent || details.whoCanJoin),
     whoCanJoinTypography: normalizeRichTextTypography(
@@ -534,7 +532,6 @@ function cmsOfferingToExperienceItem(
     additionalInfoTypography: normalizeRichTextTypography(
       content.extraInfoTypography ?? DEFAULT_DESCRIPTION_TYPOGRAPHY,
     ),
-    additionalInfoBlocks: normalizeAdditionalInfoBlocks(content.extraInfoBlocks),
     contactEmail: stringValue(content.contactEmail),
     modulesAccordionTitle: stringValue(content.modulesAccordionTitle),
     activitiesSection: normalizeActivities(content.activitiesSection),

@@ -41,16 +41,37 @@ export function ClassDetailLearningSection({
 }
 
 export function ClassDetailPostLearningSection({ item }: { item: ExperienceItem }) {
-  const title = item.postLearningTitle?.trim() ?? "";
-  const description = item.postLearningDescription?.trim() ?? "";
+  const blocks = [
+    ...(item.showPostLearningSection === true
+      ? [{
+          id: "primary-post-learning",
+          title: item.postLearningTitle?.trim() ?? "",
+          description: item.postLearningDescription?.trim() ?? "",
+        }]
+      : []),
+    ...(item.postLearningBlocks ?? [])
+      .filter((block) => block.enabled)
+      .map((block) => ({
+        id: block.id,
+        title: block.title.trim(),
+        description: block.description.trim(),
+      })),
+  ].filter((block) => Boolean(block.title || block.description));
 
-  if (item.showPostLearningSection !== true || (!title && !description)) return null;
+  if (blocks.length === 0) return null;
 
   return (
-    <section className="class-detail__text-block class-detail__post-learning-section">
-      {title ? <h2>{title}</h2> : null}
-      {description ? <p>{description}</p> : null}
-    </section>
+    <>
+      {blocks.map((block) => (
+        <section
+          className="class-detail__text-block class-detail__post-learning-section"
+          key={block.id}
+        >
+          {block.title ? <h2>{block.title}</h2> : null}
+          {block.description ? <p>{block.description}</p> : null}
+        </section>
+      ))}
+    </>
   );
 }
 

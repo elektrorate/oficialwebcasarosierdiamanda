@@ -58,11 +58,10 @@ export interface ExperienceActivitiesSection {
   items: ExperienceActivityItem[];
 }
 
-export interface ExperienceAdditionalInfoBlock {
+export interface ExperiencePostLearningBlock {
   id: string;
   title: string;
-  content: string;
-  contentTypography?: RichTextTypography;
+  description: string;
   enabled: boolean;
   order: number;
 }
@@ -217,6 +216,7 @@ export interface ExperienceItem {
   showPostLearningSection?: boolean;
   postLearningTitle?: string;
   postLearningDescription?: string;
+  postLearningBlocks?: ExperiencePostLearningBlock[];
   participationSectionTitle?: string;
   whoCanJoin: string[];
   whoCanJoinTypography?: RichTextTypography;
@@ -226,7 +226,6 @@ export interface ExperienceItem {
   additionalInfoTitle?: string;
   showAdditionalInfoSection?: boolean;
   additionalInfoTypography?: RichTextTypography;
-  additionalInfoBlocks?: ExperienceAdditionalInfoBlock[];
   contactEmail?: string;
   modulesAccordionTitle?: string;
   activitiesSection?: ExperienceActivitiesSection;

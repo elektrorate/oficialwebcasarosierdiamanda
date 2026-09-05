@@ -1,12 +1,17 @@
 import type { ShopItem } from "@/data/types";
 
+const MAX_SHOP_GALLERY_IMAGES = 8;
+
 export function shopItemGalleryImages(item: ShopItem): string[] {
-  const candidates = item.gallery.length ? item.gallery : [item.image];
+  const candidates = [item.image, ...item.gallery];
   const seen = new Set<string>();
-  return candidates.filter((src) => {
+  const result: string[] = [];
+  for (const src of candidates) {
     const key = src.trim();
-    if (!key || seen.has(key)) return false;
+    if (!key || seen.has(key)) continue;
     seen.add(key);
-    return true;
-  });
+    result.push(key);
+    if (result.length >= MAX_SHOP_GALLERY_IMAGES) break;
+  }
+  return result;
 }

@@ -4,7 +4,6 @@ import { memo } from "react";
 import Card from "@/components/ui/Card";
 import Switch from "@/components/ui/Switch";
 import type { ClassContentEditor } from "../hooks/useClassContentEditor";
-import { ClassContentAdditionalInfoBlocksEditor } from "./ClassContentAdditionalInfoBlocksEditor";
 import { ClassContentPaymentMethodsEditor } from "./ClassContentPaymentMethodsEditor";
 import { ClassContentRichTextField } from "./ClassContentRichTextField";
 import { ClassContentTextField } from "./ClassContentTextField";
@@ -18,11 +17,6 @@ type ClassContentMainCardProps = Pick<
   | "addPaymentMethod"
   | "updatePaymentMethod"
   | "removePaymentMethod"
-  | "addExtraInfoBlock"
-  | "updateExtraInfoBlock"
-  | "moveExtraInfoBlock"
-  | "removeExtraInfoBlock"
-  | "resolveModuleTypography"
 >;
 
 function ClassContentMainCardComponent({
@@ -33,11 +27,6 @@ function ClassContentMainCardComponent({
   addPaymentMethod,
   updatePaymentMethod,
   removePaymentMethod,
-  addExtraInfoBlock,
-  updateExtraInfoBlock,
-  moveExtraInfoBlock,
-  removeExtraInfoBlock,
-  resolveModuleTypography,
 }: ClassContentMainCardProps) {
   return (
     <Card padding="lg" className="space-y-5 rounded-2xl">
@@ -98,15 +87,6 @@ function ClassContentMainCardComponent({
         minHeight="150px"
         onChange={(value) => setField("extraInfo", value)}
         onTypographyChange={(extraInfoTypography) => setField("extraInfoTypography", extraInfoTypography)}
-      />
-
-      <ClassContentAdditionalInfoBlocksEditor
-        content={content}
-        addExtraInfoBlock={addExtraInfoBlock}
-        updateExtraInfoBlock={updateExtraInfoBlock}
-        moveExtraInfoBlock={moveExtraInfoBlock}
-        removeExtraInfoBlock={removeExtraInfoBlock}
-        resolveModuleTypography={resolveModuleTypography}
       />
 
       <div className="space-y-3 rounded-xl border border-outline-variant p-4">

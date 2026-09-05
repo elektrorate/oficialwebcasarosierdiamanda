@@ -14,6 +14,7 @@ export function defaultContent(): ClassOfferingContent {
     showPostLearningSection: false,
     postLearningTitle: "",
     postLearningDescription: "",
+    postLearningBlocks: [],
     participationSectionTitle: "",
     participationContent: "",
     participationContentTypography: { ...DEFAULT_DESCRIPTION_TYPOGRAPHY },
@@ -26,7 +27,6 @@ export function defaultContent(): ClassOfferingContent {
     extraInfoTitle: "",
     showExtraInfoSection: false,
     extraInfoTypography: { ...DEFAULT_DESCRIPTION_TYPOGRAPHY },
-    extraInfoBlocks: [],
     showEnrollButtonAtEnd: true,
     activitiesSection: { enabled: false, title: "", content: "", items: [] },
     modulesSectionTitle: "",
@@ -47,8 +47,8 @@ export function createActivityId() {
     : `act-${Date.now()}-${Math.random().toString(36).slice(2)}`;
 }
 
-export function createExtraInfoBlockId() {
+export function createPostLearningBlockId() {
   return typeof crypto !== "undefined" && "randomUUID" in crypto
     ? crypto.randomUUID()
-    : `extra-${Date.now()}-${Math.random().toString(36).slice(2)}`;
+    : `post-learning-${Date.now()}-${Math.random().toString(36).slice(2)}`;
 }

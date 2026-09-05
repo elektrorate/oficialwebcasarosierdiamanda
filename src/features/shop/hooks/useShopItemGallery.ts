@@ -14,10 +14,26 @@ export function useShopItemGallery(item: ShopItem) {
     setActiveIndex(index);
   }, []);
 
+  const selectRelative = useCallback(
+    (direction: -1 | 1) => {
+      setActiveIndex((current) => {
+        const base = images.length ? Math.min(current, images.length - 1) : 0;
+        return (base + direction + images.length) % images.length;
+      });
+    },
+    [images.length],
+  );
+
+  const goPrevious = useCallback(() => selectRelative(-1), [selectRelative]);
+  const goNext = useCallback(() => selectRelative(1), [selectRelative]);
+
   return {
     images,
     activeIndex: safeIndex,
     activeImage,
     selectImage,
+    selectRelative,
+    goPrevious,
+    goNext,
   };
 }

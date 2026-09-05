@@ -1,4 +1,8 @@
+"use client";
+
+import { useEffect, useRef, useState } from "react";
 import { assetPath } from "@/lib/assets";
+import type { RefObject } from "react";
 import type { ShopProductBadge } from "@/data/types";
 import { ShopProductBadgeLabel } from "../catalog/ShopProductBadgeLabel";
 
@@ -9,6 +13,8 @@ type Props = {
   activeImage: string;
   badge: ShopProductBadge | null;
   onSelectImage: (index: number) => void;
+  onOpenModal: () => void;
+  expandButtonRef: RefObject<HTMLButtonElement | null>;
 };
 
 export function ShopItemGalleryView({
@@ -18,9 +24,58 @@ export function ShopItemGalleryView({
   activeImage,
   badge,
   onSelectImage,
+  onOpenModal,
+  expandButtonRef,
 }: Props) {
+  const src = assetPath(activeImage);
+  const lastSrc = useRef(src);
+  const swapTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const [previousSrc, setPreviousSrc] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (lastSrc.current === src) return;
+    setPreviousSrc(lastSrc.current);
+    lastSrc.current = src;
+
+    if (swapTimeout.current) clearTimeout(swapTimeout.current);
+    swapTimeout.current = setTimeout(() => {
+      setPreviousSrc(null);
+      swapTimeout.current = null;
+    }, 400);
+
+    return () => {
+      if (swapTimeout.current) {
+        clearTimeout(swapTimeout.current);
+        swapTimeout.current = null;
+      }
+    };
+  }, [src]);
+
   return (
     <div className="shop-item-gallery" aria-label={`Galería de ${productName}`}>
+      <figure className="shop-item-gallery__main">
+        <img className="shop-item-gallery__ghost" src={src} alt="" aria-hidden="true" />
+        <img className="shop-item-gallery__img" src={src} alt={productName} />
+        {previousSrc ? (
+          <img
+            className="shop-item-gallery__img shop-item-gallery__img--previous"
+            src={previousSrc}
+            alt=""
+            aria-hidden="true"
+          />
+        ) : null}
+        {badge ? <ShopProductBadgeLabel badge={badge} /> : null}
+        {images.length > 1 ? (
+          <button
+            ref={expandButtonRef}
+            className="shop-item-gallery__expand"
+            type="button"
+            aria-label={`Ampliar imagen de ${productName}`}
+            onClick={onOpenModal}
+          />
+        ) : null}
+      </figure>
+
       {images.length > 1 ? (
         <div className="shop-item-gallery__thumbs" role="tablist" aria-label="Miniaturas">
           {images.map((image, index) => {
@@ -35,18 +90,12 @@ export function ShopItemGalleryView({
                 className={`shop-item-gallery__thumb${isActive ? " is-active" : ""}`}
                 onClick={() => onSelectImage(index)}
               >
-                {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img src={assetPath(image)} alt="" loading="lazy" decoding="async" />
               </button>
             );
           })}
         </div>
       ) : null}
-      <figure className="shop-item-gallery__main">
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src={assetPath(activeImage)} alt={productName} />
-        {badge ? <ShopProductBadgeLabel badge={badge} /> : null}
-      </figure>
     </div>
   );
 }

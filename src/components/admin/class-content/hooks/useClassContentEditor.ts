@@ -4,11 +4,10 @@ import { useCallback, useEffect, useMemo, useRef } from "react";
 import type {
   ClassOfferingActivityItem,
   ClassOfferingContent,
-  ClassOfferingExtraInfoBlock,
   ClassOfferingModule,
 } from "@/lib/cms/types";
 import { DEFAULT_DESCRIPTION_TYPOGRAPHY } from "@/lib/cms/rich-text-typography";
-import { createActivityId, createExtraInfoBlockId, createModuleId } from "../defaultContent";
+import { createActivityId, createModuleId } from "../defaultContent";
 import { resolveContentTypography } from "../typography";
 
 export type ClassContentEditorProps = {
@@ -147,67 +146,6 @@ export function useClassContentEditor({ content, onChange, onDirty }: ClassConte
     [setPaymentMethods],
   );
 
-  const addExtraInfoBlock = useCallback(() => {
-    const current = contentRef.current;
-    const blocks = current.extraInfoBlocks ?? [];
-    commit({
-      ...current,
-      extraInfoBlocks: [
-        ...blocks,
-        {
-          id: createExtraInfoBlockId(),
-          title: "",
-          content: "",
-          contentTypography: { ...DEFAULT_DESCRIPTION_TYPOGRAPHY },
-          enabled: true,
-          order: blocks.length,
-        },
-      ],
-    });
-  }, [commit]);
-
-  const updateExtraInfoBlock = useCallback(
-    (index: number, patch: Partial<ClassOfferingExtraInfoBlock>) => {
-      const current = contentRef.current;
-      commit({
-        ...current,
-        extraInfoBlocks: (current.extraInfoBlocks ?? []).map((item, itemIndex) =>
-          itemIndex === index ? { ...item, ...patch } : item,
-        ),
-      });
-    },
-    [commit],
-  );
-
-  const moveExtraInfoBlock = useCallback(
-    (from: number, to: number) => {
-      const current = contentRef.current;
-      const blocks = [...(current.extraInfoBlocks ?? [])];
-      if (to < 0 || to >= blocks.length || from === to) return;
-      const [moved] = blocks.splice(from, 1);
-      blocks.splice(to, 0, moved);
-      commit({
-        ...current,
-        extraInfoBlocks: blocks.map((item, order) => ({ ...item, order })),
-      });
-    },
-    [commit],
-  );
-
-  const removeExtraInfoBlock = useCallback(
-    (index: number) => {
-      if (!window.confirm("¿Eliminar este bloque de información adicional?")) return;
-      const current = contentRef.current;
-      commit({
-        ...current,
-        extraInfoBlocks: (current.extraInfoBlocks ?? [])
-          .filter((_, itemIndex) => itemIndex !== index)
-          .map((item, order) => ({ ...item, order })),
-      });
-    },
-    [commit],
-  );
-
   const updateActivitiesSection = useCallback(
     (patch: Partial<ClassOfferingContent["activitiesSection"]>) => {
       const current = contentRef.current;
@@ -281,10 +219,6 @@ export function useClassContentEditor({ content, onChange, onDirty }: ClassConte
       addPaymentMethod,
       updatePaymentMethod,
       removePaymentMethod,
-      addExtraInfoBlock,
-      updateExtraInfoBlock,
-      moveExtraInfoBlock,
-      removeExtraInfoBlock,
       updateActivitiesSection,
       addActivity,
       updateActivity,
@@ -303,10 +237,6 @@ export function useClassContentEditor({ content, onChange, onDirty }: ClassConte
       removeActivity,
       removeModule,
       removePaymentMethod,
-      addExtraInfoBlock,
-      updateExtraInfoBlock,
-      moveExtraInfoBlock,
-      removeExtraInfoBlock,
       setField,
       typography,
       updateActivity,

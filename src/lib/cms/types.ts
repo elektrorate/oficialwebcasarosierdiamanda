@@ -124,11 +124,10 @@ export interface ClassOfferingActivityItem {
   order: number;
 }
 
-export interface ClassOfferingExtraInfoBlock {
+export interface ClassOfferingPostLearningBlock {
   id: string;
   title: string;
-  content: string;
-  contentTypography?: RichTextTypography;
+  description: string;
   enabled: boolean;
   order: number;
 }
@@ -146,6 +145,7 @@ export interface ClassOfferingContent {
   showPostLearningSection: boolean;
   postLearningTitle: string;
   postLearningDescription: string;
+  postLearningBlocks: ClassOfferingPostLearningBlock[];
   participationSectionTitle: string;
   participationContent: string;
   participationContentTypography?: RichTextTypography;
@@ -158,7 +158,6 @@ export interface ClassOfferingContent {
   extraInfoTitle?: string;
   showExtraInfoSection?: boolean;
   extraInfoTypography?: RichTextTypography;
-  extraInfoBlocks: ClassOfferingExtraInfoBlock[];
   showEnrollButtonAtEnd: boolean;
   activitiesSection: {
     enabled: boolean;
