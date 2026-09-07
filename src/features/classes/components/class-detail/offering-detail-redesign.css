@@ -829,11 +829,11 @@ body.class-detail-page {
   }
 
   .class-detail-page:is([data-promo-page="class"], [data-promo-page="workshop"], [data-promo-page="experience"], [data-promo-page="gift-card"]) .class-detail--proposal .class-detail__facts--fit .class-detail__fact-block--schedule .class-detail__schedule-item h4 {
-    font-size: 8.35px;
+    font-size: 9.19px;
   }
 
   .class-detail-page:is([data-promo-page="class"], [data-promo-page="workshop"], [data-promo-page="experience"], [data-promo-page="gift-card"]) .class-detail--proposal .class-detail__facts--fit .class-detail__fact-block--schedule .class-detail__schedule-item p {
-    font-size: 9.11px;
+    font-size: 10.02px;
   }
 }
 
