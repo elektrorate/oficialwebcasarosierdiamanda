@@ -96,7 +96,7 @@ export default function ProductsTable({
       action: "trash",
       title: "Mover a papelera",
       message: `Se moverá "${product.name}" a la papelera. Puedes restaurarlo después desde Papelera.`,
-      confirmLabel: "Papelera",
+      confirmLabel: "Mover a papelera",
     });
   }
 
@@ -114,7 +114,6 @@ export default function ProductsTable({
           <button className="shop-product-menu__item" type="button" disabled={rowPending} onClick={() => run(product.id, nextAction)}>
             {pendingAction === `${product.id}:${nextAction}` ? pendingLabel : nextLabel}
           </button>
-          <button className="shop-product-menu__item is-danger" type="button" disabled={rowPending} onClick={() => requestTrash(product)}>Papelera</button>
         </div>
       </details>
     );
@@ -166,6 +165,14 @@ export default function ProductsTable({
                           <div className="shop-product-actions">
                             <a className="shop-product-edit" href={`/admin/shop/products/${product.id}/edit`}>Editar</a>
                             {renderMenu(product)}
+                            <button
+                              className="shop-product-delete"
+                              type="button"
+                              disabled={pendingAction?.startsWith(`${product.id}:`)}
+                              onClick={() => requestTrash(product)}
+                            >
+                              {pendingAction === `${product.id}:trash` ? "Eliminando..." : "Eliminar"}
+                            </button>
                           </div>
                         </td>
                       </tr>
@@ -195,6 +202,14 @@ export default function ProductsTable({
                     <div className="shop-product-card__actions">
                       <a className="shop-product-edit" href={`/admin/shop/products/${product.id}/edit`}>Editar</a>
                       {renderMenu(product)}
+                      <button
+                        className="shop-product-delete"
+                        type="button"
+                        disabled={pendingAction?.startsWith(`${product.id}:`)}
+                        onClick={() => requestTrash(product)}
+                      >
+                        {pendingAction === `${product.id}:trash` ? "Eliminando..." : "Eliminar"}
+                      </button>
                     </div>
                   </article>
                 );

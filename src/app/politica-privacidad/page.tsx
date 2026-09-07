@@ -3,7 +3,8 @@ import { PrivacyPolicyPage } from "@/features/legal/PrivacyPolicyPage";
 
 export const metadata: Metadata = {
   title: "Política de privacidad",
-  description: "Política de privacidad de Casa Rosier."
+  description: "Política de privacidad de Casa Rosier.",
+  alternates: { canonical: "/politica-privacidad" },
 };
 
 export const revalidate = 900;

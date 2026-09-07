@@ -11,7 +11,7 @@
     "typecheck": "tsc --noEmit",
     "supabase:push": "npx supabase db push",
     "supabase:seed": "node scripts/seed-supabase.mjs",
-    "test:backend": "node --no-warnings --test --experimental-strip-types tests/security.test.ts",
+    "test:backend": "node --no-warnings --test --experimental-strip-types tests/security.test.ts tests/offering-expiration.test.ts",
     "lint:backend": "eslint src/app/api src/lib --quiet",
     "check:backend": "npm run lint:backend && npm run typecheck && npm run test:backend"
   },

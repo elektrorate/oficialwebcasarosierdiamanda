@@ -5,6 +5,7 @@ export const metadata: Metadata = {
   title: "Shop",
   description:
     "Piezas ceramicas creadas en el estudio. Objetos unicos, series pequenas y piezas disponibles para compra",
+  alternates: { canonical: "/shop" },
 };
 
 export default function ShopPage() {

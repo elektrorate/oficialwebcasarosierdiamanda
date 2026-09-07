@@ -13,6 +13,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   return {
     title: landing.seo_title || landing.title,
     description: landing.seo_description || landing.hero_subtitle || landing.intro_text,
+    alternates: { canonical: `/landing/${landing.slug}` },
     openGraph: landing.seo_image ? { images: [assetPath(landing.seo_image)] } : undefined,
   };
 }

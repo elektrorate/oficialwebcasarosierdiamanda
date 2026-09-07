@@ -53,7 +53,19 @@ export function ShopItemGalleryView({
 
   return (
     <div className="shop-item-gallery" aria-label={`Galería de ${productName}`}>
-      <figure className="shop-item-gallery__main">
+      <figure
+        className="shop-item-gallery__main"
+        role="button"
+        tabIndex={0}
+        aria-label={`Ampliar imagen de ${productName}`}
+        onClick={onOpenModal}
+        onKeyDown={(e) => {
+          if (e.key === "Enter" || e.key === " ") {
+            e.preventDefault();
+            onOpenModal();
+          }
+        }}
+      >
         <img className="shop-item-gallery__ghost" src={src} alt="" aria-hidden="true" />
         <img className="shop-item-gallery__img" src={src} alt={productName} />
         {previousSrc ? (
@@ -71,7 +83,10 @@ export function ShopItemGalleryView({
             className="shop-item-gallery__expand"
             type="button"
             aria-label={`Ampliar imagen de ${productName}`}
-            onClick={onOpenModal}
+            onClick={(e) => {
+              e.stopPropagation();
+              onOpenModal();
+            }}
           />
         ) : null}
       </figure>

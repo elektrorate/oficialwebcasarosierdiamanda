@@ -71,6 +71,7 @@ export async function HomePage() {
       }
       header={<HeaderHome />}
     >
+      <h1 className="sr-only">Casa Rosier, estudio de cerámica en Barcelona</h1>
       <IntroSlider slides={homePage.introSlides} />
       {homeClasses.length ? (
         <FeaturedSection

@@ -1,36 +1,8 @@
 import { NextResponse, type NextRequest } from "next/server";
-import { revalidatePath } from "next/cache";
 import { requireAdminApi } from "@/lib/auth/supabase-auth";
 import { getOfferingById, updateOffering } from "@/lib/cms/offerings";
-import { invalidatePublicNavigationCache } from "@/lib/cms/navigation-public";
-import type { Offering, OfferingStatus } from "@/lib/cms/types";
-
-function publicOfferingPath(offering: Pick<Offering, "type" | "slug"> | null | undefined) {
-  if (!offering?.slug) return null;
-  if (offering.type === "workshop") return `/workshops/${offering.slug}`;
-  if (offering.type === "experience") return `/experiencias/${offering.slug}`;
-  if (offering.type === "gift_card") return `/gift-cards/${offering.slug}`;
-  return `/clases/${offering.slug}`;
-}
-
-function refreshOfferingPaths(...offerings: Array<Pick<Offering, "type" | "slug"> | null | undefined>) {
-  invalidatePublicNavigationCache();
-  revalidatePath("/admin/clases");
-  revalidatePath("/admin/workshops");
-  revalidatePath("/admin/experiencias");
-  revalidatePath("/admin/gift-cards");
-  revalidatePath("/");
-  revalidatePath("/clases");
-  revalidatePath("/workshops");
-  revalidatePath("/experiencias");
-  revalidatePath("/gift-cards");
-  revalidatePath("/el-estudio");
-  revalidatePath("/shop");
-  for (const offering of offerings) {
-    const path = publicOfferingPath(offering);
-    if (path) revalidatePath(path);
-  }
-}
+import { refreshOfferingPaths } from "@/lib/cms/offering-routes";
+import type { OfferingStatus } from "@/lib/cms/types";
 
 function resolveStatus(enabled: boolean): OfferingStatus {
   return enabled ? "published" : "draft";
@@ -59,6 +31,16 @@ export async function PATCH(request: NextRequest, context: { params: Promise<{ i
   }
 
   const nextStatus = resolveStatus(body.enabled);
+
+  if (nextStatus === "published") {
+    if (offering.expiration_enabled && !offering.expires_at) {
+      return NextResponse.json({ error: "La caducidad está activa, pero falta la fecha de finalización." }, { status: 400 });
+    }
+    if (offering.expiration_enabled && new Date(offering.expires_at as string).getTime() <= Date.now()) {
+      return NextResponse.json({ error: "No se puede publicar con una fecha de caducidad vencida. Elige una nueva fecha futura o desactiva la caducidad." }, { status: 400 });
+    }
+  }
+
   if (offering.status === nextStatus) {
     return NextResponse.json({ offering });
   }

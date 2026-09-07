@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
+import { publicOfferingPath } from "@/lib/cms/offering-routes";
 import type { ExperienceItem, ExperienceKind } from "@/data/types";
-import { getOfferingBySlug, getOfferings } from "@/lib/cms/offerings";
+import { getOfferingBySlug, getOfferings, isPubliclyVisibleOffering } from "@/lib/cms/offerings";
 import { normalizeHeroSettings } from "@/lib/cms/hero-settings";
 import {
   DEFAULT_DESCRIPTION_TYPOGRAPHY,
@@ -556,13 +557,13 @@ function cmsOfferingToExperienceItem(
 export async function getPublicExperienceItems() {
   const [offerings, defaultNumber] = await Promise.all([getOfferings(), getWhatsappNumber()]);
   return offerings
-    .filter((item) => item.status === "published" && !item.deleted_at)
+    .filter((item) => isPubliclyVisibleOffering(item))
     .map((item) => cmsOfferingToExperienceItem(item, defaultNumber));
 }
 
 async function bySlug(slug: string) {
   const [offering, defaultNumber] = await Promise.all([getOfferingBySlug(slug), getWhatsappNumber()]);
-  if (!offering || offering.status !== "published" || offering.deleted_at) return null;
+  if (!isPubliclyVisibleOffering(offering)) return null;
   return cmsOfferingToExperienceItem(offering, defaultNumber);
 }
 
@@ -575,7 +576,7 @@ export async function generateExperienceMetadata(
   params: Promise<{ slug: string }>
 ): Promise<Metadata> {
   const offering = await getOfferingBySlug((await params).slug);
-  if (!offering || offering.status !== "published" || offering.deleted_at) return {};
+  if (!isPubliclyVisibleOffering(offering)) return {};
 
   const item = cmsOfferingToExperienceItem(offering);
   const classDetails = (offering.details as LegacyOfferingDetails).class;
@@ -585,6 +586,9 @@ export async function generateExperienceMetadata(
   return {
     title: { absolute: item.seoTitle },
     description: item.seoDescription,
+    alternates: {
+      canonical: publicOfferingPath(offering) ?? undefined,
+    },
     openGraph: {
       title: item.seoTitle,
       description: item.seoDescription,

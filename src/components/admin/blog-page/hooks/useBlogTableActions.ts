@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useState } from "react";
 import { useRouter } from "next/navigation";
 import {
   bitacoraActionSuccessMessage,
@@ -28,8 +28,7 @@ export type BlogTableSyncHandlers = {
 
 export function useBlogTableActions(handlers: BlogTableSyncHandlers = {}) {
   const router = useRouter();
-  const handlersRef = useRef(handlers);
-  handlersRef.current = handlers;
+  const { onPostUpdated, onPostRemoved } = handlers;
   const [notice, setNotice] = useState<Notice | null>(null);
   const [trashDialog, setTrashDialog] = useState<BlogPostTrashDialogState>(null);
   const [pendingKey, setPendingKey] = useState<string | null>(null);
@@ -70,7 +69,7 @@ export function useBlogTableActions(handlers: BlogTableSyncHandlers = {}) {
       setNotice(null);
       setStatusPendingId(post.id);
       setStatusOverrides((current) => ({ ...current, [post.id]: optimisticStatus }));
-      handlersRef.current.onPostUpdated?.(post.id, null, fallbackPatch);
+      onPostUpdated?.(post.id, null, fallbackPatch);
 
       const result = await setBitacoraPostEnabledAction(post.id, enabled);
 
@@ -80,7 +79,7 @@ export function useBlogTableActions(handlers: BlogTableSyncHandlers = {}) {
           delete next[post.id];
           return next;
         });
-        handlersRef.current.onPostUpdated?.(post.id, result.post, fallbackPatch);
+        onPostUpdated?.(post.id, result.post, fallbackPatch);
         setNotice({
           type: "success",
           title: "Estado actualizado",
@@ -89,7 +88,7 @@ export function useBlogTableActions(handlers: BlogTableSyncHandlers = {}) {
         router.refresh();
       } else {
         setStatusOverrides((current) => ({ ...current, [post.id]: previousStatus }));
-        handlersRef.current.onPostUpdated?.(post.id, null, {
+        onPostUpdated?.(post.id, null, {
           status: previousStatus,
           visible_in_listing: post.visible_in_listing,
         });
@@ -103,7 +102,7 @@ export function useBlogTableActions(handlers: BlogTableSyncHandlers = {}) {
       setStatusPendingId(null);
       return result;
     },
-    [resolvePostStatus, router, statusPendingId],
+    [onPostUpdated, resolvePostStatus, router, statusPendingId],
   );
 
   const runAction = useCallback(
@@ -115,29 +114,29 @@ export function useBlogTableActions(handlers: BlogTableSyncHandlers = {}) {
 
       if (options?.optimisticHide) {
         setHiddenIds((current) => new Set(current).add(id));
-        handlersRef.current.onPostRemoved?.(id);
+        onPostRemoved?.(id);
       }
 
       const result = await patchBitacoraPostAction(id, action);
 
       if (result.ok) {
         if (action === "trash") {
-          handlersRef.current.onPostRemoved?.(id);
+          onPostRemoved?.(id);
         } else if (action === "feature") {
-          handlersRef.current.onPostUpdated?.(id, result.post, { is_featured: true });
+          onPostUpdated?.(id, result.post, { is_featured: true });
         } else if (action === "unfeature") {
-          handlersRef.current.onPostUpdated?.(id, result.post, { is_featured: false });
+          onPostUpdated?.(id, result.post, { is_featured: false });
         } else if (action === "publish") {
-          handlersRef.current.onPostUpdated?.(id, result.post, {
+          onPostUpdated?.(id, result.post, {
             status: "published",
             visible_in_listing: true,
           });
         } else if (action === "draft") {
-          handlersRef.current.onPostUpdated?.(id, result.post, { status: "draft" });
+          onPostUpdated?.(id, result.post, { status: "draft" });
         } else if (action === "archive") {
-          handlersRef.current.onPostUpdated?.(id, result.post, { status: "archived" });
+          onPostUpdated?.(id, result.post, { status: "archived" });
         } else if (isBlogPost(result.post)) {
-          handlersRef.current.onPostUpdated?.(id, result.post);
+          onPostUpdated?.(id, result.post);
         }
 
         setNotice({
@@ -168,7 +167,7 @@ export function useBlogTableActions(handlers: BlogTableSyncHandlers = {}) {
       setPendingKey(null);
       return result;
     },
-    [actionKey, pendingKey, router, statusPendingId],
+    [actionKey, onPostRemoved, onPostUpdated, pendingKey, router, statusPendingId],
   );
 
   const openTrashDialog = useCallback((post: BlogPost) => {

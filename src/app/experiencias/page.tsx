@@ -5,7 +5,8 @@ import { getExperienceCollectionConfig } from "@/features/experiences/experience
 export const metadata: Metadata = {
   title: "Experiencias",
   description:
-    "Experiencias privadas de ceramica de Casa Rosier en Barcelona."
+    "Experiencias privadas de ceramica de Casa Rosier en Barcelona.",
+  alternates: { canonical: "/experiencias" },
 };
 
 export default async function ExperienciasPage() {

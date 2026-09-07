@@ -1,7 +1,7 @@
 import type { NavigationItem } from "@/data/types";
 import { experienceHref } from "@/lib/routes";
 import { getMenuByLocation } from "./menus";
-import { getOfferings } from "./offerings";
+import { getOfferings, isPubliclyVisibleOffering } from "./offerings";
 import type { MenuItem, Offering } from "./types";
 
 type DynamicMenuKey = "classes" | "workshops" | "privateBookings" | "giftCards";
@@ -194,7 +194,7 @@ function mergeGeneratedChildrenWithSavedOrder(generated: NavigationItem[], saved
 async function getDynamicChildrenByKey() {
   const offerings = await getOfferings();
   const published = offerings
-    .filter((offering) => offering.status === "published" && !offering.deleted_at && offering.slug)
+    .filter((offering) => isPubliclyVisibleOffering(offering) && offering.slug)
     .sort((a, b) => a.title.localeCompare(b.title));
 
   return (Object.entries(dynamicMenuConfig) as [DynamicMenuKey, typeof dynamicMenuConfig[DynamicMenuKey]][])

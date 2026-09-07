@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useCallback, useState } from "react";
+import { useCallback, useMemo, useRef, useState } from "react";
 import AdminActionModal from "@/components/admin/AdminActionModal";
 import { SectionCard } from "@/components/admin/class-edit/components/SectionCard";
 import Button from "@/components/ui/Button";
@@ -16,6 +16,7 @@ import type { Form } from "@/lib/cms/types";
 
 export default function FooterContactFormSubmitForm({ item }: { item: Form }) {
   const router = useRouter();
+  const saveInFlightRef = useRef(false);
   const [title, setTitle] = useState(item.title ?? "");
   const [successMessage, setSuccessMessage] = useState(
     item.success_message ?? "Gracias, recibimos tu mensaje.",
@@ -29,17 +30,16 @@ export default function FooterContactFormSubmitForm({ item }: { item: Form }) {
     null,
   );
 
-  const editorState: FooterContactFormSubmitEditorState = {
-    title,
-    successMessage,
-    redirectUrl,
-    emailNotify,
-    notificationEmail,
-  };
+  const editorState = useMemo<FooterContactFormSubmitEditorState>(
+    () => ({ title, successMessage, redirectUrl, emailNotify, notificationEmail }),
+    [emailNotify, notificationEmail, redirectUrl, successMessage, title],
+  );
 
   const handleSubmit = useCallback(
     async (event: React.FormEvent) => {
       event.preventDefault();
+      if (saveInFlightRef.current) return;
+      saveInFlightRef.current = true;
       setError(null);
       setModal(null);
 
@@ -47,6 +47,7 @@ export default function FooterContactFormSubmitForm({ item }: { item: Form }) {
       if (validationError) {
         setError(validationError);
         setModal({ type: "error", title: "Revisa el formulario", message: validationError });
+        saveInFlightRef.current = false;
         return;
       }
 
@@ -72,6 +73,7 @@ export default function FooterContactFormSubmitForm({ item }: { item: Form }) {
         router.refresh();
       } finally {
         setIsSaving(false);
+        saveInFlightRef.current = false;
       }
     },
     [editorState, item, router],

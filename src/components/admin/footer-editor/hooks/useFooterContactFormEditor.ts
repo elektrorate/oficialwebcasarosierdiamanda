@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import type { Form, FormField } from "@/lib/cms/types";
 import {
   buildContactFormFieldsSavePayload,
@@ -9,12 +9,14 @@ import {
 } from "../utils/contactFormUtils";
 
 export function useFooterContactFormEditor(initialForm: Form) {
+  const syncKey = `${initialForm.id}:${initialForm.updated_at ?? ""}`;
+  const [previousSyncKey, setPreviousSyncKey] = useState(syncKey);
   const [fields, setFields] = useState<FormField[]>(initialForm.fields ?? []);
 
-  useEffect(() => {
+  if (syncKey !== previousSyncKey) {
+    setPreviousSyncKey(syncKey);
     setFields(initialForm.fields ?? []);
-    // eslint-disable-next-line react-hooks/exhaustive-deps -- resync when server revision changes
-  }, [initialForm.id, initialForm.updated_at]);
+  }
 
   const previewForm = useMemo(
     () => contactFormPreviewFromFields(initialForm, fields),

@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useMemo, useRef, useState } from "react";
 import type { SiteSettings } from "@/lib/cms/settings";
 import type { FooterComponent, Form, SocialLink } from "@/lib/cms/types";
 import { publishFooterEditorErrorMessage } from "@/lib/cms/publish-footer-editor";
@@ -43,7 +43,9 @@ export function useFooterEditorForm({
     () => footerEditorFieldsFromItem(item, siteContact),
     [item, siteContact],
   );
+  const syncKey = footerEditorSyncKey(item, contactForm?.updated_at, siteSettingsUpdatedAt);
 
+  const [previousSyncKey, setPreviousSyncKey] = useState(syncKey);
   const [name, setName] = useState(initial.name);
   const [logoId, setLogoId] = useState(initial.logoId);
   const [address, setAddress] = useState(initial.address);
@@ -61,9 +63,8 @@ export function useFooterEditorForm({
   const [modal, setModal] = useState<{ type: "success" | "error"; title: string; message?: string } | null>(null);
   const saveInFlightRef = useRef(false);
 
-  const syncKey = footerEditorSyncKey(item, contactForm?.updated_at, siteSettingsUpdatedAt);
-
-  useEffect(() => {
+  if (syncKey !== previousSyncKey) {
+    setPreviousSyncKey(syncKey);
     const next = footerEditorFieldsFromItem(item, siteContact);
     setName(next.name);
     setLogoId(next.logoId);
@@ -77,7 +78,7 @@ export function useFooterEditorForm({
     setSocialLinks(cloneSocialLinks(next.socialLinks));
     setMenuId(next.menuId);
     setNewsletterEnabled(next.newsletterEnabled);
-  }, [syncKey, item, siteContact]);
+  }
 
   const fields: FooterEditorFields = useMemo(
     () => ({

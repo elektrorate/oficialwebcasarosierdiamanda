@@ -3,6 +3,7 @@
 import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useState, type FormEvent } from "react";
 import type { ClassHomeCard, ClassOfferingContent, ClassOfferingDetails, Offering } from "@/lib/cms/types";
+import { fromLocalDateTime, toLocalDateTimeParts } from "@/lib/cms/offering-expiration";
 import { uploadAdminMediaFile } from "@/lib/admin/media-upload-client";
 import { MAX_CALENDAR_LABELS, MAX_GALLERY_IMAGES } from "../constants";
 import type {
@@ -56,6 +57,25 @@ export function useClassEditForm({
   const [uploadingTarget, setUploadingTarget] = useState<UploadTarget | null>(null);
   const [galleryUploadInfo, setGalleryUploadInfo] = useState<Record<string, UploadOptimization>>({});
   const [currency, setCurrency] = useState<string>((offering.currency || "EUR").trim().toUpperCase() || "EUR");
+  const initialExpirationDateTime = toLocalDateTimeParts(offering.expires_at);
+  const [expirationEnabled, setExpirationEnabledState] = useState<boolean>(offering.expiration_enabled);
+  const [expirationDate, setExpirationDateState] = useState<string>(initialExpirationDateTime.date);
+  const [expirationTime, setExpirationTimeState] = useState<string>(initialExpirationDateTime.time);
+
+  const setExpirationEnabled = useCallback((next: boolean) => {
+    setExpirationEnabledState(next);
+    setIsDirty(true);
+  }, []);
+
+  const setExpirationDate = useCallback((next: string) => {
+    setExpirationDateState(next);
+    setIsDirty(true);
+  }, []);
+
+  const setExpirationTime = useCallback((next: string) => {
+    setExpirationTimeState(next);
+    setIsDirty(true);
+  }, []);
 
   useEffect(() => {
     const handler = (event: BeforeUnloadEvent) => {
@@ -315,7 +335,14 @@ export function useClassEditForm({
     const intent: SaveIntent = submitter?.value === "publish" ? "publish" : "draft";
     const nextStatus = intent === "publish" ? "published" : "draft";
 
-    const validationErrors = validateClassEditForm({ title, slug, details });
+    const validationErrors = validateClassEditForm({
+      title,
+      slug,
+      details,
+      expirationEnabled,
+      expiresAt: fromLocalDateTime(expirationDate, expirationTime, offering.expires_at),
+      nextStatus,
+    });
     const validationKeys = Object.keys(validationErrors);
     if (validationKeys.length > 0) {
       const firstErrorKey = validationKeys[0];
@@ -350,6 +377,8 @@ export function useClassEditForm({
             seoTitle,
             seoDescription,
             currency,
+            expirationEnabled,
+            expiresAt: fromLocalDateTime(expirationDate, expirationTime, offering.expires_at),
           })),
         },
       );
@@ -378,7 +407,7 @@ export function useClassEditForm({
       setIsSaving(false);
       setSavingIntent(null);
     }
-  }, [basePath, currency, description, details, mode, offering, router, seoDescription, seoTitle, slug, subtitle, title]);
+  }, [basePath, currency, description, details, expirationDate, expirationEnabled, expirationTime, mode, offering, router, seoDescription, seoTitle, slug, subtitle, title]);
 
   const handleCancel = useCallback(() => {
     if (isDirty && !window.confirm("Hay cambios sin guardar. ¿Salir igualmente?")) return;
@@ -426,6 +455,12 @@ export function useClassEditForm({
     galleryUploadInfo,
     currency,
     setCurrency,
+    expirationEnabled,
+    setExpirationEnabled,
+    expirationDate,
+    setExpirationDate,
+    expirationTime,
+    setExpirationTime,
     updateDetails,
     updateHomeCard,
     updatePricing,

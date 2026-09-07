@@ -543,6 +543,9 @@ export interface Offering {
   details: OfferingDetails;
   seo_title: string;
   seo_description: string;
+  expiration_enabled: boolean;
+  expires_at: string | null;
+  expired_at: string | null;
   created_at: string;
   updated_at: string;
   deleted_at: string | null;
@@ -1762,7 +1765,7 @@ export function defaultLegalSettings(): LegalSettings {
 }
 
 /* ── Redirect ── */
-export const REDIRECT_TYPES = ["301", "302"] as const;
+export const REDIRECT_TYPES = ["301", "302", "308"] as const;
 export const REDIRECT_STATUSES = ["active", "inactive", "deleted"] as const;
 export type RedirectType = (typeof REDIRECT_TYPES)[number];
 export type RedirectStatus = (typeof REDIRECT_STATUSES)[number];

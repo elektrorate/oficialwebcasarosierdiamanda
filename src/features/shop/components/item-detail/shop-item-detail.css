@@ -62,6 +62,7 @@
   aspect-ratio: 1 / 1;
   background: #ece8df;
   overflow: hidden;
+  cursor: pointer;
 }
 
 .shop-item-gallery__main img {
@@ -171,6 +172,7 @@
 
 .shop-gallery-modal .ig-modal__media img {
   object-position: center;
+  object-fit: contain;
 }
 
 .shop-item-gallery__thumbs::-webkit-scrollbar {

@@ -1,13 +1,23 @@
 import { STATUS_LABELS } from "../constants";
-import type { ProductFormFields, SaveIntent } from "../types";
+import type { ProductFormFields, ProductFormMode, SaveIntent } from "../types";
 
 type Props = {
   fields: ProductFormFields;
+  mode: ProductFormMode;
   savingIntent: SaveIntent | null;
+  isDeleting: boolean;
+  onRequestDelete: () => void;
   disabled?: boolean;
 };
 
-export function ProductFormActions({ fields, savingIntent, disabled }: Props) {
+export function ProductFormActions({
+  fields,
+  mode,
+  savingIntent,
+  isDeleting,
+  onRequestDelete,
+  disabled,
+}: Props) {
   const isSaving = savingIntent !== null;
   const priceLabel = fields.price !== null ? `${fields.price} €` : "Sin precio";
   const stockLabel = fields.stock !== null ? `${fields.stock} en stock` : "Stock ilimitado";
@@ -18,6 +28,19 @@ export function ProductFormActions({ fields, savingIntent, disabled }: Props) {
         {STATUS_LABELS[fields.status] ?? fields.status} · {priceLabel} · {stockLabel}
         {fields.gallery.length ? ` · ${fields.gallery.length} en galería` : ""}
       </span>
+      {mode === "edit" ? (
+        <button
+          className="danger-btn"
+          type="button"
+          disabled={disabled || isSaving || isDeleting}
+          onClick={onRequestDelete}
+        >
+          <span className="material-symbols-outlined" aria-hidden="true">
+            delete
+          </span>
+          {isDeleting ? "Eliminando..." : "Eliminar producto"}
+        </button>
+      ) : null}
       <button
         className="secondary-btn"
         type="submit"

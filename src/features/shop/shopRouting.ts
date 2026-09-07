@@ -12,9 +12,10 @@ export async function generateShopItemMetadata(
 ): Promise<Metadata> {
   const item = await getPublicShopItemBySlug((await params).slug);
   return item
-    ? {
+      ? {
         title: { absolute: item.seoTitle },
-        description: item.seoDescription
+        description: item.seoDescription,
+        alternates: { canonical: `/shop/${item.slug}` },
       }
     : {};
 }

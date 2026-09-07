@@ -10,18 +10,30 @@ import {
 } from "../footerEditorSections";
 
 export function useFooterEditorSections(options: { singleton: boolean; hasContactForm: boolean }) {
-  const tabs = useMemo(() => footerEditorTabs(options), [options.hasContactForm, options.singleton]);
+  const { singleton, hasContactForm } = options;
+  const tabs = useMemo(
+    () => footerEditorTabs({ singleton, hasContactForm }),
+    [hasContactForm, singleton],
+  );
 
   const [activeTab, setActiveTab] = useState<FooterEditorSectionKey>(() =>
-    defaultFooterEditorSection(options),
+    defaultFooterEditorSection({ singleton, hasContactForm }),
   );
 
   useEffect(() => {
-    const fromHash = footerEditorSectionFromHash(window.location.hash, {
-      hasContactForm: options.hasContactForm,
-    });
-    if (fromHash) setActiveTab(fromHash);
-  }, [options.hasContactForm]);
+    const syncFromHash = () => {
+      const fromHash = footerEditorSectionFromHash(window.location.hash, { hasContactForm });
+      if (fromHash) setActiveTab(fromHash);
+    };
+
+    const initialSyncTimer = window.setTimeout(syncFromHash, 0);
+    window.addEventListener("hashchange", syncFromHash);
+
+    return () => {
+      window.clearTimeout(initialSyncTimer);
+      window.removeEventListener("hashchange", syncFromHash);
+    };
+  }, [hasContactForm]);
 
   const selectTab = useCallback((key: FooterEditorSectionKey) => {
     setActiveTab(key);

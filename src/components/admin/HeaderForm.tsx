@@ -1,15 +1,14 @@
 "use client";
 
 import Image from "next/image";
-import Link from "@/components/admin/AdminLink";
 import { useRouter } from "next/navigation";
 import { useEffect, useState, type FormEvent } from "react";
 import Button from "@/components/ui/Button";
 import Card from "@/components/ui/Card";
 import ColorPickerField from "./ColorPickerField";
 import MediaLibraryModal from "./MediaLibraryModal";
-import type { Header, HeaderOverlayImage, HeaderType } from "@/lib/cms/types";
-import { HEADER_TYPES, HEADER_STATUSES } from "@/lib/cms/types";
+import type { Header, HeaderOverlayImage } from "@/lib/cms/types";
+import { HEADER_TYPES } from "@/lib/cms/types";
 import HeaderPreview from "./HeaderPreview";
 
 const typeLabels: Record<string, string> = {

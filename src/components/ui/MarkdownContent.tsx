@@ -14,6 +14,7 @@ interface MarkdownContentProps {
   source: string | string[];
   className?: string;
   style?: CSSProperties;
+  h1Level?: 1 | 2;
 }
 
 function safeHref(href: string) {
@@ -249,7 +250,7 @@ function parseMarkdownBlocks(source: string): MarkdownBlock[] {
   return blocks;
 }
 
-export function MarkdownContent({ source, className, style }: MarkdownContentProps) {
+export function MarkdownContent({ source, className, style, h1Level = 1 }: MarkdownContentProps) {
   const text = Array.isArray(source) ? source.join("\n") : source;
   const blocks = parseMarkdownBlocks(text);
 
@@ -261,7 +262,8 @@ export function MarkdownContent({ source, className, style }: MarkdownContentPro
         const key = `${block.type}-${index}`;
         if (block.type === "heading") {
           const style = block.align ? { textAlign: block.align } : undefined;
-          if (block.level === 1) return <h1 key={key} style={style}>{renderInlineMarkdown(block.content)}</h1>;
+          if (block.level === 1 && h1Level === 1) return <h1 key={key} style={style}>{renderInlineMarkdown(block.content)}</h1>;
+          if (block.level === 1) return <h2 key={key} style={style}>{renderInlineMarkdown(block.content)}</h2>;
           if (block.level === 2) return <h2 key={key} style={style}>{renderInlineMarkdown(block.content)}</h2>;
           return <h3 key={key} style={style}>{renderInlineMarkdown(block.content)}</h3>;
         }

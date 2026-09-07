@@ -341,7 +341,7 @@ export async function duplicateProduct(id: string) {
 
 export async function moveProductToTrash(id: string, deletedBy?: string) {
   const dBy = deletedBy ?? await getCurrentUserEmail();
-  const items = await readJsonFile<Product[]>(FILE_NAME, []);
+  const items = await getProducts();
   const index = items.findIndex((p) => p.id === id);
   if (index === -1) return null;
   const current = items[index];
@@ -356,7 +356,7 @@ export async function moveProductToTrash(id: string, deletedBy?: string) {
 }
 
 export async function restoreProduct(id: string) {
-  const items = await readJsonFile<Product[]>(FILE_NAME, []);
+  const items = await getProducts();
   const index = items.findIndex((p) => p.id === id);
   const trashItem = await getTrashItemByEntity(id);
   if (index === -1 && !trashItem) return null;
@@ -372,7 +372,7 @@ export async function restoreProduct(id: string) {
 }
 
 export async function deleteProductPermanently(id: string) {
-  const items = await readJsonFile<Product[]>(FILE_NAME, []);
+  const items = await getProducts();
   const item = items.find((p) => p.id === id);
   const next = items.filter((p) => p.id !== id);
   if (next.length === items.length) return false;

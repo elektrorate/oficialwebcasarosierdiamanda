@@ -119,7 +119,12 @@ export function useBlogPostForm({ mode, item }: UseBlogPostFormProps) {
 
   const previewHero = useMemo(() => resolveBlogPostPreviewHero(formFields), [formFields]);
 
-  const { syncStatus, syncError } = useBlogPostAutosave(mode, item?.id, formFields, status, !isSaving);
+  const {
+    syncStatus,
+    syncError,
+    prepareForManualSave,
+    completeManualSave,
+  } = useBlogPostAutosave(mode, item?.id, formFields, status, !isSaving);
 
   const readingTime = useMemo(() => estimateBlogReadingMinutes(blocks), [blocks]);
   const visibleBlockCount = useMemo(() => blocks.filter((block) => block.is_visible).length, [blocks]);
@@ -168,9 +173,11 @@ export function useBlogPostForm({ mode, item }: UseBlogPostFormProps) {
       setModal(null);
 
       const payload = buildBlogPostSavePayload(formFields, nextStatus);
+      await prepareForManualSave();
       const result = await saveBlogPostAction(mode, item?.id, payload);
 
       if (!result.ok) {
+        completeManualSave();
         setModal({ type: "error", title: "No se pudo guardar", message: result.error });
         setIsSaving(false);
         saveInFlight.current = false;
@@ -180,6 +187,7 @@ export function useBlogPostForm({ mode, item }: UseBlogPostFormProps) {
       setStatus(result.post.status);
       setBlocks(result.post.blocks);
       setHero(result.post.hero);
+      completeManualSave(payload);
       setModal({
         type: "success",
         title: nextStatus === "published" ? "Bitácora publicada" : "Bitácora guardada",
@@ -193,7 +201,7 @@ export function useBlogPostForm({ mode, item }: UseBlogPostFormProps) {
       saveInFlight.current = false;
       router.refresh();
     },
-    [formFields, item?.id, mode, router, status, title],
+    [completeManualSave, formFields, item?.id, mode, prepareForManualSave, router, status, title],
   );
 
   const saveDraft = useCallback(() => save("draft"), [save]);

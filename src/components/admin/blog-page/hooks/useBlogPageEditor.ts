@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useMemo, useRef, useState } from "react";
 import { buildSocialGalleryProps } from "@/components/admin/page-editor/utils/socialGalleryProps";
 import { saveBlogPageSettingsAction } from "@/lib/admin/blog-page-actions";
 import { getSelectedFaqBlock, listPublishedFaqGroups } from "@/lib/cms/faq-selection";
@@ -29,6 +29,7 @@ export type BlogPageEditorProps = {
 };
 
 export function useBlogPageEditor({ page, posts, socialGallery, faqs, faqGroups }: BlogPageEditorProps) {
+  const saveInFlightRef = useRef(false);
   const [tab, setTab] = useState<BlogPageEditorTabKey>("hero");
   const [status, setStatus] = useState(page.status);
   const [hero, setHero] = useState<CmsHeroSettings>(() =>
@@ -43,13 +44,15 @@ export function useBlogPageEditor({ page, posts, socialGallery, faqs, faqGroups 
   const [seoTitle] = useState(page.seo_title);
   const [seoDescription] = useState(page.seo_description);
   const [seoImage] = useState(page.seo_image);
+  const [previousPosts, setPreviousPosts] = useState(posts);
   const [localPosts, setLocalPosts] = useState(() => sortAdminVisiblePosts(posts));
   const [isSaving, setIsSaving] = useState(false);
   const [modal, setModal] = useState<BlogPageEditorModal>(null);
 
-  useEffect(() => {
+  if (posts !== previousPosts) {
+    setPreviousPosts(posts);
     setLocalPosts(sortAdminVisiblePosts(posts));
-  }, [posts]);
+  }
 
   const savePayload = useMemo(
     () => ({
@@ -65,7 +68,12 @@ export function useBlogPageEditor({ page, posts, socialGallery, faqs, faqGroups 
     [faqGroupId, hero, seoDescription, seoImage, seoTitle, showFaqSection, showIdeaPromptSection, status],
   );
 
-  const { syncStatus, syncError } = useBlogPageAutosave(savePayload);
+  const {
+    syncStatus,
+    syncError,
+    prepareForManualSave,
+    completeManualSave,
+  } = useBlogPageAutosave(savePayload, !isSaving);
 
   const visiblePosts = localPosts;
   const publishedPosts = useMemo(
@@ -143,17 +151,23 @@ export function useBlogPageEditor({ page, posts, socialGallery, faqs, faqGroups 
 
   const save = useCallback(
     async (nextStatus = status) => {
+      if (saveInFlightRef.current) return;
+      saveInFlightRef.current = true;
       setIsSaving(true);
       setModal(null);
 
-      const result = await saveBlogPageSettingsAction({
+      const manualPayload = {
         ...savePayload,
         status: nextStatus,
-      });
+      };
+      await prepareForManualSave();
+      const result = await saveBlogPageSettingsAction(manualPayload);
 
       if (!result.ok) {
+        completeManualSave();
         setModal({ type: "error", title: "No se pudo guardar", message: result.error });
         setIsSaving(false);
+        saveInFlightRef.current = false;
         return;
       }
 
@@ -162,14 +176,16 @@ export function useBlogPageEditor({ page, posts, socialGallery, faqs, faqGroups 
       setShowIdeaPromptSection(result.page.showIdeaPromptSection);
       setShowFaqSection(result.page.showFaqSection);
       setFaqGroupId(result.page.faqGroupId);
+      completeManualSave(manualPayload);
       setModal({
         type: "success",
         title: nextStatus === "published" ? "Página publicada" : "Borrador guardado",
         message: "Los cambios de la página de Bitácora se sincronizaron con la base de datos.",
       });
       setIsSaving(false);
+      saveInFlightRef.current = false;
     },
-    [savePayload, status],
+    [completeManualSave, prepareForManualSave, savePayload, status],
   );
 
   const saveDraft = useCallback(() => save("draft"), [save]);

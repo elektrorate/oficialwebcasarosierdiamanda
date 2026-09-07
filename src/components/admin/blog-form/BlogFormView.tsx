@@ -4,7 +4,6 @@ import { memo } from "react";
 import AdminActionModal from "@/components/admin/AdminActionModal";
 import type { NavigationItem } from "@/data/types";
 import type { SiteSettings } from "@/lib/cms/settings";
-import type { BlogPost } from "@/lib/cms/types";
 import { BlogFormHeader } from "./components/BlogFormHeader";
 import { BlogFormHeroSection } from "./components/BlogFormHeroSection";
 import { BlogFormStickyBar } from "./components/BlogFormStickyBar";

@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import styles from "./estudio.module.css";
 
 export default function EstudioPage() {
@@ -15,7 +16,7 @@ export default function EstudioPage() {
         />
 
         <nav className={styles.nav} aria-label="Navegación principal">
-          <a href="/">Home</a>
+          <Link href="/">Home</Link>
           <a href="#">Clases2 <span>⌄</span></a>
           <a href="#">workshops <span>⌄</span></a>
           <a href="#">Experiencias <span>⌄</span></a>

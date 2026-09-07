@@ -5,7 +5,8 @@ import { getExperienceCollectionConfig } from "@/features/experiences/experience
 export const metadata: Metadata = {
   title: "Cursos y talleres de ceramica",
   description:
-    "Listado de clases y workshops de Casa Rosier Ceramica en Barcelona."
+    "Listado de clases y workshops de Casa Rosier Ceramica en Barcelona.",
+  alternates: { canonical: "/clases" },
 };
 
 export default async function ClassesPage() {

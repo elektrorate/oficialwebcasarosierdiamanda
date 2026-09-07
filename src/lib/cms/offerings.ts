@@ -2,7 +2,7 @@ import { randomUUID } from "crypto";
 import { deleteOfferingMediaAssets } from "./offering-media";
 import { createAdminClient } from "../supabase/admin";
 import { addTrashItem, getCurrentUserEmail, getTrashItemByEntity, removeTrashItem } from "./trash";
-import { readJsonFile, writeJsonFile } from "./local-storage";
+import { invalidateJsonCache, readJsonFile, writeJsonFile } from "./local-storage";
 import { isOfferingStatus, isOfferingType } from "./types";
 import type { ClassOfferingDetails, Offering, OfferingStatus, OfferingType } from "./types";
 import { DEFAULT_RICH_TEXT_TYPOGRAPHY, normalizeRichTextTypography, type RichTextTypography } from "./rich-text-typography";
@@ -116,6 +116,12 @@ function normalizeTextArray(value: unknown) {
   return [] as string[];
 }
 
+function normalizeExpirationDate(value: unknown) {
+  if (value === null || value === undefined || value === "") return null;
+  const date = new Date(String(value));
+  return Number.isNaN(date.getTime()) ? null : date.toISOString();
+}
+
 function normalizeDetails(value: unknown) {
   if (value && typeof value === "object" && !Array.isArray(value)) return value as Offering["details"];
   return {};
@@ -155,6 +161,9 @@ function normalizeOffering(input: OfferingInput, existing?: Offering, allItems: 
     details: normalizeDetails(input.details ?? existing?.details ?? {}),
     seo_title: String(input.seo_title ?? existing?.seo_title ?? "").trim(),
     seo_description: String(input.seo_description ?? existing?.seo_description ?? "").trim(),
+    expiration_enabled: Boolean(input.expiration_enabled ?? existing?.expiration_enabled ?? false),
+    expires_at: normalizeExpirationDate(input.expires_at) ?? (input.expiration_enabled === false ? null : existing?.expires_at ?? null),
+    expired_at: normalizeExpirationDate(input.expired_at),
     created_at: existing?.created_at ?? now,
     updated_at: now,
     deleted_at: input.status === "deleted" ? existing?.deleted_at ?? now : input.deleted_at ?? existing?.deleted_at ?? null,
@@ -174,6 +183,9 @@ function rowToOffering(row: Record<string, unknown>): Offering {
     schedule: Array.isArray(row.schedule) ? row.schedule : [],
     gallery: Array.isArray(row.gallery) ? row.gallery : [],
     details,
+    expiration_enabled: Boolean(row.expiration_enabled),
+    expires_at: normalizeExpirationDate(row.expires_at),
+    expired_at: normalizeExpirationDate(row.expired_at),
   } as Offering;
 }
 
@@ -603,6 +615,9 @@ function emptyOfferingFields(row: Offering): Offering {
     details: row.details ?? {},
     seo_title: row.seo_title ?? "",
     seo_description: row.seo_description ?? "",
+    expiration_enabled: row.expiration_enabled ?? false,
+    expires_at: normalizeExpirationDate(row.expires_at),
+    expired_at: normalizeExpirationDate(row.expired_at),
   };
 }
 
@@ -622,6 +637,22 @@ function normalizeOfferingsPageOptions(options: OfferingsPageOptions = {}) {
 function matchesOfferingStatus(item: Offering, status: OfferingsPageOptions["status"]) {
   if (!status || status === "all") return item.status !== "deleted";
   return Array.isArray(status) ? status.includes(item.status) : item.status === status;
+}
+
+/**
+ * Central public-visibility rule for offerings.
+ * An offering is visible on the public site only when it is published,
+ * not deleted, and (if expiration is enabled) its expiry date is still in the future.
+ */
+export function isPubliclyVisibleOffering(offering: Offering | null | undefined, now: Date = new Date()): offering is Offering {
+  if (!offering) return false;
+  if (offering.status !== "published") return false;
+  if (offering.deleted_at) return false;
+  if (offering.expiration_enabled) {
+    if (!offering.expires_at) return false;
+    if (new Date(offering.expires_at).getTime() <= now.getTime()) return false;
+  }
+  return true;
 }
 
 function paginateOfferings(items: Offering[], options: OfferingsPageOptions = {}): OfferingsPageResult {
@@ -829,6 +860,9 @@ export async function createOffering(data: OfferingInput) {
   if (!next.title || !next.type) {
     throw new Error("El tÃ­tulo y el tipo son obligatorios.");
   }
+  if (next.expiration_enabled && !next.expires_at) {
+    throw new Error("La caducidad estÃ¡ activa, pero falta la fecha de finalizaciÃ³n.");
+  }
 
   const nextItems = [next, ...offerings];
   await saveToSupabase(next);
@@ -844,6 +878,9 @@ export async function updateOffering(id: string, data: OfferingInput) {
 
   const old = offerings[index];
   const next = normalizeOffering(data, old, offerings);
+  if (next.expiration_enabled && !next.expires_at) {
+    throw new Error("La caducidad estÃ¡ activa, pero falta la fecha de finalizaciÃ³n.");
+  }
   offerings[index] = next;
   await saveToSupabase(next);
   cacheOfferings(offerings);
@@ -859,7 +896,14 @@ export async function duplicateOffering(id: string) {
   const offerings = await getOfferings();
   const original = offerings.find((item) => item.id === id);
   if (!original) return null;
-  const duplicateData: OfferingInput = { ...original, id: undefined, deleted_at: null };
+  const duplicateData: OfferingInput = {
+    ...original,
+    id: undefined,
+    deleted_at: null,
+    expiration_enabled: false,
+    expires_at: null,
+    expired_at: null,
+  };
   const copy = normalizeOffering(
     { ...duplicateData, title: `${original.title} (copia)`, slug: duplicateSlugBase(original.slug, offerings), status: "draft", deleted_at: null },
     undefined,
@@ -938,4 +982,73 @@ export async function deleteOfferingPermanently(id: string) {
   if (trashItem) await removeTrashItem(trashItem.id);
   if (item) await logAction({ action: "delete_permanently", entity_type: "offering", entity_id: id, entity_title: item.title, old_data: item });
   return true;
+}
+
+export type ExpiredOffering = {
+  id: string;
+  type: OfferingType;
+  slug: string;
+  title: string;
+};
+
+export type ExpireOfferingsResult = {
+  processed: number;
+  offerings: ExpiredOffering[];
+  now: string;
+};
+
+/**
+ * Marks offers whose scheduled expiration has passed as drafts in a single
+ * atomic, idempotent UPDATE. Only published offers with expiration enabled and
+ * an expiry date <= now() are processed. Returns the affected rows so callers
+ * can invalidate their public routes.
+ */
+export async function expireDueOfferings(now: Date = new Date()): Promise<ExpireOfferingsResult> {
+  const processedAt = now.toISOString();
+
+  try {
+    const supabase = createAdminClient();
+    const { data, error } = await supabase
+      .from(TABLE)
+      .update({
+        status: "draft",
+        expired_at: processedAt,
+        updated_at: processedAt,
+      })
+      .eq("status", "published")
+      .eq("expiration_enabled", true)
+      .not("expires_at", "is", null)
+      .lte("expires_at", now.toISOString())
+      .select("id, type, slug, title");
+
+    if (error) throw error;
+
+    const rows = (data ?? []) as Array<{ id: string; type: string; slug: string; title: string }>;
+    const offers: ExpiredOffering[] = rows.map((row) => ({
+      id: row.id,
+      // The DB constraint guarantees a valid type on this row.
+      type: (isOfferingType(row.type) ? row.type : "class") as OfferingType,
+      slug: row.slug,
+      title: row.title,
+    }));
+
+    offeringsCache = null;
+    await invalidateJsonCache(FILE_NAME);
+
+    for (const row of rows) {
+      void logAction({
+        action: "unpublish",
+        entity_type: "offering",
+        entity_id: row.id,
+        entity_title: row.title,
+        user_id: "system",
+        user_email: "system",
+        new_data: { status: "draft", expired_at: processedAt, expiration_reason: "expired" },
+      });
+    }
+
+    return { processed: offers.length, offerings: offers, now: processedAt };
+  } catch {
+    return { processed: 0, offerings: [], now: processedAt };
+  }
 }

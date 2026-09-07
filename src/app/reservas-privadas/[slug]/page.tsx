@@ -1,9 +1,9 @@
-import { redirect } from "next/navigation";
+import { permanentRedirect } from "next/navigation";
 
 export default async function PrivateExperienceDetailPage({
   params
 }: {
   params: Promise<{ slug: string }>;
 }) {
-  redirect(`/experiencias/${(await params).slug}`);
+  permanentRedirect(`/experiencias/${(await params).slug}`);
 }

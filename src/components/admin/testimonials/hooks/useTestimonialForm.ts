@@ -29,13 +29,6 @@ export function useTestimonialForm(mode: TestimonialFormMode, item?: Testimonial
   const [returnAfterNotice, setReturnAfterNotice] = useState(false);
   const saveInFlightRef = useRef(false);
 
-  const syncKey = `${item?.id ?? "new"}:${item?.updated_at ?? "create"}`;
-
-  useEffect(() => {
-    setFields(fieldsFromTestimonial(item));
-    setErrors({});
-  }, [syncKey, item]);
-
   useEffect(() => {
     if (!notice || notice.type === "success") return;
     const timer = window.setTimeout(() => setNotice(null), 4200);
@@ -128,7 +121,7 @@ export function useTestimonialForm(mode: TestimonialFormMode, item?: Testimonial
         saveInFlightRef.current = false;
       }
     },
-    [fields, item?.id, mode],
+    [fields, item, mode],
   );
 
   const handleSubmit = useCallback(

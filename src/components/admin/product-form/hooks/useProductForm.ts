@@ -26,26 +26,28 @@ import {
 
 export function useProductForm(mode: ProductFormMode, item?: Product) {
   const router = useRouter();
+  const productId = item?.id;
+  const syncKey = `${productId ?? "new"}:${item?.updated_at ?? "create"}`;
+  const [previousSyncKey, setPreviousSyncKey] = useState(syncKey);
   const [fields, setFields] = useState<ProductFormFields>(() => fieldsFromProduct(item));
   const [categories, setCategories] = useState<ProductCategory[]>([]);
   const [categoriesLoading, setCategoriesLoading] = useState(true);
   const [categoriesError, setCategoriesError] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [savingIntent, setSavingIntent] = useState<SaveIntent | null>(null);
+  const [isDeleting, setIsDeleting] = useState(false);
+  const [deleteConfirmOpen, setDeleteConfirmOpen] = useState(false);
   const [modal, setModal] = useState<ProductFormModal>(null);
   const saveInFlightRef = useRef(false);
 
-  const syncKey = `${item?.id ?? "new"}:${item?.updated_at ?? "create"}`;
-
-  useEffect(() => {
+  if (syncKey !== previousSyncKey) {
+    setPreviousSyncKey(syncKey);
     setFields(fieldsFromProduct(item));
     setError(null);
-  }, [syncKey, item]);
+  }
 
   useEffect(() => {
     const controller = new AbortController();
-    setCategoriesLoading(true);
-    setCategoriesError(null);
 
     fetch(CATEGORIES_ENDPOINT, { cache: "no-store", signal: controller.signal })
       .then(async (response) => {
@@ -124,7 +126,7 @@ export function useProductForm(mode: ProductFormMode, item?: Product) {
       setError(null);
 
       try {
-        const endpoint = mode === "create" ? PRODUCTS_ENDPOINT : `${PRODUCTS_ENDPOINT}/${item?.id}`;
+        const endpoint = mode === "create" ? PRODUCTS_ENDPOINT : `${PRODUCTS_ENDPOINT}/${productId}`;
         const response = await fetch(endpoint, {
           method: mode === "create" ? "POST" : "PUT",
           headers: { "Content-Type": "application/json" },
@@ -167,7 +169,7 @@ export function useProductForm(mode: ProductFormMode, item?: Product) {
         saveInFlightRef.current = false;
       }
     },
-    [fields, item?.id, mode],
+    [fields, mode, productId],
   );
 
   const handleSubmit = useCallback(
@@ -180,6 +182,54 @@ export function useProductForm(mode: ProductFormMode, item?: Product) {
     },
     [save],
   );
+
+  const requestDelete = useCallback(() => {
+    if (!productId || saveInFlightRef.current) return;
+    setDeleteConfirmOpen(true);
+  }, [productId]);
+
+  const closeDeleteConfirm = useCallback(() => {
+    if (!isDeleting) setDeleteConfirmOpen(false);
+  }, [isDeleting]);
+
+  const trashProduct = useCallback(async () => {
+    if (!productId || saveInFlightRef.current) return;
+    saveInFlightRef.current = true;
+    setDeleteConfirmOpen(false);
+    setIsDeleting(true);
+    setError(null);
+
+    try {
+      const response = await fetch(`${PRODUCTS_ENDPOINT}/${productId}`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        cache: "no-store",
+        body: JSON.stringify({ action: "trash" }),
+      });
+
+      if (!response.ok) {
+        const data = await response.json().catch(() => ({ error: "No se pudo eliminar el producto." }));
+        const message = (data as { error?: string }).error || "No se pudo eliminar el producto.";
+        setError(message);
+        setModal({ type: "error", title: "No se pudo eliminar", message });
+        return;
+      }
+
+      setModal({
+        type: "success",
+        title: "Producto movido a la papelera",
+        message: "Puedes restaurarlo desde la sección Papelera del CMS.",
+        redirectOnClose: true,
+      });
+    } catch {
+      const message = "No se pudo conectar con el servidor. Intenta nuevamente.";
+      setError(message);
+      setModal({ type: "error", title: "No se pudo eliminar", message });
+    } finally {
+      setIsDeleting(false);
+      saveInFlightRef.current = false;
+    }
+  }, [productId]);
 
   const closeModal = useCallback(() => {
     const shouldRedirect = modal?.redirectOnClose;
@@ -197,14 +247,19 @@ export function useProductForm(mode: ProductFormMode, item?: Product) {
     categoriesError,
     error,
     savingIntent,
+    isDeleting,
+    deleteConfirmOpen,
     modal,
-    isSaving: savingIntent !== null,
+    isSaving: savingIntent !== null || isDeleting,
     updateField,
     addGalleryImages,
     removeGalleryImage,
     moveGalleryImage,
     save,
     handleSubmit,
+    requestDelete,
+    closeDeleteConfirm,
+    trashProduct,
     closeModal,
   };
 }

@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useRef, useState } from "react";
 import {
   isTeacher,
   saveTeacherAction,
@@ -25,15 +25,6 @@ export function useTeacherForm(mode: TeacherFormMode, item: Teacher | undefined,
   const [savingStatus, setSavingStatus] = useState<TeacherStatus | null>(null);
   const [returnAfterNotice, setReturnAfterNotice] = useState(false);
   const saveInFlight = useRef(false);
-
-  const syncKey = `${item?.id ?? "new"}:${item?.updated_at ?? "create"}`;
-
-  // Sync only when the server record identity changes — not on every parent `item` reference.
-  useEffect(() => {
-    setFields(fieldsFromTeacher(item));
-    setErrors({});
-    // eslint-disable-next-line react-hooks/exhaustive-deps -- intentionally keyed by syncKey
-  }, [syncKey]);
 
   const updateField = useCallback(
     <K extends keyof TeacherFormFields>(key: K, value: TeacherFormFields[K]) => {

@@ -7,7 +7,6 @@ import {
   isTestimonial,
   orderedIdsKey,
   sortTestimonials,
-  testimonialsSyncKey,
 } from "../utils";
 import type {
   Testimonial,
@@ -16,7 +15,6 @@ import type {
 } from "../types";
 
 export function useTestimonialsTable(items: Testimonial[]) {
-  const syncKey = useMemo(() => testimonialsSyncKey(items), [items]);
   const [orderedItems, setOrderedItems] = useState<Testimonial[]>(() => sortTestimonials(items));
   const [baselineIds, setBaselineIds] = useState(() => orderedIdsKey(sortTestimonials(items)));
   const [notice, setNotice] = useState<TestimonialsNotice | null>(null);
@@ -25,12 +23,6 @@ export function useTestimonialsTable(items: Testimonial[]) {
   const [isSavingOrder, setIsSavingOrder] = useState(false);
   const actionInFlightRef = useRef(false);
   const orderInFlightRef = useRef(false);
-
-  useEffect(() => {
-    const next = sortTestimonials(items);
-    setOrderedItems(next);
-    setBaselineIds(orderedIdsKey(next));
-  }, [syncKey, items]);
 
   useEffect(() => {
     if (!notice || notice.type === "success") return;

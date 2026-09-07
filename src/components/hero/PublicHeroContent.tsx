@@ -68,6 +68,7 @@ export function PublicHeroContent({ hero }: { hero: CmsHeroSettings }) {
               source={hero.heroPresentationText || hero.heroTitle}
               className="page-hero__presentation-copy"
               style={richTextTypographyStyle(copyTypography)}
+              h1Level={2}
             />
             {hero.heroPresentationSubtitle ? (
               <MarkdownContent

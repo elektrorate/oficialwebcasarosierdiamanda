@@ -1200,6 +1200,9 @@ export interface OfferingRow {
   details: Json;
   seo_title: string | null;
   seo_description: string | null;
+  expiration_enabled: boolean;
+  expires_at: string | null;
+  expired_at: string | null;
   created_at: string;
   updated_at: string;
   deleted_at: string | null;
@@ -1227,6 +1230,9 @@ export interface OfferingInsert {
   details?: Json;
   seo_title?: string | null;
   seo_description?: string | null;
+  expiration_enabled?: boolean;
+  expires_at?: string | null;
+  expired_at?: string | null;
   created_at?: string;
   updated_at?: string;
   deleted_at?: string | null;
@@ -1254,6 +1260,9 @@ export interface OfferingUpdate {
   details?: Json;
   seo_title?: string | null;
   seo_description?: string | null;
+  expiration_enabled?: boolean;
+  expires_at?: string | null;
+  expired_at?: string | null;
   created_at?: string;
   updated_at?: string;
   deleted_at?: string | null;

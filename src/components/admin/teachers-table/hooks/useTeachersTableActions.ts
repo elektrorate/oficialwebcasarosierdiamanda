@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useState } from "react";
 import { useRouter } from "next/navigation";
 import {
   isTeacher,
@@ -28,8 +28,7 @@ export type TeachersTableSyncHandlers = {
 
 export function useTeachersTableActions(handlers: TeachersTableSyncHandlers = {}) {
   const router = useRouter();
-  const handlersRef = useRef(handlers);
-  handlersRef.current = handlers;
+  const { onTeacherUpdated, onTeacherRemoved } = handlers;
 
   const [notice, setNotice] = useState<Notice | null>(null);
   const [trashDialog, setTrashDialog] = useState<TeacherTrashDialogState>(null);
@@ -69,7 +68,7 @@ export function useTeachersTableActions(handlers: TeachersTableSyncHandlers = {}
       setNotice(null);
       setStatusPendingId(teacher.id);
       setStatusOverrides((current) => ({ ...current, [teacher.id]: optimisticStatus }));
-      handlersRef.current.onTeacherUpdated?.(teacher.id, null, fallbackPatch);
+      onTeacherUpdated?.(teacher.id, null, fallbackPatch);
 
       const result = await setTeacherEnabledAction(teacher.id, enabled);
 
@@ -79,7 +78,7 @@ export function useTeachersTableActions(handlers: TeachersTableSyncHandlers = {}
           delete next[teacher.id];
           return next;
         });
-        handlersRef.current.onTeacherUpdated?.(teacher.id, result.teacher, fallbackPatch);
+        onTeacherUpdated?.(teacher.id, result.teacher, fallbackPatch);
         setNotice({
           type: "success",
           title: "Estado actualizado",
@@ -88,14 +87,14 @@ export function useTeachersTableActions(handlers: TeachersTableSyncHandlers = {}
         router.refresh();
       } else {
         setStatusOverrides((current) => ({ ...current, [teacher.id]: previousStatus }));
-        handlersRef.current.onTeacherUpdated?.(teacher.id, null, { status: previousStatus });
+        onTeacherUpdated?.(teacher.id, null, { status: previousStatus });
         setNotice({ type: "error", title: "No se pudo actualizar", message: result.error });
       }
 
       setStatusPendingId(null);
       return result;
     },
-    [resolveStatus, router, statusPendingId],
+    [onTeacherUpdated, resolveStatus, router, statusPendingId],
   );
 
   const runAction = useCallback(
@@ -107,22 +106,22 @@ export function useTeachersTableActions(handlers: TeachersTableSyncHandlers = {}
 
       if (options?.optimisticHide) {
         setHiddenIds((current) => new Set(current).add(id));
-        handlersRef.current.onTeacherRemoved?.(id);
+        onTeacherRemoved?.(id);
       }
 
       const result = await patchTeacherAction(id, action);
 
       if (result.ok) {
         if (action === "trash") {
-          handlersRef.current.onTeacherRemoved?.(id);
+          onTeacherRemoved?.(id);
         } else if (action === "publish") {
-          handlersRef.current.onTeacherUpdated?.(id, result.teacher, { status: "published" });
+          onTeacherUpdated?.(id, result.teacher, { status: "published" });
         } else if (action === "draft") {
-          handlersRef.current.onTeacherUpdated?.(id, result.teacher, { status: "draft" });
+          onTeacherUpdated?.(id, result.teacher, { status: "draft" });
         } else if (action === "archive") {
-          handlersRef.current.onTeacherUpdated?.(id, result.teacher, { status: "archived" });
+          onTeacherUpdated?.(id, result.teacher, { status: "archived" });
         } else if (isTeacher(result.teacher)) {
-          handlersRef.current.onTeacherUpdated?.(id, result.teacher);
+          onTeacherUpdated?.(id, result.teacher);
         }
 
         setNotice({
@@ -145,7 +144,7 @@ export function useTeachersTableActions(handlers: TeachersTableSyncHandlers = {}
       setPendingKey(null);
       return result;
     },
-    [actionKey, pendingKey, router, statusPendingId],
+    [actionKey, onTeacherRemoved, onTeacherUpdated, pendingKey, router, statusPendingId],
   );
 
   const openTrashDialog = useCallback((teacher: Teacher) => {

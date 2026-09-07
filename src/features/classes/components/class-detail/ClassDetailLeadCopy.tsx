@@ -18,6 +18,7 @@ export function ClassDetailLeadIntro({ item }: Props) {
         source={item.detailQuestion}
         className="class-detail__question class-detail__question--editorial class-detail__question--styled"
         style={editorialDetailTypographyStyle(item.detailQuestionTypography)}
+        h1Level={2}
       />
       <MarkdownContent
         source={item.introHighlight}

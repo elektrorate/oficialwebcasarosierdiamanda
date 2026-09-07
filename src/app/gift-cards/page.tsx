@@ -5,7 +5,8 @@ import { getExperienceCollectionConfig } from "@/features/experiences/experience
 export const metadata: Metadata = {
   title: "Gift Cards",
   description:
-    "Gift cards de Casa Rosier para regalar experiencias de ceramica en Barcelona."
+    "Gift cards de Casa Rosier para regalar experiencias de ceramica en Barcelona.",
+  alternates: { canonical: "/gift-cards" },
 };
 
 export default async function GiftCardsPage() {

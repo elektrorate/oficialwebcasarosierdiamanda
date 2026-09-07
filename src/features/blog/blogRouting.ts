@@ -11,9 +11,10 @@ export async function generateBlogPostMetadata(
 ): Promise<Metadata> {
   const post = await getPublicBlogPostBySlug((await params).slug);
   return post
-    ? {
+      ? {
         title: { absolute: post.seoTitle },
-        description: post.seoDescription
+        description: post.seoDescription,
+        alternates: { canonical: `/blog/${post.slug}` },
       }
     : {};
 }

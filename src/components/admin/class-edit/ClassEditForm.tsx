@@ -80,7 +80,7 @@ export default function ClassEditForm({
           <Button type="button" variant="ghost" onClick={form.handleCancel}>Cancelar</Button>
         </div>
 
-        <ClassEditStickyBar form={form} />
+        <ClassEditStickyBar form={form} offering={offering} />
       </form>
 
       <MediaLibraryModal

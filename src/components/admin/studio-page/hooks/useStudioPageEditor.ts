@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useMemo, useRef, useState } from "react";
 import { buildSocialGalleryProps } from "@/components/admin/page-editor/utils/socialGalleryProps";
 import { saveStudioPageSettingsAction } from "@/lib/admin/studio-page-actions";
 import { getSelectedFaqBlock, listPublishedFaqGroups } from "@/lib/cms/faq-selection";
@@ -73,10 +73,6 @@ export function useStudioPageEditor({
   const [isSaving, setIsSaving] = useState(false);
   const [modal, setModal] = useState<StudioPageEditorModal>(null);
   const saveInFlight = useRef(false);
-
-  useEffect(() => {
-    setLocalTeachers(sortAdminVisibleTeachers(teachers));
-  }, [teachers]);
 
   const savePayload = useMemo(
     () => ({

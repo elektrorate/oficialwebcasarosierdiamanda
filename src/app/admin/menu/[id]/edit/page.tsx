@@ -1,4 +1,3 @@
-import { notFound } from "next/navigation";
 import AdminShell from "@/components/admin/AdminShell";
 import MenuForm from "@/components/admin/MenuForm";
 import SectionEmptyState from "@/components/admin/SectionEmptyState";

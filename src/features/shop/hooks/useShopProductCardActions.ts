@@ -1,28 +1,44 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useSyncExternalStore } from "react";
 import type { ShopItem } from "@/data/types";
 import { addCartItem } from "@/lib/cart";
 import {
   isShopFavorite,
+  SHOP_FAVORITES_STORAGE_KEY,
   toggleShopFavorite,
 } from "@/lib/shop-favorites";
 
-export function useShopProductCardActions(item: ShopItem) {
-  const [isFavorite, setIsFavorite] = useState(false);
+function subscribeToShopFavorites(onStoreChange: () => void) {
+  const handleStorage = (event: StorageEvent) => {
+    if (event.key === SHOP_FAVORITES_STORAGE_KEY) onStoreChange();
+  };
 
-  useEffect(() => {
-    setIsFavorite(isShopFavorite(item.id));
-    const sync = () => setIsFavorite(isShopFavorite(item.id));
-    window.addEventListener("casarosier:shop-favorites", sync);
-    return () => window.removeEventListener("casarosier:shop-favorites", sync);
-  }, [item.id]);
+  window.addEventListener("casarosier:shop-favorites", onStoreChange);
+  window.addEventListener("storage", handleStorage);
+  return () => {
+    window.removeEventListener("casarosier:shop-favorites", onStoreChange);
+    window.removeEventListener("storage", handleStorage);
+  };
+}
+
+function getServerFavoriteSnapshot() {
+  return false;
+}
+
+export function useShopProductCardActions(item: ShopItem) {
+  const getFavoriteSnapshot = useCallback(() => isShopFavorite(item.id), [item.id]);
+  const isFavorite = useSyncExternalStore(
+    subscribeToShopFavorites,
+    getFavoriteSnapshot,
+    getServerFavoriteSnapshot,
+  );
 
   const toggleFavorite = useCallback(
     (event?: { preventDefault: () => void; stopPropagation: () => void }) => {
       event?.preventDefault();
       event?.stopPropagation();
-      setIsFavorite(toggleShopFavorite(item.id));
+      toggleShopFavorite(item.id);
     },
     [item.id],
   );

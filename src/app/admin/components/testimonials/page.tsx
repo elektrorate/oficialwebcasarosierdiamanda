@@ -1,5 +1,9 @@
 import AdminShell from "@/components/admin/AdminShell";
-import { TestimonialsTable, TESTIMONIAL_ADMIN_FILTERS } from "@/components/admin/testimonials";
+import {
+  TestimonialsTable,
+  TESTIMONIAL_ADMIN_FILTERS,
+  testimonialsSyncKey,
+} from "@/components/admin/testimonials";
 import { listAdminTestimonials } from "@/lib/cms/testimonials";
 
 export default async function Page({
@@ -13,7 +17,12 @@ export default async function Page({
 
   return (
     <AdminShell>
-      <TestimonialsTable items={items} filters={TESTIMONIAL_ADMIN_FILTERS} status={status} />
+      <TestimonialsTable
+        key={`${status}:${testimonialsSyncKey(items)}`}
+        items={items}
+        filters={TESTIMONIAL_ADMIN_FILTERS}
+        status={status}
+      />
     </AdminShell>
   );
 }

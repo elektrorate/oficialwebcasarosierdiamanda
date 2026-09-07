@@ -4,8 +4,10 @@ type PublicRedirect = Pick<Redirect, "id" | "source_url" | "target_url" | "redir
 
 export interface ResolvedRedirect {
   url: URL;
-  status: 301 | 302;
+  status: 301 | 302 | 308;
 }
+
+const STATUS_BY_TYPE: Record<RedirectType, 301 | 302 | 308> = { "301": 301, "302": 302, "308": 308 };
 
 function sortSearchParams(searchParams: URLSearchParams) {
   return new URLSearchParams(
@@ -83,7 +85,7 @@ export function resolvePublicRedirect(requestUrl: URL, redirects: PublicRedirect
 
   for (let hop = 0; hop < maxHops; hop += 1) {
     const rule = redirects.find((item) => sourceMatches(item.source_url, current));
-    if (!rule) return firstType ? { url: current, status: firstType === "302" ? 302 : 301 } : null;
+    if (!rule) return firstType ? { url: current, status: STATUS_BY_TYPE[firstType] } : null;
 
     firstType ??= rule.redirect_type;
     const next = targetUrl(rule.target_url, current);
@@ -93,7 +95,7 @@ export function resolvePublicRedirect(requestUrl: URL, redirects: PublicRedirect
     current = next;
 
     if (current.origin !== requestUrl.origin) {
-      return { url: current, status: firstType === "302" ? 302 : 301 };
+      return { url: current, status: STATUS_BY_TYPE[firstType] };
     }
   }
   return null;

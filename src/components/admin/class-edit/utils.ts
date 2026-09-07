@@ -801,6 +801,7 @@ function errorLabel(errorKey: string) {
   if (errorKey === "slug") return "Información básica - Slug";
   if (errorKey === "heroTitle") return "Hero - Título del hero";
   if (errorKey === "whatsappNumber") return "Información básica - WhatsApp";
+  if (errorKey === "expirationDate") return "Caducidad - Fecha y hora de finalización";
 
   const pricing = errorKey.match(/^pricing-(\d+)$/);
   if (pricing) return `Información básica - Precio ${Number(pricing[1]) + 1}`;
@@ -826,15 +827,27 @@ export function validateClassEditForm({
   title,
   slug,
   details,
+  expirationEnabled = false,
+  expiresAt = null,
+  nextStatus = "draft",
+  now = new Date(),
 }: {
   title: string;
   slug: string;
   details: ClassOfferingDetails;
+  expirationEnabled?: boolean;
+  expiresAt?: string | null;
+  nextStatus?: "draft" | "published";
+  now?: Date;
 }) {
   const nextErrors: Record<string, string> = {};
   if (!details.menuTitle.trim()) nextErrors.menuTitle = "El título del menú es obligatorio.";
   if (!title.trim()) nextErrors.title = "La etiqueta interna es obligatoria.";
   if (!slug.trim()) nextErrors.slug = "El slug es obligatorio.";
+  if (expirationEnabled && !expiresAt) nextErrors.expirationDate = "Activa la caducidad y elige una fecha y hora de finalización.";
+  if (expirationEnabled && expiresAt && nextStatus === "published" && new Date(expiresAt).getTime() <= now.getTime()) {
+    nextErrors.expirationDate = "La fecha de caducidad debe ser futura para publicar. Elige una nueva fecha o desactiva la caducidad.";
+  }
   if (details.heroVariant === "text" && !details.heroTitle.trim()) nextErrors.heroTitle = "Agrega el título del hero.";
   if (details.heroVariant === "presentation") {
     const presentationText = normalizePresentationHeroForPersist(
@@ -1036,6 +1049,8 @@ export function buildOfferingPayload({
   seoTitle,
   seoDescription,
   currency,
+  expirationEnabled,
+  expiresAt,
 }: {
   offering: Offering;
   title: string;
@@ -1047,6 +1062,8 @@ export function buildOfferingPayload({
   seoTitle: string;
   seoDescription: string;
   currency?: string;
+  expirationEnabled?: boolean;
+  expiresAt?: string | null;
 }) {
   const pricing = normalizePricingForPersist(details);
   const galleryImages = normalizeGalleryImagesForPersist(details);
@@ -1078,6 +1095,8 @@ export function buildOfferingPayload({
     status: nextStatus,
     price: primaryPrice,
     currency: (currency ?? "EUR").trim().toUpperCase() || "EUR",
+    expiration_enabled: expirationEnabled === true,
+    expires_at: expirationEnabled === true ? expiresAt ?? null : null,
     cover_image_url: coverImage,
     gallery: galleryImages.map((item) => item.image),
     seo_title: seoFields.seoTitle,

@@ -27,6 +27,16 @@ export default function ProductForm({ mode, item }: ProductFormProps) {
         confirmLabel="Entendido"
         onClose={form.closeModal}
       />
+      <AdminActionModal
+        open={form.deleteConfirmOpen}
+        type="confirm"
+        title="Eliminar producto"
+        message={`Se moverá “${form.fields.name || "este producto"}” a la papelera. Podrás restaurarlo después.`}
+        confirmLabel="Mover a papelera"
+        cancelLabel="Cancelar"
+        onConfirm={() => void form.trashProduct()}
+        onClose={form.closeDeleteConfirm}
+      />
 
       <ProductFormHero mode={mode} name={form.fields.name} status={form.fields.status} />
 
@@ -98,7 +108,10 @@ export default function ProductForm({ mode, item }: ProductFormProps) {
 
       <ProductFormActions
         fields={form.fields}
+        mode={mode}
         savingIntent={form.savingIntent}
+        isDeleting={form.isDeleting}
+        onRequestDelete={form.requestDelete}
         disabled={form.isSaving}
       />
     </form>
