@@ -16,12 +16,16 @@ export async function saveBlogPostAction(
   mode: "create" | "edit",
   postId: string | undefined,
   payload: Record<string, unknown>,
+  options: { autosave?: boolean } = {},
 ): Promise<BlogPostSaveResult> {
   try {
     const response = await fetch(mode === "create" ? BITACORA_POSTS_ENDPOINT : BITACORA_POST_ENDPOINT(postId!),
       {
         method: mode === "create" ? "POST" : "PUT",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          ...(options.autosave ? { "X-CMS-Autosave": "1" } : {}),
+        },
         body: JSON.stringify(payload),
       },
     );

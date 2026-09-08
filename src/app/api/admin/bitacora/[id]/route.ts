@@ -15,7 +15,12 @@ export async function GET(request: NextRequest, ctx: { params: Promise<{ id: str
 }
 export async function PUT(request: NextRequest, ctx: { params: Promise<{ id: string }> }) {
   if (!(await requireAdminApi())) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-  try { const item = await updateBlogPost((await ctx.params).id, await request.json()); if (!item) return NextResponse.json({ error: "No encontrado" }, { status: 404 }); refreshBlogViews(); return NextResponse.json({ post: item }); }
+  try {
+    const item = await updateBlogPost((await ctx.params).id, await request.json());
+    if (!item) return NextResponse.json({ error: "No encontrado" }, { status: 404 });
+    if (request.headers.get("x-cms-autosave") !== "1") refreshBlogViews();
+    return NextResponse.json({ post: item });
+  }
   catch (err) { return NextResponse.json({ error: err instanceof Error ? err.message : "Error" }, { status: 400 }); }
 }
 export async function PATCH(request: NextRequest, ctx: { params: Promise<{ id: string }> }) {

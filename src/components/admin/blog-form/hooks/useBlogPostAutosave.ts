@@ -19,7 +19,7 @@ export function useBlogPostAutosave(
 ) {
   const payload = useMemo(() => buildBlogPostSavePayload(fields, status), [fields, status]);
   const save = useCallback(
-    (nextPayload: Record<string, unknown>) => saveBlogPostAction("edit", postId, nextPayload),
+    (nextPayload: Record<string, unknown>) => saveBlogPostAction("edit", postId, nextPayload, { autosave: true }),
     [postId],
   );
 

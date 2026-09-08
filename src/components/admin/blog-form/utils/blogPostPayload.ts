@@ -75,6 +75,7 @@ export type BlogPostFormFields = {
   excerpt: string;
   listingExcerpt: string;
   featuredImageId: string;
+  titleImageId: string;
   categoryMode: string;
   customCategory: string;
   isFeatured: boolean;
@@ -135,6 +136,7 @@ export function buildBlogPostSavePayload(fields: BlogPostFormFields, nextStatus:
     listing_excerpt: clampListingExcerpt(fields.listingExcerpt),
     content: "",
     featured_image_id: fields.featuredImageId,
+    title_image_id: fields.titleImageId,
     author_id: "Casa Rosier",
     category,
     tags: parseTagsInput(fields.tagsInput),

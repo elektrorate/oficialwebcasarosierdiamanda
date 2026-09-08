@@ -1130,6 +1130,7 @@ export interface BlogPost {
   listing_excerpt: string;
   content: string;
   featured_image_id: string;
+  title_image_id: string;
   author_id: string;
   category: string;
   tags: string[];

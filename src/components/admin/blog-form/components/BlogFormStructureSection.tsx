@@ -8,7 +8,7 @@ import Switch from "@/components/ui/Switch";
 import type { BlogPostStatus } from "@/lib/cms/types";
 import { BLOG_POST_CATEGORY_OPTIONS, BLOG_POST_MEDIA_FOLDER } from "../constants";
 import type { BlogPostFormState } from "../hooks/useBlogPostForm";
-import { clampListingExcerpt, listingExcerptWordCount, slugifyBlogPost } from "../utils/slugify";
+import { clampListingExcerpt, LISTING_EXCERPT_MAX_LENGTH, slugifyBlogPost } from "../utils/slugify";
 import { BlogPostIntroRichTextField } from "./BlogPostIntroRichTextField";
 
 function BlogFormStructureSectionComponent({
@@ -37,12 +37,20 @@ function BlogFormStructureSectionComponent({
             onChange={(event) => form.setSlug(slugifyBlogPost(event.target.value))}
           />
           <div className="md:col-span-2">
-            <TextField
+            <MediaSelectField
+              label="Imagen debajo del título"
+              value={form.titleImageId}
+              onChange={form.setTitleImageId}
+              folder={BLOG_POST_MEDIA_FOLDER}
+            />
+          </div>
+          <div className="md:col-span-2">
+            <TextAreaField
               label="Extracto del listado"
               value={form.listingExcerpt}
-              maxLength={240}
+              maxLength={LISTING_EXCERPT_MAX_LENGTH}
               placeholder="Resumen breve para el listado"
-              help={`${listingExcerptWordCount(form.listingExcerpt)}/10 palabras. Si queda vacío, se generará desde el contenido.`}
+              help={`${form.listingExcerpt.length}/${LISTING_EXCERPT_MAX_LENGTH} caracteres. Si queda vacío, se generará desde el contenido.`}
               onChange={(event) => form.setListingExcerpt(clampListingExcerpt(event.target.value))}
             />
           </div>

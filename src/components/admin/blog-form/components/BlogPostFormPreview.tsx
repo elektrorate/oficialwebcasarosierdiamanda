@@ -14,6 +14,7 @@ type Props = Pick<
   | "title"
   | "excerpt"
   | "featuredImageId"
+  | "titleImageId"
   | "previewHero"
   | "currentCategory"
   | "slug"
@@ -37,6 +38,7 @@ function BlogPostFormPreviewComponent({
   title,
   excerpt,
   featuredImageId,
+  titleImageId,
   blocks,
   previewHero,
   currentCategory,
@@ -62,6 +64,7 @@ function BlogPostFormPreviewComponent({
       excerpt: excerpt || "Texto introductorio de la bitácora.",
       listingExcerpt: "",
       coverImage: featuredImageId || previewHero.heroImage || "/img/social-2.jpg",
+      titleImage: titleImageId || undefined,
       category: currentCategory,
       tags: [],
       author: "Casa Rosier",
@@ -96,6 +99,7 @@ function BlogPostFormPreviewComponent({
       sortOrder,
       status,
       title,
+      titleImageId,
       visibleInListing,
     ],
   );

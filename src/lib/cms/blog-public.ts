@@ -104,6 +104,7 @@ function cmsToPublicPost(post: CmsBlogPost): PublicBlogPost {
     excerpt: post.excerpt,
     listingExcerpt: post.listing_excerpt || "",
     coverImage: post.featured_image_id || post.seo_image || "img/social-2.jpg",
+    titleImage: post.title_image_id || undefined,
     category: post.category || "Procesos",
     tags: post.tags ?? [],
     author: post.author_id || "Casa Rosier",

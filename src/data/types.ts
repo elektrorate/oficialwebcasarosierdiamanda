@@ -310,6 +310,7 @@ export interface BlogPost {
   /** Short plain excerpt for index feed cards (listing_excerpt from CMS). */
   listingExcerpt: string;
   coverImage: string;
+  titleImage?: string;
   category: string;
   tags: string[];
   author: string;

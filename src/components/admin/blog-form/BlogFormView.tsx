@@ -62,6 +62,7 @@ function BlogFormViewComponent({ navigationItems, menuSettings, ...formProps }: 
             title={form.title}
             excerpt={form.excerpt}
             featuredImageId={form.featuredImageId}
+            titleImageId={form.titleImageId}
             blocks={form.blocks}
             previewHero={form.previewHero}
             currentCategory={form.currentCategory}

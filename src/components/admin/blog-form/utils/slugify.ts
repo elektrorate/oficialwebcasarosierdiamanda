@@ -15,10 +15,8 @@ export function parseTagsInput(value: string) {
     .filter(Boolean);
 }
 
-export function clampListingExcerpt(value: string) {
-  return value.trimStart().split(/\s+/).slice(0, 10).join(" ");
-}
+export const LISTING_EXCERPT_MAX_LENGTH = 240;
 
-export function listingExcerptWordCount(value: string) {
-  return value.trim().split(/\s+/).filter(Boolean).length;
+export function clampListingExcerpt(value: string) {
+  return value.slice(0, LISTING_EXCERPT_MAX_LENGTH);
 }

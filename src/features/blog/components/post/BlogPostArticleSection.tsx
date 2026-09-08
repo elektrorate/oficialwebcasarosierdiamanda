@@ -6,6 +6,7 @@ import { BlogPostCta } from "./BlogPostCta";
 import { BlogPostIntro } from "./BlogPostIntro";
 import { BlogPostPager } from "./BlogPostPager";
 import { BlogPostTitle } from "./BlogPostTitle";
+import { BlogPostTitleImage } from "./BlogPostTitleImage";
 
 export function BlogPostArticleSection({
   post,
@@ -24,6 +25,7 @@ export function BlogPostArticleSection({
         <div className="blog-article__container w-[min(100%-40px,640px)] mx-auto">
           <header className="blog-article__header mb-[clamp(28px,4vw,40px)] text-center">
             <BlogPostTitle title={post.title} />
+            <BlogPostTitleImage post={post} />
             <BlogPostIntro post={post} />
           </header>
           <BlogPostCover post={post} />

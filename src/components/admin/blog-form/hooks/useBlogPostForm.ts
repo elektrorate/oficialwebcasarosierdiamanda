@@ -47,6 +47,7 @@ export function useBlogPostForm({ mode, item }: UseBlogPostFormProps) {
   const [excerpt, setExcerpt] = useState(item?.excerpt ?? "");
   const [listingExcerpt, setListingExcerpt] = useState(item?.listing_excerpt ?? "");
   const [featuredImageId, setFeaturedImageId] = useState(item?.featured_image_id ?? "");
+  const [titleImageId, setTitleImageId] = useState(item?.title_image_id ?? "");
   const [categoryMode, setCategoryMode] = useState(hasKnownCategory ? itemCategory : "custom");
   const [customCategory, setCustomCategory] = useState(hasKnownCategory ? "" : itemCategory);
   const [isFeatured] = useState(item?.is_featured ?? false);
@@ -80,6 +81,7 @@ export function useBlogPostForm({ mode, item }: UseBlogPostFormProps) {
       excerpt,
       listingExcerpt,
       featuredImageId,
+      titleImageId,
       categoryMode,
       customCategory,
       isFeatured,
@@ -113,6 +115,7 @@ export function useBlogPostForm({ mode, item }: UseBlogPostFormProps) {
       status,
       tagsInput,
       title,
+      titleImageId,
       visibleInListing,
     ],
   );
@@ -226,6 +229,8 @@ export function useBlogPostForm({ mode, item }: UseBlogPostFormProps) {
     setListingExcerpt,
     featuredImageId,
     setFeaturedImageId,
+    titleImageId,
+    setTitleImageId,
     categoryMode,
     setCategoryMode,
     customCategory,

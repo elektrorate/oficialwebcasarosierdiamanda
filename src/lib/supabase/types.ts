@@ -136,6 +136,7 @@ export interface BlogPostRow {
   excerpt: string | null;
   content: string | null;
   featured_image_id: string | null;
+  title_image_id: string | null;
   author_id: string | null;
   category: string;
   tags: Json;
@@ -163,6 +164,7 @@ export interface BlogPostInsert {
   excerpt?: string | null;
   content?: string | null;
   featured_image_id?: string | null;
+  title_image_id?: string | null;
   author_id?: string | null;
   category?: string;
   tags: Json;
@@ -190,6 +192,7 @@ export interface BlogPostUpdate {
   excerpt?: string | null;
   content?: string | null;
   featured_image_id?: string | null;
+  title_image_id?: string | null;
   author_id?: string | null;
   category?: string;
   tags?: Json;
