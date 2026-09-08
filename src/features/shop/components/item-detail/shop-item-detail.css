@@ -59,8 +59,8 @@
 .shop-item-gallery__main {
   position: relative;
   display: block;
-  width: min(100%, 300px);
-  max-width: 300px;
+  width: min(100%, 500px);
+  max-width: 500px;
   margin: 0 auto;
   padding: 0;
   border: 0;
