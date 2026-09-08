@@ -53,18 +53,12 @@ export function ShopItemGalleryView({
 
   return (
     <div className="shop-item-gallery" aria-label={`Galería de ${productName}`}>
-      <figure
+      <button
+        ref={expandButtonRef}
+        type="button"
         className="shop-item-gallery__main"
-        role="button"
-        tabIndex={0}
         aria-label={`Ampliar imagen de ${productName}`}
         onClick={onOpenModal}
-        onKeyDown={(e) => {
-          if (e.key === "Enter" || e.key === " ") {
-            e.preventDefault();
-            onOpenModal();
-          }
-        }}
       >
         <img className="shop-item-gallery__ghost" src={src} alt="" aria-hidden="true" />
         <img className="shop-item-gallery__img" src={src} alt={productName} />
@@ -77,19 +71,7 @@ export function ShopItemGalleryView({
           />
         ) : null}
         {badge ? <ShopProductBadgeLabel badge={badge} /> : null}
-        {images.length > 1 ? (
-          <button
-            ref={expandButtonRef}
-            className="shop-item-gallery__expand"
-            type="button"
-            aria-label={`Ampliar imagen de ${productName}`}
-            onClick={(e) => {
-              e.stopPropagation();
-              onOpenModal();
-            }}
-          />
-        ) : null}
-      </figure>
+      </button>
 
       {images.length > 1 ? (
         <div className="shop-item-gallery__thumbs" role="tablist" aria-label="Miniaturas">
