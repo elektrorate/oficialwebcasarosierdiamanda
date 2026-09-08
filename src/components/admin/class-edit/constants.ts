@@ -24,9 +24,6 @@ export const DEFAULT_CALENDAR_LABELS_TITLE = "PRÓXIMAS FECHAS DEL WORKSHOP";
 export const DEFAULT_CALENDAR_LABELS_DESCRIPTION =
   "Consulta las próximas fechas disponibles del workshop durante el año y elige la edición que mejor se adapte a tu calendario. Cada convocatoria incluye información sobre horarios, plazas disponibles y detalles de reserva.";
 
-export const DEFAULT_DETAIL_QUESTION =
-  "Te apasiona la creatividad y deseas explorar el mundo de la ceramica?";
-
 export const CLASS_EDIT_TABS: { key: TabKey; label: string }[] = [
   { key: "hero", label: "Hero" },
   { key: "home", label: "Tarjeta para Home" },
@@ -189,7 +186,7 @@ export const defaultClassDetails: ClassOfferingDetails = {
   ctaEnrollLabel: "",
   showConsultCta: true,
   showEnrollCta: true,
-  detailQuestion: DEFAULT_DETAIL_QUESTION,
+  detailQuestion: "",
   highlightDescription: "",
   subtitleTypography: { ...DEFAULT_RICH_TEXT_TYPOGRAPHY },
   detailQuestionTypography: { ...DEFAULT_RICH_TEXT_TYPOGRAPHY },

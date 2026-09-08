@@ -11,10 +11,6 @@ type PricingSectionProps = {
   form: ClassEditFormState;
 };
 
-function pricingRowKey(item: { description: string; price: number | null; order: number }) {
-  return `${item.order}-${item.price ?? "null"}-${item.description}`;
-}
-
 function PricingSectionComponent({ form }: PricingSectionProps) {
   const { details, errors, addPricing, updatePricing, removePricing, updateDetails, currency, setCurrency } = form;
 
@@ -50,7 +46,7 @@ function PricingSectionComponent({ form }: PricingSectionProps) {
       <div className="space-y-3">
         {details.pricing.length ? details.pricing.map((item, index) => (
           <div
-            key={pricingRowKey(item)}
+            key={item.order}
             className="grid grid-cols-1 gap-3 rounded-xl border border-outline-variant p-4 md:grid-cols-[1fr_140px_auto] md:items-start"
           >
             <AdminInput

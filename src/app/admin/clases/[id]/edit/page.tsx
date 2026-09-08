@@ -49,7 +49,7 @@ export default async function EditClassPage({ params }: { params: Promise<{ id: 
         }
       />
 
-      <ClassEditForm offering={offering} previewChrome={previewChrome} />
+      <ClassEditForm key={offering.id} offering={offering} previewChrome={previewChrome} />
     </AdminShell>
   );
 }

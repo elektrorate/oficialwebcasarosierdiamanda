@@ -533,10 +533,9 @@ async function readOneHomeCardSettings(id: string) {
 async function syncHomeCardSettingsToSupabase(item: Offering): Promise<void> {
   const row = homeCardSettingsFromDetails(item);
   if (!row) return;
-  try {
-    const supabase = createAdminClient();
-    await supabase.from(HOME_CARD_SETTINGS_TABLE).upsert(row, { onConflict: "offering_id" });
-  } catch { /* best-effort until the migration exists in every environment */ }
+  const supabase = createAdminClient();
+  const { error } = await supabase.from(HOME_CARD_SETTINGS_TABLE).upsert(row, { onConflict: "offering_id" });
+  if (error) throw error;
 }
 
 async function readDetailTextSettingsMap(ids: string[]) {
@@ -565,10 +564,9 @@ async function readOneDetailTextSettings(id: string) {
 async function syncDetailTextSettingsToSupabase(item: Offering): Promise<void> {
   const row = detailTextSettingsFromDetails(item);
   if (!row) return;
-  try {
-    const supabase = createAdminClient();
-    await supabase.from(DETAIL_TEXT_SETTINGS_TABLE).upsert(row, { onConflict: "offering_id" });
-  } catch { /* best-effort until the migration exists in every environment */ }
+  const supabase = createAdminClient();
+  const { error } = await supabase.from(DETAIL_TEXT_SETTINGS_TABLE).upsert(row, { onConflict: "offering_id" });
+  if (error) throw error;
 }
 
 async function readHeroSettingsMap(ids: string[]) {
@@ -597,10 +595,9 @@ async function readOneHeroSettings(id: string) {
 async function syncHeroSettingsToSupabase(item: Offering): Promise<void> {
   const row = heroSettingsFromDetails(item);
   if (!row) return;
-  try {
-    const supabase = createAdminClient();
-    await supabase.from(HERO_SETTINGS_TABLE).upsert(row, { onConflict: "offering_id" });
-  } catch { /* best-effort until the migration exists in every environment */ }
+  const supabase = createAdminClient();
+  const { error } = await supabase.from(HERO_SETTINGS_TABLE).upsert(row, { onConflict: "offering_id" });
+  if (error) throw error;
 }
 
 function emptyOfferingFields(row: Offering): Offering {
@@ -897,7 +894,7 @@ export async function duplicateOffering(id: string) {
   const original = offerings.find((item) => item.id === id);
   if (!original) return null;
   const duplicateData: OfferingInput = {
-    ...original,
+    ...structuredClone(original),
     id: undefined,
     deleted_at: null,
     expiration_enabled: false,

@@ -8,10 +8,10 @@ import type {
   OfferingGalleryImage,
 } from "@/lib/cms/types";
 import { normalizeCalendarUi } from "@/lib/cms/types";
+import { clearLegacyOfferingContent } from "@/lib/cms/offering-details-compat";
 import {
   DEFAULT_CALENDAR_LABELS_DESCRIPTION,
   DEFAULT_CALENDAR_LABELS_TITLE,
-  DEFAULT_DETAIL_QUESTION,
   DEFAULT_HERO_IMAGE,
   MAX_CALENDAR_LABELS,
   SEO_MAX_DESCRIPTION_LENGTH,
@@ -353,7 +353,7 @@ export function toClassDetails(offering: Offering): ClassOfferingDetails {
     heroPresentationCtaNewTab: Boolean(fromDetails.heroPresentationCtaNewTab),
     heroPresentationCtaBackgroundColor: firstText(fromDetails.heroPresentationCtaBackgroundColor, defaultClassDetails.heroPresentationCtaBackgroundColor),
     heroPresentationCtaTextColor: firstText(fromDetails.heroPresentationCtaTextColor, defaultClassDetails.heroPresentationCtaTextColor),
-    detailQuestion: firstText(fromDetails.detailQuestion, DEFAULT_DETAIL_QUESTION),
+    detailQuestion: firstText(fromDetails.detailQuestion),
     highlightDescription: firstText(fromDetails.highlightDescription, fromDetails.introHighlight, offering.excerpt),
     subtitleTypography: normalizeRichTextTypography(fromDetails.subtitleTypography),
     detailQuestionTypography: normalizeRichTextTypography(fromDetails.detailQuestionTypography),
@@ -653,7 +653,7 @@ export function buildPreviewItem({
     listingTitle: title || "Título del producto",
     listingSubtitle: details.heroSubtitle || subtitle || "",
     subtitleTypography: normalizeRichTextTypography(details.subtitleTypography ?? DEFAULT_RICH_TEXT_TYPOGRAPHY),
-    detailQuestion: details.detailQuestion || DEFAULT_DETAIL_QUESTION,
+    detailQuestion: details.detailQuestion,
     detailQuestionTypography: normalizeRichTextTypography(details.detailQuestionTypography ?? DEFAULT_RICH_TEXT_TYPOGRAPHY),
     introHighlight: details.highlightDescription || "Texto remarcado color café.",
     introHighlightTypography: normalizeRichTextTypography(details.highlightDescriptionTypography ?? DEFAULT_RICH_TEXT_TYPOGRAPHY),
@@ -1102,12 +1102,7 @@ export function buildOfferingPayload({
     seo_title: seoFields.seoTitle,
     seo_description: seoFields.seoDescription,
     details: {
-      ...offering.details,
-      videoCardImage: "",
-      videoCardLabel: "",
-      whatYouWillLearn: [],
-      whoCanJoin: [],
-      paymentMethods: [],
+      ...clearLegacyOfferingContent(offering.details),
       class: {
         ...details,
         menuTitle: details.menuTitle.trim() || title.trim(),

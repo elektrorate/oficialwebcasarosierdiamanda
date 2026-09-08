@@ -10,6 +10,7 @@ import {
 } from "@/lib/cms/rich-text-typography";
 import type { CalendarLabel, ClassOfferingDetails, Offering } from "@/lib/cms/types";
 import { normalizeCalendarUi } from "@/lib/cms/types";
+import { mergeCurrentOfferingDetails } from "@/lib/cms/offering-details-compat";
 import { DEFAULT_WHATSAPP_NUMBER, getWhatsappNumber } from "@/lib/whatsapp";
 
 type LegacyProgramItem = {
@@ -185,28 +186,8 @@ function ctaEnrollLabel(details: LegacyOfferingDetails, type: Offering["type"]) 
   return stringValue(details.ctaEnrollLabel) || (type === "gift_card" ? "Anadir al carrito" : "Inscribirme");
 }
 
-function hasDetailValue(value: unknown): boolean {
-  if (Array.isArray(value)) return value.length > 0;
-  if (typeof value === "string") return value.trim().length > 0;
-  if (value && typeof value === "object") {
-    return Object.values(value as Record<string, unknown>).some(hasDetailValue);
-  }
-  return value !== null && value !== undefined;
-}
-
-function populatedDetails(value: Partial<ClassOfferingDetails>) {
-  return Object.fromEntries(
-    Object.entries(value).filter(([, entry]) => hasDetailValue(entry))
-  ) as Partial<ClassOfferingDetails>;
-}
-
 function detailsForOffering(offering: Offering): LegacyOfferingDetails {
-  const rootDetails = offering.details as LegacyOfferingDetails;
-
-  return {
-    ...rootDetails,
-    ...(rootDetails.class ? populatedDetails(rootDetails.class) : {}),
-  };
+  return mergeCurrentOfferingDetails(offering.details) as LegacyOfferingDetails;
 }
 
 function daysInMonth(year: number, month: number) {
@@ -242,7 +223,11 @@ function normalizeCalendarLabels(value: unknown): CalendarLabel[] {
     .sort((a, b) => a.year - b.year || a.month - b.month || a.order - b.order)
     .map((label, order) => ({ ...label, order }));
 }
-function scheduleForOffering(offering: Offering, details: LegacyOfferingDetails) {
+function scheduleForOffering(
+  offering: Offering,
+  details: LegacyOfferingDetails,
+  hasCurrentSchedule: boolean,
+) {
   if (details.showScheduleOnFrontend === false) return [];
 
   const scheduleDescription = stringValue(details.scheduleDescription);
@@ -263,6 +248,8 @@ function scheduleForOffering(offering: Offering, details: LegacyOfferingDetails)
       }));
   }
 
+  if (hasCurrentSchedule) return [];
+
   return offering.schedule.map((item) => {
     const [day, ...slotParts] = item.split(":");
     const slots = slotParts.join(":").split(",").map((slot) => slot.trim()).filter(Boolean);
@@ -273,9 +260,13 @@ function scheduleForOffering(offering: Offering, details: LegacyOfferingDetails)
   });
 }
 
-function programForDetails(content: Partial<ClassOfferingDetails["content"]>, details: LegacyOfferingDetails) {
-  if (content.modules?.length) {
-    return content.modules
+function programForDetails(
+  content: Partial<ClassOfferingDetails["content"]>,
+  details: LegacyOfferingDetails,
+  hasCurrentModules: boolean,
+) {
+  if (hasCurrentModules || content.modules?.length) {
+    return (content.modules ?? [])
       .sort((a, b) => a.order - b.order)
       .map((item) => ({
         title: item.title,
@@ -316,6 +307,13 @@ function cmsOfferingToExperienceItem(
     Object.prototype.hasOwnProperty.call(classContent, "paymentMethodsList")
   ));
   const hasClassExtraInfo = Boolean(classContent && Object.prototype.hasOwnProperty.call(classContent, "extraInfo"));
+  const hasClassModules = Boolean(classContent && Object.prototype.hasOwnProperty.call(classContent, "modules"));
+  const hasClassIncludedItems = Boolean(classDetails && Object.prototype.hasOwnProperty.call(classDetails, "includedItems"));
+  const hasClassHighlight = Boolean(classDetails && Object.prototype.hasOwnProperty.call(classDetails, "highlightDescription"));
+  const hasClassSchedule = Boolean(classDetails && (
+    Object.prototype.hasOwnProperty.call(classDetails, "scheduleDescription") ||
+    Object.prototype.hasOwnProperty.call(classDetails, "scheduleDays")
+  ));
   const galleryImages = (details.galleryImages?.length
     ? details.galleryImages
     : offering.gallery.map((image, order) => ({ image, alt: "", order })))
@@ -326,7 +324,7 @@ function cmsOfferingToExperienceItem(
   const priceOptions = (details.pricing?.length ? details.pricing : offering.price !== null ? [{ description: "Precio base", price: offering.price, order: 0 }] : [])
     .sort((a, b) => (a.order ?? 0) - (b.order ?? 0))
     .map((item) => ({ label: item.description || "Precio", price: formatPrice(item.price, currency) }));
-  const schedule = scheduleForOffering(offering, details);
+  const schedule = scheduleForOffering(offering, details, hasClassSchedule);
   const calendarLabels = details.showCalendarLabels === true
     ? normalizeCalendarLabels(details.calendarLabels).filter((label) => label.active)
     : [];
@@ -337,8 +335,12 @@ function cmsOfferingToExperienceItem(
     heroSubtitle: details.heroSubtitle || stringValue(details.category) || offering.type,
     heroImage: details.heroImage || offering.cover_image_url || "img/hero-bg.jpg",
   });
-  const program = programForDetails(content, details);
-  const included = details.includedItems?.length ? details.includedItems : splitList(details.included);
+  const program = programForDetails(content, details, hasClassModules);
+  const included = hasClassIncludedItems
+    ? details.includedItems ?? []
+    : details.includedItems?.length
+      ? details.includedItems
+      : splitList(details.included);
   const showIncludedSection = typeof classDetails?.showIncludedSection === "boolean"
     ? classDetails.showIncludedSection
     : false;
@@ -360,7 +362,7 @@ function cmsOfferingToExperienceItem(
   const homeCard = classDetails?.homeCard;
   const defaultHomeImage = offering.cover_image_url || galleryImages[0]?.image || details.heroImage || "img/hero-bg.jpg";
   const defaultHomeEyebrow = details.heroSubtitle || stringValue(details.category) || offering.type;
-  const detailQuestion = stringValue(details.detailQuestion) || "Te apasiona la creatividad y deseas explorar el mundo de la ceramica?";
+  const detailQuestion = stringValue(details.detailQuestion);
 
   return {
     id: offering.id,
@@ -477,7 +479,9 @@ function cmsOfferingToExperienceItem(
     subtitleTypography: normalizeRichTextTypography(details.subtitleTypography ?? DEFAULT_RICH_TEXT_TYPOGRAPHY),
     detailQuestion,
     detailQuestionTypography: normalizeRichTextTypography(details.detailQuestionTypography ?? DEFAULT_RICH_TEXT_TYPOGRAPHY),
-    introHighlight: details.highlightDescription || stringValue(details.introHighlight) || offering.excerpt,
+    introHighlight: hasClassHighlight
+      ? stringValue(details.highlightDescription)
+      : details.highlightDescription || stringValue(details.introHighlight) || offering.excerpt,
     introHighlightTypography: normalizeRichTextTypography(details.highlightDescriptionTypography ?? DEFAULT_RICH_TEXT_TYPOGRAPHY),
     descriptionTypography: normalizeRichTextTypography(details.descriptionTypography ?? DEFAULT_DESCRIPTION_TYPOGRAPHY),
     galleryImages: galleryImages.length ? galleryImages : [{ image: offering.cover_image_url || details.heroImage || "img/hero-bg.jpg", alt: "" }],

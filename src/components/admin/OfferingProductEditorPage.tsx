@@ -97,7 +97,7 @@ export async function EditProductOfferingPage({
         }
       />
 
-      <ClassEditForm offering={offering} basePath={basePath} previewChrome={previewChrome} />
+      <ClassEditForm key={offering.id} offering={offering} basePath={basePath} previewChrome={previewChrome} />
     </AdminShell>
   );
 }
