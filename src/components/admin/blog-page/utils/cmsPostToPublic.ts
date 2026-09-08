@@ -17,7 +17,7 @@ export function cmsPostToPublic(post: BlogPost): PublicBlogPost {
     status: post.status === "published" ? "published" : "draft",
     isFeatured: Boolean(post.is_featured),
     featuredOrder: post.featured_order,
-    featuredImage: post.featured_image_id || post.seo_image || undefined,
+    featuredImage: post.featured_image_id || undefined,
     featuredExcerpt: post.featured_excerpt || post.excerpt,
     featuredOnHome: false,
     visibleInListing: post.visible_in_listing !== false,

@@ -2,11 +2,12 @@ import type { BlogPost } from "@/data/types";
 import { assetPath } from "@/lib/assets";
 
 export function BlogPostCover({ post }: { post: BlogPost }) {
+  if (!post.featuredImage) return null;
+
   return (
     <figure className="blog-article__cover">
-      {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
-        src={assetPath(post.coverImage)}
+        src={assetPath(post.featuredImage)}
         alt={post.title}
         loading="eager"
         decoding="async"
