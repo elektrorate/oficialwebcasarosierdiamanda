@@ -174,19 +174,20 @@ body.class-detail-page {
 }
 
 .offering-gallery-modal .ig-modal__media {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: #e7e4df;
+  display: block;
+  padding: 0;
+  background: transparent;
 }
 
 .offering-gallery-modal .ig-modal__media img {
-  position: relative;
-  inset: auto;
+  position: absolute;
+  inset: 0;
+  display: block;
   width: 100%;
-  height: auto;
-  max-height: 100%;
-  aspect-ratio: 354 / 330;
+  height: 100%;
+  max-width: none;
+  max-height: none;
+  aspect-ratio: auto;
   object-fit: cover;
   object-position: center;
 }
