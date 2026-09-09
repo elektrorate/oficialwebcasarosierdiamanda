@@ -47,8 +47,6 @@ export function ShopItemGalleryModal({
 
   if (!images.length || typeof document === "undefined") return null;
 
-  const hasNavigation = images.length > 1;
-
   return createPortal(
     <div
       className="ig-modal shop-gallery-modal is-open"
@@ -63,48 +61,11 @@ export function ShopItemGalleryModal({
         onClick={onClose}
       />
       <div className="ig-modal__panel" tabIndex={-1} ref={panelRef}>
+        <h2 id="shop-gallery-modal-title" className="sr-only">
+          {title}
+        </h2>
         <section className="ig-modal__media">
           <img src={assetPath(images[safeIndex])} alt={title} />
-        </section>
-        <section className="ig-modal__content">
-          <div className="ig-modal__topbar">
-            <div className="ig-modal__nav-actions" aria-label="Navegación de la galería">
-              {hasNavigation ? (
-                <>
-                  <button
-                    className="ig-modal__icon-btn ig-modal__icon-btn--prev"
-                    type="button"
-                    aria-label="Imagen anterior"
-                    onClick={() => selectRelative(-1)}
-                  >
-                    <span className="ig-modal__arrow-mark ig-modal__arrow-mark--prev" aria-hidden="true" />
-                  </button>
-                  <button
-                    className="ig-modal__icon-btn ig-modal__icon-btn--next"
-                    type="button"
-                    aria-label="Imagen siguiente"
-                    onClick={() => selectRelative(1)}
-                  >
-                    <span className="ig-modal__arrow-mark ig-modal__arrow-mark--next" aria-hidden="true" />
-                  </button>
-                </>
-              ) : null}
-            </div>
-            <button
-              className="ig-modal__icon-btn ig-modal__icon-btn--close"
-              type="button"
-              aria-label="Cerrar galería ampliada"
-              onClick={onClose}
-            >
-              <span className="ig-modal__close-mark" aria-hidden="true" />
-            </button>
-          </div>
-          <h3 id="shop-gallery-modal-title" className="ig-modal__title">
-            {title}
-          </h3>
-          <div className="ig-modal__body">
-            {safeIndex + 1} de {images.length}
-          </div>
         </section>
       </div>
     </div>,

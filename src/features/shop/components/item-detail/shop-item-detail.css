@@ -133,7 +133,43 @@
   padding-bottom: 2px;
 }
 
+.shop-gallery-modal.ig-modal.is-open {
+  --shop-gallery-modal-gutter: clamp(16px, 3.55vw, 40px);
+  padding: var(--shop-gallery-modal-gutter);
+}
+
+.shop-gallery-modal .ig-modal__backdrop {
+  background: rgba(20, 18, 17, 0.76);
+}
+
+.shop-gallery-modal .ig-modal__panel {
+  display: block;
+  width: auto;
+  height: auto;
+  max-width: calc(100vw - (var(--shop-gallery-modal-gutter) * 2));
+  max-height: calc(100dvh - (var(--shop-gallery-modal-gutter) * 2));
+  border-radius: 0;
+  overflow: visible;
+  background: transparent;
+}
+
+.shop-gallery-modal .ig-modal__media {
+  display: block;
+  width: auto;
+  height: auto;
+  min-height: 0;
+  max-height: none;
+  overflow: visible;
+  background: transparent;
+}
+
 .shop-gallery-modal .ig-modal__media img {
+  position: static;
+  display: block;
+  width: auto;
+  height: auto;
+  max-width: calc(100vw - (var(--shop-gallery-modal-gutter) * 2));
+  max-height: calc(100dvh - (var(--shop-gallery-modal-gutter) * 2));
   object-position: center;
   object-fit: contain;
 }
