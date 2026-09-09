@@ -83,8 +83,9 @@ export function BlogPostRowActions({
         type="button"
         disabled={rowPending}
         onClick={() => onAction(featureAction)}
-        className={`offerings-category-row-actions__btn${post.is_featured ? " offerings-category-row-actions__btn--accent" : ""}`}
+        className={`offerings-category-row-actions__btn blog-post-row-actions__feature${post.is_featured ? " offerings-category-row-actions__btn--accent" : ""}`}
         title={post.is_featured ? "Quitar de destacados" : "Destacar en home"}
+        aria-pressed={post.is_featured}
       >
         <span className="material-symbols-outlined" aria-hidden="true">
           {post.is_featured ? "star" : "star_border"}

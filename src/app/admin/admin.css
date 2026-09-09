@@ -8651,6 +8651,11 @@
   gap: 6px;
 }
 
+/* Keep the featured control understandable when generic row-action labels collapse. */
+.blog-post-row-actions__feature .offerings-category-row-actions__label {
+  display: inline;
+}
+
 @media (max-width: 900px) {
   .blog-admin-table--v2 .blog-admin-table__col-category {
     display: none;
