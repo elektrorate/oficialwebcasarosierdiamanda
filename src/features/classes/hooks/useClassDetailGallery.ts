@@ -9,6 +9,7 @@ export type ClassDetailGalleryItem = {
   poster: string;
   alt: string;
   seoTitle?: string;
+  modalTitle?: string;
   modalDescription?: string;
   showCta?: boolean;
   ctaLabel?: string;
@@ -34,6 +35,7 @@ export function buildClassDetailGalleryItems(item: ExperienceItem): ClassDetailG
         poster: entry.image,
         alt: entry.alt,
         seoTitle: entry.seoTitle,
+        modalTitle: entry.modalTitle,
         modalDescription: entry.modalDescription,
         showCta: entry.showCta,
         ctaLabel: entry.ctaLabel,
@@ -50,6 +52,7 @@ export function buildClassDetailGalleryItems(item: ExperienceItem): ClassDetailG
     poster: entry.image,
     alt: entry.alt,
     seoTitle: entry.seoTitle,
+    modalTitle: entry.modalTitle,
     modalDescription: entry.modalDescription,
     showCta: entry.showCta,
     ctaLabel: entry.ctaLabel,

@@ -82,6 +82,7 @@ function GalleryImagesSectionComponent({ form }: GalleryImagesSectionProps) {
             onAltChange={(alt) => updateGalleryImage(index, { alt })}
             onSeoTitleChange={(seoTitle) => updateGalleryImage(index, { seoTitle })}
             onSeoDescriptionChange={(seoDescription) => updateGalleryImage(index, { seoDescription })}
+            onModalTitleChange={(modalTitle) => updateGalleryImage(index, { modalTitle })}
             onModalDescriptionChange={(modalDescription) => updateGalleryImage(index, { modalDescription })}
             onShowCtaChange={(showCta) => updateGalleryImage(index, { showCta })}
             onCtaLabelChange={(ctaLabel) => updateGalleryImage(index, { ctaLabel })}
@@ -150,6 +151,7 @@ const GalleryImageRow = memo(function GalleryImageRow({
   onAltChange,
   onSeoTitleChange,
   onSeoDescriptionChange,
+  onModalTitleChange,
   onModalDescriptionChange,
   onShowCtaChange,
   onCtaLabelChange,
@@ -172,6 +174,7 @@ const GalleryImageRow = memo(function GalleryImageRow({
   onAltChange: (alt: string) => void;
   onSeoTitleChange: (seoTitle: string) => void;
   onSeoDescriptionChange: (seoDescription: string) => void;
+  onModalTitleChange: (modalTitle: string) => void;
   onModalDescriptionChange: (modalDescription: string) => void;
   onShowCtaChange: (showCta: boolean) => void;
   onCtaLabelChange: (ctaLabel: string) => void;
@@ -254,6 +257,13 @@ const GalleryImageRow = memo(function GalleryImageRow({
           value={item.seoDescription ?? ""}
           onChange={(event) => onSeoDescriptionChange(event.target.value)}
         />
+        <AdminInput
+          label="Título del modal"
+          help="Sustituye el título general del Offering cuando se abre esta imagen. Si queda vacío, no se mostrará ningún título."
+          placeholder="Título específico para esta imagen"
+          value={item.modalTitle ?? ""}
+          onChange={(event) => onModalTitleChange(event.target.value)}
+        />
         <AdminTextarea
           label="Descripción pública de la imagen"
           help="Se mostrará junto a la imagen cuando se abra la galería ampliada."
@@ -264,21 +274,21 @@ const GalleryImageRow = memo(function GalleryImageRow({
         <div className="grid gap-3 md:col-start-2">
           <Switch
             checked={item.showCta === true}
-            label="Mostrar botón CTA"
-            description="Añade una acción opcional dentro del modal de esta imagen."
+            label="Mostrar botón Ver más"
+            description="Añade un botón opcional con texto y enlace personalizables dentro del modal."
             onCheckedChange={onShowCtaChange}
           />
           {item.showCta ? (
             <>
               <div className="grid gap-3 md:grid-cols-2">
                 <AdminInput
-                  label="Texto del botón CTA"
-                  placeholder="Más información"
+                  label="Texto del botón"
+                  placeholder="Ver más"
                   value={item.ctaLabel ?? ""}
                   onChange={(event) => onCtaLabelChange(event.target.value)}
                 />
                 <AdminInput
-                  label="Enlace del botón CTA"
+                  label="Enlace personalizable"
                   placeholder="/contacto o https://..."
                   value={item.ctaHref ?? ""}
                   onChange={(event) => onCtaHrefChange(event.target.value)}

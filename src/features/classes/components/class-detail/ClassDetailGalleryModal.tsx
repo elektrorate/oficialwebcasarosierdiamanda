@@ -58,6 +58,7 @@ export function ClassDetailGalleryModal({
 
   if (!current || typeof document === "undefined") return null;
 
+  const modalTitle = current.modalTitle?.trim();
   const ctaHref = current.showCta ? publicCtaHref(current.ctaHref) : "";
   const ctaLabel = current.ctaLabel?.trim();
   const hasNavigation = imageIndexes.length > 1;
@@ -71,7 +72,8 @@ export function ClassDetailGalleryModal({
       className="ig-modal offering-gallery-modal is-open"
       role="dialog"
       aria-modal="true"
-      aria-labelledby="offering-gallery-modal-title"
+      aria-labelledby={modalTitle ? "offering-gallery-modal-title" : undefined}
+      aria-label={modalTitle ? undefined : offeringTitle}
     >
       <button
         className="ig-modal__backdrop"
@@ -116,9 +118,11 @@ export function ClassDetailGalleryModal({
               <span className="ig-modal__close-mark" aria-hidden="true" />
             </button>
           </div>
-          <h3 id="offering-gallery-modal-title" className="ig-modal__title">
-            {offeringTitle}
-          </h3>
+          {modalTitle ? (
+            <h3 id="offering-gallery-modal-title" className="ig-modal__title">
+              {modalTitle}
+            </h3>
+          ) : null}
           {current.modalDescription ? (
             <div className="ig-modal__body">{current.modalDescription}</div>
           ) : null}

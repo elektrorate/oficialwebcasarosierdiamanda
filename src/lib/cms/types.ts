@@ -15,6 +15,7 @@ export interface OfferingGalleryImage {
   alt: string;
   seoTitle?: string;
   seoDescription?: string;
+  modalTitle?: string;
   modalDescription?: string;
   showCta?: boolean;
   ctaLabel?: string;
