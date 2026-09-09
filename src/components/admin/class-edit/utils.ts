@@ -8,7 +8,7 @@ import type {
   OfferingGalleryImage,
 } from "@/lib/cms/types";
 import { normalizeCalendarUi } from "@/lib/cms/types";
-import { clearLegacyOfferingContent } from "@/lib/cms/offering-details-compat";
+import { clearLegacyOfferingContent, mergeCurrentOfferingDetails } from "@/lib/cms/offering-details-compat";
 import {
   DEFAULT_CALENDAR_LABELS_DESCRIPTION,
   DEFAULT_CALENDAR_LABELS_TITLE,
@@ -212,8 +212,7 @@ export function sanitizeCalendarLabels(value: unknown): CalendarLabel[] {
 }
 
 export function toClassDetails(offering: Offering): ClassOfferingDetails {
-  const legacyDetails = (offering.details ?? {}) as LegacyOfferingDetails;
-  const fromDetails = { ...legacyDetails, ...(offering.details.class ?? {}) } as LegacyOfferingDetails;
+  const fromDetails = mergeCurrentOfferingDetails(offering.details) as LegacyOfferingDetails;
   const legacyContent = defaultContent();
   legacyContent.learningContent = textBlock(fromDetails.whatYouWillLearn);
   legacyContent.participationContent = textBlock(fromDetails.whoCanJoin);

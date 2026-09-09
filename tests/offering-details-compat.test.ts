@@ -10,6 +10,7 @@ test("los valores modernos vacíos prevalecen sobre el contenido heredado", () =
     introHighlight: "Texto anterior",
     includedItems: ["Material anterior"],
     class: {
+      class: { highlightDescription: "Copia interna anterior" },
       highlightDescription: "",
       includedItems: [],
       content: { modules: [] },
@@ -19,6 +20,7 @@ test("los valores modernos vacíos prevalecen sobre el contenido heredado", () =
   assert.equal(merged.highlightDescription, "");
   assert.deepEqual(merged.includedItems, []);
   assert.deepEqual(merged.content, { modules: [] });
+  assert.equal(Object.hasOwn(merged, "class"), false);
 });
 
 test("el guardado neutraliza aliases antiguos sin perder metadatos", () => {
@@ -29,6 +31,7 @@ test("el guardado neutraliza aliases antiguos sin perder metadatos", () => {
     program: [{ title: "Bloque anterior" }],
     included: ["Material anterior"],
     additionalInfo: "Información anterior",
+    class: { highlightDescription: "Contenido actual" },
   });
 
   assert.equal(cleared.source, "legacy-import");
@@ -37,4 +40,5 @@ test("el guardado neutraliza aliases antiguos sin perder metadatos", () => {
   assert.deepEqual(cleared.program, []);
   assert.deepEqual(cleared.included, []);
   assert.equal(cleared.additionalInfo, "");
+  assert.equal(Object.hasOwn(cleared, "class"), false);
 });

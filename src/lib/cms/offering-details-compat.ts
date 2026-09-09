@@ -6,6 +6,12 @@ function detailsObject(value: unknown): OfferingDetailsObject {
     : {};
 }
 
+function withoutNestedClass(value: unknown): OfferingDetailsObject {
+  return Object.fromEntries(
+    Object.entries(detailsObject(value)).filter(([key]) => key !== "class"),
+  );
+}
+
 /**
  * Modern offering fields live under `details.class`. When that object contains
  * an explicit empty value, it must still win over the legacy root value so a
@@ -14,7 +20,9 @@ function detailsObject(value: unknown): OfferingDetailsObject {
 export function mergeCurrentOfferingDetails(value: unknown): OfferingDetailsObject {
   const root = detailsObject(value);
   const current = detailsObject(root.class);
-  return { ...root, ...current };
+  const legacyFields = withoutNestedClass(root);
+  const currentFields = withoutNestedClass(current);
+  return { ...legacyFields, ...currentFields };
 }
 
 /**
@@ -24,8 +32,9 @@ export function mergeCurrentOfferingDetails(value: unknown): OfferingDetailsObje
  * left empty.
  */
 export function clearLegacyOfferingContent(value: unknown): OfferingDetailsObject {
+  const rootFields = withoutNestedClass(value);
   return {
-    ...detailsObject(value),
+    ...rootFields,
     category: "",
     introHighlight: "",
     videoCardImage: "",
