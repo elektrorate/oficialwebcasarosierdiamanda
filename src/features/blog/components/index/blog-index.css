@@ -399,21 +399,25 @@
 }
 
 .blog-feed-card__cta {
-  display: inline-flex;
+  display: flex;
   align-items: center;
   justify-content: center;
+  width: max-content;
   min-width: 140px;
+  margin-inline: auto;
   padding: 12px 28px;
   border: 1px solid #3a3631;
   background: transparent;
   color: #2f2a25;
   font-family: var(--font-menu), var(--font-inter), sans-serif;
-  font-size: 14px;
+  font-size: 14.7px;
   font-weight: 400;
   text-decoration: none;
+  transform: translateY(-5%);
   transition:
     background-color 0.2s ease,
-    color 0.2s ease;
+    color 0.2s ease,
+    transform 0.2s ease;
 }
 
 .blog-feed-card__cta:hover,
