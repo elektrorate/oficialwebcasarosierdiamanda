@@ -380,12 +380,14 @@
 }
 
 .blog-feed-card__excerpt.markdown-content {
-  margin: 0 0 22px;
+  width: 65%;
+  margin: 0 auto 22px;
   color: #6f6861;
   font-family: var(--font-menu), var(--font-inter), sans-serif;
   font-size: 15px;
   font-weight: 300;
   line-height: 1.75;
+  text-align: center;
   display: -webkit-box;
   -webkit-line-clamp: 4;
   -webkit-box-orient: vertical;
@@ -460,7 +462,8 @@
   }
 
   .blog-feed-card__category,
-  .blog-feed-card__title {
+  .blog-feed-card__title,
+  .blog-feed-card__excerpt.markdown-content {
     width: 75%;
   }
 
