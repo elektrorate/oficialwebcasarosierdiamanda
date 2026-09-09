@@ -375,7 +375,7 @@ function cmsOfferingToExperienceItem(
     heroSubtitle: hero.heroSubtitle || details.heroSubtitle || offering.subtitle || offering.title,
     category: details.heroSubtitle || stringValue(details.category) || offering.type,
     excerpt: offering.excerpt,
-    description: splitParagraphs(offering.description),
+    description: markdownLines(offering.description),
     coverImage: defaultHomeImage,
     homeImage: stringValue(homeCard?.image) || defaultHomeImage,
     homeImageAlt: stringValue(homeCard?.imageAlt) || stringValue(homeCard?.title) || offering.title,
