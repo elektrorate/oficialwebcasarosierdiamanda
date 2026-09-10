@@ -6,6 +6,13 @@ import type { NavigationItem } from "@/data/types";
 import AdminActionModal from "./AdminActionModal";
 import ColorPickerField from "./ColorPickerField";
 import MediaSelectField from "./MediaSelectField";
+import {
+  menuUrlValidationMessage,
+  normalizeMenuUrl,
+  systemMenuRootId,
+  systemMenuRootKey,
+  type SystemMenuRootKey,
+} from "@/lib/cms/menu-links";
 import type { SiteSettings } from "@/lib/cms/settings";
 import type { LinkedEntityType, Menu, MenuItem, MenuItemType } from "@/lib/cms/types";
 
@@ -49,7 +56,7 @@ const DEFAULT_POINTS: EditableMenuItem[] = [
 ];
 
 function menuPoint(
-  key: string,
+  key: SystemMenuRootKey,
   label: string,
   url: string,
   sortOrder: number,
@@ -62,7 +69,7 @@ function menuPoint(
     sort_order: sortOrder,
     type: "internal",
     linked_entity_type: "none",
-    linked_entity_id: "",
+    linked_entity_id: systemMenuRootId(key),
     is_visible: true,
     open_in_new_tab: false,
     locked: options.locked,
@@ -93,7 +100,9 @@ function normalizeLabel(value: string) {
     .trim();
 }
 
-function keyForItem(item: Pick<MenuItem, "label" | "url">) {
+function keyForItem(item: Pick<MenuItem, "label" | "url"> & Partial<Pick<MenuItem, "linked_entity_id">>) {
+  const stableKey = systemMenuRootKey(item.linked_entity_id);
+  if (stableKey) return stableKey;
   const label = normalizeLabel(item.label);
   if (["/#hero", "/", "/home"].includes(item.url) || label === "inicio") return "inicio";
   if (item.url === "/clases" || label === "clases") return "clases";
@@ -106,7 +115,7 @@ function keyForItem(item: Pick<MenuItem, "label" | "url">) {
 }
 
 function keyForNavigationItem(item: NavigationItem) {
-  return keyForItem({ label: item.label, url: item.href });
+  return keyForItem({ label: item.label, url: item.href, linked_entity_id: item.linked_entity_id });
 }
 
 function cloneChildren(children: EditableMenuChild[]) {
@@ -208,11 +217,11 @@ function itemToEditable(item: MenuItem, children: MenuItem[]): EditableMenuItem 
     id: item.id,
     key,
     label: item.label,
-    url: key === "shop" ? "/shop" : (defaultPoint?.url ?? item.url),
+    url: item.url || defaultPoint?.url || "/",
     sort_order: defaultPoint?.sort_order ?? item.sort_order,
     type: item.type,
     linked_entity_type: item.linked_entity_type,
-    linked_entity_id: item.linked_entity_id,
+    linked_entity_id: item.linked_entity_id || (defaultPoint ? systemMenuRootId(defaultPoint.key as SystemMenuRootKey) : ""),
     is_visible: key === "inicio" ? true : item.is_visible,
     open_in_new_tab: item.open_in_new_tab,
     locked: key === "inicio",
@@ -266,7 +275,7 @@ function payloadFor(item: EditableMenuItem | EditableMenuChild, parentId: string
   return {
     label: item.label.trim(),
     type: item.type,
-    url: item.url,
+    url: normalizeMenuUrl(item.url) ?? item.url.trim(),
     linked_entity_type: item.linked_entity_type,
     linked_entity_id: item.linked_entity_id,
     parent_id: parentId,
@@ -383,6 +392,16 @@ export default function PublicMenuEditor({
       return;
     }
 
+    const invalidItem = items
+      .flatMap((item) => [item, ...item.children])
+      .find((item) => menuUrlValidationMessage(item.url));
+    if (invalidItem) {
+      const message = `${invalidItem.label || "Este elemento"}: ${menuUrlValidationMessage(invalidItem.url)}`;
+      setError(message);
+      setActionModal({ type: "error", title: "Revisa la URL", message });
+      return;
+    }
+
     setIsSaving(true);
     setError(null);
 
@@ -486,6 +505,9 @@ export default function PublicMenuEditor({
       {error ? <p className="form-error">{error}</p> : null}
 
       <div className="public-menu-editor__panel">
+        <p className="form-help">
+          Las rutas internas deben empezar por /. Cambiar una URL modifica el enlace del menú, pero no crea ni renombra la página de destino.
+        </p>
         <div className="public-menu-list" aria-label="Puntos del menú">
           <div className="public-menu-simple" role="table" aria-label="Editor simple del menú público">
             <div className="public-menu-simple__head" role="row">
@@ -506,11 +528,13 @@ export default function PublicMenuEditor({
                       />
                     </label>
                     <label className="public-menu-simple__field public-menu-simple__field--url">
-                      <span>URL fija</span>
+                      <span>{item.locked ? "URL fija" : "URL del enlace"}</span>
                       <input
                         value={item.url}
-                        readOnly
+                        readOnly={item.locked}
+                        placeholder="/ruta"
                         aria-label={`URL de ${item.label || "elemento del menú"}`}
+                        onChange={(event) => updateItem(item.key, { url: event.target.value })}
                       />
                     </label>
                     <div className="public-menu-simple__options">
@@ -535,7 +559,9 @@ export default function PublicMenuEditor({
                     </div>
                   </div>
 
-                  {item.children.map((child, childIndex) => (
+                  {item.children.map((child, childIndex) => {
+                    const hasAutomaticUrl = child.linked_entity_type === "offering";
+                    return (
                     <div className="public-menu-simple__row public-menu-simple__row--child" role="row" key={child.key}>
                       <label className="public-menu-simple__field public-menu-simple__field--label">
                         <span>Subelemento</span>
@@ -546,11 +572,13 @@ export default function PublicMenuEditor({
                         />
                       </label>
                       <label className="public-menu-simple__field public-menu-simple__field--url">
-                        <span>URL fija</span>
+                        <span>{hasAutomaticUrl ? "URL automática" : "URL del enlace"}</span>
                         <input
                           value={child.url}
-                          readOnly
+                          readOnly={hasAutomaticUrl}
+                          placeholder="/ruta"
                           aria-label={`URL de ${child.label || "subelemento del menú"}`}
+                          onChange={(event) => updateChild(item.key, child.key, { url: event.target.value })}
                         />
                       </label>
                       <div className="public-menu-simple__options">
@@ -592,7 +620,8 @@ export default function PublicMenuEditor({
                         </button>
                       </div>
                     </div>
-                  ))}
+                    );
+                  })}
                 </div>
               ))}
             </div>

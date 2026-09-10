@@ -5,6 +5,7 @@ import { readJsonFile, writeJsonFile } from "./local-storage";
 import { isMenuLocation, isMenuStatus, isMenuItemType, isLinkedEntityType } from "./types";
 import type { Menu, MenuItem, MenuLocation } from "./types";
 import { logAction } from "./history-logs";
+import { menuUrlValidationMessage, normalizeMenuUrl } from "./menu-links";
 
 const FILE_NAME = "menus.json";
 const SUPABASE_READ_TIMEOUT_MS = Number(process.env.CMS_SUPABASE_READ_TIMEOUT_MS ?? 8_000);
@@ -111,12 +112,15 @@ function normalizeMenuItem(input: MenuItemInput, existing?: MenuItem) {
 
   if (!label) throw new Error("La etiqueta del item es obligatoria.");
   if (!isMenuItemType(type)) throw new Error("Tipo de item no válido.");
+  const rawUrl = String(input.url ?? existing?.url ?? "");
+  const urlError = menuUrlValidationMessage(rawUrl);
+  if (urlError) throw new Error(`${label}: ${urlError}`);
 
   const normalized = {
     id: existing?.id ?? input.id ?? randomUUID(),
     label,
     type,
-    url: String(input.url ?? existing?.url ?? "").trim(),
+    url: normalizeMenuUrl(rawUrl) ?? rawUrl.trim(),
     linked_entity_type: isLinkedEntityType(input.linked_entity_type) ? input.linked_entity_type : (existing?.linked_entity_type ?? "none"),
     linked_entity_id: String(input.linked_entity_id ?? existing?.linked_entity_id ?? "").trim(),
     parent_id: input.parent_id !== undefined ? input.parent_id : (existing?.parent_id ?? null),

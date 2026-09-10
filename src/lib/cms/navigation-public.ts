@@ -1,5 +1,6 @@
 import type { NavigationItem } from "@/data/types";
 import { experienceHref } from "@/lib/routes";
+import { systemMenuRootKey } from "./menu-links";
 import { getMenuByLocation } from "./menus";
 import { getOfferings, isPubliclyVisibleOffering } from "./offerings";
 import type { MenuItem, Offering } from "./types";
@@ -96,6 +97,12 @@ function normalizeLabel(value: string) {
 }
 
 function dynamicKeyForItem(item: NavigationItem): DynamicMenuKey | null {
+  const stableKey = systemMenuRootKey(item.linked_entity_id);
+  if (stableKey === "clases") return "classes";
+  if (stableKey === "workshops") return "workshops";
+  if (stableKey === "experiencias") return "privateBookings";
+  if (stableKey === "giftcards") return "giftCards";
+
   const byHref = (Object.entries(dynamicMenuConfig) as [DynamicMenuKey, typeof dynamicMenuConfig[DynamicMenuKey]][])
     .find(([, config]) => item.href === config.href);
   if (byHref) return byHref[0];
@@ -215,7 +222,7 @@ function withDynamicChildren(items: NavigationItem[], dynamicChildren: Record<Dy
     return {
       ...item,
       label: item.label,
-      href: dynamicMenuConfig[key].href,
+      href: item.href || dynamicMenuConfig[key].href,
       children: mergeGeneratedChildrenWithSavedOrder(dynamicChildren[key], item.children),
     };
   });
