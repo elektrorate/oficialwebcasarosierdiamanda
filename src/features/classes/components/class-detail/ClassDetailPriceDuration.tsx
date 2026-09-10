@@ -9,12 +9,18 @@ export function ClassDetailPriceDuration({ item }: Props) {
   const hasSchedule = item.schedule.length > 0;
   if (!hasPrices && !hasSchedule) return null;
 
+  const factsClassName = [
+    "class-detail__facts",
+    "class-detail__facts--fit",
+    hasPrices && hasSchedule ? "class-detail__facts--split" : "class-detail__facts--single",
+  ].join(" ");
+
   const durationTitle = item.durationSectionTitle?.trim() ?? "";
   const showDurationTitle = item.showDurationSectionTitle !== false && durationTitle.length > 0;
   const normalizedScheduleLabel = item.scheduleLabel?.trim().toLowerCase() ?? "";
 
   return (
-    <section className="class-detail__facts class-detail__facts--fit" aria-label="Precio y horario">
+    <section className={factsClassName} aria-label="Precio y horario">
       {hasPrices ? (
         <div className="class-detail__fact-block class-detail__fact-block--price">
           <h2>{item.priceSectionTitle || "Precio"}</h2>

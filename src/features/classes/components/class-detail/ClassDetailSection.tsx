@@ -59,7 +59,7 @@ export function ClassDetailSection({ item, titleLevel = "h1" }: Props) {
             <ClassDetailPostLearningSection item={item} />
             <ClassDetailPriceDuration item={item} />
             {viewModel.showEnrollAction && viewModel.showEnrollAtEnd ? (
-              <div className="class-detail__enroll-placement class-detail__enroll-placement--desktop">
+              <div className="class-detail__enroll-placement class-detail__enroll-placement--facts">
                 <ClassDetailEnrollActions
                   consultHref=""
                   consultLabel={viewModel.consultLabel}
@@ -83,17 +83,6 @@ export function ClassDetailSection({ item, titleLevel = "h1" }: Props) {
               showProgram={viewModel.showProgram}
               programItems={viewModel.programItems}
             />
-            {viewModel.showEnrollAction && viewModel.showEnrollAtEnd ? (
-              <div className="class-detail__enroll-placement class-detail__enroll-placement--mobile">
-                <ClassDetailEnrollActions
-                  consultHref=""
-                  consultLabel={viewModel.consultLabel}
-                  enrollHref={viewModel.enrollHref}
-                  enrollLabel={viewModel.enrollLabel}
-                  showEnroll
-                />
-              </div>
-            ) : null}
           </section>
 
           <ClassDetailSidebarColumn

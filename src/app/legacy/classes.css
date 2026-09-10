@@ -508,7 +508,6 @@
 }
 
 .class-sidecard h3,
-.class-detail__fact-block h2,
 .class-detail__includes h2,
 .class-detail__text-block h2,
 .class-detail__program h2 {
@@ -522,8 +521,7 @@
 .class-sidecard p,
 .class-sidecard li,
 .class-detail__copy p,
-.class-detail__text-block p,
-.class-detail__schedule-item p {
+.class-detail__text-block p {
   margin: 0 0 10px;
   color: #68615a;
   font: 300 16px/1.7 var(--font-menu);
@@ -591,59 +589,6 @@
   margin: 0;
   color: inherit;
   font: inherit;
-}
-
-.class-detail__facts {
-  margin-top: 30px;
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 24px;
-}
-
-.class-detail__fact-block {
-  padding: 22px 24px;
-  background: #fffdf9;
-  border: 1px solid rgba(147, 124, 97, 0.16);
-  border-radius: 14px;
-}
-
-.class-detail__price-row {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16px;
-  padding: 10px 0;
-  border-bottom: 1px solid rgba(147, 124, 97, 0.12);
-  color: #6f665e;
-  font: 300 15px/1.4 var(--font-menu);
-}
-
-.class-detail__price-row:last-child {
-  border-bottom: 0;
-}
-
-.class-detail__price-row strong {
-  color: #ca7c3e;
-  font-weight: 400;
-}
-
-.class-detail__duration {
-  margin: 0 0 18px;
-  color: #c27649;
-  font: 400 18px/1.45 var(--font-menu);
-}
-
-.class-detail__schedule {
-  display: grid;
-  gap: 12px;
-}
-
-.class-detail__schedule-item h4 {
-  margin: 0 0 4px;
-  color: #4f4a45;
-  font: 400 14px/1.3 var(--font-menu);
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
 }
 
 .class-detail__includes,
@@ -745,12 +690,7 @@
   font-size: 16px;
 }
 
-.class-detail__fact-block {
-  padding: 18px 19px;
-}
-
 .class-sidecard h3,
-.class-detail__fact-block h2,
 .class-detail__includes h2,
 .class-detail__text-block h2,
 .class-detail__program h2 {
@@ -760,15 +700,8 @@
 .class-sidecard p,
 .class-sidecard li,
 .class-detail__copy p,
-.class-detail__text-block p,
-.class-detail__schedule-item p {
+.class-detail__text-block p {
   font-size: 13px;
-}
-
-@media (max-width: 992px) {
-  .class-detail__facts {
-    grid-template-columns: 1fr;
-  }
 }
 
 @media (max-width: 640px) {

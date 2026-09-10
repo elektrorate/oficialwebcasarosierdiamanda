@@ -147,60 +147,6 @@
   line-height: inherit;
 }
 
-/* Price / duration cards — height follows content (no stretched empty area) */
-.class-detail-page:is([data-promo-page="class"], [data-promo-page="workshop"], [data-promo-page="experience"], [data-promo-page="gift-card"]) .class-detail__facts--fit {
-  align-items: start;
-  margin-top: 0;
-  margin-bottom: 0;
-  height: fit-content;
-  gap: clamp(16px, 2vw, 22px);
-}
-
-.class-detail-page:is([data-promo-page="class"], [data-promo-page="workshop"], [data-promo-page="experience"], [data-promo-page="gift-card"]) .class-detail__facts--fit .class-detail__fact-block {
-  align-self: start;
-  height: fit-content;
-  min-height: 0;
-  padding: clamp(18px, 2.2vw, 22px) clamp(20px, 2.4vw, 24px);
-  border-radius: 16px;
-  background: #fffdf9;
-  border: 1px solid rgba(147, 124, 97, 0.14);
-  box-shadow: none;
-}
-
-.class-detail-page:is([data-promo-page="class"], [data-promo-page="workshop"], [data-promo-page="experience"], [data-promo-page="gift-card"]) .class-detail__facts--fit .class-detail__fact-block h2 {
-  margin-bottom: 14px;
-  font-family: var(--font-display);
-  font-size: clamp(20px, 2.2vw, 24px);
-  font-weight: 400;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-  color: #1a1816;
-}
-
-.class-detail-page:is([data-promo-page="class"], [data-promo-page="workshop"], [data-promo-page="experience"], [data-promo-page="gift-card"]) .class-detail__facts--fit .class-detail__duration {
-  margin: 0 0 14px;
-  color: #b87352;
-  font-size: clamp(14px, 1.45vw, 16px);
-  font-weight: 400;
-  line-height: 1.45;
-}
-
-.class-detail-page:is([data-promo-page="class"], [data-promo-page="workshop"], [data-promo-page="experience"], [data-promo-page="gift-card"]) .class-detail__facts--fit .class-detail__schedule-item h4 {
-  margin: 0 0 6px;
-  font-size: 11px;
-  font-weight: 500;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: #8a827a;
-}
-
-.class-detail-page:is([data-promo-page="class"], [data-promo-page="workshop"], [data-promo-page="experience"], [data-promo-page="gift-card"]) .class-detail__facts--fit .class-detail__schedule-item p {
-  margin: 0 0 4px;
-  font-size: clamp(13px, 1.35vw, 15px);
-  line-height: 1.5;
-  color: #5c554e;
-}
-
 .class-detail-page:is([data-promo-page="class"], 
 [data-promo-page="workshop"], 
 [data-promo-page="experience"], 
@@ -408,7 +354,6 @@
   .class-detail-page:is([data-promo-page="class"], [data-promo-page="workshop"], [data-promo-page="experience"], [data-promo-page="gift-card"]) .class-detail__mobile-gallery,
   .class-detail-page:is([data-promo-page="class"], [data-promo-page="workshop"], [data-promo-page="experience"], [data-promo-page="gift-card"]) .class-detail__media-column,
   .class-detail-page:is([data-promo-page="class"], [data-promo-page="workshop"], [data-promo-page="experience"], [data-promo-page="gift-card"]) .class-detail__body-stack,
-  .class-detail-page:is([data-promo-page="class"], [data-promo-page="workshop"], [data-promo-page="experience"], [data-promo-page="gift-card"]) .class-detail__facts--fit,
   .class-detail-page:is([data-promo-page="class"], [data-promo-page="workshop"], [data-promo-page="experience"], [data-promo-page="gift-card"]) .class-detail__actions {
     width: 90%;
     margin-inline: auto;
@@ -459,10 +404,6 @@
   .class-detail-page:is([data-promo-page="class"], [data-promo-page="workshop"], [data-promo-page="experience"], [data-promo-page="gift-card"]) .course-accordion__copy li,
   .class-detail-page:is([data-promo-page="class"], [data-promo-page="workshop"], [data-promo-page="experience"], [data-promo-page="gift-card"]) .course-accordion__content li {
     font-size: 13px !important;
-  }
-
-  .class-detail-page:is([data-promo-page="class"], [data-promo-page="workshop"], [data-promo-page="experience"], [data-promo-page="gift-card"]) .class-detail__facts--fit {
-    grid-template-columns: 1fr;
   }
 
   .class-detail-page:is([data-promo-page="class"], [data-promo-page="workshop"], [data-promo-page="experience"], [data-promo-page="gift-card"]) .class-sidecard h3 {

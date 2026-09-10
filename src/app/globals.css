@@ -2223,26 +2223,18 @@ body {
   .class-detail__text-block li,
   .course-accordion__content p,
   .course-accordion__content li,
-  .class-detail__schedule-item p,
   .class-sidecard p,
   .class-sidecard li {
     font-size: 15px;
     line-height: 1.7;
   }
 
-  .class-detail__facts {
-    margin-top: 24px;
-    gap: 16px;
-  }
-
-  .class-detail__fact-block,
   .class-sidecard {
     padding: 18px;
     border-radius: 12px;
   }
 
   .class-sidecard h3,
-  .class-detail__fact-block h2,
   .class-detail__includes h2,
   .class-detail__copy h2,
   .class-detail__copy h3,
