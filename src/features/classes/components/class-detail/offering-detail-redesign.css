@@ -665,7 +665,7 @@ body.class-detail-page {
 
   .class-detail-page:is([data-promo-page="class"], [data-promo-page="workshop"], [data-promo-page="experience"], [data-promo-page="gift-card"]) .class-detail--proposal .class-detail__facts--fit .class-detail__fact-block--schedule .class-detail__schedule-item p {
     margin-bottom: 2px;
-    font-size: 10.5px;
+    font-size: 11.55px;
     line-height: 1.5;
   }
 }
@@ -834,7 +834,7 @@ body.class-detail-page {
   }
 
   .class-detail-page:is([data-promo-page="class"], [data-promo-page="workshop"], [data-promo-page="experience"], [data-promo-page="gift-card"]) .class-detail--proposal .class-detail__facts--fit .class-detail__fact-block--schedule .class-detail__schedule-item p {
-    font-size: 10.02px;
+    font-size: 11.52px;
   }
 }
 
