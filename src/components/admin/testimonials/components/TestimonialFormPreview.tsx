@@ -22,7 +22,6 @@ function TestimonialFormPreviewComponent({ fields }: { fields: TestimonialFormFi
 
       <div className="testimonial-preview-card__avatar">
         {avatarId ? (
-          // eslint-disable-next-line @next/next/no-img-element
           <img src={avatarId} alt={name || "Avatar"} width={88} height={88} />
         ) : (
           <span aria-hidden="true">{initialsFromName(name)}</span>

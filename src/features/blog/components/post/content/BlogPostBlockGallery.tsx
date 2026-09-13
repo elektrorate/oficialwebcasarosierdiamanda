@@ -9,7 +9,6 @@ export function BlogPostBlockGallery({
     <div className="blog-article__gallery">
       {images.map((image) => (
         <figure className="blog-article__gallery-item" key={image.src}>
-          {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src={assetPath(image.src)} alt={image.alt ?? ""} loading="lazy" decoding="async" />
         </figure>
       ))}

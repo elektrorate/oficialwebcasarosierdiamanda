@@ -31,7 +31,6 @@ export function TestimonialListCard({
     <article className="admin-list-card testimonial-admin-card">
       <div className="testimonial-admin-card__avatar">
         {testimonial.avatar_id ? (
-          // eslint-disable-next-line @next/next/no-img-element
           <img
             src={testimonial.avatar_id}
             alt={`Foto de ${testimonial.name}`}

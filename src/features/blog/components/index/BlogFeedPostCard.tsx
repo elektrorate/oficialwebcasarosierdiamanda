@@ -11,7 +11,6 @@ export function BlogFeedPostCard({ post }: { post: BlogPost }) {
   return (
     <article className="blog-feed-card">
       <Link className="blog-feed-card__media" href={`/blog/${post.slug}`}>
-        {/* eslint-disable-next-line @next/next/no-img-element */}
         <img src={assetPath(post.coverImage)} alt={post.title} loading="lazy" decoding="async" />
         <BlogFeedDateBadge publishedAt={post.publishedAt} />
       </Link>
