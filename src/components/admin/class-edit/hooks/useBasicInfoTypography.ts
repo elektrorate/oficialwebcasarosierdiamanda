@@ -1,6 +1,5 @@
 "use client";
 
-import { useMemo } from "react";
 import {
   DEFAULT_DESCRIPTION_TYPOGRAPHY,
   DEFAULT_RICH_TEXT_TYPOGRAPHY,
@@ -57,6 +56,5 @@ export function classEditPreviewTypographyRevision(details: ClassOfferingDetails
 }
 
 export function useBasicInfoTypography(details: ClassOfferingDetails): BasicInfoTypography {
-  const revision = basicInfoTypographyRevision(details);
-  return useMemo(() => resolveBasicInfoTypography(details), [revision]);
+  return resolveBasicInfoTypography(details);
 }

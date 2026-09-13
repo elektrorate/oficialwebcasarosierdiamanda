@@ -51,7 +51,7 @@ async function withTimeout<T>(promise: Promise<T>, timeoutMs: number, fallback: 
 const DEFAULT_SOCIAL_LINKS: SocialLink[] = [
   {
     platform: "instagram",
-    url: "https://www.facebook.com/casarosier",
+    url: "https://www.instagram.com/casarosier",
     label: "Instagram",
     icon_url: "/img/icon-instagram.svg",
     icon_color: "#ffffff",

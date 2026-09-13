@@ -5,6 +5,7 @@ import { assetPath } from "@/lib/assets";
 import type { RefObject } from "react";
 import type { ShopProductBadge } from "@/data/types";
 import { ShopProductBadgeLabel } from "../catalog/ShopProductBadgeLabel";
+import { applyImageFallback } from "@/lib/image-fallback";
 
 type Props = {
   productName: string;
@@ -60,14 +61,15 @@ export function ShopItemGalleryView({
         aria-label={`Ampliar imagen de ${productName}`}
         onClick={onOpenModal}
       >
-        <img className="shop-item-gallery__ghost" src={src} alt="" aria-hidden="true" />
-        <img className="shop-item-gallery__img" src={src} alt={productName} />
+        <img className="shop-item-gallery__ghost" src={src} alt="" aria-hidden="true" onError={applyImageFallback} />
+        <img className="shop-item-gallery__img" src={src} alt={productName} onError={applyImageFallback} />
         {previousSrc ? (
           <img
             className="shop-item-gallery__img shop-item-gallery__img--previous"
             src={previousSrc}
             alt=""
             aria-hidden="true"
+            onError={applyImageFallback}
           />
         ) : null}
         {badge ? <ShopProductBadgeLabel badge={badge} /> : null}
@@ -87,7 +89,7 @@ export function ShopItemGalleryView({
                 className={`shop-item-gallery__thumb${isActive ? " is-active" : ""}`}
                 onClick={() => onSelectImage(index)}
               >
-                <img src={assetPath(image)} alt="" loading="lazy" decoding="async" />
+                <img src={assetPath(image)} alt="" loading="lazy" decoding="async" onError={applyImageFallback} />
               </button>
             );
           })}

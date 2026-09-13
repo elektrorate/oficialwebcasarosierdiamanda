@@ -9,6 +9,7 @@ import {
 import { experienceHref } from "@/lib/routes";
 import { truncateHomeFlipExcerpt } from "@/lib/text/plain-text";
 import { classNames } from "@/lib/utils";
+import { ResilientImage } from "@/components/ui/ResilientImage";
 
 function homeCardExcerpt(item: ExperienceItem) {
   const raw = item.homeExcerpt || item.excerpt;
@@ -40,7 +41,7 @@ export function FeaturedExperienceCards({ items }: { items: readonly ExperienceI
               <div className="relative aspect-square overflow-hidden bg-[#e8e4dc]">
                 <div className="relative h-full w-full">
                   <div className="absolute inset-0 z-1 opacity-100 transition-opacity duration-280 ease-in-out group-hover:opacity-0 group-focus-within:opacity-0">
-                    <img
+                    <ResilientImage
                       className={classNames(
                         "block h-full w-full object-cover",
                         resolvedImage !== `/${image}` && "asset-fallback",

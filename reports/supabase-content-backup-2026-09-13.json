@@ -1,0 +1,75 @@
+{
+  "createdAt": "2026-09-13",
+  "reason": "Backup previo a correcciones de enlaces y valores de galería detectados por la auditoría frontend.",
+  "records": [
+    {
+      "table": "home_page_settings",
+      "id": "home-page",
+      "field": "intro_slides",
+      "before": [
+        {
+          "id": "intro-1788248293295",
+          "text": "Ya sea en clases mensuales o en talleres intensivos de fin de semana, te acompañamos para que descubras todas las posibilidades que te ofrece la cerámica.",
+          "image": "https://hhxftxxshwgmfxuyrjmz.supabase.co/storage/v1/object/public/media/general/1783506735238-532ef2ae.png",
+          "imageAlt": "Imagen de Casa Rosier",
+          "isVisible": true,
+          "sortOrder": 0,
+          "buttonHref": "https://oficialwebcasarosierdiamanda.vercel.app/clases",
+          "buttonText": "Ver mas"
+        }
+      ]
+    },
+    {
+      "table": "products",
+      "id": "9a484558-1151-48fa-9736-96ce24cba0c6",
+      "slug": "mostro1",
+      "field": "gallery",
+      "before": ["???"]
+    },
+    {
+      "table": "offerings",
+      "id": "3e82c387-62e8-4b14-ad61-9f304e599b18",
+      "field": "title,slug",
+      "before": {
+        "title": "https://www.casarosierceramica.com/workshops/formulacion-esmaltes-barcelona",
+        "slug": "https-www-casarosierceramica-com-workshops-formulacion-esmaltes-barcelona"
+      }
+    },
+    {
+      "table": "products",
+      "id": "e699cf7c-2edb-5a14-a9c3-d2dd1af3c28d",
+      "slug": "serie-mineral-01",
+      "field": "main_image_id",
+      "before": "https://hhxftxxshwgmfxuyrjmz.supabase.co/storage/v1/object/public/media/general/1783972138331-b393a969.jpg"
+    },
+    {
+      "table": "products",
+      "id": "9a484558-1151-48fa-9736-96ce24cba0c6",
+      "slug": "mostro1",
+      "field": "main_image_id",
+      "before": "https://hhxftxxshwgmfxuyrjmz.supabase.co/storage/v1/object/public/media/general/1783852099876-53bb743a.jpeg"
+    },
+    {
+      "table": "products",
+      "id": "b59d4c41-dc76-53b7-869a-c3b25d1b7016",
+      "slug": "jarron-de-gres-blanco",
+      "field": "gallery,seo_image",
+      "before": {
+        "gallery": [
+          "img/social-4.jpeg",
+          "img/intro-e.jpg",
+          "https://hhxftxxshwgmfxuyrjmz.supabase.co/storage/v1/object/public/media/general/1783708798890-a4c953c0.jpg",
+          "https://hhxftxxshwgmfxuyrjmz.supabase.co/storage/v1/object/public/media/general/1783847686135-864b855b.jpg"
+        ],
+        "seo_image": "https://hhxftxxshwgmfxuyrjmz.supabase.co/storage/v1/object/public/media/general/1783102086026-8aa47972.png"
+      }
+    },
+    {
+      "table": "offerings",
+      "id": "59c85d51-cdcc-4fd4-9722-e86e25b0c1df",
+      "slug": "totorito2",
+      "field": "details.class.homeCard.image",
+      "before": "https://hhxftxxshwgmfxuyrjmz.supabase.co/storage/v1/object/public/media/general/1785773080693-51c100bf.webp"
+    }
+  ]
+}

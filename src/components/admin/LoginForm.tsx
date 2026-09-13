@@ -1,8 +1,10 @@
 "use client";
 
 import { useState, type FormEvent } from "react";
+import { useRouter } from "next/navigation";
 
 export default function LoginForm() {
+  const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -34,7 +36,8 @@ export default function LoginForm() {
       return;
     }
 
-    window.location.assign("/admin/dashboard");
+    router.replace("/admin/dashboard");
+    router.refresh();
   }
 
   return (

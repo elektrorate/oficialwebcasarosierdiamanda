@@ -26,7 +26,7 @@ const defaultIdeaPromptContent: IdeaPromptContent = {
   subtitle: "siguenos en instagram - @casarosier",
   posts: defaultSocialGalleryPosts,
   ariaLabel: "Galeria continua de Instagram",
-  sourceHref: "https://www.facebook.com/casarosier"
+  sourceHref: "https://www.instagram.com/casarosier"
 };
 
 const ideaPromptByContext: Partial<Record<IdeaPromptContext, IdeaPromptContent>> = {

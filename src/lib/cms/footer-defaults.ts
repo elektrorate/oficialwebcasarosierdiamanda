@@ -17,7 +17,7 @@ export const DEFAULT_FOOTER_SOCIAL_TITLE = "Siguenos en Nuestras Redes:";
 export const DEFAULT_FOOTER_SOCIAL_LINKS: SocialLink[] = [
   {
     platform: "instagram",
-    url: "https://www.facebook.com/casarosier",
+    url: "https://www.instagram.com/casarosier",
     label: "Instagram",
     icon_url: "/img/icon-instagram.svg",
     icon_color: "#ffffff",

@@ -3,6 +3,7 @@
 import { useEffect, useRef } from "react";
 import { createPortal } from "react-dom";
 import { assetPath } from "@/lib/assets";
+import { applyImageFallback } from "@/lib/image-fallback";
 
 type Props = {
   title: string;
@@ -65,7 +66,7 @@ export function ShopItemGalleryModal({
           {title}
         </h2>
         <section className="ig-modal__media">
-          <img src={assetPath(images[safeIndex])} alt={title} />
+          <img src={assetPath(images[safeIndex])} alt={title} onError={applyImageFallback} />
         </section>
       </div>
     </div>,

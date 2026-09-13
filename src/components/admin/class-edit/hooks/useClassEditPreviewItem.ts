@@ -1,8 +1,6 @@
 "use client";
 
-import { useMemo } from "react";
 import type { ClassOfferingDetails, Offering } from "@/lib/cms/types";
-import { classEditPreviewTypographyRevision } from "./useBasicInfoTypography";
 import { buildPreviewItem } from "../utils";
 
 export function useClassEditPreviewItem({
@@ -24,20 +22,14 @@ export function useClassEditPreviewItem({
   seoDescription: string;
   details: ClassOfferingDetails;
 }) {
-  const typographyRevision = classEditPreviewTypographyRevision(details);
-
-  return useMemo(
-    () =>
-      buildPreviewItem({
-        offeringType,
-        title,
-        slug,
-        subtitle,
-        description,
-        seoTitle,
-        seoDescription,
-        details,
-      }),
-    [description, details, offeringType, seoDescription, seoTitle, slug, subtitle, title, typographyRevision],
-  );
+  return buildPreviewItem({
+    offeringType,
+    title,
+    slug,
+    subtitle,
+    description,
+    seoTitle,
+    seoDescription,
+    details,
+  });
 }

@@ -13,6 +13,7 @@ import {
 } from "@/lib/cms/rich-text-typography";
 import { experienceHref } from "@/lib/routes";
 import { Carousel } from "@/components/ui/Carousel";
+import { applyImageFallback } from "@/lib/image-fallback";
 
 const DEFAULT_GIFT_EYEBROW_TYPOGRAPHY: RichTextTypography = {
   ...DEFAULT_RICH_TEXT_TYPOGRAPHY,
@@ -90,6 +91,7 @@ function GiftCard({ item }: { item: ExperienceItem }) {
           alt={content.imageAlt}
           loading="lazy"
           decoding="async"
+          onError={applyImageFallback}
           className="block h-full w-full object-cover"
         />
       </span>
