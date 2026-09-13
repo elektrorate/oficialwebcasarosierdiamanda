@@ -72,6 +72,13 @@
       "before": "https://hhxftxxshwgmfxuyrjmz.supabase.co/storage/v1/object/public/media/general/1785773080693-51c100bf.webp"
     },
     {
+      "table": "offering_home_card_settings",
+      "id": "59c85d51-cdcc-4fd4-9722-e86e25b0c1df",
+      "field": "image",
+      "before": "https://hhxftxxshwgmfxuyrjmz.supabase.co/storage/v1/object/public/media/general/1785773080693-51c100bf.webp",
+      "reason": "La tabla específica prevalece sobre details.class.homeCard y conservaba la referencia eliminada."
+    },
+    {
       "table": "home_page_settings",
       "id": "home-page",
       "field": "hero.heroVideoUrl,hero.heroVideoUrlMobile",
@@ -80,6 +87,21 @@
         "heroVideoUrlMobile": ""
       },
       "reason": "El reproductor devuelve HTTP 401; se conserva la imagen válida como fondo del hero."
+    },
+    {
+      "table": "testimonials",
+      "id": "dd6a6345-d35d-475f-af69-1a02c5470a7b",
+      "field": "avatar_id",
+      "before": "https://hhxftxxshwgmfxuyrjmz.supabase.co/storage/v1/object/public/media/general/1784312061294-b62feb11.webp",
+      "reason": "El objeto ya no existe en Storage; se sustituye por el avatar local de respaldo."
+    },
+    {
+      "table": "testimonials",
+      "id": "8be8d54d-e4d1-4f20-92e5-335ecee8a4cd",
+      "name": "Ana Marquez",
+      "field": "avatar_id",
+      "before": "https://hhxftxxshwgmfxuyrjmz.supabase.co/storage/v1/object/public/media/general/1783080947172-dc2e45aa.jpg",
+      "reason": "El objeto ya no existe en Storage; se sustituye por el segundo avatar local de respaldo."
     }
   ]
 }

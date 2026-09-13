@@ -91,6 +91,9 @@ export async function generateMetadata(): Promise<Metadata> {
       template: `%s | ${siteName}`,
     },
     description,
+    icons: {
+      icon: "/img/logo-header.png",
+    },
     robots: {
       index: settings.seo.robots_index,
       follow: settings.seo.robots_follow,
