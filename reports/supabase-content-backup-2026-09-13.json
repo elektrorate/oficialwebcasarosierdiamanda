@@ -70,6 +70,16 @@
       "slug": "totorito2",
       "field": "details.class.homeCard.image",
       "before": "https://hhxftxxshwgmfxuyrjmz.supabase.co/storage/v1/object/public/media/general/1785773080693-51c100bf.webp"
+    },
+    {
+      "table": "home_page_settings",
+      "id": "home-page",
+      "field": "hero.heroVideoUrl,hero.heroVideoUrlMobile",
+      "before": {
+        "heroVideoUrl": "https://vimeo.com/1222945239?share=copy&fl=sv&fe=ci",
+        "heroVideoUrlMobile": ""
+      },
+      "reason": "El reproductor devuelve HTTP 401; se conserva la imagen válida como fondo del hero."
     }
   ]
 }
