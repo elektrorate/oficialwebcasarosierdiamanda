@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import Image from "next/image";
 import { assetPath } from "@/lib/assets";
 import type { RefObject } from "react";
 import type { ShopProductBadge } from "@/data/types";
@@ -61,13 +62,16 @@ export function ShopItemGalleryView({
         aria-label={`Ampliar imagen de ${productName}`}
         onClick={onOpenModal}
       >
-        <img className="shop-item-gallery__ghost" src={src} alt="" aria-hidden="true" onError={applyImageFallback} />
-        <img className="shop-item-gallery__img" src={src} alt={productName} onError={applyImageFallback} />
+        <Image className="shop-item-gallery__ghost" src={src} alt="" width={1000} height={1000} sizes="(max-width: 760px) 100vw, 500px" aria-hidden="true" onError={applyImageFallback} />
+        <Image className="shop-item-gallery__img" src={src} alt={productName} width={1000} height={1000} sizes="(max-width: 760px) 100vw, 500px" quality={85} onError={applyImageFallback} />
         {previousSrc ? (
-          <img
+          <Image
             className="shop-item-gallery__img shop-item-gallery__img--previous"
             src={previousSrc}
             alt=""
+            width={1000}
+            height={1000}
+            sizes="(max-width: 760px) 100vw, 500px"
             aria-hidden="true"
             onError={applyImageFallback}
           />
@@ -89,7 +93,7 @@ export function ShopItemGalleryView({
                 className={`shop-item-gallery__thumb${isActive ? " is-active" : ""}`}
                 onClick={() => onSelectImage(index)}
               >
-                <img src={assetPath(image)} alt="" loading="lazy" decoding="async" onError={applyImageFallback} />
+                <Image src={assetPath(image)} alt="" width={160} height={160} sizes="80px" loading="lazy" onError={applyImageFallback} />
               </button>
             );
           })}

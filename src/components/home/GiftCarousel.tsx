@@ -2,6 +2,7 @@
 
 import type { CSSProperties } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { MarkdownContent } from "@/components/ui/MarkdownContent";
 import type { ExperienceItem } from "@/data/types";
 import { assetPath } from "@/lib/assets";
@@ -85,12 +86,13 @@ function GiftCard({ item }: { item: ExperienceItem }) {
       style={style}
       className="group grid items-center gap-[clamp(28px,4.5vw,52px)] text-left text-inherit no-underline grid-cols-[minmax(min(100%,240px),clamp(240px,28vw,320px))_minmax(0,1fr)] focus-visible:outline-2 focus-visible:outline-[currentColor] focus-visible:outline-offset-[6px] max-[720px]:grid-cols-1 max-[720px]:gap-[clamp(20px,5vw,28px)]"
     >
-      <span className="block aspect-square w-full overflow-hidden bg-[#1a1a1a] max-[720px]:mx-auto max-[720px]:w-[min(100%,320px)]">
-        <img
+      <span className="relative block aspect-square w-full overflow-hidden bg-[#1a1a1a] max-[720px]:mx-auto max-[720px]:w-[min(100%,320px)]">
+        <Image
           src={assetPath(content.image)}
           alt={content.imageAlt}
+          fill
+          sizes="(max-width: 720px) min(100vw, 320px), 320px"
           loading="lazy"
-          decoding="async"
           onError={applyImageFallback}
           className="block h-full w-full object-cover"
         />

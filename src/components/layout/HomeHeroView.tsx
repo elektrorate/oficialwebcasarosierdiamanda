@@ -1,8 +1,10 @@
 import { NavbarGlobal } from "@/components/layout/NavbarGlobal";
 import { HeroVimeoVideo } from "@/components/layout/HeroVimeoVideo";
 import { PublicHeroContent, PublicHeroTitle } from "@/components/hero/PublicHeroContent";
+import { getImageProps } from "next/image";
 import type { NavigationItem } from "@/data/types";
 import type { CmsHeroSettings } from "@/lib/cms/types";
+import { assetPath } from "@/lib/assets";
 import { classNames } from "@/lib/utils";
 import type { CSSProperties } from "react";
 
@@ -63,6 +65,22 @@ export function HomeHeroView({
   const mobileVideoEmbed = mobileVideo === desktopVideo ? desktopVideoEmbed : heroVideoEmbedUrl(mobileVideo);
   const hasHeroVideo = hero.heroVariant === "image" && Boolean(desktopVideo);
   const videoPoster = hero.heroVideoPoster || hero.heroImage || "/img/hero-bg.jpg";
+  const { props: desktopBackgroundProps } = getImageProps({
+    src: assetPath(desktopImage),
+    alt: "",
+    fill: true,
+    sizes: "100vw",
+    quality: 85,
+    priority: true,
+  });
+  const { props: mobileBackgroundProps } = getImageProps({
+    src: assetPath(mobileImage),
+    alt: "",
+    fill: true,
+    sizes: "100vw",
+    quality: 85,
+    priority: true,
+  });
   const heroStyle: CSSProperties = {
     "--home-hero-image": 'url("' + desktopImage + '")',
     "--home-hero-image-mobile": 'url("' + mobileImage + '")',
@@ -209,7 +227,12 @@ export function HomeHeroView({
       data-header-component="HeaderHome"
       style={heroStyle}
     >
-      <div className="hero__bg" aria-hidden="true" />
+      <div className="hero__bg" aria-hidden="true">
+        <picture className="hero__bg-picture">
+          <source media="(max-width: 640px)" srcSet={mobileBackgroundProps.srcSet} />
+          <img {...desktopBackgroundProps} className="hero__bg-image" />
+        </picture>
+      </div>
       {hasHeroVideo && desktopVideoEmbed && isVimeoEmbed(desktopVideoEmbed) ? (
         <HeroVimeoVideo
           className="hero__video hero__video--embed hero__video--desktop"

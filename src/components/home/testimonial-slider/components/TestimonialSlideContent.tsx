@@ -1,4 +1,5 @@
 import { memo } from "react";
+import Image from "next/image";
 import type { TestimonialSlide } from "../types";
 
 function TestimonialSlideContentComponent({ slide, variant = "default" }: { slide: TestimonialSlide; variant?: "default" | "home" }) {
@@ -6,12 +7,14 @@ function TestimonialSlideContentComponent({ slide, variant = "default" }: { slid
 
   return (
     <>
-      <img
+      <Image
         className={isHome ? "h-[clamp(96px,9vw,112px)] w-[clamp(96px,9vw,112px)] rounded-full object-cover max-[640px]:h-[clamp(72px,22vw,88px)] max-[640px]:w-[clamp(72px,22vw,88px)]" : "testimonial__avatar"}
         src={slide.image}
         alt={slide.alt}
+        width={224}
+        height={224}
+        sizes="(max-width: 640px) 88px, 112px"
         loading="lazy"
-        decoding="async"
       />
       <div className={isHome ? "pt-0 text-left" : "testimonial__body"}>
         <p className={isHome ? "m-0 max-w-[38ch] [font-family:var(--font-manrope)] text-[clamp(15px,1.35vw,17px)] font-light leading-[1.55] text-[#4a4a4a] max-[640px]:max-w-none max-[640px]:text-[15px] max-[640px]:leading-[1.52]" : "testimonial__quote"}>{slide.quote}</p>

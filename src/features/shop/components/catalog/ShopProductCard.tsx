@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { assetPath } from "@/lib/assets";
 import type { ShopItem } from "@/data/types";
 import { useShopProductCardActions } from "@/features/shop/hooks/useShopProductCardActions";
@@ -20,7 +21,14 @@ export function ShopProductCard({ item }: { item: ShopItem }) {
         className="shop-product-card__media"
         aria-label={`Ver ${item.name}`}
       >
-        <img src={imageSrc} alt={item.name} loading="lazy" decoding="async" onError={applyImageFallback} />
+        <Image
+          src={imageSrc}
+          alt={item.name}
+          fill
+          sizes="(max-width: 640px) 100vw, (max-width: 960px) 50vw, 33vw"
+          loading="lazy"
+          onError={applyImageFallback}
+        />
         {item.badge ? <ShopProductBadgeLabel badge={item.badge} /> : null}
         <div className="shop-product-card__hover" aria-hidden="true">
           <span className="shop-product-card__actions">

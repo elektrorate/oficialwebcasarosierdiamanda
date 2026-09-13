@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { MarkdownContent } from "@/components/ui/MarkdownContent";
 import type { ExperienceItem } from "@/data/types";
 import { assetPath } from "@/lib/assets";
@@ -12,12 +13,13 @@ export function CollectionCard({ item }: { item: ExperienceItem }) {
   return (
     <article className="w-full">
       <Link className="block aspect-[0.92/1] bg-[#ddd] overflow-hidden relative" href={href}>
-        <img
+        <Image
           src={imgSrc}
           alt={item.title}
+          fill
+          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
           className={isFallback ? "block w-full h-full object-cover bg-transparent" : "block w-full h-full object-cover"}
           loading="lazy"
-          decoding="async"
         />
       </Link>
       <div className="pt-3.5 pb-0 border-0">

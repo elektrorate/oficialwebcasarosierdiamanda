@@ -48,8 +48,9 @@ export function FeaturedExperienceCards({ items }: { items: readonly ExperienceI
                       )}
                       src={resolvedImage}
                       alt={imageAlt}
+                      fill
+                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                       loading="lazy"
-                      decoding="async"
                     />
                   </div>
                   <div className="pointer-events-none absolute inset-0 z-2 flex items-center justify-center overflow-hidden bg-[#f7f5f0] p-[clamp(16px,4vw,28px)] text-center opacity-0 transition-opacity duration-280 ease-in-out group-hover:pointer-events-auto group-hover:opacity-100 group-focus-within:pointer-events-auto group-focus-within:opacity-100">

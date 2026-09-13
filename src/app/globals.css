@@ -1302,9 +1302,13 @@ body {
 
 .header-home--video-hero .hero__bg {
   z-index: 0;
-  background: var(--home-hero-image) var(--hero-media-position-x, 50%) var(--hero-media-position-y, 50%) / cover no-repeat #61563a;
+  background: #61563a;
   transform: scale(var(--hero-media-scale, 1));
   transform-origin: var(--hero-media-position-x, 50%) var(--hero-media-position-y, 50%);
+}
+
+.header-home--video-hero .hero__bg-image {
+  object-position: var(--hero-media-position-x, 50%) var(--hero-media-position-y, 50%);
 }
 
 @media (min-width: 641px) and (max-width: 1024px) {
@@ -1315,11 +1319,14 @@ body {
   }
 
   .header-home--video-hero .hero__bg {
-    background-position:
-      var(--hero-media-tablet-position-x, var(--hero-media-position-x, 50%))
-      var(--hero-media-tablet-position-y, var(--hero-media-position-y, 50%));
     transform: scale(var(--hero-media-tablet-scale, var(--hero-media-scale, 1)));
     transform-origin:
+      var(--hero-media-tablet-position-x, var(--hero-media-position-x, 50%))
+      var(--hero-media-tablet-position-y, var(--hero-media-position-y, 50%));
+  }
+
+  .header-home--video-hero .hero__bg-image {
+    object-position:
       var(--hero-media-tablet-position-x, var(--hero-media-position-x, 50%))
       var(--hero-media-tablet-position-y, var(--hero-media-position-y, 50%));
   }
@@ -1335,12 +1342,14 @@ body {
   }
 
   .header-home--video-hero .hero__bg {
-    background-image: var(--home-hero-image-mobile, var(--home-hero-image));
-    background-position:
-      var(--hero-media-mobile-position-x, var(--hero-media-tablet-position-x, 50%))
-      var(--hero-media-mobile-position-y, var(--hero-media-tablet-position-y, 50%));
     transform: scale(var(--hero-media-mobile-scale, var(--hero-media-tablet-scale, 1)));
     transform-origin:
+      var(--hero-media-mobile-position-x, var(--hero-media-tablet-position-x, 50%))
+      var(--hero-media-mobile-position-y, var(--hero-media-tablet-position-y, 50%));
+  }
+
+  .header-home--video-hero .hero__bg-image {
+    object-position:
       var(--hero-media-mobile-position-x, var(--hero-media-tablet-position-x, 50%))
       var(--hero-media-mobile-position-y, var(--hero-media-tablet-position-y, 50%));
   }

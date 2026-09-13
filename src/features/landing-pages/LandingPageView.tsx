@@ -6,7 +6,7 @@ import styles from "./landing-page.module.css";
 
 function LandingImage({ src, alt }: { src: string; alt: string }) {
   if (!src) return null;
-  return <Image src={assetPath(src, { width: 1600, quality: 82 })} alt={alt} fill sizes="(max-width: 768px) 100vw, 1200px" className={styles.image} unoptimized />;
+  return <Image src={assetPath(src, { width: 1600, quality: 82 })} alt={alt} fill sizes="(max-width: 768px) 100vw, 1200px" className={styles.image} quality={80} />;
 }
 
 function Action({ text, href }: { text: string; href: string }) {

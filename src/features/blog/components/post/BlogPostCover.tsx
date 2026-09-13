@@ -1,3 +1,4 @@
+import Image from "next/image";
 import type { BlogPost } from "@/data/types";
 import { assetPath } from "@/lib/assets";
 
@@ -6,11 +7,14 @@ export function BlogPostCover({ post }: { post: BlogPost }) {
 
   return (
     <figure className="blog-article__cover">
-      <img
+      <Image
         src={assetPath(post.featuredImage)}
         alt={post.title}
+        width={1600}
+        height={1000}
+        sizes="(max-width: 760px) 100vw, 900px"
+        quality={85}
         loading="eager"
-        decoding="async"
         fetchPriority="high"
       />
     </figure>

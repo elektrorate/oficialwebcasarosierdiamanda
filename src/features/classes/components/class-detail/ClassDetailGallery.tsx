@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState, type RefObject } from "react";
+import Image from "next/image";
 import type { ExperienceItem } from "@/data/types";
 import { assetPath } from "@/lib/assets";
 import { classNames } from "@/lib/utils";
@@ -97,13 +98,16 @@ function GalleryMainMedia({
 
   return (
     <div className="class-gallery__main-wrap">
-      <img className="class-gallery__main-ghost" src={posterSrc} alt="" aria-hidden="true" />
-      <img className="class-gallery__main" src={posterSrc} alt={item.alt || title} title={item.seoTitle || undefined} />
+      <Image className="class-gallery__main-ghost" src={posterSrc} alt="" width={1000} height={1000} sizes="(max-width: 760px) 100vw, 354px" aria-hidden="true" />
+      <Image className="class-gallery__main" src={posterSrc} alt={item.alt || title} title={item.seoTitle || undefined} width={1000} height={1000} sizes="(max-width: 760px) 100vw, 354px" quality={85} />
       {previousPosterSrc ? (
-        <img
+        <Image
           className="class-gallery__main class-gallery__main--previous"
           src={previousPosterSrc}
           alt=""
+          width={1000}
+          height={1000}
+          sizes="(max-width: 760px) 100vw, 354px"
           aria-hidden="true"
         />
       ) : null}
@@ -167,7 +171,7 @@ export function ClassDetailGallery({ item }: Props) {
                   aria-current={isActive ? "true" : undefined}
                   onClick={() => gallery.selectIndex(index)}
                 >
-                  <img src={assetPath(mediaItem.poster)} alt={mediaItem.alt || item.title} title={mediaItem.seoTitle || undefined} loading="lazy" decoding="async" className="w-full aspect-square object-cover" />
+                  <Image src={assetPath(mediaItem.poster)} alt={mediaItem.alt || item.title} title={mediaItem.seoTitle || undefined} width={160} height={160} sizes="50px" loading="lazy" className="w-full aspect-square object-cover" />
                   {mediaItem.kind === "video" ? (
                     <span className="class-gallery__thumb-play" aria-hidden="true" />
                   ) : null}

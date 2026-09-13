@@ -1,5 +1,15 @@
 import type { NextConfig } from "next";
 
+const supabaseHostname = (() => {
+  try {
+    return new URL(
+      process.env.NEXT_PUBLIC_SUPABASE_URL ?? "https://hhxftxxshwgmfxuyrjmz.supabase.co",
+    ).hostname;
+  } catch {
+    return "hhxftxxshwgmfxuyrjmz.supabase.co";
+  }
+})();
+
 const nextConfig: NextConfig = {
   async headers() {
     return [
@@ -19,7 +29,16 @@ const nextConfig: NextConfig = {
     ];
   },
   images: {
-    unoptimized: true
+    formats: ["image/webp"],
+    minimumCacheTTL: 86400,
+    qualities: [70, 75, 80, 85, 90],
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: supabaseHostname,
+        pathname: "/storage/v1/object/public/**",
+      },
+    ],
   },
   experimental: {
     cpus: 1,

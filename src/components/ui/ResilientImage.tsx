@@ -1,15 +1,15 @@
 "use client";
 
-import type { ImgHTMLAttributes } from "react";
+import Image, { type ImageProps } from "next/image";
 import { applyImageFallback } from "@/lib/image-fallback";
 
-type Props = Omit<ImgHTMLAttributes<HTMLImageElement>, "onError"> & {
+type Props = Omit<ImageProps, "onError"> & {
   fallbackSrc?: string;
 };
 
 export function ResilientImage({ fallbackSrc, ...props }: Props) {
   return (
-    <img
+    <Image
       {...props}
       onError={(event) => applyImageFallback(event, fallbackSrc)}
     />

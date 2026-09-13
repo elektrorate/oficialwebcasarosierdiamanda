@@ -29,7 +29,7 @@ export function PublicHeroContent({ hero }: { hero: CmsHeroSettings }) {
               zIndex: 1,
             } as CSSProperties}
           >
-            <Image src={hero.titleImage} alt="" fill sizes="(max-width: 640px) 72vw, (max-width: 1024px) 70vw, 700px" className="object-contain" style={{ opacity: 0.8 }} unoptimized />
+            <Image src={hero.titleImage} alt="" fill sizes="(max-width: 640px) 72vw, (max-width: 1024px) 70vw, 700px" className="object-contain" style={{ opacity: 0.8 }} quality={85} />
           </div>
         ) : null}
         {hero.titleImageSecondary ? (
@@ -47,7 +47,7 @@ export function PublicHeroContent({ hero }: { hero: CmsHeroSettings }) {
               zIndex: 2,
             } as CSSProperties}
           >
-            <Image src={hero.titleImageSecondary} alt="" fill sizes="(max-width: 640px) 72vw, (max-width: 1024px) 70vw, 700px" className="object-contain" unoptimized />
+            <Image src={hero.titleImageSecondary} alt="" fill sizes="(max-width: 640px) 72vw, (max-width: 1024px) 70vw, 700px" className="object-contain" quality={85} />
           </div>
         ) : null}
       </div>
@@ -91,7 +91,7 @@ export function PublicHeroContent({ hero }: { hero: CmsHeroSettings }) {
           </div>
           {hero.heroPresentationImage ? (
             <div className="page-hero__presentation-image">
-              <Image src={hero.heroPresentationImage} alt={hero.heroTitle} fill sizes="420px" className="object-contain" unoptimized />
+              <Image src={hero.heroPresentationImage} alt={hero.heroTitle} fill sizes="(max-width: 640px) 78vw, 420px" className="object-contain" quality={85} />
             </div>
           ) : null}
         </div>

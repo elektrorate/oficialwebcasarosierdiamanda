@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { MarkdownContent } from "@/components/ui/MarkdownContent";
 import type { BlogPost } from "@/data/types";
 import { assetPath } from "@/lib/assets";
@@ -11,7 +12,14 @@ export function BlogFeedPostCard({ post }: { post: BlogPost }) {
   return (
     <article className="blog-feed-card">
       <Link className="blog-feed-card__media" href={`/blog/${post.slug}`}>
-        <img src={assetPath(post.coverImage)} alt={post.title} loading="lazy" decoding="async" />
+        <Image
+          src={assetPath(post.coverImage)}
+          alt={post.title}
+          width={1200}
+          height={750}
+          sizes="(max-width: 760px) 75vw, 65vw"
+          loading="lazy"
+        />
         <BlogFeedDateBadge publishedAt={post.publishedAt} />
       </Link>
       <div className="blog-feed-card__body">

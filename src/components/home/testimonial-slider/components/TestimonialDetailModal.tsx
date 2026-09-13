@@ -1,4 +1,5 @@
 import { memo, type RefObject } from "react";
+import Image from "next/image";
 import type { TestimonialSlide } from "../types";
 
 function TestimonialDetailModalComponent({
@@ -55,12 +56,14 @@ function TestimonialDetailModalComponent({
           </button>
         </div>
         <div className="testimonial-modal__content">
-          <img
+          <Image
             className="testimonial-modal__avatar"
             src={slide.image}
             alt={slide.alt}
+            width={224}
+            height={224}
+            sizes="112px"
             loading="lazy"
-            decoding="async"
           />
           <p className="testimonial-modal__quote">{slide.quote}</p>
           <p className="testimonial-modal__author">{slide.author}</p>

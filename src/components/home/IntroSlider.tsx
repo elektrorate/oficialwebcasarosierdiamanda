@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { assetPath } from "@/lib/assets";
 import { Carousel } from "@/components/ui/Carousel";
 import type { HomeIntroSlide } from "@/lib/cms/types";
@@ -32,11 +33,13 @@ export function IntroSlider({ slides }: { slides: readonly HomeIntroSlide[] }) {
         renderItem={(slide) => (
           <>
             <div className="flex h-full min-h-0 w-full items-center justify-end max-[640px]:justify-center">
-              <img
+              <Image
                 src={assetPath(slide.image)}
                 alt={slide.imageAlt}
+                width={480}
+                height={480}
+                sizes="(max-width: 640px) 160px, 240px"
                 loading="lazy"
-                decoding="async"
                 className="block w-full max-w-60 px-8 sm:px-0 object-contain max-[640px]:max-w-40"
               />
             </div>

@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
+import Image from "next/image";
 import { Carousel } from "@/components/ui/Carousel";
 import { classNames } from "@/lib/utils";
 
@@ -108,11 +109,13 @@ export function SocialGallery({
         aria-label={`Abrir post social ${realIndex + 1}`}
         tabIndex={isDuplicate ? -1 : undefined}
       >
-        <img
+        <Image
           src={post.image}
           alt={isDuplicate ? "" : `Post social ${realIndex + 1}`}
+          width={700}
+          height={700}
+          sizes="(max-width: 640px) 72vw, (max-width: 1024px) 34vw, 260px"
           loading="lazy"
-          decoding="async"
         />
       </button>
     );
@@ -170,7 +173,7 @@ export function SocialGallery({
           />
           <div className="ig-modal__panel" tabIndex={-1} ref={panelRef}>
             <section className="ig-modal__media">
-              <img src={current.image} alt="" loading="lazy" decoding="async" />
+              <Image src={current.image} alt="" width={1200} height={1200} sizes="(max-width: 760px) 100vw, 55vw" quality={85} />
               <div className="ig-modal__overlay-text">Post</div>
             </section>
             <section className="ig-modal__content">
