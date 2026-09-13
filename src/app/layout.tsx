@@ -60,15 +60,16 @@ const robotoFlex = Roboto_Flex({
 const nunito = localFont({
   src: [
     {
-      path: "../../public/fonts/Nunito-VariableFont_wght.ttf",
+      path: "../../public/fonts/Nunito-VariableFont_wght.woff2",
       style: "normal"
     },
     {
-      path: "../../public/fonts/Nunito-Italic-VariableFont_wght.ttf",
+      path: "../../public/fonts/Nunito-Italic-VariableFont_wght.woff2",
       style: "italic"
     }
   ],
   variable: "--font-nunito",
+  preload: false,
   display: "swap"
 });
 
