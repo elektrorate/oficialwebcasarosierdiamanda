@@ -2,6 +2,23 @@ import type { ReactNode } from "react";
 import { redirect } from "next/navigation";
 import AdminLayoutShell from "@/components/layout/AdminLayout";
 import { requireAdminProfile } from "@/lib/auth/supabase-auth";
+// Public feature styles are also used by the CMS preview panes. Keeping them
+// here preserves those previews without making every public route download them.
+import "../legacy/home.css";
+import "../legacy/classes.css";
+import "../legacy/shop.css";
+import "../../features/shop/components/catalog/shop-catalog.css";
+import "../../features/shop/components/item-detail/shop-item-detail.css";
+import "../../features/classes/components/class-detail/class-detail.css";
+import "../legacy/blog.css";
+import "../../features/blog/components/index/blog-index.css";
+import "../../features/blog/components/post/blog-post-editorial.css";
+import "../legacy/studio.css";
+import "../../features/classes/components/class-detail/offering-detail-redesign.css";
+import "../../components/home/gift-carousel.css";
+import "../../components/home/social-gallery-home.css";
+import "../../components/layout/scroll-nav/home-scroll-sticky-nav.css";
+import "../admin-offerings-table.css";
 import "./admin.css";
 
 export default async function AdminLayout({

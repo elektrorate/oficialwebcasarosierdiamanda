@@ -6,27 +6,12 @@ import { WhatsAppFloat } from "@/components/layout/WhatsAppFloat";
 import { getSettings } from "@/lib/cms/settings";
 import "./tailwind.css";
 import "./legacy/base.css";
-import "./legacy/home.css";
-import "./legacy/classes.css";
-import "./legacy/shop.css";
-import "../features/shop/components/catalog/shop-catalog.css";
-import "../features/shop/components/item-detail/shop-item-detail.css";
-import "../features/classes/components/class-detail/class-detail.css";
-import "./legacy/blog.css";
-import "../features/blog/components/index/blog-index.css";
-import "../features/blog/components/post/blog-post-editorial.css";
 import "./legacy/cart.css";
-import "./legacy/studio.css";
 import "./legacy/promo-entry.css";
 import "./legacy/footer.css";
 import "./globals.css";
 import "./responsive-tuning.css";
-import "../features/classes/components/class-detail/offering-detail-redesign.css";
 import "./public-header-desktop.css";
-import "./admin-offerings-table.css";
-import "../components/home/gift-carousel.css";
-import "../components/home/social-gallery-home.css";
-import "../components/layout/scroll-nav/home-scroll-sticky-nav.css";
 
 const baskervville = Baskervville({
   subsets: ["latin"],
