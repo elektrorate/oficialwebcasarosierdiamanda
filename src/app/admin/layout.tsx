@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import type { ReactNode } from "react";
 import { redirect } from "next/navigation";
 import AdminLayoutShell from "@/components/layout/AdminLayout";
@@ -20,6 +21,10 @@ import "../../components/home/social-gallery-home.css";
 import "../../components/layout/scroll-nav/home-scroll-sticky-nav.css";
 import "../admin-offerings-table.css";
 import "./admin.css";
+
+export const metadata: Metadata = {
+  robots: { index: false, follow: false },
+};
 
 export default async function AdminLayout({
   children,

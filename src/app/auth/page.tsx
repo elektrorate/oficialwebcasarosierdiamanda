@@ -4,6 +4,7 @@ import { requireAdminProfile } from "@/lib/auth/supabase-auth";
 
 export const metadata = {
   title: "Administracion | Casa Rosier",
+  robots: { index: false, follow: false },
 };
 
 export default async function AuthPage() {

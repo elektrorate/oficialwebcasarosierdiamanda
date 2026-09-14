@@ -1,6 +1,7 @@
 import { revalidatePath } from "next/cache";
 import { invalidatePublicNavigationCache } from "./navigation-public";
 import type { Offering } from "./types";
+import { revalidatePublicSitemap } from "@/lib/seo/revalidation";
 
 /**
  * Public route for an offering detail page based on its type and slug.
@@ -31,6 +32,7 @@ export function refreshOfferingPaths(...offerings: Array<Pick<Offering, "type" |
   revalidatePath("/gift-cards");
   revalidatePath("/el-estudio");
   revalidatePath("/shop");
+  revalidatePublicSitemap();
   for (const offering of offerings) {
     const path = publicOfferingPath(offering);
     if (path) revalidatePath(path);

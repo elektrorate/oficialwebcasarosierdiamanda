@@ -4,6 +4,7 @@ import { getLandingPages } from "@/lib/cms/landing-pages";
 import { getOfferings, isPubliclyVisibleOffering } from "@/lib/cms/offerings";
 import { getProducts } from "@/lib/cms/products";
 import { getAbsoluteSiteUrl } from "@/lib/seo/site-url";
+import { isValidPublicSlug } from "@/lib/seo/public-slug";
 
 export const revalidate = 900;
 
@@ -46,7 +47,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: pathname === "/" ? 1 : 0.7,
   }));
 
-  for (const offering of offerings.filter((item) => isPubliclyVisibleOffering(item))) {
+  for (const offering of offerings.filter(
+    (item) => isPubliclyVisibleOffering(item) && isValidPublicSlug(item.slug),
+  )) {
     entries.push({
       url: getAbsoluteSiteUrl(offeringPath(offering.type, offering.slug)),
       lastModified: validLastModified(offering.updated_at),
@@ -55,7 +58,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     });
   }
 
-  for (const post of blogPosts.filter((item) => item.status === "published" && !item.deleted_at)) {
+  for (const post of blogPosts.filter(
+    (item) => item.status === "published" && !item.deleted_at && isValidPublicSlug(item.slug),
+  )) {
     entries.push({
       url: getAbsoluteSiteUrl(`/blog/${post.slug}`),
       lastModified: validLastModified(post.updated_at || post.published_at),
@@ -64,7 +69,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     });
   }
 
-  for (const product of products.filter((item) => item.status === "published" && !item.deleted_at)) {
+  for (const product of products.filter(
+    (item) => item.status === "published" && !item.deleted_at && isValidPublicSlug(item.slug),
+  )) {
     entries.push({
       url: getAbsoluteSiteUrl(`/shop/${product.slug}`),
       lastModified: validLastModified(product.updated_at),
@@ -73,7 +80,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     });
   }
 
-  for (const landingPage of landingPages.filter((item) => item.status === "published" && !item.deleted_at)) {
+  for (const landingPage of landingPages.filter(
+    (item) => item.status === "published" && !item.deleted_at && isValidPublicSlug(item.slug),
+  )) {
     entries.push({
       url: getAbsoluteSiteUrl(`/landing/${landingPage.slug}`),
       lastModified: validLastModified(landingPage.updated_at),

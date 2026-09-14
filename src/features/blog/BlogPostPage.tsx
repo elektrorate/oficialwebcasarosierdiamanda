@@ -3,6 +3,8 @@ import type { BlogPost } from "@/data/types";
 import { BlogPostArticleSection } from "./components/post/BlogPostArticleSection";
 import { BlogPostPageHeader } from "./components/post/BlogPostPageHeader";
 import type { BlogPostAdjacent } from "./loadBlogPostPage";
+import { JsonLd } from "@/components/seo/JsonLd";
+import { blogPostJsonLd } from "@/lib/seo/structured-data";
 
 export async function BlogPostPage({
   post,
@@ -17,6 +19,7 @@ export async function BlogPostPage({
 }) {
   return (
     <SitePage bodyClass="blog-post-page" header={<BlogPostPageHeader />}>
+      <JsonLd data={blogPostJsonLd(post)} />
       <BlogPostArticleSection
         post={post}
         adjacent={adjacent}

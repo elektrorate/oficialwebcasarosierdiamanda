@@ -11,6 +11,7 @@ import {
 import { refreshOfferingPaths } from "@/lib/cms/offering-routes";
 import { expirationSaveError } from "@/lib/cms/offering-expiration";
 import { internalApiError } from "@/lib/security/api-response";
+import { publicSlugError } from "@/lib/seo/public-slug";
 
 export async function PUT(request: NextRequest, context: { params: Promise<{ id: string }> }) {
   const session = await requireAdminApi();
@@ -20,6 +21,10 @@ export async function PUT(request: NextRequest, context: { params: Promise<{ id:
 
   const { id } = await context.params;
   const body = await request.json();
+  if (body.slug) {
+    const slugError = publicSlugError(body.slug);
+    if (slugError) return NextResponse.json({ error: slugError }, { status: 400 });
+  }
 
   const expirationError = expirationSaveError({
     expirationEnabled: body.expiration_enabled === true,

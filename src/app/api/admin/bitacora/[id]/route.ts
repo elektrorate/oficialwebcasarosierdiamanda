@@ -2,11 +2,14 @@ import { requireAdminApi } from "@/lib/auth/supabase-auth";
 import { deleteBlogPostPermanently, duplicateBlogPost, getBlogPostById, moveBlogPostToTrash, restoreBlogPost, updateBlogPost } from "@/lib/cms/blog";
 import { revalidatePath } from "next/cache";
 import { type NextRequest, NextResponse } from "next/server";
+import { revalidatePublicSitemap } from "@/lib/seo/revalidation";
+import { publicSlugError } from "@/lib/seo/public-slug";
 
 function refreshBlogViews() {
   revalidatePath("/blog");
   revalidatePath("/blog/[slug]", "page");
   revalidatePath("/admin/bitacora");
+  revalidatePublicSitemap();
 }
 
 export async function GET(request: NextRequest, ctx: { params: Promise<{ id: string }> }) {
@@ -16,7 +19,12 @@ export async function GET(request: NextRequest, ctx: { params: Promise<{ id: str
 export async function PUT(request: NextRequest, ctx: { params: Promise<{ id: string }> }) {
   if (!(await requireAdminApi())) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   try {
-    const item = await updateBlogPost((await ctx.params).id, await request.json());
+    const body = await request.json();
+    if (body.slug) {
+      const slugError = publicSlugError(body.slug);
+      if (slugError) return NextResponse.json({ error: slugError }, { status: 400 });
+    }
+    const item = await updateBlogPost((await ctx.params).id, body);
     if (!item) return NextResponse.json({ error: "No encontrado" }, { status: 404 });
     if (request.headers.get("x-cms-autosave") !== "1") refreshBlogViews();
     return NextResponse.json({ post: item });

@@ -1,6 +1,15 @@
 import { requireAdminApi } from "@/lib/auth/supabase-auth";
 import { createProduct, getProducts } from "@/lib/cms/products";
 import { type NextRequest, NextResponse } from "next/server";
+import { revalidatePath } from "next/cache";
+import { publicSlugError } from "@/lib/seo/public-slug";
+import { revalidatePublicSitemap } from "@/lib/seo/revalidation";
+
+function refreshProductViews(slug?: string) {
+  revalidatePath("/shop");
+  if (slug) revalidatePath(`/shop/${slug}`);
+  revalidatePublicSitemap();
+}
 
 export async function GET(request: NextRequest) {
   if (!(await requireAdminApi())) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
@@ -16,6 +25,10 @@ export async function POST(request: NextRequest) {
   if (!(await requireAdminApi())) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   const body = await request.json();
   if (!body?.name) return NextResponse.json({ error: "El nombre es obligatorio." }, { status: 400 });
-  try { const item = await createProduct(body); return NextResponse.json({ product: item }); }
+  if (body.slug) {
+    const slugError = publicSlugError(body.slug);
+    if (slugError) return NextResponse.json({ error: slugError }, { status: 400 });
+  }
+  try { const item = await createProduct(body); refreshProductViews(item.slug); return NextResponse.json({ product: item }); }
   catch (err) { return NextResponse.json({ error: err instanceof Error ? err.message : "Error" }, { status: 400 }); }
 }

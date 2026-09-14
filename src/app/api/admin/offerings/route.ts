@@ -4,6 +4,7 @@ import { requireAdminApi } from "@/lib/auth/supabase-auth";
 import { refreshOfferingPaths } from "@/lib/cms/offering-routes";
 import { expirationSaveError } from "@/lib/cms/offering-expiration";
 import { internalApiError } from "@/lib/security/api-response";
+import { publicSlugError } from "@/lib/seo/public-slug";
 
 export async function GET() {
   const session = await requireAdminApi();
@@ -24,6 +25,10 @@ export async function POST(request: NextRequest) {
   const body = await request.json();
   if (!body?.title || !body?.type) {
     return NextResponse.json({ error: "El título y el tipo son obligatorios." }, { status: 400 });
+  }
+  if (body.slug) {
+    const slugError = publicSlugError(body.slug);
+    if (slugError) return NextResponse.json({ error: slugError }, { status: 400 });
   }
 
   const expirationError = expirationSaveError({

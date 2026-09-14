@@ -4,6 +4,8 @@ import { ClassDetailSection } from "@/features/classes/components/class-detail/C
 import { IdeaPromptSection } from "@/features/shared/contextual-sections/IdeaPromptSection";
 import { SitePage } from "@/features/shared/layout/SitePage";
 import { buildExperienceDetailHero } from "@/features/experiences/buildExperienceDetailHero";
+import { JsonLd } from "@/components/seo/JsonLd";
+import { offeringJsonLd } from "@/lib/seo/structured-data";
 
 function safeJsonLd(value: unknown) {
   return JSON.stringify(value).replace(/</g, "\\u003c");
@@ -49,6 +51,7 @@ export function OfferingDetailPage({
         />
       }
     >
+      <JsonLd data={offeringJsonLd(item)} />
       {galleryImagesJsonLd.length ? (
         <script
           type="application/ld+json"

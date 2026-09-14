@@ -3,7 +3,10 @@ import localFont from "next/font/local";
 import { Baskervville, Inter, Manrope, Roboto_Flex } from "next/font/google";
 import { SiteChrome } from "@/components/layout/SiteChrome";
 import { WhatsAppFloat } from "@/components/layout/WhatsAppFloat";
+import { JsonLd } from "@/components/seo/JsonLd";
 import { getSettings } from "@/lib/cms/settings";
+import { organizationJsonLd } from "@/lib/seo/structured-data";
+import { getSiteUrl } from "@/lib/seo/site-url";
 import "./tailwind.css";
 import "./legacy/base.css";
 import "./legacy/cart.css";
@@ -58,8 +61,6 @@ const nunito = localFont({
   display: "swap"
 });
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://casarosierceramica.com";
-
 export const revalidate = 900;
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -71,7 +72,7 @@ export async function generateMetadata(): Promise<Metadata> {
   const images = ogImage ? [ogImage] : undefined;
 
   return {
-    metadataBase: new URL(SITE_URL),
+    metadataBase: new URL(getSiteUrl()),
     title: {
       default: title,
       template: `%s | ${siteName}`,
@@ -80,10 +81,9 @@ export async function generateMetadata(): Promise<Metadata> {
     icons: {
       icon: "/img/logo-header.png",
     },
-    robots: {
-      index: settings.seo.robots_index,
-      follow: settings.seo.robots_follow,
-    },
+    ...(settings.seo.robots_index === false
+      ? { robots: { index: false, follow: false } }
+      : {}),
     openGraph: {
       title,
       description,
@@ -108,12 +108,16 @@ export async function generateMetadata(): Promise<Metadata> {
 export default async function RootLayout({
   children
 }: Readonly<{ children: React.ReactNode }>) {
+  const settings = await getSettings();
+  const siteName = settings.site.site_name || "Casa Rosier";
+
   return (
     <html lang="es" data-scroll-behavior="smooth">
       <body
         suppressHydrationWarning
         className={`${baskervville.variable} ${inter.variable} ${manrope.variable} ${robotoFlex.variable} ${nunito.variable}`}
       >
+        <JsonLd data={organizationJsonLd(siteName)} />
         {children}
         <SiteChrome whatsappFloat={<WhatsAppFloat />} />
       </body>
