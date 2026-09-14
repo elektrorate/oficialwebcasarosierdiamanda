@@ -388,7 +388,8 @@ function cmsOfferingToExperienceItem(
     homeTitleTypography: normalizeRichTextTypography(
       homeCard?.titleTypography ?? { ...DEFAULT_RICH_TEXT_TYPOGRAPHY, fontSize: 26 },
     ),
-    homeTagline: stringValue(homeCard?.tagline) || offering.subtitle || offering.title,
+    // An empty Home subtitle is intentional: do not duplicate the offering title.
+    homeTagline: stringValue(homeCard?.tagline),
     homeTaglineTypography: normalizeRichTextTypography(
       homeCard?.taglineTypography ?? { ...DEFAULT_RICH_TEXT_TYPOGRAPHY, fontSize: 21 },
     ),

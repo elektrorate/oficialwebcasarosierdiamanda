@@ -2575,6 +2575,17 @@
   gap: 16px;
 }
 
+.class-edit-home-title-field {
+  border-left: 3px solid #c2410c;
+  border-radius: 12px;
+  background: #fff7f3;
+  padding: 12px;
+}
+
+.class-edit-home-title-field label {
+  color: #c2410c;
+}
+
 /* Home-card copy is intentionally compact; use each field's configured height. */
 .class-edit-home-editor-grid .tiptap-editor--compact .tiptap-editor__main {
   grid-template-rows: auto auto;
@@ -2627,10 +2638,6 @@
 
   .class-edit-home-text-fields {
     grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  .class-edit-home-text-fields > :last-child {
-    grid-column: 1 / -1;
   }
 
   .class-edit-hero-workspace {

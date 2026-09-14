@@ -609,7 +609,7 @@ export function buildPreviewItem({
     homeTitleTypography: normalizeRichTextTypography(
       details.homeCard.titleTypography ?? { ...DEFAULT_RICH_TEXT_TYPOGRAPHY, fontSize: 26 },
     ),
-    homeTagline: details.homeCard.tagline || subtitle || title || "Título del producto",
+    homeTagline: details.homeCard.tagline,
     homeTaglineTypography: normalizeRichTextTypography(
       details.homeCard.taglineTypography ?? { ...DEFAULT_RICH_TEXT_TYPOGRAPHY, fontSize: 21 },
     ),

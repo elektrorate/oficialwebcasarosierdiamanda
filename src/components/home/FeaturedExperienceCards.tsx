@@ -10,6 +10,7 @@ import { experienceHref } from "@/lib/routes";
 import { truncateHomeFlipExcerpt } from "@/lib/text/plain-text";
 import { classNames } from "@/lib/utils";
 import { ResilientImage } from "@/components/ui/ResilientImage";
+import { MarkdownContent } from "@/components/ui/MarkdownContent";
 
 function homeCardExcerpt(item: ExperienceItem) {
   const raw = item.homeExcerpt || item.excerpt;
@@ -24,6 +25,7 @@ export function FeaturedExperienceCards({ items }: { items: readonly ExperienceI
         const image = item.homeImage || item.coverImage;
         const resolvedImage = assetPath(image);
         const label = item.homeTitle || item.title;
+        const tagline = item.homeTagline?.trim() || "";
         const imageAlt = item.homeImageAlt || item.homeTitle || item.title;
         const excerptTypography = normalizeRichTextTypography(
           item.homeExcerptTypography ?? DEFAULT_RICH_TEXT_TYPOGRAPHY,
@@ -63,12 +65,20 @@ export function FeaturedExperienceCards({ items }: { items: readonly ExperienceI
                   </div>
                 </div>
               </div>
-              <p
-                className="mt-[clamp(11px,1.9vw,15px)] mb-0 whitespace-pre-line px-[clamp(4px,1vw,8px)] text-center [font-family:var(--font-nunito)] text-[clamp(13px,1.05vw,15px)] font-light tracking-[0.07em] text-[#4a4a4a] max-[640px]:mt-3.25 max-[640px]:text-[13px] max-[640px]:tracking-[0.06em]"
-                style={{ lineHeight: item.homeTitleTypography?.lineHeight ?? 1.38 }}
-              >
-                {label}
-              </p>
+              <div className="mt-[clamp(11px,1.9vw,15px)] px-[clamp(4px,1vw,8px)] text-center [font-family:var(--font-nunito)] max-[640px]:mt-3.25">
+                <MarkdownContent
+                  className="home-feature-card__title text-[clamp(13px,1.05vw,15px)] font-light uppercase tracking-[0.07em] text-[#2f2b28] [&_p]:m-0 max-[640px]:text-[13px] max-[640px]:tracking-[0.06em]"
+                  source={label}
+                  style={{ lineHeight: item.homeTitleTypography?.lineHeight ?? 1.38 }}
+                />
+                {tagline ? (
+                  <MarkdownContent
+                    className="home-feature-card__tagline mx-auto mt-1.5 max-w-[34ch] text-[clamp(12px,0.95vw,14px)] font-light leading-[1.4] tracking-[0.015em] text-[#766e68] [&_p]:m-0 max-[640px]:mt-1 max-[640px]:text-[12px]"
+                    source={tagline}
+                    style={{ lineHeight: item.homeTaglineTypography?.lineHeight ?? 1.4 }}
+                  />
+                ) : null}
+              </div>
             </Link>
           </article>
         );

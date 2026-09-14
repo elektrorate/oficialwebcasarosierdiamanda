@@ -96,33 +96,33 @@ export function HomeCardEditorSection({ offering, form }: HomeCardEditorSectionP
                 onTypographyChange={(next) => updateHomeCard({ eyebrowTypography: next })}
               />
             ) : null}
-            <AdminRichTextField
-              label="Título para Home"
-              value={details.homeCard.title}
-              placeholder={title || "Título de la tarjeta"}
-              typography={titleTypography}
-              showLineHeightControl={!supportsExtendedHomeCopy}
-              controls={HOME_CARD_SHORT_TEXT_CONTROLS}
-              layout="compact"
-              minHeight="68px"
-              help="Puede ser distinto del título del Hero y de la página detallada."
-              onChange={(value) => updateHomeCard({ title: value })}
-              onTypographyChange={(next) => updateHomeCard({ titleTypography: next })}
-            />
-            {supportsExtendedHomeCopy ? (
+            <div className="class-edit-home-title-field">
               <AdminRichTextField
-                label="Subtítulo para Home"
-                value={details.homeCard.tagline}
-                placeholder={form.subtitle || title || "Segunda línea de la tarjeta"}
-                typography={taglineTypography}
+                label="Titular"
+                value={details.homeCard.title}
+                placeholder={title || "Título de la tarjeta"}
+                typography={titleTypography}
+                showLineHeightControl={!supportsExtendedHomeCopy}
                 controls={HOME_CARD_SHORT_TEXT_CONTROLS}
                 layout="compact"
-                minHeight="64px"
-                help="Si queda vacío, usa el título de página."
-                onChange={(value) => updateHomeCard({ tagline: value })}
-                onTypographyChange={(next) => updateHomeCard({ taglineTypography: next })}
+                minHeight="68px"
+                help="Texto principal de la tarjeta. Si queda vacío, se utilizará el título del offering."
+                onChange={(value) => updateHomeCard({ title: value })}
+                onTypographyChange={(next) => updateHomeCard({ titleTypography: next })}
               />
-            ) : null}
+            </div>
+            <AdminRichTextField
+              label="Subtítulo"
+              value={details.homeCard.tagline}
+              placeholder="Texto complementario de la tarjeta"
+              typography={taglineTypography}
+              controls={HOME_CARD_SHORT_TEXT_CONTROLS}
+              layout="compact"
+              minHeight="64px"
+              help="Aparece debajo del titular. Si queda vacío, no se mostrará ninguna segunda línea."
+              onChange={(value) => updateHomeCard({ tagline: value })}
+              onTypographyChange={(next) => updateHomeCard({ taglineTypography: next })}
+            />
           </div>
 
           <AdminRichTextField
