@@ -814,8 +814,8 @@ function errorLabel(errorKey: string) {
   if (schedule) return `Horario - Día ${Number(schedule[2]) + 1}`;
 
   const calendar = errorKey.match(/^calendar-label-(\d+)$/);
-  if (calendar) return `Pagina detallada - Etiqueta calendario ${Number(calendar[1]) + 1}`;
-  if (errorKey === "calendarLabels") return "Pagina detallada - Etiquetas calendario";
+  if (calendar) return `Página detallada - Etiqueta calendario ${Number(calendar[1]) + 1}`;
+  if (errorKey === "calendarLabels") return "Página detallada - Etiquetas calendario";
 
   return errorKey;
 }
@@ -869,7 +869,7 @@ export function validateClassEditForm({
   details.calendarLabels.forEach((item, index) => {
     const maxDay = daysInMonth(item.year, item.month);
     if (!maxDay) nextErrors[`calendar-label-${index}`] = "Selecciona un mes y anio validos.";
-    if (item.days.some((day) => day < 1 || day > maxDay)) nextErrors[`calendar-label-${index}`] = "Hay dias que no existen en ese mes.";
+    if (item.days.some((day) => day < 1 || day > maxDay)) nextErrors[`calendar-label-${index}`] = "Hay días que no existen en ese mes.";
     if (details.showCalendarLabels && item.active && item.days.length === 0) nextErrors[`calendar-label-${index}`] = "Marca al menos un dia o desactiva esta etiqueta.";
   });
   return nextErrors;

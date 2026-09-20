@@ -124,7 +124,7 @@ export default function HomePageEditor({
       {
         id: `intro-${Date.now()}`,
         text: "",
-        buttonText: "Ver mas",
+        buttonText: "Ver más",
         buttonHref: "/clases",
         image: "/img/hero-bg.jpg",
         imageAlt: "Imagen de Casa Rosier",
@@ -193,7 +193,7 @@ export default function HomePageEditor({
       giftSubtitle: result.page.giftSubtitle,
       giftFeaturedIds: result.page.giftFeaturedIds,
     }));
-    setModal({ type: "success", title: nextStatus === "published" ? "Home publicada" : "Borrador guardado", message: "La configuracion de Home quedo lista." });
+    setModal({ type: "success", title: nextStatus === "published" ? "Home publicada" : "Borrador guardado", message: "La configuración de Home quedó lista." });
     setIsLoading(false);
   }
 
@@ -208,7 +208,7 @@ export default function HomePageEditor({
       <header className="cms-page-editor-head">
         <div className="cms-page-editor-head__main">
           <h1>Home</h1>
-          <p>Edicion de secciones principales de la pagina inicial</p>
+          <p>Edición de secciones principales de la página inicial</p>
           <div className="cms-page-editor-meta">
             <span className={`status-pill status-pill--${status}`}>{status}</span>
             <span>{introSlides.filter((slide) => slide.isVisible).length} slides visibles</span>
@@ -366,7 +366,7 @@ function FeaturedPicker({
   return (
     <section className="form-block cms-editor-card cms-home-editor-card">
       <div className="cms-home-section-settings grid-2">
-        <label className="field"><span>Titulo</span><input value={title} onChange={(event) => onTitleChange(event.target.value)} /></label>
+        <label className="field"><span>Título</span><input value={title} onChange={(event) => onTitleChange(event.target.value)} /></label>
         <label className="field"><span>Subtitulo</span><input value={subtitle} onChange={(event) => onSubtitleChange(event.target.value)} /></label>
       </div>
       <div className="cms-home-feature-grid">

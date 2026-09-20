@@ -77,10 +77,10 @@ function normalizeProduct(input: ProductInput, existing?: Product, allItems: Pro
   const lowStockThreshold = input.low_stock_threshold ?? existing?.low_stock_threshold ?? 5;
 
   if (!name) throw new Error("El nombre es obligatorio.");
-  if (!isProductStatus(status)) throw new Error("Estado no vÃ¡lido.");
-  if (price !== null && (!Number.isFinite(Number(price)) || Number(price) < 0)) throw new Error("Precio no vÃ¡lido.");
-  if (stock !== null && (!Number.isInteger(Number(stock)) || Number(stock) < 0)) throw new Error("Stock no vÃ¡lido.");
-  if (!Number.isInteger(Number(lowStockThreshold)) || Number(lowStockThreshold) < 0) throw new Error("Stock mÃ­nimo no vÃ¡lido.");
+  if (!isProductStatus(status)) throw new Error("Estado no válido.");
+  if (price !== null && (!Number.isFinite(Number(price)) || Number(price) < 0)) throw new Error("Precio no válido.");
+  if (stock !== null && (!Number.isInteger(Number(stock)) || Number(stock) < 0)) throw new Error("Stock no válido.");
+  if (!Number.isInteger(Number(lowStockThreshold)) || Number(lowStockThreshold) < 0) throw new Error("Stock mínimo no válido.");
 
   return {
     id: existing?.id ?? input.id ?? randomUUID(), status, name, slug,

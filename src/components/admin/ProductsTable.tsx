@@ -129,7 +129,7 @@ export default function ProductsTable({
             <input name="q" value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Nombre, SKU o categoria" />
           </label>
           <button type="submit" className="secondary-btn">Buscar</button>
-          <p>{items.length} de {pagination?.total ?? items.length} articulos</p>
+          <p>{items.length} de {pagination?.total ?? items.length} artículos</p>
         </form>
 
         {items.length ? (

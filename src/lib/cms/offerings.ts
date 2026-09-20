@@ -136,8 +136,8 @@ function normalizeOffering(input: OfferingInput, existing?: Offering, allItems: 
   const type = input.type ?? existing?.type;
   const status = input.status ?? existing?.status ?? "draft";
 
-  if (!isOfferingType(type)) throw new Error("Tipo de offering no vÃ¡lido.");
-  if (!isOfferingStatus(status)) throw new Error("Estado de offering no vÃ¡lido.");
+  if (!isOfferingType(type)) throw new Error("Tipo de offering no válido.");
+  if (!isOfferingStatus(status)) throw new Error("Estado de offering no válido.");
 
   return {
     id: existing?.id ?? input.id ?? randomUUID(),
@@ -855,10 +855,10 @@ export async function createOffering(data: OfferingInput) {
   const next = normalizeOffering(data, undefined, offerings);
 
   if (!next.title || !next.type) {
-    throw new Error("El tÃ­tulo y el tipo son obligatorios.");
+    throw new Error("El título y el tipo son obligatorios.");
   }
   if (next.expiration_enabled && !next.expires_at) {
-    throw new Error("La caducidad estÃ¡ activa, pero falta la fecha de finalizaciÃ³n.");
+    throw new Error("La caducidad está activa, pero falta la fecha de finalización.");
   }
 
   const nextItems = [next, ...offerings];
@@ -876,7 +876,7 @@ export async function updateOffering(id: string, data: OfferingInput) {
   const old = offerings[index];
   const next = normalizeOffering(data, old, offerings);
   if (next.expiration_enabled && !next.expires_at) {
-    throw new Error("La caducidad estÃ¡ activa, pero falta la fecha de finalizaciÃ³n.");
+    throw new Error("La caducidad está activa, pero falta la fecha de finalización.");
   }
   offerings[index] = next;
   await saveToSupabase(next);

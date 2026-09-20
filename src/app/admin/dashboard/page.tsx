@@ -10,14 +10,14 @@ import { requireAdminProfile } from "@/lib/auth/supabase-auth";
 import { formatAdminDateTime } from "@/lib/admin/date-format";
 
 const activityLabels: Record<string, string> = {
-  create: "Creaci?n",
-  update: "Actualizaci?n",
-  publish: "Publicaci?n",
+  create: "Creación",
+  update: "Actualización",
+  publish: "Publicación",
   unpublish: "Cambio a borrador",
   archive: "Archivo",
   trash: "Papelera",
-  restore: "Restauraci?n",
-  delete_permanently: "Eliminaci?n",
+  restore: "Restauración",
+  delete_permanently: "Eliminación",
   duplicate: "Duplicado",
 };
 
@@ -36,7 +36,7 @@ export default async function DashboardPage() {
     <AdminShell>
       <TopBar
         title="Dashboard"
-        subtitle="Bienvenido al panel de administraci?n de Casa Rosier"
+        subtitle="Bienvenido al panel de administración de Casa Rosier"
       />
 
       <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6 mb-section-gap">
@@ -45,7 +45,7 @@ export default async function DashboardPage() {
           iconBg="bg-surface-container-high"
           iconClassName="text-primary"
           value={metrics.activePages}
-          label="P?ginas"
+          label="Páginas"
           footer={
             <>
               <span className="material-symbols-outlined text-xs mr-1">public</span>
@@ -117,7 +117,7 @@ export default async function DashboardPage() {
                     <div className="font-semibold text-on-surface truncate">{item.entity_title}</div>
                     <div className="flex flex-wrap items-center gap-2 text-label-md text-on-surface-variant mt-0.5">
                       <span>{activityLabels[item.action] ?? item.action}</span>
-                      <span aria-hidden="true">?</span>
+                      <span aria-hidden="true">·</span>
                       <span>{formatAdminDateTime(item.created_at)}</span>
                     </div>
                   </div>
@@ -126,7 +126,7 @@ export default async function DashboardPage() {
             </div>
           ) : (
             <div className="p-8 text-center text-on-surface-variant">
-              No hay actividad reciente registrada todav?a.
+              No hay actividad reciente registrada todavía.
             </div>
           )}
         </Card>

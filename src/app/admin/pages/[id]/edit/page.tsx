@@ -21,7 +21,7 @@ export default async function EditPagePage({ params }: { params: Promise<{ id: s
   if (!page) {
     return (
       <AdminShell>
-        <SectionEmptyState title="P?gina no encontrada" description="La p?gina que intentas editar no existe o fue eliminada." actionHref="/admin/pages" actionLabel="Volver al listado" />
+        <SectionEmptyState title="Página no encontrada" description="La página que intentas editar no existe o fue eliminada." actionHref="/admin/pages" actionLabel="Volver al listado" />
       </AdminShell>
     );
   }
@@ -30,7 +30,7 @@ export default async function EditPagePage({ params }: { params: Promise<{ id: s
       <div className="section-head">
         <div>
           <p className="auth-kicker">CMS</p>
-          <h2>Editar p?gina</h2>
+          <h2>Editar página</h2>
         </div>
       </div>
       <PageForm

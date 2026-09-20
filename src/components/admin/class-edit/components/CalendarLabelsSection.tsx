@@ -39,7 +39,7 @@ function CalendarLabelsSectionComponent({ form }: CalendarLabelsSectionProps) {
   return (
     <SectionCard
       compact
-      description="Crea hasta seis meses puntuales y marca solo los dias destacados para la pagina publica."
+      description="Crea hasta seis meses puntuales y marca solo los días destacados para la página pública."
       action={(
         <Button
           type="button"
@@ -54,7 +54,7 @@ function CalendarLabelsSectionComponent({ form }: CalendarLabelsSectionProps) {
       <Switch
         checked={details.showCalendarLabels}
         label="Mostrar etiquetas calendario"
-        description="Las etiquetas activas con dias seleccionados se muestran en el frontend publico."
+        description="Las etiquetas activas con días seleccionados se muestran en el frontend público."
         onCheckedChange={setShowCalendarLabels}
       />
 

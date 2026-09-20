@@ -19,7 +19,7 @@ type ModalState = { type: "success" | "error"; title: string; message?: string }
 
 const tabs: Array<{ key: TabKey; label: string }> = [
   { key: "hero", label: "Hero" },
-  { key: "items", label: "Articulos" },
+  { key: "items", label: "Artículos" },
   { key: "preview", label: "Vista previa" },
 ];
 
@@ -117,7 +117,7 @@ export default function ShopPageEditor({
     }
 
     setStatus(nextStatus);
-    setModal({ type: "success", title: nextStatus === "published" ? "Shop publicado" : "Borrador guardado", message: "La configuracion de Shop se guardo correctamente." });
+    setModal({ type: "success", title: nextStatus === "published" ? "Shop publicado" : "Borrador guardado", message: "La configuración de Shop se guardó correctamente." });
     setIsLoading(false);
   }
 
@@ -128,10 +128,10 @@ export default function ShopPageEditor({
       <header className="cms-page-editor-head">
         <div className="cms-page-editor-head__main">
           <h1>Shop</h1>
-          <p>Edicion de pagina publica y catalogo</p>
+          <p>Edición de página pública y catálogo</p>
           <div className="cms-page-editor-meta">
             <span className={`status-pill status-pill--${status}`}>{status}</span>
-            <span>{published.length} articulos publicados</span>
+            <span>{published.length} artículos publicados</span>
             <span>{categories.length} categorias</span>
             <span>Caracteristicas visibles</span>
           </div>
@@ -167,8 +167,8 @@ export default function ShopPageEditor({
           <section className="form-block cms-editor-card shop-admin-card">
             <div className="cms-editor-card__head shop-admin-card__head">
               <div>
-                <p className="auth-kicker">Catalogo</p>
-                <h3>Articulos</h3>
+                <p className="auth-kicker">Catálogo</p>
+                <h3>Artículos</h3>
               </div>
               <Link className="primary-btn" href="/admin/shop/products/new">Nuevo articulo</Link>
             </div>
@@ -177,7 +177,7 @@ export default function ShopPageEditor({
                 <ProductsTable items={products} categories={categories} pagination={productsPage} />
                 {productsPage.totalPages > 1 ? (
                   <div className="flex items-center justify-between gap-4 mt-6">
-                    <span className="text-label-md text-on-surface-variant">Pagina {productsPage.page} de {productsPage.totalPages}</span>
+                    <span className="text-label-md text-on-surface-variant">Página {productsPage.page} de {productsPage.totalPages}</span>
                     <div className="flex items-center gap-2">
                       <Link className={productsPage.prevHref ? "secondary-btn" : "secondary-btn pointer-events-none opacity-40"} href={productsPage.prevHref ?? "#"}>Anterior</Link>
                       <Link className={productsPage.nextHref ? "secondary-btn" : "secondary-btn pointer-events-none opacity-40"} href={productsPage.nextHref ?? "#"}>Siguiente</Link>
@@ -185,7 +185,7 @@ export default function ShopPageEditor({
                   </div>
                 ) : null}
               </>
-            ) : <p className="muted">No hay articulos todavia.</p>}
+            ) : <p className="muted">No hay artículos todavía.</p>}
           </section>
         ) : null}
 
@@ -195,7 +195,7 @@ export default function ShopPageEditor({
       </div>
 
       <div className="admin-sticky-actionbar">
-        <span className="admin-sticky-actionbar__meta">{published.length} articulos publicados · {categories.length} categorias</span>
+        <span className="admin-sticky-actionbar__meta">{published.length} artículos publicados · {categories.length} categorías</span>
         <button type="button" className="secondary-btn" onClick={() => setTab("preview")}>Vista previa</button>
         <button type="button" className="secondary-btn" onClick={() => save("draft")} disabled={isLoading}>{isLoading ? "Guardando..." : "Borrador"}</button>
         <button type="button" className="primary-btn" onClick={() => save("published")} disabled={isLoading}>{isLoading ? "Publicando..." : "Publicar"}</button>

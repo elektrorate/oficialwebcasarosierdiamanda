@@ -40,7 +40,7 @@ export function CalendarLabelItem({
         <div>
           <p className="text-label-lg font-bold text-on-surface">Etiqueta {index + 1}</p>
           <p className="text-label-md text-on-surface-variant">
-            {label.days.length ? `${label.days.length} dias seleccionados` : "Sin dias seleccionados"}
+            {label.days.length ? `${label.days.length} días seleccionados` : "Sin días seleccionados"}
           </p>
         </div>
         <ListItemActions
@@ -81,7 +81,7 @@ export function CalendarLabelItem({
       <Switch
         checked={label.active}
         label="Etiqueta activa"
-        description="Permite conservarla en el CMS sin mostrarla en la pagina publica."
+        description="Permite conservarla en el CMS sin mostrarla en la página pública."
         onCheckedChange={(checked) => onUpdate({ active: checked })}
       />
 

@@ -18,7 +18,7 @@ export default async function NewPagePage() {
       <div className="section-head">
         <div>
           <p className="auth-kicker">CMS</p>
-          <h2>Nueva p?gina</h2>
+          <h2>Nueva página</h2>
         </div>
       </div>
       <PageForm
