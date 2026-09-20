@@ -108,6 +108,57 @@
     position: relative;
   }
 
+  /* Shared desktop dropdown layout for internal pages (home.css is route-specific). */
+  .header-home .navbar-global .hero__nav-group,
+  .header-interno .navbar-global .hero__nav-group,
+  .page-hero .navbar-global .hero__nav-group {
+    display: inline-flex;
+    align-items: center;
+  }
+
+  .header-home .navbar-global .nav-submenu,
+  .header-interno .navbar-global .nav-submenu,
+  .page-hero .navbar-global .nav-submenu {
+    position: absolute;
+    left: 0;
+    top: calc(100% - 8px);
+    width: max-content;
+    max-width: min(400px, calc(100vw - 32px));
+    margin: 0;
+    list-style: none;
+    border: 1px solid rgba(143, 126, 106, 0.14);
+    border-radius: 12px;
+    background: rgba(251, 248, 242, 0.98);
+    box-shadow: 0 24px 50px rgba(40, 32, 22, 0.12);
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transform: translateY(8px);
+    transition: opacity 220ms ease, transform 220ms ease, visibility 220ms ease;
+  }
+
+  .header-home .navbar-global .hero__nav-item--open > .nav-submenu,
+  .header-home .navbar-global .hero__nav-item:hover > .nav-submenu,
+  .header-home .navbar-global .hero__nav-item:focus-within > .nav-submenu,
+  .header-interno .navbar-global .hero__nav-item--open > .nav-submenu,
+  .header-interno .navbar-global .hero__nav-item:hover > .nav-submenu,
+  .header-interno .navbar-global .hero__nav-item:focus-within > .nav-submenu,
+  .page-hero .navbar-global .hero__nav-item--open > .nav-submenu,
+  .page-hero .navbar-global .hero__nav-item:hover > .nav-submenu,
+  .page-hero .navbar-global .hero__nav-item:focus-within > .nav-submenu {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transform: translateY(0);
+  }
+
+  .header-home .navbar-global .nav-submenu__link,
+  .header-interno .navbar-global .nav-submenu__link,
+  .page-hero .navbar-global .nav-submenu__link {
+    display: block;
+    text-decoration: none;
+  }
+
   /* Texto del menú */
   .header-home .navbar-global .hero__nav-link,
   .header-home .navbar-global .hero__nav-toggle,
@@ -115,6 +166,9 @@
   .header-interno .navbar-global .hero__nav-toggle,
   .page-hero .navbar-global .hero__nav-link,
   .page-hero .navbar-global .hero__nav-toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     min-height: calc(44px * var(--hero-menu-effective-scale, 1));
     padding: 0 clamp(
       calc(18px * var(--hero-menu-effective-scale, 1)),
@@ -156,13 +210,10 @@
     color: var(--site-hero-menu-color, #403b36) !important;
   }
 
-  /* Separadores verticales como en la segunda foto */
-  .header-home .navbar-global .hero__nav-link::after,
-  .header-home .navbar-global .hero__nav-toggle::after,
-  .header-interno .navbar-global .hero__nav-link::after,
-  .header-interno .navbar-global .hero__nav-toggle::after,
-  .page-hero .navbar-global .hero__nav-link::after,
-  .page-hero .navbar-global .hero__nav-toggle::after {
+  /* Una sola barra por separación, independientemente de si hay submenú. */
+  .header-home .navbar-global .hero__nav-item:not(:last-child)::after,
+  .header-interno .navbar-global .hero__nav-item:not(:last-child)::after,
+  .page-hero .navbar-global .hero__nav-item:not(:last-child)::after {
     content: "";
     position: absolute;
     right: 0;
@@ -171,40 +222,42 @@
     height: calc(26px * var(--hero-menu-effective-scale, 1));
     transform: translateY(-50%);
     background: color-mix(in srgb, var(--site-hero-menu-color, #403b36) 36%, transparent);
-    color: transparent;
+    pointer-events: none;
   }
 
-  /* No separador al final */
-  .header-home .navbar-global .hero__nav-item:last-child .hero__nav-link::after,
-  .header-home .navbar-global .hero__nav-item:last-child .hero__nav-toggle::after,
-  .header-interno .navbar-global .hero__nav-item:last-child .hero__nav-link::after,
-  .header-interno .navbar-global .hero__nav-item:last-child .hero__nav-toggle::after,
-  .page-hero .navbar-global .hero__nav-item:last-child .hero__nav-link::after,
-  .page-hero .navbar-global .hero__nav-item:last-child .hero__nav-toggle::after {
-    content: none;
-  }
-
-  /* Para Comunidad, el separador va después de la flecha */
-  .header-home .navbar-global .hero__nav-item--has-children .hero__nav-link::after,
-  .header-interno .navbar-global .hero__nav-item--has-children .hero__nav-link::after,
-  .page-hero .navbar-global .hero__nav-item--has-children .hero__nav-link::after {
-    content: none;
-  }
-
-  .header-home .navbar-global .hero__nav-item--has-children .hero__nav-toggle::after,
-  .header-interno .navbar-global .hero__nav-item--has-children .hero__nav-toggle::after,
-  .page-hero .navbar-global .hero__nav-item--has-children .hero__nav-toggle::after {
-    content: "";
+  .header-home .navbar-global .hero__nav-link::after,
+  .header-home .navbar-global .hero__nav-toggle::after,
+  .header-interno .navbar-global .hero__nav-link::after,
+  .header-interno .navbar-global .hero__nav-toggle::after,
+  .page-hero .navbar-global .hero__nav-link::after,
+  .page-hero .navbar-global .hero__nav-toggle::after {
+    content: none !important;
   }
 
   /* Flecha */
   .header-home .navbar-global .hero__plus,
   .header-interno .navbar-global .hero__plus,
   .page-hero .navbar-global .hero__plus {
+    display: inline-block;
     width: calc(11px * var(--hero-menu-effective-scale, 1));
     height: calc(11px * var(--hero-menu-effective-scale, 1));
     border-right: calc(1.5px * var(--hero-menu-effective-scale, 1)) solid var(--site-hero-menu-color, #403b36);
     border-bottom: calc(1.5px * var(--hero-menu-effective-scale, 1)) solid var(--site-hero-menu-color, #403b36);
+    transform: translateY(-2px) rotate(45deg);
+    transform-origin: center;
+    transition: transform 220ms ease;
+  }
+
+  .header-home .navbar-global .hero__nav-item--open .hero__plus,
+  .header-home .navbar-global .hero__nav-item:hover .hero__plus,
+  .header-home .navbar-global .hero__nav-item:focus-within .hero__plus,
+  .header-interno .navbar-global .hero__nav-item--open .hero__plus,
+  .header-interno .navbar-global .hero__nav-item:hover .hero__plus,
+  .header-interno .navbar-global .hero__nav-item:focus-within .hero__plus,
+  .page-hero .navbar-global .hero__nav-item--open .hero__plus,
+  .page-hero .navbar-global .hero__nav-item:hover .hero__plus,
+  .page-hero .navbar-global .hero__nav-item:focus-within .hero__plus {
+    transform: translateY(2px) rotate(225deg);
   }
 
   /* Hover limpio */
@@ -294,7 +347,11 @@
     --hero-menu-effective-scale: var(--site-hero-menu-scale, var(--hero-menu-scale, 1));
     position: absolute !important;
     left: 50% !important;
-    top: var(--hero-menu-position-y, 214px) !important;
+    /* Lower only the desktop links; preserve the CMS position when it is already lower. */
+    top: max(
+      calc(var(--hero-menu-position-y, 214px) + 20px),
+      calc(var(--hero-logo-position-y, 62px) + var(--hero-logo-width, 175px) * 0.55 + 40px)
+    ) !important;
     margin: 0 !important;
     transform: translateX(-50%) !important;
   }
@@ -310,7 +367,10 @@
   .header-home .navbar-global .hero__nav,
   .header-interno .navbar-global .hero__nav,
   .page-hero .navbar-global .hero__nav {
-    top: var(--hero-menu-position-y, 190px) !important;
+    top: max(
+      calc(var(--hero-menu-position-y, 190px) + 20px),
+      calc(var(--hero-logo-position-y, 54px) + var(--hero-logo-width, 142px) * 0.55 + 40px)
+    ) !important;
   }
 }
 

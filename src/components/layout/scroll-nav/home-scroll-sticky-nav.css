@@ -40,17 +40,17 @@
   .desktop-sticky-nav-portal .mobile-scroll-nav__bar {
     position: relative;
     width: 100%;
-    min-height: 154px;
+    min-height: 152px;
     box-sizing: border-box;
     display: grid !important;
     grid-template-columns: minmax(0, 1fr) minmax(180px, auto) minmax(0, 1fr);
     grid-template-rows: 1fr;
     align-items: center;
     gap: 0 clamp(18px, 3vw, 48px);
-    padding: 0 clamp(32px, 7.3vw, 100px);
-    background: #fbfaf6 !important;
+    padding: 0 clamp(50px, 7.3vw, 100px);
+    background: #fff !important;
     color: #403b36 !important;
-    border-top: 1px solid #8c7457;
+    border-top: 0;
     box-shadow:
       0 1px 0 rgba(64, 59, 54, 0.08),
       0 8px 24px rgba(64, 59, 54, 0.12);
@@ -67,6 +67,7 @@
     align-items: center;
     justify-content: center;
     margin: 0;
+    transform: translateY(-20px);
     text-decoration: none;
   }
 
@@ -75,6 +76,7 @@
     grid-row: 1 !important;
     justify-content: flex-end !important;
     min-width: 0;
+    transform: translateY(14px);
   }
 
   .desktop-sticky-nav-portal .scroll-desktop-nav--right {
@@ -82,6 +84,7 @@
     grid-row: 1 !important;
     justify-content: flex-start !important;
     min-width: 0;
+    transform: translateY(14px);
   }
 
   .desktop-sticky-nav-portal
@@ -157,8 +160,8 @@
     line-height: 1;
   }
 
-  /* A submenu already has its own + indicator and needs the invisible hover bridge. */
-  .desktop-sticky-nav-portal .scroll-desktop-nav__item--has-children::before {
+  /* Keep the + separator; use ::after as the invisible bridge down to the dropdown. */
+  .desktop-sticky-nav-portal .scroll-desktop-nav__item--has-children::after {
     content: "";
     position: absolute;
     inset: 100% -8px auto;
@@ -210,14 +213,31 @@
   }
 
   .desktop-sticky-nav-portal .scroll-desktop-submenu {
+    top: calc(100% - 7px);
     z-index: 2147482001 !important;
-    background: #fbfaf6 !important;
-    border: 1px solid rgba(64, 59, 54, 0.08);
+    min-width: 316px;
+    max-width: min(316px, calc(100vw - 32px));
+    min-height: 84px;
+    box-sizing: border-box;
+    padding: 4px 0;
+    background: #fff !important;
+    border: 0;
+    border-radius: 0;
     box-shadow: 0 14px 34px rgba(64, 59, 54, 0.14);
+  }
+
+  .desktop-sticky-nav-portal .scroll-desktop-nav--left .scroll-desktop-submenu {
+    left: 18px;
+  }
+
+  .desktop-sticky-nav-portal .scroll-desktop-nav--right .scroll-desktop-submenu {
+    left: 18px;
+    right: auto;
   }
 
   .desktop-sticky-nav-portal .scroll-desktop-submenu__link {
     color: #403b36 !important;
+    padding-inline: 12px;
   }
 
   .desktop-sticky-nav-portal .scroll-desktop-submenu__link:hover,
@@ -234,8 +254,8 @@
 
 @media (min-width: 1025px) and (max-width: 1280px) {
   .desktop-sticky-nav-portal .mobile-scroll-nav__bar {
-    min-height: 128px;
-    padding-inline: 24px;
+    min-height: 152px;
+    padding-inline: clamp(50px, 5.8vw, 80px);
     gap: 0 12px;
   }
 
@@ -252,9 +272,20 @@
   }
 
   .desktop-sticky-nav-portal .scroll-desktop-nav__link {
-    padding-inline: 9px;
-    font-size: 13px !important;
-    letter-spacing: 0.07em !important;
+    padding-inline: 18px;
+    font-size: 14px !important;
+    letter-spacing: 0.08em !important;
+  }
+}
+
+@media (min-width: 1025px) and (max-width: 1100px) {
+  .desktop-sticky-nav-portal
+    .scroll-desktop-nav--right
+    .scroll-desktop-nav__item:not(:first-child)
+    .scroll-desktop-submenu {
+    width: 270px;
+    min-width: 270px;
+    max-width: 270px;
   }
 }
 
