@@ -2,7 +2,7 @@ import { requireAdminApi } from "@/lib/auth/supabase-auth";
 import { createShippingMethod, getShippingMethods, updateShippingMethod } from "@/lib/cms/shipping";
 import { type NextRequest, NextResponse } from "next/server";
 
-export async function GET(request: NextRequest) {
+export async function GET() {
   if (!(await requireAdminApi())) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   const items = await getShippingMethods();
   return NextResponse.json({ shippingMethods: items });
@@ -22,7 +22,6 @@ export async function PUT(request: NextRequest) {
   if (!(await requireAdminApi())) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   const body = await request.json();
   if (body.action === "reorder" && Array.isArray(body.orderedIds)) {
-    const all = await getShippingMethods();
     for (const [i, id] of body.orderedIds.entries()) await updateShippingMethod(id, { sort_order: i });
     const updated = await getShippingMethods();
     return NextResponse.json({ shippingMethods: updated });

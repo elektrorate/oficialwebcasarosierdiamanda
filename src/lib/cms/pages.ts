@@ -3,7 +3,7 @@ import { createAdminClient } from "../supabase/admin";
 import { addTrashItem, getCurrentUserEmail, getTrashItemByEntity, removeTrashItem } from "./trash";
 import { readJsonFile, writeJsonFile } from "./local-storage";
 import { isPageStatus, isPageType } from "./types";
-import type { Page, PageStatus, PageType } from "./types";
+import type { Page } from "./types";
 import { logAction } from "./history-logs";
 
 const TABLE = "pages";

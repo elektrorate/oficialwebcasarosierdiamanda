@@ -3,7 +3,7 @@ import { createAdminClient } from "../supabase/admin";
 import { addTrashItem, getCurrentUserEmail, getTrashItemByEntity, removeTrashItem } from "./trash";
 import { readJsonFile, writeJsonFile } from "./local-storage";
 import { isCouponStatus, isDiscountType } from "./types";
-import type { Coupon, CouponStatus, DiscountType } from "./types";
+import type { Coupon } from "./types";
 import { logAction } from "./history-logs";
 
 const TABLE = "coupons";

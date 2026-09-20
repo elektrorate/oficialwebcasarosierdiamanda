@@ -2,7 +2,7 @@ import { requireAdminApi } from "@/lib/auth/supabase-auth";
 import { createCoupon, getCoupons } from "@/lib/cms/coupons";
 import { type NextRequest, NextResponse } from "next/server";
 
-export async function GET(request: NextRequest) {
+export async function GET() {
   if (!(await requireAdminApi())) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   const items = await getCoupons();
   return NextResponse.json({ coupons: items });

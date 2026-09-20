@@ -230,7 +230,7 @@ export function HomeHeroView({
       <div className="hero__bg" aria-hidden="true">
         <picture className="hero__bg-picture">
           <source media="(max-width: 640px)" srcSet={mobileBackgroundProps.srcSet} />
-          <img {...desktopBackgroundProps} className="hero__bg-image" />
+          <img {...desktopBackgroundProps} alt="" className="hero__bg-image" />
         </picture>
       </div>
       {hasHeroVideo && desktopVideoEmbed && isVimeoEmbed(desktopVideoEmbed) ? (

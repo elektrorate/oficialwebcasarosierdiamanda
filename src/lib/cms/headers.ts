@@ -3,7 +3,7 @@ import { createAdminClient } from "../supabase/admin";
 import { addTrashItem, getCurrentUserEmail, getTrashItemByEntity, removeTrashItem } from "./trash";
 import { readJsonFile, writeJsonFile } from "./local-storage";
 import { isHeaderStatus, isHeaderType } from "./types";
-import type { Header, HeaderOverlayImage, HeaderStatus, HeaderType } from "./types";
+import type { Header, HeaderOverlayImage } from "./types";
 import { logAction } from "./history-logs";
 
 const TABLE = "headers";

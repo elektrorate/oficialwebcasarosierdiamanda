@@ -74,13 +74,6 @@ async function readRecentFromSupabase(limit: number): Promise<HistoryLog[] | nul
   }
 }
 
-async function upsertHistoryLog(log: HistoryLog): Promise<void> {
-  try {
-    const supabase = createAdminClient();
-    await supabase.from(TABLE).upsert(historyLogToRow(log), { onConflict: "id" });
-  } catch { /* best-effort */ }
-}
-
 async function getCurrentUserIdentity(): Promise<{ user_id: string; user_email: string }> {
   try {
     const supabase = createClient();

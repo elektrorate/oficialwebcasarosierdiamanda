@@ -1,4 +1,3 @@
-import { errorMessageFromUnknown } from "@/lib/cms/form-field-persistence";
 import { requireAdminApi } from "@/lib/auth/supabase-auth";
 import type { FooterSiteContactDisplaySync } from "@/lib/cms/footer-contact-sync";
 import { deleteFooterPermanently, getFooterById, moveFooterToTrash, restoreFooter, updateFooter } from "@/lib/cms/footers";

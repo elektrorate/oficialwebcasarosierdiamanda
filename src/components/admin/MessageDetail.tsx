@@ -4,7 +4,7 @@ import AdminActionModal from "./AdminActionModal";
 import Link from "@/components/admin/AdminLink";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import type { FormNotificationMeta, FormSubmission } from "@/lib/cms/types";
+import type { FormSubmission } from "@/lib/cms/types";
 import { formatAdminDateTime } from "@/lib/admin/date-format";
 
 const stLabels: Record<string, string> = { new: "Nuevo", read: "Leído", replied: "Respondido", archived: "Archivado", spam: "Spam", deleted: "Eliminado" };

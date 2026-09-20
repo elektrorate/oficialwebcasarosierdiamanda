@@ -1,6 +1,6 @@
 import { cookies } from "next/headers";
 import type { NextRequest } from "next/server";
-import { LOCAL_SESSION_COOKIE, readLocalSessionToken, validateLocalCredentials } from "./local-auth-core";
+import { LOCAL_SESSION_COOKIE, readLocalSessionToken } from "./local-auth-core";
 
 export { LOCAL_ADMIN_EMAIL, LOCAL_ADMIN_PASSWORD, LOCAL_ADMIN_PASSWORD_HASH, LOCAL_AUTH_SECRET, LOCAL_SESSION_COOKIE, createLocalSessionToken, readLocalSessionToken, validateLocalCredentials } from "./local-auth-core";
 

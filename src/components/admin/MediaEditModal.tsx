@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import type { MediaAsset, MediaFolder } from "@/lib/cms/types";
+import type { MediaAsset } from "@/lib/cms/types";
 import { MEDIA_FOLDERS } from "@/lib/cms/types";
 
 const folderLabels: Record<string, string> = {

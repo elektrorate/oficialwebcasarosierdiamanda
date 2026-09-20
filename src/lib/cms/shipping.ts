@@ -3,7 +3,7 @@ import { createAdminClient } from "../supabase/admin";
 import { addTrashItem, getCurrentUserEmail, getTrashItemByEntity, removeTrashItem } from "./trash";
 import { readJsonFile, writeJsonFile } from "./local-storage";
 import { isShippingMethodStatus } from "./types";
-import type { ShippingMethod, ShippingMethodStatus } from "./types";
+import type { ShippingMethod } from "./types";
 import { logAction } from "./history-logs";
 
 const TABLE = "shipping_methods";

@@ -7,7 +7,8 @@ export default defineConfig([
   ...nextTs,
   {
     rules: {
-      "@next/next/no-img-element": "off"
+      "@next/next/no-img-element": "off",
+      "@typescript-eslint/no-unused-vars": ["warn", { ignoreRestSiblings: true }]
     }
   },
   globalIgnores([".next/**", "out/**", "build/**", "next-env.d.ts"])

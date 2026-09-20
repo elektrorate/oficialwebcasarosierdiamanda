@@ -7,10 +7,11 @@ type Props = Omit<ImageProps, "onError"> & {
   fallbackSrc?: string;
 };
 
-export function ResilientImage({ fallbackSrc, ...props }: Props) {
+export function ResilientImage({ fallbackSrc, alt, ...props }: Props) {
   return (
     <Image
       {...props}
+      alt={alt}
       onError={(event) => applyImageFallback(event, fallbackSrc)}
     />
   );

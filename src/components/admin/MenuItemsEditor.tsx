@@ -137,7 +137,6 @@ export default function MenuItemsEditor({ menu, onItemsChange }: Props) {
       {showNewForm ? (
         <div className="menu-item-form-wrap">
           <MenuItemForm
-            menuId={menu.id}
             parentOptions={parentOptions}
             onSave={handleSave}
             onCancel={() => setShowNewForm(false)}
@@ -149,7 +148,6 @@ export default function MenuItemsEditor({ menu, onItemsChange }: Props) {
         <div className="menu-item-form-wrap">
           <MenuItemForm
             item={editingItem}
-            menuId={menu.id}
             parentOptions={parentOptions}
             onSave={handleSave}
             onCancel={() => setEditingItem(null)}

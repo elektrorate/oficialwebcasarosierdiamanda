@@ -7,7 +7,6 @@ import { MENU_ITEM_TYPES, LINKED_ENTITY_TYPES } from "@/lib/cms/types";
 interface MenuItemFormProps {
   item?: MenuItem;
   parentOptions: { id: string; label: string }[];
-  menuId: string;
   onSave: (data: Record<string, unknown>) => Promise<void>;
   onCancel: () => void;
 }
@@ -16,7 +15,7 @@ const typeLabels: Record<string, string> = { internal: "Interno", external: "Ext
 const linkedLabels: Record<string, string> = { offering: "Offering", page: "Página", landing: "Landing", blog: "Blog", shop: "Shop", none: "Ninguna" };
 const offeringTypeUrlMap: Record<string, string> = { class: "/clases/", workshop: "/workshops/", experience: "/experiencias/", gift_card: "/gift-cards/" };
 
-export default function MenuItemForm({ item, parentOptions, menuId, onSave, onCancel }: MenuItemFormProps) {
+export default function MenuItemForm({ item, parentOptions, onSave, onCancel }: MenuItemFormProps) {
   const [label, setLabel] = useState(item?.label ?? "");
   const [type, setType] = useState<MenuItemType>(item?.type ?? "internal");
   const [url, setUrl] = useState(item?.url ?? "");

@@ -3,7 +3,7 @@ import { createAdminClient } from "../supabase/admin";
 import { addTrashItem, getCurrentUserEmail, getTrashItemByEntity, removeTrashItem } from "./trash";
 import { readJsonFile, writeJsonFile } from "./local-storage";
 import { isOrderPaymentStatus, isOrderStatus } from "./types";
-import type { Order, OrderItem, OrderPaymentStatus, OrderStatus } from "./types";
+import type { Order, OrderItem } from "./types";
 import { logAction } from "./history-logs";
 
 const TABLE = "orders";

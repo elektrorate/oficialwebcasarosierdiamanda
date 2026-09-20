@@ -9,7 +9,7 @@ import {
   normalizeFormFieldVisibility,
 } from "./form-field-persistence";
 import { isFormFieldType, isFormStatus, isFormType } from "./types";
-import type { Form, FormField, FormFieldType, FormStatus, FormType } from "./types";
+import type { Form, FormField } from "./types";
 import { logAction } from "./history-logs";
 
 const TABLE = "forms";

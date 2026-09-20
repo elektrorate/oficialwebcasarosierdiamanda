@@ -1,4 +1,4 @@
-import type { ClassOfferingDetails, Offering } from "@/lib/cms/types";
+import type { ClassOfferingDetails } from "@/lib/cms/types";
 
 export type TabKey = "hero" | "home" | "basic" | "schedule" | "seo" | "additions" | "preview";
 

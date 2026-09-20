@@ -11,7 +11,7 @@ export default function Checkbox({ label, className = "", id, ...props }: Checkb
       <input
         id={checkboxId}
         type="checkbox"
-        className="w-4 h-4 rounded border-outline-variant text-primary focus:ring-primary-container transition-colors cursor-pointer"
+        className={`w-4 h-4 rounded border-outline-variant text-primary focus:ring-primary-container transition-colors cursor-pointer ${className}`.trim()}
         {...props}
       />
       <span className="text-body-md text-on-surface group-hover:text-primary transition-colors">

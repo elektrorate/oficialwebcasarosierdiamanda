@@ -1,5 +1,5 @@
 import { requireAdminApi } from "@/lib/auth/supabase-auth";
-import { addLandingPageBlock, getLandingPageById, reorderLandingPageBlocks, removeLandingPageBlock, updateLandingPageBlock } from "@/lib/cms/landing-pages";
+import { addLandingPageBlock, reorderLandingPageBlocks, removeLandingPageBlock, updateLandingPageBlock } from "@/lib/cms/landing-pages";
 
 import { randomUUID } from "crypto";
 import { type NextRequest, NextResponse } from "next/server";

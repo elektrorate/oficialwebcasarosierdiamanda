@@ -7,7 +7,6 @@ import { assetPath } from "@/lib/assets";
 import {
   normalizeRichTextTypography,
   richTextTypographyRevision,
-  type RichTextTypography,
 } from "@/lib/cms/rich-text-typography";
 import type { TeacherFormFields } from "../types";
 

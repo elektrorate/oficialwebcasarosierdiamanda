@@ -3,7 +3,7 @@ import { createAdminClient } from "../supabase/admin";
 import { addTrashItem, getCurrentUserEmail, getTrashItemByEntity, removeTrashItem } from "./trash";
 import { readJsonFile, writeJsonFile } from "./local-storage";
 import { isReservationPaymentStatus, isReservationStatus } from "./types";
-import type { Reservation, ReservationPaymentStatus, ReservationStatus } from "./types";
+import type { Reservation } from "./types";
 import { logAction } from "./history-logs";
 
 const TABLE = "reservations";

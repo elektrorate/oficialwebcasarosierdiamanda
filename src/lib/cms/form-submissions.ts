@@ -3,7 +3,7 @@ import { createAdminClient } from "../supabase/admin";
 import { addTrashItem, getCurrentUserEmail, getTrashItemByEntity, removeTrashItem } from "./trash";
 import { readJsonFile, writeJsonFile } from "./local-storage";
 import { isFormSubmissionStatus } from "./types";
-import type { FormSubmission, FormSubmissionStatus } from "./types";
+import type { FormSubmission } from "./types";
 import { logAction } from "./history-logs";
 
 const TABLE = "form_submissions";
