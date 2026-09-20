@@ -135,14 +135,26 @@
 
 .shop-gallery-modal.ig-modal.is-open {
   --shop-gallery-modal-gutter: clamp(16px, 3.55vw, 40px);
+  position: fixed;
+  inset: 0;
+  z-index: 2200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   padding: var(--shop-gallery-modal-gutter);
 }
 
 .shop-gallery-modal .ig-modal__backdrop {
+  position: absolute;
+  inset: 0;
+  border: 0;
   background: rgba(20, 18, 17, 0.76);
+  cursor: pointer;
 }
 
 .shop-gallery-modal .ig-modal__panel {
+  position: relative;
+  z-index: 1;
   display: block;
   width: auto;
   height: auto;
@@ -172,6 +184,64 @@
   max-height: calc(100dvh - (var(--shop-gallery-modal-gutter) * 2));
   object-position: center;
   object-fit: contain;
+}
+
+.shop-gallery-modal .ig-modal__media {
+  touch-action: pan-y;
+}
+
+.shop-gallery-modal__nav {
+  display: none;
+}
+
+.shop-gallery-modal__nav .ig-modal__arrow-mark {
+  display: block;
+  width: 12px;
+  height: 12px;
+  border-top: 2px solid currentColor;
+  border-left: 2px solid currentColor;
+}
+
+.shop-gallery-modal__nav .ig-modal__arrow-mark--prev {
+  transform: translateX(2px) rotate(-45deg);
+}
+
+.shop-gallery-modal__nav .ig-modal__arrow-mark--next {
+  transform: translateX(-2px) rotate(135deg);
+}
+
+@media (min-width: 761px) {
+  .shop-gallery-modal__nav {
+    position: fixed;
+    top: 50%;
+    z-index: 2;
+    display: grid;
+    place-items: center;
+    width: 48px;
+    height: 48px;
+    padding: 0;
+    border: 1px solid rgba(255, 255, 255, 0.45);
+    border-radius: 50%;
+    background: rgba(30, 27, 25, 0.55);
+    color: #fff;
+    cursor: pointer;
+    transform: translateY(-50%);
+  }
+
+  .shop-gallery-modal__nav:hover,
+  .shop-gallery-modal__nav:focus-visible {
+    background: rgba(30, 27, 25, 0.82);
+    outline: 2px solid #fff;
+    outline-offset: 3px;
+  }
+
+  .shop-gallery-modal__nav--prev {
+    left: clamp(12px, 6vw, 96px);
+  }
+
+  .shop-gallery-modal__nav--next {
+    right: clamp(12px, 6vw, 96px);
+  }
 }
 
 .shop-item-gallery__thumbs::-webkit-scrollbar {

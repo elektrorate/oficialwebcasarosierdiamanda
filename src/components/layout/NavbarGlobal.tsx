@@ -6,6 +6,7 @@ import { usePathname } from "next/navigation";
 import type { CSSProperties } from "react";
 import { useCallback, useEffect, useRef, useState } from "react";
 import type { NavigationItem } from "@/data/types";
+import { systemMenuRootKey } from "@/lib/cms/menu-links";
 import { classNames } from "@/lib/utils";
 import { ScrollStickyNavBar } from "@/components/layout/scroll-nav/ScrollStickyNavBar";
 
@@ -356,7 +357,16 @@ export function NavbarGlobal({
                       )}
                     </div>
                     {children.length > 0 && (
-                      <ul className="nav-submenu" id={submenuId} role="menu">
+                      <ul
+                        className={classNames(
+                          "nav-submenu",
+                          (systemMenuRootKey(item.linked_entity_id) === "experiencias" ||
+                            item.href === "/experiencias") &&
+                            "nav-submenu--experiencias"
+                        )}
+                        id={submenuId}
+                        role="menu"
+                      >
                         {children.map((child) => (
                           <li
                             className="nav-submenu__item"

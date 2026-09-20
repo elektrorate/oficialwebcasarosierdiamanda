@@ -919,6 +919,18 @@ body {
 }
 
 @media (min-width: 1025px) {
+  .nav-submenu--experiencias,
+  .header-interno .nav-submenu--experiencias,
+  .page-hero .nav-submenu--experiencias,
+  .header-home .navbar-global .nav-submenu--experiencias,
+  .header-interno .navbar-global .nav-submenu--experiencias,
+  .studio-page .studio-header .navbar-global .nav-submenu--experiencias,
+  .site-nav-shell .navbar-global .nav-submenu--experiencias {
+    width: max-content;
+    min-width: 280px;
+    max-width: min(400px, calc(100vw - 32px));
+  }
+
   .site-nav-shell--internal .navbar-global {
     transform: none;
     transform-origin: top center;
