@@ -52,7 +52,7 @@
   max-width: min(100%, 22ch);
   color: #1a1816;
   font-family: var(--font-display);
-  font-size: clamp(28px, 3.4vw, 38px);
+  font-size: clamp(25px, 3.06vw, 34px);
   font-weight: 400;
   font-style: normal;
   line-height: 1.08;
