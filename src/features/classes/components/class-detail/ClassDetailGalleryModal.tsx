@@ -83,41 +83,37 @@ export function ClassDetailGalleryModal({
       />
       <div className="ig-modal__panel" tabIndex={-1} ref={panelRef}>
         <section className="ig-modal__media">
+          {hasNavigation ? (
+            <>
+              <button
+                className="ig-modal__icon-btn ig-modal__icon-btn--prev"
+                type="button"
+                aria-label="Imagen anterior"
+                onClick={() => selectRelative(-1)}
+              >
+                <span className="ig-modal__arrow-mark ig-modal__arrow-mark--prev" aria-hidden="true" />
+              </button>
+              <button
+                className="ig-modal__icon-btn ig-modal__icon-btn--next"
+                type="button"
+                aria-label="Imagen siguiente"
+                onClick={() => selectRelative(1)}
+              >
+                <span className="ig-modal__arrow-mark ig-modal__arrow-mark--next" aria-hidden="true" />
+              </button>
+            </>
+          ) : null}
           <img src={assetPath(current.poster)} alt={current.alt || offeringTitle} />
+          <button
+            className="ig-modal__icon-btn ig-modal__icon-btn--close"
+            type="button"
+            aria-label="Cerrar galería ampliada"
+            onClick={onClose}
+          >
+            <span className="ig-modal__close-mark" aria-hidden="true" />
+          </button>
         </section>
         <section className="ig-modal__content">
-          <div className="ig-modal__topbar">
-            <div className="ig-modal__nav-actions" aria-label="Navegación de la galería">
-              {hasNavigation ? (
-                <>
-                  <button
-                    className="ig-modal__icon-btn ig-modal__icon-btn--prev"
-                    type="button"
-                    aria-label="Imagen anterior"
-                    onClick={() => selectRelative(-1)}
-                  >
-                    <span className="ig-modal__arrow-mark ig-modal__arrow-mark--prev" aria-hidden="true" />
-                  </button>
-                  <button
-                    className="ig-modal__icon-btn ig-modal__icon-btn--next"
-                    type="button"
-                    aria-label="Imagen siguiente"
-                    onClick={() => selectRelative(1)}
-                  >
-                    <span className="ig-modal__arrow-mark ig-modal__arrow-mark--next" aria-hidden="true" />
-                  </button>
-                </>
-              ) : null}
-            </div>
-            <button
-              className="ig-modal__icon-btn ig-modal__icon-btn--close"
-              type="button"
-              aria-label="Cerrar galería ampliada"
-              onClick={onClose}
-            >
-              <span className="ig-modal__close-mark" aria-hidden="true" />
-            </button>
-          </div>
           {modalTitle ? (
             <h3 id="offering-gallery-modal-title" className="ig-modal__title">
               {modalTitle}

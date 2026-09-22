@@ -15,6 +15,7 @@ import "./legacy/footer.css";
 import "./globals.css";
 import "./responsive-tuning.css";
 import "./public-header-desktop.css";
+import "@/components/layout/scroll-nav/home-scroll-sticky-nav.css";
 
 const baskervville = Baskervville({
   subsets: ["latin"],

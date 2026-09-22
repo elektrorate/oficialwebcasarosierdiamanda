@@ -4520,8 +4520,9 @@ body {
 }
 
 .ig-modal.social-gallery-modal .ig-modal__panel {
+  display: grid;
   width: min(664px, calc(100vw - 48px));
-  height: min(336px, calc(100dvh - 64px));
+  height: min(370px, calc(100dvh - 64px));
   max-height: calc(100dvh - 64px);
   overflow: hidden;
   border-radius: 10px;
@@ -4557,7 +4558,7 @@ body {
   white-space: pre-line;
   scrollbar-width: none;
   -webkit-box-orient: vertical;
-  -webkit-line-clamp: 9;
+  -webkit-line-clamp: 11;
 }
 
 .ig-modal.social-gallery-modal .ig-modal__date {
