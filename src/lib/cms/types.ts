@@ -310,6 +310,7 @@ export interface ClassOfferingDetails {
   showConsultCta: boolean;
   showEnrollCta: boolean;
   detailQuestion: string;
+  titleHighlight: string;
   highlightDescription: string;
   subtitleTypography?: RichTextTypography;
   detailQuestionTypography?: RichTextTypography;

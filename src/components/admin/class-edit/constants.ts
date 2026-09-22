@@ -187,6 +187,7 @@ export const defaultClassDetails: ClassOfferingDetails = {
   showConsultCta: true,
   showEnrollCta: true,
   detailQuestion: "",
+  titleHighlight: "",
   highlightDescription: "",
   subtitleTypography: { ...DEFAULT_RICH_TEXT_TYPOGRAPHY },
   detailQuestionTypography: { ...DEFAULT_RICH_TEXT_TYPOGRAPHY },

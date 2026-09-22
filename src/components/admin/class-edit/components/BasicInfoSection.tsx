@@ -81,6 +81,12 @@ export function BasicInfoSection({ form }: BasicInfoSectionProps) {
           minHeight="100px"
           help="Tipografía global en el panel inferior. Usa negrita, cursiva o subrayado para énfasis parcial."
         />
+        <AdminInput
+          label="Texto resaltado bajo el título"
+          value={details.titleHighlight}
+          help="Texto corto en negrita y color café (#ad3f14) que se muestra debajo del título de la página."
+          onChange={(event) => updateDetails({ titleHighlight: event.target.value })}
+        />
         <AdminRichTextField
           label="Pregunta / frase introductoria"
           labelPlacement="editor"

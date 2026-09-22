@@ -482,6 +482,7 @@ function cmsOfferingToExperienceItem(
     subtitleTypography: normalizeRichTextTypography(details.subtitleTypography ?? DEFAULT_RICH_TEXT_TYPOGRAPHY),
     detailQuestion,
     detailQuestionTypography: normalizeRichTextTypography(details.detailQuestionTypography ?? DEFAULT_RICH_TEXT_TYPOGRAPHY),
+    titleHighlight: stringValue(details.titleHighlight) || undefined,
     introHighlight: hasClassHighlight
       ? stringValue(details.highlightDescription)
       : details.highlightDescription || stringValue(details.introHighlight) || offering.excerpt,

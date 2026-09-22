@@ -18,6 +18,11 @@ export function ClassDetailIntro({ item, titleLevel = "h1" }: Props) {
       >
         {renderInlineMarkdown(titleMarkdownToInline(item.subtitle) || item.title)}
       </TitleTag>
+      {item.titleHighlight?.trim() ? (
+        <p className="class-detail__title-highlight class-detail__title-highlight--editorial">
+          {item.titleHighlight}
+        </p>
+      ) : null}
     </header>
   );
 }
