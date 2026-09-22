@@ -1396,6 +1396,9 @@ body {
     transform: none !important;
     contain: paint;
     isolation: isolate;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
   /*
@@ -1416,6 +1419,11 @@ body {
    * video tiles, which appear as duplicated horizontal bands.
    */
   .header-home .hero__video-frame .hero__video-player {
+    position: relative;
+    inset: auto;
+    flex: 0 0 auto;
+    width: max(100%, 100svh);
+    height: max(100%, 100vw);
     transform: none !important;
     opacity: 1 !important;
     animation: none !important;
@@ -4410,6 +4418,7 @@ body {
   display: inline-grid;
   place-items: center;
   cursor: pointer;
+  pointer-events: auto;
   appearance: none;
   -webkit-appearance: none;
 }
