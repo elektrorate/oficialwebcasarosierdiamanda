@@ -61,6 +61,7 @@ function HeroImageVariantFields({ details, onChange }: Pick<HeroContentFieldsPro
           label="URL del video para movil (opcional)"
           value={details.heroVideoUrlMobile}
           placeholder="https://.../hero-mobile.mp4"
+          help="Para reproducir video también en Android usa una URL directa .mp4 o .webm. Los enlaces de Vimeo muestran la imagen móvil de respaldo en Android para evitar franjas gráficas."
           onChange={(event) => onChange({ heroVideoUrlMobile: event.target.value })}
         />
       </div>
