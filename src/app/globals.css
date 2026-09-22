@@ -4294,6 +4294,13 @@ body {
   }
 }
 
+.ig-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 2200;
+  display: none;
+}
+
 .ig-modal,
 .testimonial-modal,
 .studio-lightbox,
@@ -4306,6 +4313,12 @@ body {
   align-items: center;
   justify-content: center;
   padding: 24px;
+}
+
+.ig-modal__backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
 }
 
 .ig-modal__panel {
