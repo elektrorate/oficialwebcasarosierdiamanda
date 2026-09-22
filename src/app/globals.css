@@ -1787,7 +1787,18 @@ body {
   }
 
   .mobile-scroll-menu .mobile-submenu {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 240ms ease;
     padding-inline: 8px;
+  }
+
+  .mobile-scroll-menu .mobile-menu__item--open > .mobile-submenu {
+    grid-template-rows: 1fr;
+  }
+
+  .mobile-scroll-menu .mobile-submenu__inner {
+    overflow: hidden;
   }
 
   .mobile-scroll-menu .mobile-submenu__list {
