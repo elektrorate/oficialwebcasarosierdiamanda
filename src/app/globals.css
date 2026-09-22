@@ -4330,6 +4330,8 @@ body {
 }
 
 .ig-modal__panel {
+  position: relative;
+  z-index: 1;
   width: min(860px, calc(100vw - 48px));
   height: min(68dvh, 520px);
   max-height: calc(100dvh - 64px);
