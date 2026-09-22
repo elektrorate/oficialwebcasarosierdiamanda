@@ -4513,6 +4513,107 @@ body {
   transform: translate(-50%, -50%) rotate(-45deg);
 }
 
+.ig-modal.social-gallery-modal .ig-modal__media {
+  position: relative;
+}
+
+.ig-modal.social-gallery-modal .ig-modal__icon-btn--prev,
+.ig-modal.social-gallery-modal .ig-modal__icon-btn--next {
+  position: absolute;
+  top: 50%;
+  z-index: 4;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: #ffffff;
+  box-shadow: none;
+  transform: translateY(-50%);
+  pointer-events: auto;
+  display: inline-grid;
+  place-items: center;
+  cursor: pointer;
+  appearance: none;
+  -webkit-appearance: none;
+}
+
+.ig-modal.social-gallery-modal .ig-modal__icon-btn--prev {
+  left: 16px;
+}
+
+.ig-modal.social-gallery-modal .ig-modal__icon-btn--next {
+  right: 16px;
+}
+
+.ig-modal.social-gallery-modal .ig-modal__arrow-mark {
+  width: 14px;
+  height: 14px;
+  display: block;
+  border-top: 3px solid currentColor;
+  border-left: 3px solid currentColor;
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.35));
+}
+
+.ig-modal.social-gallery-modal .ig-modal__arrow-mark--prev {
+  transform: translateX(1px) rotate(-45deg);
+}
+
+.ig-modal.social-gallery-modal .ig-modal__arrow-mark--next {
+  transform: translateX(-1px) rotate(135deg);
+}
+
+.ig-modal.social-gallery-modal .ig-modal__icon-btn--close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  z-index: 5;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: #ffffff;
+  box-shadow: none;
+  display: inline-grid;
+  place-items: center;
+  cursor: pointer;
+  pointer-events: auto;
+  appearance: none;
+  -webkit-appearance: none;
+}
+
+.ig-modal.social-gallery-modal .ig-modal__close-mark {
+  position: relative;
+  display: block;
+  width: 28px;
+  height: 28px;
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.35));
+}
+
+.ig-modal.social-gallery-modal .ig-modal__close-mark::before,
+.ig-modal.social-gallery-modal .ig-modal__close-mark::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  display: block;
+  width: 26px;
+  height: 2.5px;
+  border-radius: 0;
+  background: currentColor;
+}
+
+.ig-modal.social-gallery-modal .ig-modal__close-mark::before {
+  transform: translate(-50%, -50%) rotate(45deg);
+}
+
+.ig-modal.social-gallery-modal .ig-modal__close-mark::after {
+  transform: translate(-50%, -50%) rotate(-45deg);
+}
+
 @media (max-width: 900px) {
   .ig-modal.is-open {
     padding: 16px;

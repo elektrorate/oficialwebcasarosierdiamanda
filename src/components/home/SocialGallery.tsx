@@ -159,7 +159,7 @@ export function SocialGallery({
 
       {current && typeof document !== "undefined" && createPortal(
         <div
-          className="ig-modal is-open"
+          className="ig-modal social-gallery-modal is-open"
           id="ig-modal"
           role="dialog"
           aria-modal="true"
@@ -173,50 +173,46 @@ export function SocialGallery({
           />
           <div className="ig-modal__panel" tabIndex={-1} ref={panelRef}>
             <section className="ig-modal__media">
+              <button
+                className="ig-modal__icon-btn ig-modal__icon-btn--prev"
+                type="button"
+                aria-label="Anterior"
+                onClick={() =>
+                  setActive(
+                    ((active ?? 0) - 1 + posts.length) % posts.length
+                  )
+                }
+              >
+                <span
+                  className="ig-modal__arrow-mark ig-modal__arrow-mark--prev"
+                  aria-hidden="true"
+                />
+              </button>
               <Image src={current.image} alt="" width={1200} height={1200} sizes="(max-width: 760px) 100vw, 55vw" quality={85} />
+              <button
+                className="ig-modal__icon-btn ig-modal__icon-btn--next"
+                type="button"
+                aria-label="Siguiente"
+                onClick={() =>
+                  setActive(((active ?? 0) + 1) % posts.length)
+                }
+              >
+                <span
+                  className="ig-modal__arrow-mark ig-modal__arrow-mark--next"
+                  aria-hidden="true"
+                />
+              </button>
+              <button
+                className="ig-modal__icon-btn ig-modal__icon-btn--close"
+                type="button"
+                aria-label="Cerrar"
+                onClick={() => setActive(null)}
+              >
+                <span className="ig-modal__close-mark" aria-hidden="true" />
+              </button>
               <div className="ig-modal__overlay-text">Post</div>
             </section>
             <section className="ig-modal__content">
-              <div className="ig-modal__topbar">
-                <div className="ig-modal__nav-actions" aria-label="Navegacion de galeria">
-                  <button
-                    className="ig-modal__icon-btn ig-modal__icon-btn--prev"
-                    type="button"
-                    aria-label="Anterior"
-                    onClick={() =>
-                      setActive(
-                        ((active ?? 0) - 1 + posts.length) % posts.length
-                      )
-                    }
-                  >
-                    <span
-                      className="ig-modal__arrow-mark ig-modal__arrow-mark--prev"
-                      aria-hidden="true"
-                    />
-                  </button>
-                  <button
-                    className="ig-modal__icon-btn ig-modal__icon-btn--next"
-                    type="button"
-                    aria-label="Siguiente"
-                    onClick={() =>
-                      setActive(((active ?? 0) + 1) % posts.length)
-                    }
-                  >
-                    <span
-                      className="ig-modal__arrow-mark ig-modal__arrow-mark--next"
-                      aria-hidden="true"
-                    />
-                  </button>
-                </div>
-                <button
-                  className="ig-modal__icon-btn ig-modal__icon-btn--close"
-                  type="button"
-                  aria-label="Cerrar"
-                  onClick={() => setActive(null)}
-                >
-                  <span className="ig-modal__close-mark" aria-hidden="true" />
-                </button>
-              </div>
               <h3 id="ig-title" className="ig-modal__title">
                 {current.title}
               </h3>
