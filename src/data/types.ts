@@ -179,7 +179,6 @@ export interface ExperienceItem {
   subtitleTypography?: import("@/lib/cms/rich-text-typography").RichTextTypography;
   detailQuestion: string;
   detailQuestionTypography?: import("@/lib/cms/rich-text-typography").RichTextTypography;
-  titleHighlight?: string;
   introHighlight: string;
   introHighlightTypography?: import("@/lib/cms/rich-text-typography").RichTextTypography;
   descriptionTypography?: import("@/lib/cms/rich-text-typography").RichTextTypography;
