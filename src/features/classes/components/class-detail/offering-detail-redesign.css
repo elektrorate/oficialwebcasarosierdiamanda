@@ -196,6 +196,16 @@ body.class-detail-page {
   white-space: pre-line;
 }
 
+@media (min-width: 901px) {
+  .offering-gallery-modal .ig-modal__panel {
+    display: grid;
+    width: min(1040px, calc(100vw - 48px));
+    height: min(78dvh, 620px);
+    max-height: calc(100dvh - 64px);
+    grid-template-columns: minmax(0, 3fr) minmax(360px, 2fr);
+  }
+}
+
 .class-detail-page:is([data-promo-page="class"], [data-promo-page="workshop"], [data-promo-page="experience"], [data-promo-page="gift-card"]) .class-detail--proposal .class-gallery__thumbs {
   display: flex;
   flex-wrap: nowrap;

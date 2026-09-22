@@ -1380,6 +1380,25 @@ body {
   }
 
   /*
+   * Keep Vimeo's mobile player in one stable, full-screen layer. Chrome on
+   * Android may duplicate horizontal tiles when an iframe wrapper combines
+   * oversizing, transforms and opacity animation.
+   */
+  .header-home--has-mobile-video .hero__video--mobile.hero__video-frame {
+    inset: 0 !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    overflow: hidden;
+    opacity: 1 !important;
+    animation: none !important;
+    transform: none !important;
+    contain: paint;
+    isolation: isolate;
+  }
+
+  /*
    * Android/Chrome can repaint a transformed Vimeo iframe in horizontal tiles
    * while its opacity changes. Keep the mobile player on a stable compositor
    * layer; the poster remains available only while Vimeo is loading.
@@ -1398,6 +1417,9 @@ body {
    */
   .header-home .hero__video-frame .hero__video-player {
     transform: none !important;
+    opacity: 1 !important;
+    animation: none !important;
+    transition: none !important;
     backface-visibility: hidden;
   }
 

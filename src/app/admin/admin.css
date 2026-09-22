@@ -2575,11 +2575,109 @@
   gap: 16px;
 }
 
-.admin-offering-expiration-trigger,
-.admin-offering-expiration-backdrop,
-.admin-offering-expiration__head,
-.admin-offering-expiration__done {
+.admin-offering-expiration-trigger {
+  display: inline-flex;
+  min-height: 42px;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border: 1px solid #b3261e;
+  border-radius: 999px;
+  background: #fff4f2;
+  color: #9b1c16;
+  padding: 8px 14px;
+  box-shadow: 0 6px 18px rgba(179, 38, 30, 0.16);
+  font: 700 13px/18px var(--font-inter), Inter, sans-serif;
+  cursor: pointer;
+}
+
+.admin-offering-expiration-trigger:hover,
+.admin-offering-expiration-trigger:focus-visible {
+  border-color: #8f1d17;
+  background: #ffe9e6;
+  color: #7d1712;
+}
+
+.admin-offering-expiration-trigger:focus-visible {
+  outline: 3px solid rgba(179, 38, 30, 0.24);
+  outline-offset: 2px;
+}
+
+.admin-offering-expiration-trigger .material-symbols-outlined {
+  flex: 0 0 auto;
+  font-size: 19px;
+}
+
+.admin-offering-expiration-trigger.is-active {
+  border-color: #b3261e;
+  background: #b3261e;
+  color: #fff;
+}
+
+.admin-offering-expiration-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 110;
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  background: rgba(20, 16, 27, 0.48);
+  cursor: default;
+}
+
+.class-edit-form .admin-offering-expiration {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  z-index: 111;
   display: none;
+  width: min(calc(100vw - 40px), 520px);
+  max-height: calc(100dvh - 40px);
+  overflow-y: auto;
+  align-items: stretch;
+  gap: 18px;
+  padding: 22px;
+  border-radius: 18px;
+  background: #fff;
+  box-shadow: 0 24px 70px rgba(11, 28, 48, 0.28);
+  transform: translate(-50%, -50%);
+}
+
+.class-edit-form .admin-offering-expiration.is-open {
+  display: grid;
+}
+
+.admin-offering-expiration__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.admin-offering-expiration__head strong {
+  color: #1c1726;
+  font: 800 18px/24px var(--font-manrope), Manrope, sans-serif;
+}
+
+.admin-offering-expiration__close {
+  width: 40px;
+  height: 40px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+  border: 1px solid #e2dcec;
+  border-radius: 999px;
+  background: #fff;
+  color: #494552;
+  cursor: pointer;
+}
+
+.admin-offering-expiration__done {
+  display: inline-flex;
+  width: 100%;
+  justify-content: center;
 }
 
 .class-edit-home-title-field {
@@ -7289,16 +7387,17 @@
 
   .admin-offering-expiration-trigger {
     display: inline-flex;
-    width: 38px;
-    height: 38px;
+    width: 44px;
+    height: 44px;
+    min-height: 44px;
     align-items: center;
     justify-content: center;
-    border: 1px solid #d9d3e4;
+    border: 1px solid #b3261e;
     border-radius: 999px;
-    background: #fff;
-    color: #494552;
+    background: #b3261e;
+    color: #fff;
     padding: 0;
-    box-shadow: 0 8px 22px rgba(11, 28, 48, 0.16);
+    box-shadow: 0 8px 22px rgba(179, 38, 30, 0.28);
     cursor: pointer;
   }
 
@@ -7324,9 +7423,9 @@
   }
 
   .admin-offering-expiration-trigger.is-active {
-    border-color: #7c3aed;
-    background: #f4f0ff;
-    color: #3c1989;
+    border-color: #7d1712;
+    background: #7d1712;
+    color: #fff;
   }
 
   .admin-offering-expiration-backdrop {
@@ -7343,6 +7442,7 @@
 
   .class-edit-form .admin-offering-expiration {
     position: fixed;
+    top: auto;
     left: 50%;
     bottom: max(18px, env(safe-area-inset-bottom, 0px));
     z-index: 111;

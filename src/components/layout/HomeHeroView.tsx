@@ -267,6 +267,7 @@ export function HomeHeroView({
             className="hero__video-player"
             src={mobileVideoEmbed}
             title="Video de fondo movil del hero"
+            loopFade={false}
           />
         </div>
       ) : hasHeroVideo && mobileVideo && mobileVideo !== desktopVideo && mobileVideoEmbed ? (

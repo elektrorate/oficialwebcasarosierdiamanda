@@ -16,10 +16,12 @@ export function HeroVimeoVideo({
   className,
   src,
   title,
+  loopFade = true,
 }: {
   className: string;
   src: string;
   title: string;
+  loopFade?: boolean;
 }) {
   const iframeRef = useRef<HTMLIFrameElement>(null);
 
@@ -52,11 +54,11 @@ export function HeroVimeoVideo({
       }
 
       if (message.event === "ready") {
-        subscribeToPlayback();
+        if (loopFade) subscribeToPlayback();
         return;
       }
 
-      if (message.event !== "timeupdate" || reduceMotion.matches) return;
+      if (!loopFade || message.event !== "timeupdate" || reduceMotion.matches) return;
 
       const seconds = message.data?.seconds;
       const duration = message.data?.duration;
@@ -67,18 +69,18 @@ export function HeroVimeoVideo({
     };
 
     window.addEventListener("message", onMessage);
-    subscribeToPlayback();
+    if (loopFade) subscribeToPlayback();
     return () => window.removeEventListener("message", onMessage);
-  }, [subscribeToPlayback]);
+  }, [loopFade, subscribeToPlayback]);
 
   return (
     <iframe
       ref={iframeRef}
-      className={`${className} hero__video--loop-fade`}
+      className={`${className}${loopFade ? " hero__video--loop-fade" : ""}`}
       src={src}
       title={title}
       allow="autoplay; fullscreen; picture-in-picture"
-      onLoad={subscribeToPlayback}
+      onLoad={loopFade ? subscribeToPlayback : undefined}
       tabIndex={-1}
       aria-hidden="true"
     />
