@@ -1,9 +1,8 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useSyncExternalStore } from "react";
+import { useCallback, useEffect, useRef } from "react";
 
 const LOOP_FADE_SECONDS = 1.1;
-const subscribeToUserAgent = () => () => {};
 
 type VimeoMessage = {
   event?: string;
@@ -18,21 +17,13 @@ export function HeroVimeoVideo({
   src,
   title,
   loopFade = true,
-  disableOnAndroid = false,
 }: {
   className: string;
   src: string;
   title: string;
   loopFade?: boolean;
-  disableOnAndroid?: boolean;
 }) {
   const iframeRef = useRef<HTMLIFrameElement>(null);
-  const isAndroid = useSyncExternalStore(
-    subscribeToUserAgent,
-    () => /Android/i.test(window.navigator.userAgent),
-    () => true,
-  );
-  const androidFallback = disableOnAndroid && isAndroid;
 
   const subscribeToPlayback = useCallback(() => {
     iframeRef.current?.contentWindow?.postMessage(
@@ -81,8 +72,6 @@ export function HeroVimeoVideo({
     if (loopFade) subscribeToPlayback();
     return () => window.removeEventListener("message", onMessage);
   }, [loopFade, subscribeToPlayback]);
-
-  if (androidFallback) return null;
 
   return (
     <iframe

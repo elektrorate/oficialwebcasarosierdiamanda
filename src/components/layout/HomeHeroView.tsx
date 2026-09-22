@@ -268,7 +268,6 @@ export function HomeHeroView({
             src={mobileVideoEmbed}
             title="Video de fondo movil del hero"
             loopFade={false}
-            disableOnAndroid
           />
         </div>
       ) : hasHeroVideo && mobileVideo && mobileVideo !== desktopVideo && mobileVideoEmbed ? (
