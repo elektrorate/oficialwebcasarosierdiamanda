@@ -32,6 +32,7 @@ export function FeaturedExperienceCards({ items }: { items: readonly ExperienceI
         );
         const excerptStyle = richTextTypographyStyle(excerptTypography);
         const flipExcerpt = truncateHomeFlipExcerpt(homeCardExcerpt(item));
+        const titleLineHeight = Math.max(item.homeTitleTypography?.lineHeight ?? 1.38, 1.3);
 
         return (
           <article className="content-card--home-flip group mx-auto w-full" key={item.id}>
@@ -69,7 +70,7 @@ export function FeaturedExperienceCards({ items }: { items: readonly ExperienceI
                 <MarkdownContent
                   className="home-feature-card__title text-[clamp(13px,1.05vw,15px)] font-light uppercase tracking-[0.07em] text-[#2f2b28] [&_p]:m-0 max-[640px]:text-[13px] max-[640px]:tracking-[0.06em]"
                   source={label}
-                  style={{ lineHeight: item.homeTitleTypography?.lineHeight ?? 1.38 }}
+                  style={{ lineHeight: titleLineHeight }}
                 />
                 {tagline ? (
                   <MarkdownContent
