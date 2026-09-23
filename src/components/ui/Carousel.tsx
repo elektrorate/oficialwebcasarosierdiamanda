@@ -234,6 +234,7 @@ export function Carousel<T>({
         isDragging && "is-dragging",
         className
       )}
+      role="region"
       aria-roledescription="carousel"
       aria-label={ariaLabel}
       onMouseEnter={() => setPaused(true)}
@@ -367,7 +368,7 @@ export function ThumbnailGallery<T>({
   if (!current) return null;
 
   return (
-    <div className={classNames("thumbnail-carousel", className)} aria-label={ariaLabel}>
+    <div className={classNames("thumbnail-carousel", className)} role="region" aria-label={ariaLabel}>
       <div className={classNames("thumbnail-carousel__main", mainClassName)}>
         {renderMain(current, active)}
       </div>

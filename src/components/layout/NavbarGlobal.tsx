@@ -72,6 +72,7 @@ export function NavbarGlobal({
 }) {
   const pathname = usePathname();
   const rootRef = useRef<HTMLDivElement>(null);
+  const desktopPortalRef = useRef<HTMLDivElement>(null);
   const scrollMobileToggleRef = useRef<HTMLButtonElement>(null);
   const desktopCloseTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(
     null
@@ -187,10 +188,11 @@ export function NavbarGlobal({
       }
     };
     const onPointerDown = (event: PointerEvent) => {
+      const target = event.target;
       if (
-        rootRef.current &&
-        event.target instanceof Node &&
-        !rootRef.current.contains(event.target)
+        target instanceof Node &&
+        !rootRef.current?.contains(target) &&
+        !desktopPortalRef.current?.contains(target)
       ) {
         setMobileOpen(false);
         clearDesktopCloseTimeout();
@@ -366,6 +368,8 @@ export function NavbarGlobal({
                         )}
                         id={submenuId}
                         role="menu"
+                        hidden={!open}
+                        aria-hidden={!open}
                       >
                         {children.map((child) => (
                           <li
@@ -512,7 +516,7 @@ export function NavbarGlobal({
                     )}
                   </div>
                   {children.length > 0 && (
-                    <div className="mobile-submenu" id={submenuId}>
+                    <div className="mobile-submenu" id={submenuId} hidden={!open} aria-hidden={!open}>
                       <div className="mobile-submenu__inner">
                         <ul className="mobile-submenu__list">
                           {children.map((child) => (
@@ -545,6 +549,7 @@ export function NavbarGlobal({
       {isDesktopViewport && typeof document !== "undefined"
         ? createPortal(
             <div
+              ref={desktopPortalRef}
               className={classNames(
                 "desktop-sticky-nav-portal",
                 showDesktopScrollNav && "is-sticky-active"

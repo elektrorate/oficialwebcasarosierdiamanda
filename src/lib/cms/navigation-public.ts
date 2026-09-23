@@ -65,13 +65,21 @@ function hrefForItem(item: MenuItem) {
   return item.url || "/";
 }
 
+function targetForHref(href: string, openInNewTab: boolean) {
+  if (!openInNewTab) return undefined;
+  return /^(?:https?:)?\/\//i.test(href) || /^(?:mailto|tel):/i.test(href)
+    ? "_blank" as const
+    : undefined;
+}
+
 function toNavigationItem(item: MenuItem, children: MenuItem[]): NavigationItem {
+  const href = hrefForItem(item);
   return {
     label: item.label,
-    href: hrefForItem(item),
+    href,
     order: item.sort_order,
     visible: item.is_visible,
-    target: item.open_in_new_tab ? "_blank" : undefined,
+    target: targetForHref(href, item.open_in_new_tab),
     linked_entity_id: item.linked_entity_id || undefined,
     linked_entity_type: item.linked_entity_type !== "none" ? item.linked_entity_type : undefined,
     children: children
@@ -173,7 +181,7 @@ function mergeGeneratedChildrenWithSavedOrder(generated: NavigationItem[], saved
           ...byId,
           label: child.label || byId.label,
           visible: child.visible,
-          target: child.target ?? byId.target,
+          target: targetForHref(byId.href, child.target === "_blank"),
         });
         return;
       }
@@ -185,7 +193,7 @@ function mergeGeneratedChildrenWithSavedOrder(generated: NavigationItem[], saved
         ...byHref,
         label: child.label || byHref.label,
         visible: child.visible,
-        target: child.target ?? byHref.target,
+        target: targetForHref(byHref.href, child.target === "_blank"),
       });
     });
 

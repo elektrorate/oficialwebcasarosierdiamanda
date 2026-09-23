@@ -90,7 +90,7 @@ export function PublicFooterContent({
       </section>
       {model.legalCopy ? (
         <div className="mt-0 px-6 pb-[clamp(24px,4vw,32px)] pt-0 border-t-0 text-center">
-          <p className="m-0 text-[11px] leading-normal font-light text-[#9a9a9a] [font-family:var(--font-menu)]">{model.legalCopy}</p>
+          <p className="m-0 text-[11px] leading-normal font-light text-[#737373] [font-family:var(--font-menu)]">{model.legalCopy}</p>
         </div>
       ) : null}
     </footer>

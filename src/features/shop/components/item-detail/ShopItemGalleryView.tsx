@@ -54,7 +54,7 @@ export function ShopItemGalleryView({
   }, [src]);
 
   return (
-    <div className="shop-item-gallery" aria-label={`Galería de ${productName}`}>
+    <div className="shop-item-gallery" role="region" aria-label={`Galería de ${productName}`}>
       <button
         ref={expandButtonRef}
         type="button"
@@ -63,7 +63,7 @@ export function ShopItemGalleryView({
         onClick={onOpenModal}
       >
         <Image className="shop-item-gallery__ghost" src={src} alt="" width={1000} height={1000} sizes="(max-width: 760px) 100vw, 500px" aria-hidden="true" onError={applyImageFallback} />
-        <Image className="shop-item-gallery__img" src={src} alt={productName} width={1000} height={1000} sizes="(max-width: 760px) 100vw, 500px" quality={85} onError={applyImageFallback} />
+        <Image className="shop-item-gallery__img" src={src} alt={productName} width={1000} height={1000} sizes="(max-width: 760px) 100vw, 500px" quality={85} fetchPriority="high" onError={applyImageFallback} />
         {previousSrc ? (
           <Image
             className="shop-item-gallery__img shop-item-gallery__img--previous"

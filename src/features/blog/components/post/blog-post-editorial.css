@@ -65,7 +65,7 @@
 .blog-article__intro {
   margin: clamp(18px, 2.5vw, 26px) auto 0;
   max-width: 52ch;
-  color: #7a736c;
+  color: #6f6861;
   font-family: var(--font-menu), var(--font-inter), sans-serif;
   font-size: clamp(15px, 1.6vw, 17px);
   font-weight: 300;

@@ -143,7 +143,7 @@ export function ClassDetailGallery({ item }: Props) {
   if (!gallery.items.length || !gallery.activeItem) return null;
 
   return (
-    <div className="class-gallery thumbnail-carousel grid gap-4.5" aria-label={`Galeria de ${item.title}`}>
+    <div className="class-gallery thumbnail-carousel grid gap-4.5" role="region" aria-label={`Galeria de ${item.title}`}>
       <div className="thumbnail-carousel__main">
         <GalleryMainMedia
           item={gallery.activeItem}

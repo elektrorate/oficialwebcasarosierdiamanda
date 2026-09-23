@@ -60,7 +60,12 @@ export function ScrollDesktopNavList({
                 ) : null}
               </Link>
               {children.length > 0 ? (
-                <ul className="scroll-desktop-submenu" role="menu">
+                <ul
+                  className="scroll-desktop-submenu"
+                  role="menu"
+                  hidden={!open}
+                  aria-hidden={!open}
+                >
                   {children.map((child) => (
                     <li className="scroll-desktop-submenu__item" role="none" key={child.href}>
                       <Link

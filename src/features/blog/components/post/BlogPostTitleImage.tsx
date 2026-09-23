@@ -15,6 +15,7 @@ export function BlogPostTitleImage({ post }: { post: BlogPost }) {
         sizes="(max-width: 560px) calc(100vw - 32px), 500px"
         quality={85}
         loading="eager"
+        fetchPriority="high"
       />
     </figure>
   );

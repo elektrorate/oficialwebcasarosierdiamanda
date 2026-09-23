@@ -190,6 +190,31 @@
   touch-action: pan-y;
 }
 
+.shop-gallery-modal__close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 3;
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  border: 1px solid rgba(255, 255, 255, 0.55);
+  border-radius: 50%;
+  background: rgba(30, 27, 25, 0.58);
+  color: #fff;
+  font: 300 28px/1 sans-serif;
+  cursor: pointer;
+}
+
+.shop-gallery-modal__close:hover,
+.shop-gallery-modal__close:focus-visible {
+  background: rgba(30, 27, 25, 0.85);
+  outline: 2px solid #fff;
+  outline-offset: 3px;
+}
+
 .shop-gallery-modal__nav {
   display: none;
 }
@@ -343,7 +368,7 @@
 }
 
 .shop-item-purchase__price-compare {
-  color: #9a928a;
+  color: #756d65;
   font-family: var(--font-display), serif;
   font-size: 18px;
   text-decoration: line-through;

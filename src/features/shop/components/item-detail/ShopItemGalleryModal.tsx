@@ -20,7 +20,9 @@ export function ShopItemGalleryModal({
   onSelect,
   onClose,
 }: Props) {
+  const modalRef = useRef<HTMLDivElement>(null);
   const panelRef = useRef<HTMLDivElement>(null);
+  const closeButtonRef = useRef<HTMLButtonElement>(null);
   const touchStartRef = useRef<{ x: number; y: number } | null>(null);
   const safeIndex = Math.min(activeIndex, Math.max(images.length - 1, 0));
 
@@ -50,7 +52,7 @@ export function ShopItemGalleryModal({
 
   useEffect(() => {
     document.body.classList.add("modal-open");
-    panelRef.current?.focus();
+    closeButtonRef.current?.focus();
 
     return () => document.body.classList.remove("modal-open");
   }, []);
@@ -60,6 +62,21 @@ export function ShopItemGalleryModal({
       if (event.key === "Escape") onClose();
       if (event.key === "ArrowLeft") selectRelative(-1);
       if (event.key === "ArrowRight") selectRelative(1);
+      if (event.key === "Tab") {
+        const focusable = modalRef.current?.querySelectorAll<HTMLElement>(
+          'button:not([disabled]), [href], [tabindex]:not([tabindex="-1"])',
+        );
+        if (!focusable?.length) return;
+        const first = focusable[0];
+        const last = focusable[focusable.length - 1];
+        if (event.shiftKey && document.activeElement === first) {
+          event.preventDefault();
+          last.focus();
+        } else if (!event.shiftKey && document.activeElement === last) {
+          event.preventDefault();
+          first.focus();
+        }
+      }
     };
 
     document.addEventListener("keydown", onKeyDown);
@@ -70,6 +87,7 @@ export function ShopItemGalleryModal({
 
   return createPortal(
     <div
+      ref={modalRef}
       className="ig-modal shop-gallery-modal is-open"
       role="dialog"
       aria-modal="true"
@@ -93,6 +111,15 @@ export function ShopItemGalleryModal({
         >
           <img src={assetPath(images[safeIndex])} alt={title} onError={applyImageFallback} />
         </section>
+        <button
+          ref={closeButtonRef}
+          className="shop-gallery-modal__close"
+          type="button"
+          aria-label="Cerrar galería ampliada"
+          onClick={onClose}
+        >
+          <span aria-hidden="true">×</span>
+        </button>
       </div>
       {images.length > 1 ? (
         <>

@@ -739,7 +739,18 @@
   }
 }
 
-/* Headers internos sin imagen: el logo ocupa solo la banda superior. */
+/* Mantiene el acceso al menú visible desde el primer viewport en móvil y tablet. */
+@media (max-width: 1024px) {
+  .site-nav-shell.site-nav-shell--home
+    .mobile-scroll-nav.is-at-top
+    .mobile-scroll-nav__toggle,
+  .site-nav-shell.site-nav-shell--internal
+    .mobile-scroll-nav.is-at-top
+    .mobile-scroll-nav__toggle {
+    display: grid !important;
+  }
+}
+
 @media (min-width: 641px) and (max-width: 1024px) {
   .header-interno--text-hero {
     min-height: 128px !important;

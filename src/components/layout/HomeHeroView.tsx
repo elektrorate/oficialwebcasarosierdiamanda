@@ -16,7 +16,7 @@ function heroVideoEmbedUrl(rawUrl: string) {
 
     if (host === "player.vimeo.com" || host === "vimeo.com") {
       const id = url.pathname.split("/").find((part) => /^\d+$/.test(part));
-      return id ? `https://player.vimeo.com/video/${id}?background=1&autoplay=1&muted=1&loop=1&autopause=0&controls=0&api=1&playsinline=1` : "";
+      return id ? `https://player.vimeo.com/video/${id}?background=1&autoplay=1&muted=1&loop=1&autopause=0&controls=0&api=1&playsinline=1&dnt=1` : "";
     }
 
     if (host === "youtu.be" || host === "youtube.com" || host === "m.youtube.com") {

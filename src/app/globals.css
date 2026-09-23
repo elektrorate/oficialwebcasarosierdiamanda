@@ -1407,7 +1407,7 @@ body {
    * layer; the poster remains available only while Vimeo is loading.
    */
   .header-home .hero__video--loop-fade {
-    opacity: 1 !important;
+    opacity: 0 !important;
     transition: none !important;
     will-change: auto !important;
     backface-visibility: hidden;
@@ -1425,10 +1425,14 @@ body {
     width: max(104%, 104svh);
     height: max(100%, 96.2vw);
     transform: none !important;
-    opacity: 1 !important;
+    opacity: 0 !important;
     animation: none !important;
     transition: none !important;
     backface-visibility: hidden;
+  }
+
+  .header-home .hero__video-frame .hero__video-player.is-playing {
+    opacity: 1 !important;
   }
 
   .header-home .hero__video {
@@ -2472,15 +2476,29 @@ body {
 }
 
 .header-home .hero__video--loop-fade {
-  opacity: 1;
+  opacity: 0;
   transition: opacity 900ms ease-in-out;
   will-change: opacity;
 }
 
+.header-home .hero__video--vimeo {
+  opacity: 0;
+  animation: none;
+  transition: opacity 450ms ease-in-out;
+}
+
+.header-home .hero__video--vimeo.is-playing {
+  opacity: 1;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .header-home .hero__video--loop-fade {
-    opacity: 1 !important;
+    opacity: 0 !important;
     transition: none;
+  }
+
+  .header-home .hero__video--vimeo.is-playing {
+    opacity: 1 !important;
   }
 }
 
