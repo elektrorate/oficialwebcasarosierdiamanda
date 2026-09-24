@@ -258,6 +258,7 @@ export default function HomePageEditor({
                       value={slide.image}
                       onChange={(image) => updateSlide(index, { image })}
                       previewClassName="cms-home-slide-card__preview"
+                      resolutionHint={{ renderWidthPx: 440, recommendedMinWidth: 1200, recommendedMinHeight: 1200 }}
                     />
                   </div>
                   <div className="cms-home-slide-card__body">

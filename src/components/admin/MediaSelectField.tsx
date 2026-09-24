@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import MediaLibraryModal from "./MediaLibraryModal";
 import {
   formatUploadMegabytes,
@@ -18,6 +18,12 @@ function localImageSrc(url: string) {
   return url.startsWith("/") ? url : `/${url}`;
 }
 
+export type MediaResolutionHint = {
+  renderWidthPx?: number;
+  recommendedMinWidth?: number;
+  recommendedMinHeight?: number;
+};
+
 export default function MediaSelectField({
   label,
   value,
@@ -25,6 +31,7 @@ export default function MediaSelectField({
   className,
   previewClassName,
   folder = "general",
+  resolutionHint,
 }: {
   label: string;
   value: string;
@@ -32,12 +39,26 @@ export default function MediaSelectField({
   className?: string;
   previewClassName?: string;
   folder?: string;
+  resolutionHint?: MediaResolutionHint;
 }) {
   const uploadInFlight = useRef(false);
   const [showPicker, setShowPicker] = useState(false);
   const [isUploading, setIsUploading] = useState(false);
   const [uploadHint, setUploadHint] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [measured, setMeasured] = useState<{ width: number; height: number } | null>(null);
+
+  useEffect(() => {
+    setMeasured(null);
+  }, [value]);
+
+  const effectiveMinWidth = resolutionHint?.recommendedMinWidth ?? resolutionHint?.renderWidthPx ?? 0;
+  const showResolutionWarning =
+    Boolean(resolutionHint) &&
+    measured !== null &&
+    effectiveMinWidth > 0 &&
+    measured.width > 0 &&
+    measured.width < effectiveMinWidth;
 
   async function uploadFile(file: File) {
     if (uploadInFlight.current) return;
