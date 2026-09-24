@@ -38,7 +38,7 @@ export function IntroSlider({ slides }: { slides: readonly HomeIntroSlide[] }) {
                 alt={slide.imageAlt}
                 width={480}
                 height={480}
-                sizes="(max-width: 640px) 160px, 240px"
+                sizes="(max-width: 640px) 200px, 440px"
                 loading="lazy"
                 className="block w-full max-w-60 px-8 sm:px-0 object-contain max-[640px]:max-w-40"
               />

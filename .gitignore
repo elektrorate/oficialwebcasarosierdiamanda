@@ -33,3 +33,9 @@ supabase/.temp/
 
 .playwright-mcp
 /docs
+# Auto-generated Next.js types (regenerado por dev/typegen)
+next-env.d.ts
+
+# Notas de agente locales (no forman parte del repo)
+AGENTS.md
+CLAUDE.md
