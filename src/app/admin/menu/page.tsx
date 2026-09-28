@@ -20,8 +20,13 @@ export default async function MenuPage() {
   catch (error) { publicationError = error instanceof Error ? error.message : "No se pudo preparar la publicación."; }
   return (
     <AdminShell>
-      {publicationError ? <p role="alert">{publicationError}</p> : null}
-      <PublicMenuEditor initialMenu={menu} initialSettings={settings} availableNavigationItems={navigationItems} initialRevision={revision} />
+      <PublicMenuEditor
+        initialMenu={menu}
+        initialSettings={settings}
+        availableNavigationItems={navigationItems}
+        initialRevision={revision}
+        publicationError={publicationError}
+      />
     </AdminShell>
   );
 }

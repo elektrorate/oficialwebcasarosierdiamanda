@@ -5306,6 +5306,10 @@
   margin-bottom: 0;
 }
 
+.public-menu-editor__save-error {
+  margin: 0;
+}
+
 .public-menu-editor__panel,
 .public-menu-list {
   display: grid;

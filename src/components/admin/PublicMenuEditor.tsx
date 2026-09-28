@@ -350,11 +350,13 @@ export default function PublicMenuEditor({
   initialSettings,
   availableNavigationItems,
   initialRevision = "",
+  publicationError = "",
 }: {
   initialMenu: Menu | null;
   initialSettings: SiteSettings;
   availableNavigationItems: NavigationItem[];
   initialRevision?: string;
+  publicationError?: string;
 }) {
   const [items, setItems] = useState(() => buildEditableMenu(initialMenu, availableNavigationItems));
   const [revision, setRevision] = useState(initialRevision);
@@ -562,11 +564,18 @@ export default function PublicMenuEditor({
           <p className="auth-kicker">CMS</p>
           <h2>Menú</h2>
         </div>
-        <button type="button" className="primary-btn inline" disabled={!canSave} onClick={() => void handleSave()}>
+        <button
+          type="button"
+          className="primary-btn inline"
+          disabled={!canSave}
+          title={!canSave && publicationError ? publicationError : undefined}
+          onClick={() => void handleSave()}
+        >
           {saveLabel}
         </button>
       </div>
 
+      {publicationError ? <p className="form-error public-menu-editor__save-error" role="alert"><strong>No se puede guardar el menú.</strong> {publicationError}</p> : null}
       {error ? <p className="form-error">{error}</p> : null}
 
       <fieldset className="public-menu-editor__panel" disabled={isSaving} style={{ border: 0, minWidth: 0 }}>
@@ -777,14 +786,15 @@ export default function PublicMenuEditor({
           />
         </div>
       </fieldset>
-      <button
-        type="button"
-        className="public-menu-editor__fixed-save primary-btn"
-        disabled={!canSave}
-        onClick={() => void handleSave()}
-      >
-        {saveLabel}
-      </button>
+      {canSave ? (
+        <button
+          type="button"
+          className="public-menu-editor__fixed-save primary-btn"
+          onClick={() => void handleSave()}
+        >
+          {saveLabel}
+        </button>
+      ) : null}
     </div>
   );
 }
