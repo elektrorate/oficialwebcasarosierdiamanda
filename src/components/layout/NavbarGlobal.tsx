@@ -93,10 +93,12 @@ export function NavbarGlobal({
   const mobileItems = navigationItems
     .filter((item) => item.visible)
     .sort((a, b) => a.order - b.order);
-  // En escritorio mostramos también "Inicio" para conservar
-  // la misma estructura visual del header de referencia.
   const desktopItems = mobileItems;
-  const scrollDesktopItems = desktopItems;
+  const scrollDesktopItems = home
+    ? desktopItems.filter(
+        (item) => systemMenuRootKey(item.linked_entity_id) !== "inicio"
+      )
+    : desktopItems;
   const showDesktopScrollNav = isDesktopViewport && desktopScrolled;
   const effectiveScrollIconColor = scrollMenuIconColor || scrollMenuTextColor;
   const navStyle = {
