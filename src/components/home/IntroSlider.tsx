@@ -42,6 +42,7 @@ export function IntroSlider({ slides }: { slides: readonly HomeIntroSlide[] }) {
                 // Preserve the CMS image detail instead of generating a small carousel thumbnail.
                 unoptimized
                 loading="lazy"
+                style={slide.id === "intro-1788248293295" ? { transform: "scale(1.15)" } : undefined}
                 className="block w-full max-w-60 px-8 sm:px-0 object-contain max-[640px]:max-w-40"
               />
             </div>
