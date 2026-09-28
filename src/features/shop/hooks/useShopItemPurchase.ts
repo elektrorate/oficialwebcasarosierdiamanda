@@ -3,10 +3,11 @@
 import { useCallback } from "react";
 import type { ShopItem } from "@/data/types";
 import { addCartItem } from "@/lib/cart";
+import { SHOP_LABELS } from "../lib/shopLabels";
 
 export function useShopItemPurchase(item: ShopItem) {
   const isSoldOut = item.badge === "sold";
-  const ctaLabel = item.ctaLabel?.trim() || "Comprarlo";
+  const ctaLabel = item.ctaLabel?.trim() || SHOP_LABELS.buyNowAlt;
 
   const addToCart = useCallback(() => {
     if (isSoldOut) return;

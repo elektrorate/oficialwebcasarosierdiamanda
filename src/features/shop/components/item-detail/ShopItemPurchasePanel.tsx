@@ -3,6 +3,7 @@
 import { MarkdownContent } from "@/components/ui/MarkdownContent";
 import type { ShopItem } from "@/data/types";
 import { useShopItemPurchase } from "../../hooks/useShopItemPurchase";
+import { SHOP_LABELS } from "../../lib/shopLabels";
 import { ShopItemPrice } from "./ShopItemPrice";
 
 export function ShopItemPurchasePanel({ item }: { item: ShopItem }) {
@@ -31,7 +32,7 @@ export function ShopItemPurchasePanel({ item }: { item: ShopItem }) {
             className="shop-item-purchase__button"
             disabled
           >
-            Agotado
+            {SHOP_LABELS.soldOut}
           </button>
         ) : item.ctaUrl.trim() ? (
           <a

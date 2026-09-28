@@ -3,6 +3,7 @@
 import type { ShopCategory, ShopItem } from "@/data/types";
 import { ShopPagination } from "@/components/shop/components/ShopPagination";
 import { useShopCatalog } from "@/features/shop/hooks/useShopCatalog";
+import { SHOP_LABELS } from "@/features/shop/lib/shopLabels";
 import { ShopCatalogGrid } from "./ShopCatalogGrid";
 import { ShopCatalogSidebar } from "./ShopCatalogSidebar";
 
@@ -31,8 +32,8 @@ export function ShopCatalogSection({
             ) : (
               <p className="shop-catalog__empty">
                 {published.length
-                  ? "No hay piezas en esta categoría por ahora."
-                  : "Todavía no hay piezas publicadas."}
+                  ? SHOP_LABELS.emptyCategory
+                  : SHOP_LABELS.emptyShop}
               </p>
             )}
 

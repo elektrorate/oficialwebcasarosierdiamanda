@@ -2,6 +2,7 @@
 
 import type { ShopCategoryNavItem } from "@/features/shop/lib/buildShopCategoryNav";
 import { ALL_CATEGORIES_KEY } from "@/components/shop/hooks/useShopGrid";
+import { SHOP_LABELS } from "@/features/shop/lib/shopLabels";
 
 type Props = {
   categories: ShopCategoryNavItem[];
@@ -14,7 +15,7 @@ export function ShopCatalogSidebar({ categories, activeCategory, onSelect }: Pro
 
   return (
     <aside className="shop-catalog__sidebar" aria-label="Categorías de la tienda">
-      <p className="shop-catalog__sidebar-kicker max-[640px]:text-center!">Categories:</p>
+      <p className="shop-catalog__sidebar-kicker max-[640px]:text-center!">{SHOP_LABELS.categoriesLabel}:</p>
       <nav className="shop-catalog__nav" aria-label="Filtrar por categoría">
         <ul className="shop-catalog__nav-list max-[640px]:justify-center! max-[640px]:gap-y-0! max-[640px]:gap-x-2.5!">
           {categories.map((category) => {

@@ -5,6 +5,7 @@ import Image from "next/image";
 import { assetPath } from "@/lib/assets";
 import type { ShopItem } from "@/data/types";
 import { useShopProductCardActions } from "@/features/shop/hooks/useShopProductCardActions";
+import { SHOP_LABELS } from "@/features/shop/lib/shopLabels";
 import { ShopProductBadgeLabel } from "./ShopProductBadgeLabel";
 import { ShopProductCardFooter } from "./ShopProductCardFooter";
 import { ShopIconEye } from "./ShopProductIcons";
@@ -19,7 +20,7 @@ export function ShopProductCard({ item }: { item: ShopItem }) {
       <Link
         href={actions.productHref}
         className="shop-product-card__media"
-        aria-label={`Ver ${item.name}`}
+        aria-label={`${SHOP_LABELS.viewItem} ${item.name}`}
       >
         <Image
           src={imageSrc}

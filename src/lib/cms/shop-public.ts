@@ -8,6 +8,13 @@ import {
 } from "@/lib/cms/shop-product-presentation";
 import { getWhatsappHref } from "@/lib/whatsapp";
 
+export interface ShopSiteConfig {
+  siteName: string;
+  defaultSeoDescription: string;
+}
+
+const DEFAULT_CONFIG: ShopSiteConfig = { siteName: "Casa Rosier", defaultSeoDescription: "" };
+
 function findCategory(product: Product, categories: ProductCategory[]) {
   return categories.find((item) => item.id === product.category_id || item.slug === product.category_id);
 }
@@ -40,6 +47,7 @@ function productToShopItem(
   categories: ProductCategory[],
   index: number,
   defaultCtaUrl: string,
+  config: ShopSiteConfig = DEFAULT_CONFIG,
 ): ShopItem {
   const gallery = [product.main_image_id, ...(product.gallery ?? [])].filter(Boolean);
 
@@ -63,15 +71,15 @@ function productToShopItem(
     availabilityNote: product.excerpt || (product.stock === null ? "" : `${product.stock} disponible(s)`),
     ctaLabel: product.cta_label || "Comprar",
     ctaUrl: product.cta_url || defaultCtaUrl,
-    seoTitle: product.seo_title || `${product.name} | Casa Rosier`,
-    seoDescription: product.seo_description || product.excerpt || product.description,
+    seoTitle: product.seo_title || `${product.name} | ${config.siteName}`,
+    seoDescription: product.seo_description || product.excerpt || product.description || config.defaultSeoDescription,
     order: orderFromProduct(product),
     isPublished: product.status === "published",
     createdAt: product.created_at,
   };
 }
 
-export async function getPublicShopData() {
+export async function getPublicShopData(config: ShopSiteConfig = DEFAULT_CONFIG) {
   const [products, categories, defaultCtaUrl] = await Promise.all([
     getProducts(),
     getCategories(),
@@ -80,7 +88,7 @@ export async function getPublicShopData() {
   const published = products
     .filter((product) => product.status === "published" && product.deleted_at === null)
     .sort((a, b) => orderFromProduct(a) - orderFromProduct(b) || a.name.localeCompare(b.name, "es"))
-    .map((product, index) => productToShopItem(product, categories, index, defaultCtaUrl));
+    .map((product, index) => productToShopItem(product, categories, index, defaultCtaUrl, config));
 
   const usedCategoryIds = new Set(published.map((item) => item.category).filter(Boolean));
 
@@ -100,7 +108,7 @@ export async function getPublicShopData() {
   return { published, shopCategories };
 }
 
-export async function getPublicShopItemBySlug(slug: string) {
-  const { published } = await getPublicShopData();
+export async function getPublicShopItemBySlug(slug: string, config: ShopSiteConfig = DEFAULT_CONFIG) {
+  const { published } = await getPublicShopData(config);
   return published.find((item) => item.slug === slug) ?? null;
 }

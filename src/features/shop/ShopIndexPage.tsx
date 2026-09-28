@@ -5,11 +5,11 @@ import { ShopIndexHeader } from "./components/ShopIndexHeader";
 import { loadShopIndexPage } from "./loadShopIndexPage";
 
 export async function ShopIndexPage() {
-  const { published, shopCategories, hero, faqSection } = await loadShopIndexPage();
+  const { published, shopCategories, hero, faqSection, siteName } = await loadShopIndexPage();
 
   return (
-    <SitePage bodyClass="shop-page" header={<ShopIndexHeader hero={hero} />}>
-      <h1 className="sr-only">Shop de cerámica artesanal de Casa Rosier</h1>
+    <SitePage bodyClass="shop-page" header={<ShopIndexHeader hero={hero} siteName={siteName} />}>
+      <h1 className="sr-only">Shop de cerámica artesanal de {siteName}</h1>
       <ShopCatalogSection published={published} shopCategories={shopCategories} />
       <PublicFaqSection pageSection={faqSection} eyebrow="" />
     </SitePage>

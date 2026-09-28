@@ -6,6 +6,7 @@ import { getOfferings, isPubliclyVisibleOffering } from "./offerings";
 import type { MenuItem, Offering } from "./types";
 import { getPublicSectionRoutes } from "./public-section-routes";
 import { canonicalMenuPath } from "./menu-routing";
+import { getSettings } from "./settings";
 
 type DynamicMenuKey = "classes" | "workshops" | "privateBookings" | "giftCards";
 const PUBLIC_NAV_CACHE_TTL_MS = Number(process.env.CMS_PUBLIC_NAV_CACHE_MS ?? 0);
@@ -23,27 +24,29 @@ const dynamicMenuConfig: Record<DynamicMenuKey, {
   giftCards: { label: "Gift Cards", href: "/gift-cards", offeringType: "gift_card", order: 4 },
 };
 
-const staticFallbackItems: NavigationItem[] = [
-  { label: "Inicio", href: "/#hero", order: 0, visible: true },
-  ...Object.values(dynamicMenuConfig).map((item) => ({
-    label: item.label,
-    href: item.href,
-    order: item.order,
-    visible: true,
-    children: [],
-  })),
-  {
-    label: "Comunidad",
-    href: "/el-estudio",
-    order: 5,
-    visible: true,
-    children: [
-      { label: "El estudio", href: "/el-estudio", order: 0, visible: true },
-      { label: "Bitácora", href: "/blog", order: 1, visible: true },
-    ],
-  },
-  { label: "Shop", href: "/shop", order: 6, visible: true },
-];
+function staticFallbackItems(siteName: string): NavigationItem[] {
+  return [
+    { label: "Inicio", href: "/#hero", order: 0, visible: true },
+    ...Object.values(dynamicMenuConfig).map((item) => ({
+      label: item.label,
+      href: item.href,
+      order: item.order,
+      visible: true,
+      children: [],
+    })),
+    {
+      label: "Comunidad",
+      href: "/el-estudio",
+      order: 5,
+      visible: true,
+      children: [
+        { label: "El estudio", href: "/el-estudio", order: 0, visible: true },
+        { label: "Bitácora", href: "/blog", order: 1, visible: true },
+      ],
+    },
+    { label: siteName, href: "/shop", order: 6, visible: true },
+  ];
+}
 
 export function invalidatePublicNavigationCache() {
   publicNavigationCache.clear();
@@ -256,9 +259,12 @@ async function getUnmappedNavigationItems(location: "main" | "mobile" | "footer"
   const cached = getCachedPublicNavigation(location);
   if (cached) return cached;
 
+  const settings = await getSettings();
+  const siteName = settings.site.site_name;
+  const fallbackItems = staticFallbackItems(siteName);
   const dynamicChildren = location === "footer" ? null : await getDynamicChildrenByKey();
   const menu = await getMenuByLocation(location);
-  if (!menu) return cachePublicNavigation(location, dynamicChildren ? withDynamicChildren(staticFallbackItems, dynamicChildren) : []);
+  if (!menu) return cachePublicNavigation(location, dynamicChildren ? withDynamicChildren(fallbackItems, dynamicChildren) : []);
 
   const childrenByParent = new Map<string, MenuItem[]>();
   for (const item of menu.items) {
@@ -274,7 +280,7 @@ async function getUnmappedNavigationItems(location: "main" | "mobile" | "footer"
     .map((item) => toNavigationItem(item, childrenByParent.get(item.id) ?? []));
 
   if (dynamicChildren) {
-    return cachePublicNavigation(location, withDynamicChildren(items.length ? items : staticFallbackItems, dynamicChildren));
+    return cachePublicNavigation(location, withDynamicChildren(items.length ? items : fallbackItems, dynamicChildren));
   }
 
   return cachePublicNavigation(location, location === "footer" ? items : normalizePublicMenuStructure(items));

@@ -1,6 +1,6 @@
 import type { CmsHeroSettings } from "@/lib/cms/types";
 
-export function mapShopHeroHeaderProps(hero: CmsHeroSettings) {
+export function mapShopHeroHeaderProps(hero: CmsHeroSettings, siteName = "Casa Rosier") {
   const heroVariant = hero.heroVariant ?? "text";
   const isImageLikeHero = heroVariant === "image" || heroVariant === "presentation";
 
@@ -10,7 +10,7 @@ export function mapShopHeroHeaderProps(hero: CmsHeroSettings) {
     hero,
     height: (isImageLikeHero ? "large" : "medium") as "large" | "medium",
     eyebrow: hero.heroSubtitle,
-    title: hero.heroTitle || "Shop",
+    title: hero.heroTitle || siteName,
     overlayTitle: isImageLikeHero,
   };
 }

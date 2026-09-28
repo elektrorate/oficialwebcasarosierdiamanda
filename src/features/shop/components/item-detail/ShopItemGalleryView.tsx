@@ -7,6 +7,7 @@ import type { RefObject } from "react";
 import type { ShopProductBadge } from "@/data/types";
 import { ShopProductBadgeLabel } from "../catalog/ShopProductBadgeLabel";
 import { applyImageFallback } from "@/lib/image-fallback";
+import { SHOP_LABELS } from "../../lib/shopLabels";
 
 type Props = {
   productName: string;
@@ -54,12 +55,12 @@ export function ShopItemGalleryView({
   }, [src]);
 
   return (
-    <div className="shop-item-gallery" role="region" aria-label={`Galería de ${productName}`}>
+    <div className="shop-item-gallery" role="region" aria-label={`${SHOP_LABELS.galleryOf} ${productName}`}>
       <button
         ref={expandButtonRef}
         type="button"
         className="shop-item-gallery__main"
-        aria-label={`Ampliar imagen de ${productName}`}
+        aria-label={`${SHOP_LABELS.enlargeImage} ${productName}`}
         onClick={onOpenModal}
       >
         <Image className="shop-item-gallery__ghost" src={src} alt="" width={1000} height={1000} sizes="(max-width: 760px) 100vw, 500px" aria-hidden="true" onError={applyImageFallback} />
@@ -89,7 +90,7 @@ export function ShopItemGalleryView({
                 type="button"
                 role="tab"
                 aria-selected={isActive}
-                aria-label={`Imagen ${index + 1} de ${productName}`}
+                aria-label={`${SHOP_LABELS.imageOf} ${index + 1} ${SHOP_LABELS.of} ${productName}`}
                 className={`shop-item-gallery__thumb${isActive ? " is-active" : ""}`}
                 onClick={() => onSelectImage(index)}
               >
