@@ -8,6 +8,7 @@ import type { ClassOfferingDetails, Offering, OfferingStatus, OfferingType } fro
 import { DEFAULT_RICH_TEXT_TYPOGRAPHY, normalizeRichTextTypography, type RichTextTypography } from "./rich-text-typography";
 import type { Json } from "../supabase/types";
 import { logAction } from "./history-logs";
+import { duplicateOfferingIdentity } from "./offering-duplication";
 
 const TABLE = "offerings";
 const HERO_SETTINGS_TABLE = "offering_public_hero_settings";
@@ -102,14 +103,6 @@ function uniqueSlug(items: Offering[], baseSlug: string, currentId?: string) {
   let counter = 2;
   while (taken.has(`${baseSlug}-${counter}`)) counter++;
   return `${baseSlug}-${counter}`;
-}
-
-function duplicateSlugBase(slug: string, items: Offering[]) {
-  const match = slug.match(/^(.*)-(\d+)$/);
-  if (match?.[1] && items.some((item) => item.slug === match[1])) {
-    return match[1];
-  }
-  return slug;
 }
 
 function normalizeTextArray(value: unknown) {
@@ -903,8 +896,16 @@ export async function duplicateOffering(id: string) {
     expires_at: null,
     expired_at: null,
   };
+  const identity = duplicateOfferingIdentity(original, offerings);
   const copy = normalizeOffering(
-    { ...duplicateData, title: `${original.title} (copia)`, slug: duplicateSlugBase(original.slug, offerings), status: "draft", deleted_at: null },
+    {
+      ...duplicateData,
+      title: identity.title,
+      slug: identity.slug,
+      details: identity.details,
+      status: "draft",
+      deleted_at: null,
+    },
     undefined,
     offerings,
   );
