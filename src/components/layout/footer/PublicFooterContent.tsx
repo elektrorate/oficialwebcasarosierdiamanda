@@ -5,6 +5,7 @@ import type { SiteSettings } from "@/lib/cms/settings";
 import {
   buildPublicFooterViewModel,
   type PublicFooterViewModel,
+  type SiteSocialSlice,
 } from "@/lib/cms/public-footer-model";
 import type { FooterComponent, Form } from "@/lib/cms/types";
 import { FooterContactForm } from "./FooterContactForm";
@@ -17,7 +18,14 @@ export type PublicFooterContentProps = {
   contactForm?: Form | null;
   siteContact?: SiteSettings["contact"];
   siteName?: string;
+  /** Texto legal global (`footer.legal_text`). */
   footerLegalText?: string;
+  /** Texto descriptivo global (`footer.footer_text`). */
+  footerBrandText?: string;
+  footerLogoUrl?: string;
+  siteSocial?: SiteSocialSlice;
+  showContactInfo?: boolean;
+  showSocialLinks?: boolean;
   socialTrack?: boolean;
   preview?: boolean;
 };
@@ -29,6 +37,11 @@ export function PublicFooterContent({
   siteContact,
   siteName = "Casa Rosier",
   footerLegalText,
+  footerBrandText,
+  footerLogoUrl,
+  siteSocial,
+  showContactInfo,
+  showSocialLinks,
   socialTrack = false,
   preview = false,
 }: PublicFooterContentProps) {
@@ -49,8 +62,25 @@ export function PublicFooterContent({
         },
         siteName,
         footerLegalText,
+        footerBrandText,
+        footerLogoUrl,
+        siteSocial,
+        showContactInfo,
+        showSocialLinks,
       }),
-    [contactForm, footer, footerLegalText, modelProp, siteContact, siteName],
+    [
+      contactForm,
+      footer,
+      footerBrandText,
+      footerLegalText,
+      footerLogoUrl,
+      modelProp,
+      showContactInfo,
+      showSocialLinks,
+      siteContact,
+      siteName,
+      siteSocial,
+    ],
   );
 
   const marqueeHref = model.socialLinks[0]?.url?.trim() || null;
@@ -67,6 +97,23 @@ export function PublicFooterContent({
         className="py-[clamp(64px,8vw,92px)] pb-[clamp(48px,6vw,72px)]"
       >
         <div className="container max-w-[min(560px,100%)] flex flex-col items-stretch gap-[clamp(28px,4vw,40px)]">
+          {model.logoUrl || model.brandText ? (
+            <div className="flex flex-col items-center gap-[12px] text-center">
+              {model.logoUrl ? (
+                <img
+                  src={model.logoUrl}
+                  alt={siteName}
+                  className="h-auto max-h-[72px] w-auto object-contain"
+                  loading="lazy"
+                />
+              ) : null}
+              {model.brandText ? (
+                <p className="m-0 max-w-[46ch] text-[13px] leading-normal font-light text-[#57534e] [font-family:var(--font-menu)]">
+                  {model.brandText}
+                </p>
+              ) : null}
+            </div>
+          ) : null}
           <FooterContactInfo model={model} variant="editorial" />
           <FooterContactForm config={model.contactForm} preview={preview} />
           <nav

@@ -5,7 +5,6 @@ export function splitNavigationColumns(items: NavigationItem[]) {
 
   const visible = items
     .filter((item) => item.visible)
-    .filter((item) => !["/#hero", "/", "/home"].includes(item.href))
     .sort((a, b) => a.order - b.order);
   const mid = Math.ceil(visible.length / 2);
   return {

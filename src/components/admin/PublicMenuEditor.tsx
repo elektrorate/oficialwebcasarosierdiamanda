@@ -2,6 +2,7 @@
 
 import type { CSSProperties } from "react";
 import { useState } from "react";
+import { SECTION_BASES, SECTION_TYPES, menuSlug } from "@/lib/cms/menu-routing";
 import type { NavigationItem } from "@/data/types";
 import AdminActionModal from "./AdminActionModal";
 import ColorPickerField from "./ColorPickerField";
@@ -21,6 +22,7 @@ type EditableMenuItem = {
   key: string;
   label: string;
   url: string;
+  url_auto?: boolean;
   sort_order: number;
   type: MenuItemType;
   linked_entity_type: LinkedEntityType;
@@ -35,7 +37,7 @@ type EditableMenuChild = Omit<EditableMenuItem, "children" | "locked"> & {
   parent_id?: string | null;
 };
 
-type PublishMenuResponse = { items?: MenuItem[]; error?: string };
+type PublishMenuResponse = { items?: MenuItem[]; error?: string; revision?: string; messages?: string[] };
 type ActionModalState = { type: "success" | "error"; title: string; message: string } | null;
 
 const DYNAMIC_MENU_KEYS = new Set(["clases", "workshops", "experiencias", "giftcards"]);
@@ -141,6 +143,9 @@ function mergeChildrenWithSavedOrder(available: EditableMenuChild[], saved: Edit
         usedUrls.add(byId.url);
         merged.push({
           ...byId,
+          id: child.id,
+          label: child.label,
+          url_auto: child.url_auto,
           is_visible: child.is_visible,
           open_in_new_tab: child.open_in_new_tab,
         });
@@ -152,6 +157,9 @@ function mergeChildrenWithSavedOrder(available: EditableMenuChild[], saved: Edit
       usedUrls.add(child.url);
       merged.push({
         ...byUrl,
+        id: child.id,
+        label: child.label,
+        url_auto: child.url_auto,
         is_visible: child.is_visible,
         open_in_new_tab: child.open_in_new_tab,
       });
@@ -204,6 +212,7 @@ function itemToEditable(item: MenuItem, children: MenuItem[]): EditableMenuItem 
       key: child.id,
       label: child.label,
       url: child.url,
+      url_auto: (child as MenuItem & { url_auto?: boolean }).url_auto,
       sort_order: child.sort_order,
       type: child.type,
       linked_entity_type: child.linked_entity_type,
@@ -218,7 +227,8 @@ function itemToEditable(item: MenuItem, children: MenuItem[]): EditableMenuItem 
     key,
     label: item.label,
     url: item.url || defaultPoint?.url || "/",
-    sort_order: defaultPoint?.sort_order ?? item.sort_order,
+    url_auto: (item as MenuItem & { url_auto?: boolean }).url_auto,
+    sort_order: item.sort_order,
     type: item.type,
     linked_entity_type: item.linked_entity_type,
     linked_entity_id: item.linked_entity_id || (defaultPoint ? systemMenuRootId(defaultPoint.key as SystemMenuRootKey) : ""),
@@ -276,6 +286,7 @@ function payloadFor(item: EditableMenuItem | EditableMenuChild, parentId: string
     label: item.label.trim(),
     type: item.type,
     url: normalizeMenuUrl(item.url) ?? item.url.trim(),
+    url_auto: item.url_auto !== false,
     linked_entity_type: item.linked_entity_type,
     linked_entity_id: item.linked_entity_id,
     parent_id: parentId,
@@ -338,12 +349,19 @@ export default function PublicMenuEditor({
   initialMenu,
   initialSettings,
   availableNavigationItems,
+  initialRevision = "",
 }: {
   initialMenu: Menu | null;
   initialSettings: SiteSettings;
   availableNavigationItems: NavigationItem[];
+  initialRevision?: string;
 }) {
   const [items, setItems] = useState(() => buildEditableMenu(initialMenu, availableNavigationItems));
+  const [revision, setRevision] = useState(initialRevision);
+  const [confirmMoves, setConfirmMoves] = useState(false);
+  const [draggedRoot, setDraggedRoot] = useState<string | null>(null);
+  const [previewMessages, setPreviewMessages] = useState<string[] | null>(null);
+  const [savedUrls, setSavedUrls] = useState(() => new Map(items.flatMap((item) => [item, ...item.children]).map((item) => [item.linked_entity_id || item.key, item.url])));
   const [logoUrl, setLogoUrl] = useState(initialSettings.menu.header_logo_url);
   const [scrollBackgroundColor, setScrollBackgroundColor] = useState(initialSettings.menu.scroll_menu_background_color);
   const [scrollTextColor, setScrollTextColor] = useState(initialSettings.menu.scroll_menu_text_color);
@@ -353,24 +371,39 @@ export default function PublicMenuEditor({
   const [error, setError] = useState<string | null>(null);
   const [actionModal, setActionModal] = useState<ActionModalState>(null);
 
-  const canSave = Boolean(initialMenu?.id) && !isSaving;
-  const saveLabel = isSaving ? "Publicando..." : "Publicar";
+  const canSave = Boolean(initialMenu?.id && revision) && !isSaving;
+  const saveLabel = isSaving ? "Procesando..." : previewMessages === null ? "Revisar cambios" : "Publicar";
 
   function updateItem(key: string, patch: Partial<EditableMenuItem>) {
-    setItems((current) => current.map((item) => item.key === key ? { ...item, ...patch } : item));
+    setPreviewMessages(null);
+    setItems((current) => current.map((item) => {
+      if (item.key !== key) return item;
+      const next = { ...item, ...patch };
+      if (patch.url_auto === false) next.url = savedUrls.get(item.linked_entity_id || item.key) ?? item.url;
+      if (SECTION_BASES[key] && next.url_auto !== false && (patch.label !== undefined || patch.url_auto === true)) next.url = `/${menuSlug(next.label)}`;
+      return next;
+    }));
   }
 
   function updateChild(parentKey: string, childKey: string, patch: Partial<EditableMenuChild>) {
+    setPreviewMessages(null);
     setItems((current) => current.map((item) => {
       if (item.key !== parentKey) return item;
       return {
         ...item,
-        children: item.children.map((child) => child.key === childKey ? { ...child, ...patch } : child),
+        children: item.children.map((child) => {
+          if (child.key !== childKey) return child;
+          const next = { ...child, ...patch };
+          if (patch.url_auto === false) next.url = `${SECTION_BASES[parentKey]}/${(savedUrls.get(child.linked_entity_id || child.key) ?? child.url).split("/").pop()}`;
+          if (next.linked_entity_type === "offering" && next.url_auto !== false && (patch.label !== undefined || patch.url_auto === true)) next.url = `${SECTION_BASES[parentKey]}/${menuSlug(next.label)}`;
+          return next;
+        }),
       };
     }));
   }
 
   function moveChild(parentKey: string, childKey: string, direction: -1 | 1) {
+    setPreviewMessages(null);
     setItems((current) => current.map((item) => {
       if (item.key !== parentKey) return item;
       const currentIndex = item.children.findIndex((child) => child.key === childKey);
@@ -384,6 +417,29 @@ export default function PublicMenuEditor({
         children: children.map((child, index) => ({ ...child, sort_order: index })),
       };
     }));
+  }
+
+  function moveRoot(key: string, targetIndex: number) {
+    setPreviewMessages(null);
+    setItems((current) => {
+      if (targetIndex < 0 || targetIndex >= current.length) return current;
+      const next = [...current]; const index = next.findIndex((item) => item.key === key);
+      if (index < 0) return current;
+      const [item] = next.splice(index, 1); next.splice(targetIndex, 0, item);
+      return next.map((entry, sort_order) => ({ ...entry, sort_order }));
+    });
+  }
+
+  function transferChild(parentKey: string, childKey: string, destination: string) {
+    setPreviewMessages(null); setConfirmMoves(false);
+    setItems((current) => {
+      const child = current.find((item) => item.key === parentKey)?.children.find((item) => item.key === childKey);
+      if (!child || !SECTION_TYPES[destination]) return current;
+      return current.map((item) => ({ ...item, children: (
+        item.key === parentKey ? item.children.filter((entry) => entry.key !== childKey) :
+        item.key === destination ? [...item.children, { ...child, url: `${SECTION_BASES[destination]}/${child.url.split("/").pop()}` }] : item.children
+      ).map((entry, sort_order) => ({ ...entry, sort_order })) }));
+    });
   }
 
   async function handleSave() {
@@ -411,6 +467,9 @@ export default function PublicMenuEditor({
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           menuId: initialMenu.id,
+          revision,
+          confirmMoves,
+          preview: previewMessages === null,
           settings: {
             menu: {
               header_logo_url: logoUrl,
@@ -433,7 +492,10 @@ export default function PublicMenuEditor({
       });
 
       const data = await response.json().catch(() => ({})) as PublishMenuResponse;
-      if (!response.ok || !data.items) throw new Error(data.error || "No se pudo publicar el menú.");
+      if (!response.ok) throw new Error(data.error || "No se pudo publicar el menú.");
+      if (previewMessages === null) { setPreviewMessages(data.messages ?? []); return; }
+      if (!data.items || !data.revision) throw new Error("No se pudo confirmar la publicación. Recarga antes de volver a intentarlo.");
+      setRevision(data.revision); setPreviewMessages(null);
 
       const savedRoots = data.items
         .filter((item) => !item.parent_id)
@@ -453,16 +515,19 @@ export default function PublicMenuEditor({
         return {
           ...item,
           id: savedRoot?.id ?? item.id,
+          url: savedRoot?.url ?? item.url,
           sort_order: index,
           children: item.children.map((child, childIndex) => ({
             ...child,
             id: savedChildren[childIndex]?.id ?? child.id,
+            url: savedChildren[childIndex]?.url ?? child.url,
             parent_id: savedRoot?.id ?? child.parent_id,
             sort_order: childIndex,
           })),
         };
       });
       setItems(savedItems);
+      setSavedUrls(new Map(savedItems.flatMap((item) => [item, ...item.children]).map((item) => [item.linked_entity_id || item.key, item.url])));
       setActionModal({
         type: "success",
         title: "Menú publicado",
@@ -504,9 +569,10 @@ export default function PublicMenuEditor({
 
       {error ? <p className="form-error">{error}</p> : null}
 
-      <div className="public-menu-editor__panel">
+      <fieldset className="public-menu-editor__panel" disabled={isSaving} style={{ border: 0, minWidth: 0 }}>
+        <legend className="sr-only">Edición del menú público</legend>
         <p className="form-help">
-          Las rutas internas deben empezar por /. Cambiar una URL modifica el enlace del menú, pero no crea ni renombra la página de destino.
+          Cambia nombres y orden, o mueve páginas a otra sección. Primero revisa los cambios y después publícalos. Las direcciones anteriores seguirán funcionando mediante redirecciones.
         </p>
         <div className="public-menu-list" aria-label="Puntos del menú">
           <div className="public-menu-simple" role="table" aria-label="Editor simple del menú público">
@@ -516,8 +582,15 @@ export default function PublicMenuEditor({
               <span role="columnheader">Comportamiento</span>
             </div>
             <div className="public-menu-simple__body">
-              {items.map((item) => (
-                <div className="public-menu-simple__group" key={item.key}>
+              {items.map((item, itemIndex) => (
+                <div className="public-menu-simple__group" key={item.key}
+                  onDragOver={(event) => event.preventDefault()}
+                  onDrop={(event) => { event.preventDefault(); if (draggedRoot) moveRoot(draggedRoot, itemIndex); setDraggedRoot(null); }}>
+                  <div aria-label={`Orden de ${item.label}`}>
+                    <button type="button" draggable onDragStart={() => setDraggedRoot(item.key)} onDragEnd={() => setDraggedRoot(null)} aria-label={`Arrastrar ${item.label}`}>↕</button>
+                    <button type="button" disabled={itemIndex === 0 || isSaving} onClick={() => moveRoot(item.key, itemIndex - 1)}>Subir {item.label}</button>
+                    <button type="button" disabled={itemIndex === items.length - 1 || isSaving} onClick={() => moveRoot(item.key, itemIndex + 1)}>Bajar {item.label}</button>
+                  </div>
                   <div className="public-menu-simple__row" role="row">
                     <label className="public-menu-simple__field public-menu-simple__field--label">
                       <span>{item.locked ? "Elemento fijo" : "Nombre visible"}</span>
@@ -531,13 +604,14 @@ export default function PublicMenuEditor({
                       <span>{item.locked ? "URL fija" : "URL del enlace"}</span>
                       <input
                         value={item.url}
-                        readOnly={item.locked}
+                        readOnly={item.locked || (Boolean(SECTION_BASES[item.key]) && item.url_auto !== false)}
                         placeholder="/ruta"
                         aria-label={`URL de ${item.label || "elemento del menú"}`}
                         onChange={(event) => updateItem(item.key, { url: event.target.value })}
                       />
                     </label>
                     <div className="public-menu-simple__options">
+                      {!item.locked && SECTION_BASES[item.key] ? <label><input type="checkbox" checked={item.url_auto !== false} onChange={(event) => updateItem(item.key, { url_auto: event.target.checked })} /> URL según el nombre</label> : null}
                       <label className="public-menu-simple__option">
                         <input
                           type="checkbox"
@@ -562,7 +636,7 @@ export default function PublicMenuEditor({
                   {item.children.map((child, childIndex) => {
                     const hasAutomaticUrl = child.linked_entity_type === "offering";
                     return (
-                    <div className="public-menu-simple__row public-menu-simple__row--child" role="row" key={child.key}>
+                    <div id={hasAutomaticUrl ? `offering-${child.linked_entity_id}` : undefined} className="public-menu-simple__row public-menu-simple__row--child" role="row" key={child.key}>
                       <label className="public-menu-simple__field public-menu-simple__field--label">
                         <span>Subelemento</span>
                         <input
@@ -574,7 +648,7 @@ export default function PublicMenuEditor({
                       <label className="public-menu-simple__field public-menu-simple__field--url">
                         <span>{hasAutomaticUrl ? "URL automática" : "URL del enlace"}</span>
                         <input
-                          value={child.url}
+                        value={hasAutomaticUrl ? `${item.url}/${child.url.split("/").pop()}` : child.url}
                           readOnly={hasAutomaticUrl}
                           placeholder="/ruta"
                           aria-label={`URL de ${child.label || "subelemento del menú"}`}
@@ -582,6 +656,14 @@ export default function PublicMenuEditor({
                         />
                       </label>
                       <div className="public-menu-simple__options">
+                        {hasAutomaticUrl ? <>
+                          <label><input type="checkbox" checked={child.url_auto !== false} onChange={(event) => updateChild(item.key, child.key, { url_auto: event.target.checked })} /> URL según el nombre (desactiva para conservarla)</label>
+                          <label>Mover página a
+                            <select aria-label={`Sección de ${child.label}`} value={item.key} onChange={(event) => transferChild(item.key, child.key, event.target.value)}>
+                              {items.filter((root) => SECTION_TYPES[root.key]).map((root) => <option key={root.key} value={root.key}>{root.label}</option>)}
+                            </select>
+                          </label>
+                        </> : null}
                         <label className="public-menu-simple__option">
                           <input
                             type="checkbox"
@@ -627,6 +709,8 @@ export default function PublicMenuEditor({
             </div>
           </div>
         </div>
+        <label><input type="checkbox" checked={confirmMoves} onChange={(event) => { setConfirmMoves(event.target.checked); setPreviewMessages(null); }} /> Confirmo los traslados de sección. Se conservan los datos; Gift Cards y otras secciones pueden presentar opciones distintas.</label>
+        {previewMessages !== null ? <div role="status"><strong>Revisión antes de publicar</strong><ul>{previewMessages.map((message) => <li key={message}>{message}</li>)}</ul><p>El orden y la visibilidad de la vista previa también se guardarán. Pulsa Publicar de nuevo para confirmar.</p></div> : null}
 
         <div className="settings-section">
           <div className="section-head compact">
@@ -675,8 +759,7 @@ export default function PublicMenuEditor({
             logoTintColor={scrollLogoTintColor}
           />
         </div>
-      </div>
-
+      </fieldset>
       <button
         type="button"
         className="public-menu-editor__fixed-save primary-btn"
@@ -688,3 +771,4 @@ export default function PublicMenuEditor({
     </div>
   );
 }
+

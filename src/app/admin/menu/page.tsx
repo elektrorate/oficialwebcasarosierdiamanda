@@ -3,6 +3,7 @@ import PublicMenuEditor from "@/components/admin/PublicMenuEditor";
 import { getMenuByLocation } from "@/lib/cms/menus";
 import { getPublicNavigationItems, invalidatePublicNavigationCache } from "@/lib/cms/navigation-public";
 import { getSettings } from "@/lib/cms/settings";
+import { getMenuPublicationSnapshot } from "@/lib/cms/menu-publication";
 
 export default async function MenuPage() {
   invalidatePublicNavigationCache();
@@ -13,9 +14,14 @@ export default async function MenuPage() {
     getPublicNavigationItems("main"),
   ]);
 
+  let revision = "";
+  let publicationError = "";
+  try { if (menu) revision = (await getMenuPublicationSnapshot(menu.id)).revision; }
+  catch (error) { publicationError = error instanceof Error ? error.message : "No se pudo preparar la publicación."; }
   return (
     <AdminShell>
-      <PublicMenuEditor initialMenu={menu} initialSettings={settings} availableNavigationItems={navigationItems} />
+      {publicationError ? <p role="alert">{publicationError}</p> : null}
+      <PublicMenuEditor initialMenu={menu} initialSettings={settings} availableNavigationItems={navigationItems} initialRevision={revision} />
     </AdminShell>
   );
 }

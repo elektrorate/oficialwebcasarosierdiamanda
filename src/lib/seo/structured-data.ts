@@ -13,12 +13,17 @@ function breadcrumbJsonLd(sectionName: string, sectionPath: string, pageName: st
   };
 }
 
-export function organizationJsonLd(siteName: string) {
+export function organizationJsonLd(
+  siteName: string,
+  options: { description?: string; logoUrl?: string } = {},
+) {
   return {
     "@context": "https://schema.org",
     "@type": "Organization",
     name: siteName,
     url: getAbsoluteSiteUrl("/"),
+    ...(options.description?.trim() ? { description: options.description.trim() } : {}),
+    ...(options.logoUrl?.trim() ? { logo: options.logoUrl.trim() } : {}),
   };
 }
 

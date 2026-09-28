@@ -5,6 +5,8 @@ import { getOfferings, isPubliclyVisibleOffering } from "@/lib/cms/offerings";
 import { getProducts } from "@/lib/cms/products";
 import { getAbsoluteSiteUrl } from "@/lib/seo/site-url";
 import { isValidPublicSlug } from "@/lib/seo/public-slug";
+import { getPublicSectionRoutes } from "@/lib/cms/public-section-routes";
+import { canonicalMenuPath } from "@/lib/cms/menu-routing";
 
 export const revalidate = 900;
 
@@ -91,5 +93,10 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     });
   }
 
-  return Array.from(new Map(entries.map((entry) => [entry.url, entry])).values());
+  const routes = await getPublicSectionRoutes();
+  const canonicalEntries = entries.map((entry) => {
+    const url = new URL(entry.url); url.pathname = canonicalMenuPath(url.pathname, routes);
+    return { ...entry, url: url.toString() };
+  });
+  return Array.from(new Map(canonicalEntries.map((entry) => [entry.url, entry])).values());
 }

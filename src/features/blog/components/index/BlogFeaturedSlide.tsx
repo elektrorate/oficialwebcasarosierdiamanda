@@ -4,7 +4,7 @@ import type { BlogPost } from "@/data/types";
 import { assetPath } from "@/lib/assets";
 import { BlogFeaturedSlideCard } from "./BlogFeaturedSlideCard";
 
-export function BlogFeaturedSlide({ post }: { post: BlogPost }) {
+export function BlogFeaturedSlide({ post, timeZone }: { post: BlogPost; timeZone?: string }) {
   const image = post.featuredImage ?? post.coverImage;
 
   return (
@@ -23,7 +23,7 @@ export function BlogFeaturedSlide({ post }: { post: BlogPost }) {
           quality={85}
         />
       </Link>
-      <BlogFeaturedSlideCard post={post} />
+      <BlogFeaturedSlideCard post={post} timeZone={timeZone} />
     </>
   );
 }

@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useMemo } from "react";
+import Link from "next/link";
 import AdminActionModal from "@/components/admin/AdminActionModal";
 import MediaLibraryModal from "@/components/admin/MediaLibraryModal";
 import SharedHeroEditor from "@/components/admin/SharedHeroEditor";
@@ -44,6 +45,7 @@ export default function ClassEditForm({
 
   return (
     <>
+      {mode === "edit" ? <p className="form-help">Para trasladar esta página, guarda primero los cambios y abre <Link href={`/admin/menu#offering-${offering.id}`}>Mover a otra sección</Link>.</p> : null}
       <AdminActionModal
         open={Boolean(form.toast)}
         type={form.toast?.type}

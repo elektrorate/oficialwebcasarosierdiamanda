@@ -1,12 +1,15 @@
 import AdminShell from "@/components/admin/AdminShell";
 import SettingsForm from "@/components/admin/SettingsForm";
+import { getPublicFooter } from "@/lib/cms/footers";
 import { getMenuByLocation } from "@/lib/cms/menus";
 import { getSettings } from "@/lib/cms/settings";
+import { resolveSettingsOrigins } from "@/lib/cms/settings-overrides";
 
 export default async function SettingsPage() {
-  const [settings, mainMenu] = await Promise.all([
+  const [settings, mainMenu, footer] = await Promise.all([
     getSettings(),
     getMenuByLocation("main"),
+    getPublicFooter(),
   ]);
 
   return (
@@ -19,7 +22,11 @@ export default async function SettingsPage() {
         </div>
       </div>
 
-      <SettingsForm initial={settings} initialMenu={mainMenu} />
+      <SettingsForm
+        initial={settings}
+        initialMenu={mainMenu}
+        origins={resolveSettingsOrigins(footer)}
+      />
     </AdminShell>
   );
 }

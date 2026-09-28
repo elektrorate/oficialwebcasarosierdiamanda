@@ -4,6 +4,8 @@ import { systemMenuRootKey } from "./menu-links";
 import { getMenuByLocation } from "./menus";
 import { getOfferings, isPubliclyVisibleOffering } from "./offerings";
 import type { MenuItem, Offering } from "./types";
+import { getPublicSectionRoutes } from "./public-section-routes";
+import { canonicalMenuPath } from "./menu-routing";
 
 type DynamicMenuKey = "classes" | "workshops" | "privateBookings" | "giftCards";
 const PUBLIC_NAV_CACHE_TTL_MS = Number(process.env.CMS_PUBLIC_NAV_CACHE_MS ?? 0);
@@ -250,7 +252,7 @@ function withDynamicChildren(items: NavigationItem[], dynamicChildren: Record<Dy
   return normalizePublicMenuStructure(enhanced);
 }
 
-export async function getPublicNavigationItems(location: "main" | "mobile" | "footer" = "main") {
+async function getUnmappedNavigationItems(location: "main" | "mobile" | "footer" = "main") {
   const cached = getCachedPublicNavigation(location);
   if (cached) return cached;
 
@@ -276,4 +278,12 @@ export async function getPublicNavigationItems(location: "main" | "mobile" | "fo
   }
 
   return cachePublicNavigation(location, location === "footer" ? items : normalizePublicMenuStructure(items));
+}
+
+export async function getPublicNavigationItems(location: "main" | "mobile" | "footer" = "main") {
+  const [items, routes] = await Promise.all([getUnmappedNavigationItems(location === "mobile" ? "main" : location), getPublicSectionRoutes()]);
+  const mapItem = (item: NavigationItem): NavigationItem => ({ ...item,
+    href: canonicalMenuPath(item.href, routes), children: item.children?.map(mapItem),
+  });
+  return items.map(mapItem);
 }

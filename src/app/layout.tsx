@@ -2,11 +2,14 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import { Baskervville, Inter, Manrope, Roboto_Flex } from "next/font/google";
 import { SiteChrome } from "@/components/layout/SiteChrome";
+import { SiteTimeZoneProvider } from "@/components/layout/SiteTimeZoneProvider";
 import { WhatsAppFloat } from "@/components/layout/WhatsAppFloat";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { getSettings } from "@/lib/cms/settings";
 import { organizationJsonLd } from "@/lib/seo/structured-data";
 import { getSiteUrl } from "@/lib/seo/site-url";
+import { resolveRobotsMetadata } from "@/lib/seo/site-robots";
+import { siteHtmlLang, siteOpenGraphLocale } from "@/lib/seo/site-language";
 import "./tailwind.css";
 import "./legacy/base.css";
 import "./legacy/cart.css";
@@ -64,13 +67,24 @@ const nunito = localFont({
 
 export const revalidate = 900;
 
+const FALLBACK_SITE_DESCRIPTION = "Studio de ceramica en Barcelona";
+const FALLBACK_FAVICON = "/img/logo-header.png";
+
 export async function generateMetadata(): Promise<Metadata> {
   const settings = await getSettings();
   const siteName = settings.site.site_name || "Casa Rosier";
   const title = settings.seo.default_seo_title || siteName;
-  const description = settings.seo.default_seo_description || "Studio de ceramica en Barcelona";
+  const description =
+    settings.seo.default_seo_description ||
+    settings.site.site_description ||
+    FALLBACK_SITE_DESCRIPTION;
   const ogImage = settings.seo.default_og_image_url?.trim();
   const images = ogImage ? [ogImage] : undefined;
+
+  // `robots_index` y `robots_follow` son independientes: cada uno añade solo su
+  // directiva. Un SEO de página concreta puede sobrescribir este objeto entero
+  // (Next.js no fusiona `robots` entre layouts padre e hijo).
+  const robots = resolveRobotsMetadata(settings.seo);
 
   return {
     metadataBase: new URL(getSiteUrl()),
@@ -80,16 +94,15 @@ export async function generateMetadata(): Promise<Metadata> {
     },
     description,
     icons: {
-      icon: "/img/logo-header.png",
+      icon: settings.site.favicon_url?.trim() || FALLBACK_FAVICON,
+      ...(settings.site.logo_url?.trim() ? { shortcut: settings.site.logo_url.trim() } : {}),
     },
-    ...(settings.seo.robots_index === false
-      ? { robots: { index: false, follow: false } }
-      : {}),
+    ...(robots ? { robots } : {}),
     openGraph: {
       title,
       description,
       siteName,
-      locale: "es_ES",
+      locale: siteOpenGraphLocale(settings.site.default_language),
       type: "website",
       ...(images ? { images } : {}),
     },
@@ -113,13 +126,21 @@ export default async function RootLayout({
   const siteName = settings.site.site_name || "Casa Rosier";
 
   return (
-    <html lang="es" data-scroll-behavior="smooth">
+    <html lang={siteHtmlLang(settings.site.default_language)} data-scroll-behavior="smooth">
       <body
         suppressHydrationWarning
         className={`${baskervville.variable} ${inter.variable} ${manrope.variable} ${robotoFlex.variable} ${nunito.variable}`}
       >
-        <JsonLd data={organizationJsonLd(siteName)} />
-        {children}
+        <JsonLd
+          data={organizationJsonLd(siteName, {
+            description:
+              settings.seo.default_seo_description || settings.site.site_description,
+            logoUrl: settings.site.logo_url?.trim(),
+          })}
+        />
+        <SiteTimeZoneProvider timeZone={settings.site.timezone}>
+          {children}
+        </SiteTimeZoneProvider>
         <SiteChrome whatsappFloat={<WhatsAppFloat />} />
       </body>
     </html>

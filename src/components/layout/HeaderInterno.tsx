@@ -16,7 +16,7 @@ export async function HeaderInterno(props: HeaderInternoProps) {
     <HeaderInternoView
       {...props}
       navigationItems={navigationItems}
-      menu={resolveEditorialScrollMenu(settings.menu)}
+      menu={resolveEditorialScrollMenu(settings.menu, settings.site)}
     />
   );
 }

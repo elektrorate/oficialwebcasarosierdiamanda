@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { publicOfferingPath } from "@/lib/cms/offering-routes";
+import { canonicalPublicPath } from "@/lib/cms/public-section-routes";
 import type { ExperienceItem, ExperienceKind } from "@/data/types";
 import { getOfferingBySlug, getOfferings, isPubliclyVisibleOffering } from "@/lib/cms/offerings";
 import { normalizeHeroSettings } from "@/lib/cms/hero-settings";
@@ -594,7 +595,7 @@ export async function generateExperienceMetadata(
     title: { absolute: item.seoTitle },
     description: item.seoDescription,
     alternates: {
-      canonical: publicOfferingPath(offering) ?? undefined,
+      canonical: await canonicalPublicPath(publicOfferingPath(offering) ?? "/"),
     },
     openGraph: {
       title: item.seoTitle,

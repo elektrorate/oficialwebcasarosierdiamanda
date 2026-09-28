@@ -30,8 +30,48 @@ export type PublicFooterViewModel = {
   mapLinkLines: readonly [string, string];
   socialLinks: SocialLink[];
   legalCopy: string;
+  /** Texto descriptivo global (`footer.footer_text`); nunca sustituye al legal. */
+  brandText: string | null;
+  /** Logo global del footer (`footer.footer_logo_url`). */
+  logoUrl: string | null;
+  showContactInfo: boolean;
+  showSocialLinks: boolean;
   contactForm: PublicFooterContactFormProps;
 };
+
+/** Plataformas de Configuración global → icono por defecto del footer. */
+const SOCIAL_PLATFORM_ICONS: Array<{ platform: string; icon: string; label: string }> = [
+  { platform: "instagram", icon: "/img/icon-instagram.svg", label: "Instagram" },
+  { platform: "facebook", icon: "/img/icon-facebook.svg", label: "Facebook" },
+  { platform: "tiktok", icon: "/img/icon-instagram.svg", label: "TikTok" },
+  { platform: "youtube", icon: "/img/icon-instagram.svg", label: "YouTube" },
+  { platform: "pinterest", icon: "/img/icon-instagram.svg", label: "Pinterest" },
+];
+
+export type SiteSocialSlice = Record<string, string>;
+
+/**
+ * Redes sociales globales como enlaces del footer.
+ * Se usan SOLO si el editor del footer no define los suyos (no es una
+ * sobrescritura: el footer manda cuando tiene contenido).
+ */
+export function socialLinksFromSiteSettings(social: SiteSocialSlice | undefined): SocialLink[] {
+  if (!social) return [];
+  return SOCIAL_PLATFORM_ICONS.flatMap(({ platform, icon, label }) => {
+    const url = (social[`${platform}_url`] ?? "").trim();
+    if (!url) return [];
+    return [
+      {
+        platform,
+        url,
+        label,
+        icon_url: icon,
+        icon_color: "",
+        button_color: "",
+      } satisfies SocialLink,
+    ];
+  });
+}
 
 function parseContactBlock(contactText: string) {
   const lines = contactText
@@ -96,7 +136,14 @@ export function buildPublicFooterViewModel(input: {
   contactForm: Form | null | undefined;
   siteContact: SiteContactSlice;
   siteName: string;
+  /** Texto legal global (`footer.legal_text`); el del footer tiene prioridad. */
   footerLegalText?: string;
+  /** Texto descriptivo global (`footer.footer_text`). */
+  footerBrandText?: string;
+  footerLogoUrl?: string;
+  siteSocial?: SiteSocialSlice;
+  showContactInfo?: boolean;
+  showSocialLinks?: boolean;
 }): PublicFooterViewModel {
   const footer = input.footer;
   const resolved = resolvePublicFooterContact(footer, input.siteContact);
@@ -117,10 +164,22 @@ export function buildPublicFooterViewModel(input: {
       ? resolved.address
       : null;
 
+  // Prioridad de redes: editor del footer → Configuración global → valores por
+  // defecto del tema. El footer solo sustituye al global cuando tiene enlaces.
   const socialFromFooter = normalizePublicSocialLinks(footer?.social_links);
-  const socialLinks = socialFromFooter.length ? socialFromFooter : DEFAULT_FOOTER_SOCIAL_LINKS;
+  const socialFromSettings = socialLinksFromSiteSettings(input.siteSocial);
+  const socialLinks = socialFromFooter.length
+    ? socialFromFooter
+    : socialFromSettings.length
+      ? socialFromSettings
+      : DEFAULT_FOOTER_SOCIAL_LINKS;
+
+  const showContactInfo = input.showContactInfo !== false;
+  const showSocialLinks = input.showSocialLinks !== false;
 
   const form = input.contactForm ?? null;
+  // Texto legal: el del footer manda; si no hay, el global `legal_text`; si no,
+  // una firma con el nombre del sitio. `footer_text` NO se usa aquí.
   const legalFromFooter = footer?.legal_text?.trim();
   const legalFromSettings = input.footerLegalText?.trim();
   const legalCopy =
@@ -139,14 +198,23 @@ export function buildPublicFooterViewModel(input: {
       socialButtonColor: theme.socialButton,
       socialIconColor: theme.socialIcon,
     },
-    contactTitle: footer?.contact_title?.trim() || DEFAULT_FOOTER_CONTACT_TITLE,
-    contactLines,
+    contactTitle:
+      showContactInfo && contactLines.length
+        ? footer?.contact_title?.trim() || DEFAULT_FOOTER_CONTACT_TITLE
+        : "",
+    // Con `show_contact_info` desactivado se vacían las líneas y la dirección;
+    // el formulario de contacto y los enlaces legales se conservan.
+    contactLines: showContactInfo ? contactLines : [],
     socialTitle,
-    extraAddress: extraAddress || null,
-    mapUrl: resolved.mapUrl || null,
+    extraAddress: showContactInfo ? extraAddress || null : null,
+    mapUrl: showContactInfo ? resolved.mapUrl || null : null,
     mapLinkLines: DEFAULT_FOOTER_MAP_LINK_LINES,
-    socialLinks,
+    socialLinks: showSocialLinks ? socialLinks : [],
     legalCopy,
+    brandText: input.footerBrandText?.trim() || null,
+    logoUrl: input.footerLogoUrl?.trim() || null,
+    showContactInfo,
+    showSocialLinks,
     contactForm: {
       form,
       slug: form?.slug ?? "footer-contact",

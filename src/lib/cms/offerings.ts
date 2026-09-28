@@ -19,6 +19,8 @@ const OFFERINGS_CACHE_TTL_MS = 15_000;
 
 let offeringsCache: { items: Offering[]; expiresAt: number } | null = null;
 
+export function invalidateOfferingsCache() { offeringsCache = null; }
+
 type OfferingInput = Partial<Omit<Offering, "id" | "created_at" | "updated_at" | "deleted_at">> & {
   id?: string;
   deleted_at?: string | null;

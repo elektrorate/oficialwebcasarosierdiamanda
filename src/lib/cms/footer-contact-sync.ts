@@ -1,6 +1,6 @@
 import type { FooterComponent } from "./types";
-import type { SiteSettings } from "./settings";
-import { getSettings, updateContactSettings } from "./settings";
+import type { SiteSettings } from "./settings-types";
+import { updateContactSettings } from "./settings";
 
 export type SiteContactSlice = SiteSettings["contact"];
 
@@ -51,12 +51,9 @@ export function siteContactPatchFromFooterDisplaySync(
 
 /** Tras publicar el footer global, copia dirección y mapa a site_settings.contact. */
 export async function syncSiteContactDisplayFromFooterEditor(input: FooterSiteContactDisplaySync) {
-  const current = await getSettings();
-  const patch = siteContactPatchFromFooterDisplaySync(input);
-  return updateContactSettings({
-    ...current.contact,
-    ...patch,
-  });
+  // Solo se envía el parche: nunca la porción completa de `contact`, para no
+  // sobrescribir cambios globales guardados por otra vía.
+  return updateContactSettings(siteContactPatchFromFooterDisplaySync(input));
 }
 
 export async function syncSiteContactFromFooterComponent(footer: FooterComponent) {

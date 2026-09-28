@@ -1,7 +1,7 @@
 import { formatBlogDateBadge } from "../../lib/formatBlogDateBadge";
 
-export function BlogFeedDateBadge({ publishedAt }: { publishedAt: string }) {
-  const label = formatBlogDateBadge(publishedAt);
+export function BlogFeedDateBadge({ publishedAt, timeZone }: { publishedAt: string; timeZone?: string }) {
+  const label = formatBlogDateBadge(publishedAt, timeZone);
   if (!label) return null;
 
   return (

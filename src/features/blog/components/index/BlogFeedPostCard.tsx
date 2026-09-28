@@ -6,7 +6,7 @@ import { assetPath } from "@/lib/assets";
 import { resolveBlogCardExcerpt } from "../../lib/resolveBlogCardExcerpt";
 import { BlogFeedDateBadge } from "./BlogFeedDateBadge";
 
-export function BlogFeedPostCard({ post }: { post: BlogPost }) {
+export function BlogFeedPostCard({ post, timeZone }: { post: BlogPost; timeZone?: string }) {
   const excerpt = resolveBlogCardExcerpt(post);
 
   return (
@@ -20,7 +20,7 @@ export function BlogFeedPostCard({ post }: { post: BlogPost }) {
           sizes="(max-width: 760px) 75vw, 65vw"
           loading="lazy"
         />
-        <BlogFeedDateBadge publishedAt={post.publishedAt} />
+        <BlogFeedDateBadge publishedAt={post.publishedAt} timeZone={timeZone} />
       </Link>
       <div className="blog-feed-card__body">
         <p className="blog-feed-card__category">{post.category}</p>

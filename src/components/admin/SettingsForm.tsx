@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import type { SiteSettings } from "@/lib/cms/settings";
+import type { GlobalSettingsField, FieldOriginInfo } from "@/lib/cms/settings-overrides";
 import type { Menu } from "@/lib/cms/types";
 import SettingsSection from "./SettingsSection";
 import MediaSelectField from "./MediaSelectField";
@@ -16,6 +17,8 @@ type EditableMenuItem = {
   order: number;
   locked?: boolean;
 };
+
+type Origins = Partial<Record<GlobalSettingsField, FieldOriginInfo>>;
 
 const DEFAULT_MENU_ITEMS: EditableMenuItem[] = [
   { key: "inicio", label: "Inicio", href: "/#hero", order: 0, locked: true },
@@ -84,12 +87,37 @@ function buildEditableMenuItems(menu?: Menu | null): EditableMenuItem[] {
   return [...defaults, ...extras].sort((a, b) => a.order - b.order);
 }
 
-export default function SettingsForm({ initial, initialMenu }: { initial: SiteSettings; initialMenu?: Menu | null }) {
+/** Aviso de sobrescritura del editor del footer, con la vía para volver al global. */
+function OverrideNote({ origins, field }: { origins: Origins; field: GlobalSettingsField }) {
+  const info = origins[field];
+  if (!info || info.origin !== "footer-override") return null;
+
+  return (
+    <small className="settings-override-note">
+      Sobrescrito por el footer: {info.detail}{info.resetHint ? ` ${info.resetHint}` : ""}
+    </small>
+  );
+}
+
+function Hint({ children }: { children: React.ReactNode }) {
+  return <small className="muted">{children}</small>;
+}
+
+export default function SettingsForm({
+  initial,
+  initialMenu,
+  origins = {},
+}: {
+  initial: SiteSettings;
+  initialMenu?: Menu | null;
+  origins?: Origins;
+}) {
   const [settings, setSettings] = useState<SiteSettings>(initial);
   const [menuItems, setMenuItems] = useState<EditableMenuItem[]>(() => buildEditableMenuItems(initialMenu));
   const [isLoading, setIsLoading] = useState(false);
   const [success, setSuccess] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [errorDetails, setErrorDetails] = useState<string[]>([]);
 
   function updateSection<K extends keyof SiteSettings>(section: K, value: Partial<SiteSettings[K]>) {
     setSettings((prev) => ({
@@ -141,30 +169,62 @@ export default function SettingsForm({ initial, initialMenu }: { initial: SiteSe
     setIsLoading(true);
     setSuccess(null);
     setError(null);
+    setErrorDetails([]);
 
-    const response = await fetch("/api/admin/settings", {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(settings),
-    });
+    // 1) Ajustes globales. Si el servidor no los confirma, no se toca el menú y
+    //    se conservan los valores introducidos en el formulario.
+    try {
+      const response = await fetch("/api/admin/settings", {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(settings),
+      });
 
-    if (!response.ok) {
-      const data = await response.json().catch(() => ({ error: "Error al guardar." }));
-      setError(data.error || "Error al guardar la configuración.");
-      setIsLoading(false);
+      const data = await response.json().catch(() => null);
+
+      if (!response.ok) {
+        setError(data?.error || "No se pudo guardar la configuración.");
+        setErrorDetails(Array.isArray(data?.errors) ? data.errors : []);
+        if (Array.isArray(data?.saved) && data.saved.length) {
+          setErrorDetails((prev) => [
+            ...prev,
+            `Guardado antes del fallo: ${data.saved.join(", ")}. Revisa los campos señalados.`,
+          ]);
+        }
+        return;
+      }
+
+      if (!data?.settings) {
+        setError("El servidor respondió sin confirmar los ajustes guardados.");
+        return;
+      }
+
+      // El formulario se sincroniza con lo que el servidor ha confirmado,
+      // incluida la fecha real de actualización.
+      setSettings(data.settings as SiteSettings);
+    } catch {
+      setError("No se pudo conectar con el servidor. Revisa tu conexión e inténtalo de nuevo.");
       return;
+    } finally {
+      setIsLoading(false);
     }
 
+    // 2) Etiquetas del menú principal, en una segunda operación independiente.
+    setIsLoading(true);
     try {
       await saveMenuItems();
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "Error al guardar el menú.");
-      setIsLoading(false);
+    } catch (menuError) {
+      setError(
+        `Los ajustes globales se guardaron, pero las etiquetas del menú no. ${
+          menuError instanceof Error ? menuError.message : "Error al guardar el menú."
+        }`,
+      );
       return;
+    } finally {
+      setIsLoading(false);
     }
 
     setSuccess("Configuración guardada correctamente.");
-    setIsLoading(false);
     setTimeout(() => setSuccess(null), 3000);
   }
 
@@ -175,24 +235,30 @@ export default function SettingsForm({ initial, initialMenu }: { initial: SiteSe
 
     setIsLoading(true);
     setError(null);
+    setErrorDetails([]);
 
-    const response = await fetch("/api/admin/settings", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ action: "reset" }),
-    });
+    try {
+      const response = await fetch("/api/admin/settings", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ action: "reset" }),
+      });
 
-    if (!response.ok) {
-      setError("Error al restaurar valores iniciales.");
+      if (!response.ok) {
+        const data = await response.json().catch(() => null);
+        setError(data?.error || "No se pudieron restaurar los valores iniciales.");
+        return;
+      }
+
+      const data = await response.json();
+      if (data?.settings) setSettings(data.settings as SiteSettings);
+      setSuccess("Valores iniciales restaurados.");
+      setTimeout(() => setSuccess(null), 3000);
+    } catch {
+      setError("No se pudo conectar con el servidor. Revisa tu conexión e inténtalo de nuevo.");
+    } finally {
       setIsLoading(false);
-      return;
     }
-
-    const data = await response.json();
-    setSettings(data.settings);
-    setSuccess("Valores iniciales restaurados.");
-    setIsLoading(false);
-    setTimeout(() => setSuccess(null), 3000);
   }
 
   return (
@@ -233,6 +299,10 @@ export default function SettingsForm({ initial, initialMenu }: { initial: SiteSe
             </label>
           </div>
         </div>
+        <Hint>
+          Prioridad del logo: logo del menú → logo general del sitio → logo por defecto. Los logos
+          propios de una página (hero, blog, shop) mandan sobre estos.
+        </Hint>
 
         <div className="settings-menu-items">
           {menuItems.map((item) => (
@@ -257,6 +327,7 @@ export default function SettingsForm({ initial, initialMenu }: { initial: SiteSe
               value={settings.site.site_name}
               onChange={(e) => updateSection("site", { site_name: e.target.value })}
             />
+            <small>Se usa en el título por defecto, en Open Graph y en los datos estructurados.</small>
           </label>
           <label className="field span-2">
             <span>Descripción del sitio</span>
@@ -265,6 +336,7 @@ export default function SettingsForm({ initial, initialMenu }: { initial: SiteSe
               value={settings.site.site_description}
               onChange={(e) => updateSection("site", { site_description: e.target.value })}
             />
+            <small>Se usa si no hay una descripción SEO por defecto.</small>
           </label>
           <label className="field">
             <span>Idioma por defecto</span>
@@ -272,6 +344,10 @@ export default function SettingsForm({ initial, initialMenu }: { initial: SiteSe
               value={settings.site.default_language}
               onChange={(e) => updateSection("site", { default_language: e.target.value })}
             />
+            <small>
+              Declara el idioma del documento (html[lang]) y de los metadatos. No traduce el
+              contenido del CMS: los textos siguen siendo los que escribes.
+            </small>
           </label>
           <label className="field">
             <span>Zona horaria</span>
@@ -279,6 +355,7 @@ export default function SettingsForm({ initial, initialMenu }: { initial: SiteSe
               value={settings.site.timezone}
               onChange={(e) => updateSection("site", { timezone: e.target.value })}
             />
+            <small>Zona IANA (por ejemplo Europe/Madrid) para las fechas públicas del sitio.</small>
           </label>
         </div>
 
@@ -298,7 +375,7 @@ export default function SettingsForm({ initial, initialMenu }: { initial: SiteSe
 
       <SettingsSection
         title="Contacto"
-        description="Email, teléfono y WhatsApp del sitio. El texto del bloque del footer se edita en Componentes → Footer (pestaña Información)."
+        description="Email, teléfono y WhatsApp del sitio. El título, el texto del bloque y el diseño se editan en Componentes → Footer."
       >
         <div className="grid-2">
           <label className="field">
@@ -308,6 +385,7 @@ export default function SettingsForm({ initial, initialMenu }: { initial: SiteSe
               value={settings.contact.email}
               onChange={(e) => updateSection("contact", { email: e.target.value })}
             />
+            <OverrideNote origins={origins} field="contact.email" />
           </label>
           <label className="field">
             <span>Teléfono</span>
@@ -315,6 +393,7 @@ export default function SettingsForm({ initial, initialMenu }: { initial: SiteSe
               value={settings.contact.phone}
               onChange={(e) => updateSection("contact", { phone: e.target.value })}
             />
+            <small>No tiene equivalente en el footer: este valor siempre manda.</small>
           </label>
           <label className="field">
             <span>WhatsApp</span>
@@ -322,6 +401,8 @@ export default function SettingsForm({ initial, initialMenu }: { initial: SiteSe
               value={settings.contact.whatsapp}
               onChange={(e) => updateSection("contact", { whatsapp: e.target.value })}
             />
+            <OverrideNote origins={origins} field="contact.whatsapp" />
+            <small>También es el CTA por defecto de los productos de la tienda.</small>
           </label>
           <label className="field">
             <span>Dirección</span>
@@ -329,6 +410,7 @@ export default function SettingsForm({ initial, initialMenu }: { initial: SiteSe
               value={settings.contact.address}
               onChange={(e) => updateSection("contact", { address: e.target.value })}
             />
+            <OverrideNote origins={origins} field="contact.address" />
           </label>
           <label className="field">
             <span>Ciudad</span>
@@ -350,11 +432,15 @@ export default function SettingsForm({ initial, initialMenu }: { initial: SiteSe
               value={settings.contact.map_url}
               onChange={(e) => updateSection("contact", { map_url: e.target.value })}
             />
+            <OverrideNote origins={origins} field="contact.map_url" />
           </label>
         </div>
       </SettingsSection>
 
-      <SettingsSection title="Redes sociales" description="Enlaces a perfiles sociales.">
+      <SettingsSection
+        title="Redes sociales"
+        description="Enlaces a perfiles sociales. Se usan en el footer cuando el editor del footer no define los suyos."
+      >
         <div className="grid-2">
           <label className="field">
             <span>Instagram</span>
@@ -362,6 +448,7 @@ export default function SettingsForm({ initial, initialMenu }: { initial: SiteSe
               value={settings.social.instagram_url}
               onChange={(e) => updateSection("social", { instagram_url: e.target.value })}
             />
+            <OverrideNote origins={origins} field="social.instagram_url" />
           </label>
           <label className="field">
             <span>TikTok</span>
@@ -369,6 +456,7 @@ export default function SettingsForm({ initial, initialMenu }: { initial: SiteSe
               value={settings.social.tiktok_url}
               onChange={(e) => updateSection("social", { tiktok_url: e.target.value })}
             />
+            <OverrideNote origins={origins} field="social.tiktok_url" />
           </label>
           <label className="field">
             <span>Facebook</span>
@@ -376,6 +464,7 @@ export default function SettingsForm({ initial, initialMenu }: { initial: SiteSe
               value={settings.social.facebook_url}
               onChange={(e) => updateSection("social", { facebook_url: e.target.value })}
             />
+            <OverrideNote origins={origins} field="social.facebook_url" />
           </label>
           <label className="field">
             <span>YouTube</span>
@@ -383,6 +472,7 @@ export default function SettingsForm({ initial, initialMenu }: { initial: SiteSe
               value={settings.social.youtube_url}
               onChange={(e) => updateSection("social", { youtube_url: e.target.value })}
             />
+            <OverrideNote origins={origins} field="social.youtube_url" />
           </label>
           <label className="field">
             <span>Pinterest</span>
@@ -390,11 +480,12 @@ export default function SettingsForm({ initial, initialMenu }: { initial: SiteSe
               value={settings.social.pinterest_url}
               onChange={(e) => updateSection("social", { pinterest_url: e.target.value })}
             />
+            <OverrideNote origins={origins} field="social.pinterest_url" />
           </label>
         </div>
       </SettingsSection>
 
-      <SettingsSection title="Footer" description="Configuración del pie de página.">
+      <SettingsSection title="Footer" description="Marca, texto y visibilidad del pie de página.">
         <div className="grid-2">
           <MediaSelectField
             label="Logo del footer"
@@ -408,6 +499,7 @@ export default function SettingsForm({ initial, initialMenu }: { initial: SiteSe
               value={settings.footer.footer_text}
               onChange={(e) => updateSection("footer", { footer_text: e.target.value })}
             />
+            <small>Texto descriptivo de la marca. No sustituye al texto legal.</small>
           </label>
           <label className="field span-2">
             <span>Texto legal</span>
@@ -416,6 +508,8 @@ export default function SettingsForm({ initial, initialMenu }: { initial: SiteSe
               value={settings.footer.legal_text}
               onChange={(e) => updateSection("footer", { legal_text: e.target.value })}
             />
+            <small>Aviso legal del pie de página (por ejemplo el aviso de cookies).</small>
+            <OverrideNote origins={origins} field="footer.legal_text" />
           </label>
           <label className="field checkbox-field">
             <input
@@ -434,9 +528,16 @@ export default function SettingsForm({ initial, initialMenu }: { initial: SiteSe
             <span>Mostrar información de contacto</span>
           </label>
         </div>
+        <Hint>
+          Al ocultar la información de contacto se retiran teléfono, dirección y mapa del pie. El
+          formulario de contacto y los enlaces legales se mantienen.
+        </Hint>
       </SettingsSection>
 
-      <SettingsSection title="SEO global" description="Configuración SEO por defecto.">
+      <SettingsSection
+        title="SEO global"
+        description="Valores por defecto. El SEO propio de cada página prevalece sobre estos ajustes."
+      >
         <div className="grid-2">
           <label className="field span-2">
             <span>SEO title por defecto</span>
@@ -458,22 +559,29 @@ export default function SettingsForm({ initial, initialMenu }: { initial: SiteSe
             value={settings.seo.default_og_image_url}
             onChange={(url) => updateSection("seo", { default_og_image_url: url })}
           />
-          <label className="field checkbox-field">
-            <input
-              type="checkbox"
-              checked={settings.seo.robots_index}
-              onChange={(e) => updateSection("seo", { robots_index: e.target.checked })}
-            />
-            <span>Permitir indexación</span>
-          </label>
-          <label className="field checkbox-field">
-            <input
-              type="checkbox"
-              checked={settings.seo.robots_follow}
-              onChange={(e) => updateSection("seo", { robots_follow: e.target.checked })}
-            />
-            <span>Permitir follow</span>
-          </label>
+          <div className="field">
+            <span>Directivas robots</span>
+            <label className="checkbox-field">
+              <input
+                type="checkbox"
+                checked={settings.seo.robots_index}
+                onChange={(e) => updateSection("seo", { robots_index: e.target.checked })}
+              />
+              <span>Permitir indexación (noindex cuando se desmarca)</span>
+            </label>
+            <label className="checkbox-field">
+              <input
+                type="checkbox"
+                checked={settings.seo.robots_follow}
+                onChange={(e) => updateSection("seo", { robots_follow: e.target.checked })}
+              />
+              <span>Permitir follow (nofollow cuando se desmarca)</span>
+            </label>
+            <small>
+              Se aplican por separado. Desmarcar la indexación también bloquea el rastreo en
+              robots.txt; «follow» no tiene equivalente en robots.txt.
+            </small>
+          </div>
         </div>
       </SettingsSection>
 
@@ -486,6 +594,10 @@ export default function SettingsForm({ initial, initialMenu }: { initial: SiteSe
               onChange={(e) => updateSection("system", { maintenance_mode: e.target.checked })}
             />
             <span>Modo mantenimiento</span>
+            <small>
+              Devuelve 503 en las páginas públicas. /admin, /auth y /api siguen accesibles para
+              que puedas entrar y desactivarlo, y las APIs e integraciones no se interrumpen.
+            </small>
           </label>
           <div className="field">
             <span>Última actualización</span>
@@ -494,12 +606,20 @@ export default function SettingsForm({ initial, initialMenu }: { initial: SiteSe
                 ? formatAdminDateTime(settings.system.updated_at)
                 : "Nunca"}
             </p>
+            <small>Fecha confirmada por el servidor en el último guardado.</small>
           </div>
         </div>
       </SettingsSection>
 
       {success ? <p className="form-success">{success}</p> : null}
       {error ? <p className="form-error">{error}</p> : null}
+      {errorDetails.length ? (
+        <ul className="settings-form-errors">
+          {errorDetails.map((detail) => (
+            <li key={detail}>{detail}</li>
+          ))}
+        </ul>
+      ) : null}
 
       <div className="form-actions" style={{ display: "flex", gap: "0.75rem", justifyContent: "flex-end" }}>
         <button type="button" className="secondary-btn" onClick={handleReset} disabled={isLoading}>

@@ -3,15 +3,16 @@ import { HeaderInterno } from "@/components/layout/HeaderInterno";
 import { MarkdownContent } from "@/components/ui/MarkdownContent";
 import { SitePage } from "@/features/shared/layout/SitePage";
 import { getLegalSettings } from "@/lib/cms/legal";
+import { getSettings } from "@/lib/cms/settings";
 import { DEFAULT_PRIVACY_POLICY_MARKDOWN } from "@/lib/cms/types";
 import { formatDate } from "@/lib/utils";
 
 export async function PrivacyPolicyPage() {
-  const settings = await getLegalSettings();
+  const [settings, siteSettings] = await Promise.all([getLegalSettings(), getSettings()]);
   const title = settings.privacy_policy_title || "Política de privacidad";
   const content = settings.privacy_policy_content.trim() || DEFAULT_PRIVACY_POLICY_MARKDOWN;
   const updatedAt = settings.updated_at
-    ? formatDate(settings.updated_at)
+    ? formatDate(settings.updated_at, siteSettings.site.timezone)
     : null;
 
   return (

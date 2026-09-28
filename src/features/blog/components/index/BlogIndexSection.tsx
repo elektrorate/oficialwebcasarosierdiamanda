@@ -8,16 +8,18 @@ export function BlogIndexSection({
   intro,
   featured,
   published,
+  timeZone,
 }: {
   intro: BlogIndexIntroView;
   featured: BlogPost[];
   published: BlogPost[];
+  timeZone?: string;
 }) {
   return (
     <>
       <BlogIndexMasthead intro={intro} />
       <BlogFeaturedSection posts={featured} />
-      <BlogFeedSection posts={published} />
+      <BlogFeedSection posts={published} timeZone={timeZone} />
     </>
   );
 }

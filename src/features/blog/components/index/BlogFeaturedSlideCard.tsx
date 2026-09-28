@@ -4,7 +4,7 @@ import type { BlogPost } from "@/data/types";
 import { formatDate } from "@/lib/utils";
 import { resolveBlogCardExcerpt } from "../../lib/resolveBlogCardExcerpt";
 
-export function BlogFeaturedSlideCard({ post }: { post: BlogPost }) {
+export function BlogFeaturedSlideCard({ post, timeZone }: { post: BlogPost; timeZone?: string }) {
   const excerpt = post.featuredExcerpt?.trim() || resolveBlogCardExcerpt(post);
 
   return (
@@ -22,7 +22,7 @@ export function BlogFeaturedSlideCard({ post }: { post: BlogPost }) {
         </span>
         <div className="blog-featured-slide__byline">
           <strong>{post.author}</strong>
-          <time dateTime={post.publishedAt}>{formatDate(post.publishedAt)}</time>
+          <time dateTime={post.publishedAt}>{formatDate(post.publishedAt, timeZone)}</time>
         </div>
       </div>
     </article>

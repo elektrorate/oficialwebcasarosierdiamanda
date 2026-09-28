@@ -15,7 +15,7 @@ export async function HeaderHome() {
     <HomeHeroView
       hero={homePage.hero}
       navigationItems={navigationItems}
-      menu={resolveEditorialScrollMenu(settings.menu)}
+      menu={resolveEditorialScrollMenu(settings.menu, settings.site)}
     />
   );
 }

@@ -42,7 +42,7 @@ function cacheMenus(items: Menu[]) {
   menuLocationCache.clear();
 }
 
-function invalidateMenuCache() {
+export function invalidateMenuCache() {
   menusCache = null;
   menuLocationCache.clear();
 }
@@ -121,6 +121,7 @@ function normalizeMenuItem(input: MenuItemInput, existing?: MenuItem) {
     label,
     type,
     url: normalizeMenuUrl(rawUrl) ?? rawUrl.trim(),
+    url_auto: input.url_auto ?? existing?.url_auto ?? true,
     linked_entity_type: isLinkedEntityType(input.linked_entity_type) ? input.linked_entity_type : (existing?.linked_entity_type ?? "none"),
     linked_entity_id: String(input.linked_entity_id ?? existing?.linked_entity_id ?? "").trim(),
     parent_id: input.parent_id !== undefined ? input.parent_id : (existing?.parent_id ?? null),
@@ -138,9 +139,9 @@ function normalizeMenuItem(input: MenuItemInput, existing?: MenuItem) {
       type: "internal",
       url: "/#hero",
       linked_entity_type: "none",
-      linked_entity_id: "",
+      linked_entity_id: "menu-root:inicio",
       parent_id: null,
-      sort_order: 0,
+      sort_order: normalized.sort_order,
       is_visible: true,
       open_in_new_tab: false,
     } satisfies MenuItem;

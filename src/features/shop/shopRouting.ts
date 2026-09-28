@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { canonicalPublicPath } from "@/lib/cms/public-section-routes";
 import { getPublicShopData, getPublicShopItemBySlug } from "@/lib/cms/shop-public";
 import { loadShopItemPage } from "./loadShopItemPage";
 
@@ -15,7 +16,7 @@ export async function generateShopItemMetadata(
       ? {
         title: { absolute: item.seoTitle },
         description: item.seoDescription,
-        alternates: { canonical: `/shop/${item.slug}` },
+        alternates: { canonical: await canonicalPublicPath(`/shop/${item.slug}`) },
       }
     : {};
 }

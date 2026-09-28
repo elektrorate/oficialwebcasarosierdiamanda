@@ -1,10 +1,13 @@
 "use client";
 
 import type { BlogPost } from "@/data/types";
+import { useSiteTimeZone } from "@/components/layout/SiteTimeZoneProvider";
 import { Carousel } from "@/components/ui/Carousel";
 import { BlogFeaturedSlide } from "./BlogFeaturedSlide";
 
-export function BlogFeaturedCarousel({ posts }: { posts: readonly BlogPost[] }) {
+export function BlogFeaturedCarousel({ posts, timeZone }: { posts: readonly BlogPost[]; timeZone?: string }) {
+  const contextTimeZone = useSiteTimeZone();
+  const resolvedTimeZone = timeZone ?? contextTimeZone;
   if (!posts.length) return null;
 
   return (
@@ -27,7 +30,9 @@ export function BlogFeaturedCarousel({ posts }: { posts: readonly BlogPost[] }) 
       nextLabel="Artículo destacado siguiente"
       dotLabel={(index) => `Ir al destacado ${index + 1}`}
       getSlideId={(post) => `blog-featured-${post.id}`}
-      renderItem={(post) => <BlogFeaturedSlide post={post} />}
+      renderItem={(post) => (
+        <BlogFeaturedSlide key={post.id} post={post} timeZone={resolvedTimeZone} />
+      )}
     />
   );
 }

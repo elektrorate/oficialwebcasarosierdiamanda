@@ -612,6 +612,7 @@ export interface MenuItem {
   label: string;
   type: MenuItemType;
   url: string;
+  url_auto?: boolean;
   linked_entity_type: LinkedEntityType;
   linked_entity_id: string;
   parent_id: string | null;

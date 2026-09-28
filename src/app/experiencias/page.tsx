@@ -1,13 +1,14 @@
+import { canonicalPublicPath } from "@/lib/cms/public-section-routes";
 import type { Metadata } from "next";
 import { ExperienceCollectionPage } from "@/features/experiences/ExperienceCollectionPage";
 import { getExperienceCollectionConfig } from "@/features/experiences/experienceRoutes";
 
-export const metadata: Metadata = {
+export async function generateMetadata(): Promise<Metadata> { return {
   title: "Experiencias",
   description:
     "Experiencias privadas de ceramica de Casa Rosier en Barcelona.",
-  alternates: { canonical: "/experiencias" },
-};
+  alternates: { canonical: await canonicalPublicPath("/experiencias") },
+}; }
 
 export default async function ExperienciasPage() {
   const config = await getExperienceCollectionConfig("privateBookings");
