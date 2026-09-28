@@ -1,5 +1,4 @@
 export const LOCAL_ADMIN_EMAIL = process.env.LOCAL_ADMIN_EMAIL ?? "name@admin.com";
-export const LOCAL_ADMIN_PASSWORD = process.env.LOCAL_ADMIN_PASSWORD ?? "";
 export const LOCAL_ADMIN_PASSWORD_HASH = process.env.LOCAL_ADMIN_PASSWORD_HASH ?? "";
 export const LOCAL_AUTH_SECRET = process.env.LOCAL_AUTH_SECRET ?? "";
 
@@ -91,7 +90,6 @@ function timingSafeEqual(a: string, b: string) {
 export async function validateLocalCredentials(email: string, password: string) {
   if (!LOCAL_AUTH_SECRET) return false;
   if (email.trim().toLowerCase() !== LOCAL_ADMIN_EMAIL.trim().toLowerCase()) return false;
-  if (LOCAL_ADMIN_PASSWORD && password === LOCAL_ADMIN_PASSWORD) return true;
   if (!LOCAL_ADMIN_PASSWORD_HASH) return false;
   return timingSafeEqual(await sha256Hex(password), LOCAL_ADMIN_PASSWORD_HASH.trim().toLowerCase());
 }

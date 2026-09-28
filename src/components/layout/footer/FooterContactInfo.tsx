@@ -16,7 +16,9 @@ export function FooterContactInfo({
 
   return (
     <div className="grid justify-items-center text-center gap-[clamp(8px,1.2vw,12px)] pt-0">
-      <h2 className="m-0 mb-[clamp(4px,0.6vw,8px)] text-[clamp(28px,3.2vw,36px)] leading-[1.1] font-normal text-[#1a1a1a] [font-family:var(--font-display)]">{model.contactTitle}</h2>
+      {model.contactTitle ? (
+        <h2 className="m-0 mb-[clamp(4px,0.6vw,8px)] text-[clamp(28px,3.2vw,36px)] leading-[1.1] font-normal text-[#1a1a1a] [font-family:var(--font-display)]">{model.contactTitle}</h2>
+      ) : null}
       {model.contactLines.map((line, index) => (
         <p className="m-0 text-[clamp(13px,1.15vw,15px)] leading-normal font-light text-[#3a3a3a] [font-family:var(--font-menu)]" key={`${line}-${index}`}>
           {line}
@@ -61,7 +63,7 @@ export function FooterContactInfo({
         <div className="mt-[clamp(20px,2.8vw,32px)] w-full flex justify-center">
           {isEditorial ? (
             <a
-              className="inline-flex flex-col items-center gap-0 text-[#b5a48b] text-[clamp(22px,2.65vw,28px)] leading-[1.35] font-light no-underline lowercase tracking-[0.03em] text-center [font-family:var(--font-menu)] hover:text-[#957a4e] hover:no-underline focus-visible:text-[#957a4e] focus-visible:outline-none"
+              className="inline-flex flex-col items-center gap-0 text-[#b5a48b] text-[clamp(17.6px,2.12vw,22.4px)] leading-[1.35] font-light no-underline lowercase tracking-[0.03em] text-center [font-family:var(--font-menu)] hover:text-[#957a4e] hover:no-underline focus-visible:text-[#957a4e] focus-visible:outline-none"
               href={model.mapUrl}
               target="_blank"
               rel="noopener noreferrer"

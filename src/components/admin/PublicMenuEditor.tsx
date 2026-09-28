@@ -586,10 +586,25 @@ export default function PublicMenuEditor({
                 <div className="public-menu-simple__group" key={item.key}
                   onDragOver={(event) => event.preventDefault()}
                   onDrop={(event) => { event.preventDefault(); if (draggedRoot) moveRoot(draggedRoot, itemIndex); setDraggedRoot(null); }}>
-                  <div aria-label={`Orden de ${item.label}`}>
-                    <button type="button" draggable onDragStart={() => setDraggedRoot(item.key)} onDragEnd={() => setDraggedRoot(null)} aria-label={`Arrastrar ${item.label}`}>↕</button>
-                    <button type="button" disabled={itemIndex === 0 || isSaving} onClick={() => moveRoot(item.key, itemIndex - 1)}>Subir {item.label}</button>
-                    <button type="button" disabled={itemIndex === items.length - 1 || isSaving} onClick={() => moveRoot(item.key, itemIndex + 1)}>Bajar {item.label}</button>
+                  <div className="public-menu-simple__order-bar" aria-label={`Orden de ${item.label}`}>
+                    <div className="public-menu-simple__item-identity">
+                      <span className="public-menu-simple__position" aria-label={`Posición ${itemIndex + 1}`}>{itemIndex + 1}</span>
+                      <span><strong>{item.label || "Sin nombre"}</strong><small>Elemento del menú</small></span>
+                    </div>
+                    <div className="public-menu-simple__order-actions">
+                      <button className="public-menu-simple__drag" type="button" draggable onDragStart={() => setDraggedRoot(item.key)} onDragEnd={() => setDraggedRoot(null)} aria-label={`Arrastrar ${item.label}`} title="Arrastrar para cambiar el orden">
+                        <span className="material-symbols-outlined" aria-hidden="true">drag_indicator</span>
+                        <span>Arrastrar</span>
+                      </button>
+                      <button className="public-menu-simple__move public-menu-simple__move--up" type="button" disabled={itemIndex === 0 || isSaving} onClick={() => moveRoot(item.key, itemIndex - 1)}>
+                        <span className="material-symbols-outlined" aria-hidden="true">arrow_upward</span>
+                        <span>Subir</span>
+                      </button>
+                      <button className="public-menu-simple__move public-menu-simple__move--down" type="button" disabled={itemIndex === items.length - 1 || isSaving} onClick={() => moveRoot(item.key, itemIndex + 1)}>
+                        <span className="material-symbols-outlined" aria-hidden="true">arrow_downward</span>
+                        <span>Bajar</span>
+                      </button>
+                    </div>
                   </div>
                   <div className="public-menu-simple__row" role="row">
                     <label className="public-menu-simple__field public-menu-simple__field--label">
@@ -684,21 +699,23 @@ export default function PublicMenuEditor({
                       <div className="public-menu-simple__child-actions" aria-label={`Orden de ${child.label || "subelemento"}`}>
                         <button
                           type="button"
-                          className="secondary-btn icon-btn"
+                          className="secondary-btn public-menu-simple__child-move"
                           disabled={childIndex === 0}
                           aria-label={`Subir ${child.label || "subelemento"}`}
                           onClick={() => moveChild(item.key, child.key, -1)}
                         >
                           <span className="material-symbols-outlined" aria-hidden="true">arrow_upward</span>
+                          <span>Subir</span>
                         </button>
                         <button
                           type="button"
-                          className="secondary-btn icon-btn"
+                          className="secondary-btn public-menu-simple__child-move"
                           disabled={childIndex === item.children.length - 1}
                           aria-label={`Bajar ${child.label || "subelemento"}`}
                           onClick={() => moveChild(item.key, child.key, 1)}
                         >
                           <span className="material-symbols-outlined" aria-hidden="true">arrow_downward</span>
+                          <span>Bajar</span>
                         </button>
                       </div>
                     </div>
@@ -771,4 +788,3 @@ export default function PublicMenuEditor({
     </div>
   );
 }
-
