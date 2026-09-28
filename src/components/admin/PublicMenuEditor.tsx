@@ -585,11 +585,6 @@ export default function PublicMenuEditor({
         </p>
         <div className="public-menu-list" aria-label="Puntos del menú">
           <div className="public-menu-simple" role="table" aria-label="Editor simple del menú público">
-            <div className="public-menu-simple__head" role="row">
-              <span role="columnheader">Elemento</span>
-              <span role="columnheader">URL</span>
-              <span role="columnheader">Comportamiento</span>
-            </div>
             <div className="public-menu-simple__body">
               {items.map((item, itemIndex) => (
                 <div className="public-menu-simple__group" key={item.key}
@@ -615,7 +610,33 @@ export default function PublicMenuEditor({
                       </button>
                     </div>
                   </div>
-                  <div className="public-menu-simple__row" role="row">
+                  <div className="public-menu-simple__root-options" aria-label={`Comportamiento de ${item.label}`}>
+                    <label className="public-menu-simple__option">
+                      <input
+                        type="checkbox"
+                        checked={item.open_in_new_tab}
+                        disabled={item.locked}
+                        onChange={(event) => updateItem(item.key, { open_in_new_tab: event.target.checked })}
+                      />
+                      <span>Abrir en nueva pestaña</span>
+                    </label>
+                    {!item.locked && SECTION_BASES[item.key] ? (
+                      <label className="public-menu-simple__option">
+                        <input type="checkbox" checked={item.url_auto !== false} onChange={(event) => updateItem(item.key, { url_auto: event.target.checked })} />
+                        <span>URL según el nombre</span>
+                      </label>
+                    ) : null}
+                    <label className="public-menu-simple__option">
+                      <input
+                        type="checkbox"
+                        checked={item.is_visible}
+                        disabled={item.locked}
+                        onChange={(event) => updateItem(item.key, { is_visible: event.target.checked })}
+                      />
+                      <span>Mostrar en la web</span>
+                    </label>
+                  </div>
+                  <div className="public-menu-simple__row public-menu-simple__row--root" role="row">
                     <label className="public-menu-simple__field public-menu-simple__field--label">
                       <span>{item.locked ? "Elemento fijo" : "Nombre visible"}</span>
                       <input
@@ -634,34 +655,13 @@ export default function PublicMenuEditor({
                         onChange={(event) => updateItem(item.key, { url: event.target.value })}
                       />
                     </label>
-                    <div className="public-menu-simple__options">
-                      {!item.locked && SECTION_BASES[item.key] ? <label><input type="checkbox" checked={item.url_auto !== false} onChange={(event) => updateItem(item.key, { url_auto: event.target.checked })} /> URL según el nombre</label> : null}
-                      <label className="public-menu-simple__option">
-                        <input
-                          type="checkbox"
-                          checked={item.is_visible}
-                          disabled={item.locked}
-                          onChange={(event) => updateItem(item.key, { is_visible: event.target.checked })}
-                        />
-                        <span>Mostrar en la web</span>
-                      </label>
-                      <label className="public-menu-simple__option">
-                        <input
-                          type="checkbox"
-                          checked={item.open_in_new_tab}
-                          disabled={item.locked}
-                          onChange={(event) => updateItem(item.key, { open_in_new_tab: event.target.checked })}
-                        />
-                        <span>Abrir en nueva pestaña</span>
-                      </label>
-                    </div>
                   </div>
 
                   {item.children.map((child, childIndex) => {
                     const hasAutomaticUrl = child.linked_entity_type === "offering";
                     return (
                     <div id={hasAutomaticUrl ? `offering-${child.linked_entity_id}` : undefined} className="public-menu-simple__row public-menu-simple__row--child" role="row" key={child.key}>
-                      <label className="public-menu-simple__field public-menu-simple__field--label">
+                      <label className="public-menu-simple__field public-menu-simple__field--label public-menu-simple__child-name">
                         <span>Subelemento</span>
                         <input
                           value={child.label}
@@ -669,7 +669,7 @@ export default function PublicMenuEditor({
                           onChange={(event) => updateChild(item.key, child.key, { label: event.target.value })}
                         />
                       </label>
-                      <label className="public-menu-simple__field public-menu-simple__field--url">
+                      <label className="public-menu-simple__field public-menu-simple__field--url public-menu-simple__child-url">
                         <span>{hasAutomaticUrl ? "URL automática" : "URL del enlace"}</span>
                         <input
                         value={hasAutomaticUrl ? `${item.url}/${child.url.split("/").pop()}` : child.url}
@@ -679,15 +679,14 @@ export default function PublicMenuEditor({
                           onChange={(event) => updateChild(item.key, child.key, { url: event.target.value })}
                         />
                       </label>
-                      <div className="public-menu-simple__options">
-                        {hasAutomaticUrl ? <>
-                          <label><input type="checkbox" checked={child.url_auto !== false} onChange={(event) => updateChild(item.key, child.key, { url_auto: event.target.checked })} /> URL según el nombre (desactiva para conservarla)</label>
-                          <label>Mover página a
+                      <div className="public-menu-simple__child-controls">
+                        {hasAutomaticUrl ? (
+                          <label className="public-menu-simple__move-field"><span>Mover página a</span>
                             <select aria-label={`Sección de ${child.label}`} value={item.key} onChange={(event) => transferChild(item.key, child.key, event.target.value)}>
                               {items.filter((root) => SECTION_TYPES[root.key]).map((root) => <option key={root.key} value={root.key}>{root.label}</option>)}
                             </select>
                           </label>
-                        </> : null}
+                        ) : null}
                         <label className="public-menu-simple__option">
                           <input
                             type="checkbox"
@@ -704,6 +703,12 @@ export default function PublicMenuEditor({
                           />
                           <span>Abrir en nueva pestaña</span>
                         </label>
+                        {hasAutomaticUrl ? (
+                          <label className="public-menu-simple__option">
+                            <input type="checkbox" checked={child.url_auto !== false} onChange={(event) => updateChild(item.key, child.key, { url_auto: event.target.checked })} />
+                            <span>URL según el nombre</span>
+                          </label>
+                        ) : null}
                       </div>
                       <div className="public-menu-simple__child-actions" aria-label={`Orden de ${child.label || "subelemento"}`}>
                         <button

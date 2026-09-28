@@ -5313,10 +5313,23 @@
 .public-menu-editor__panel,
 .public-menu-list {
   display: grid;
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
   gap: 14px;
 }
 
+.public-menu-editor__panel {
+  container-type: inline-size;
+}
+
+.public-menu-list {
+  width: 100cqi;
+}
+
 .public-menu-simple {
+  min-width: 0;
   overflow: hidden;
   border: 1px solid #d9d3e4;
   border-radius: 8px;
@@ -5332,7 +5345,11 @@
 }
 
 .public-menu-simple__row--child {
-  grid-template-columns: minmax(180px, 0.34fr) minmax(220px, 0.38fr) minmax(210px, 0.28fr) auto;
+  grid-template-columns: minmax(220px, 0.36fr) minmax(260px, 0.42fr) minmax(170px, 0.22fr);
+  grid-template-areas:
+    "name url actions"
+    "controls controls actions";
+  align-items: start;
 }
 
 .public-menu-simple__options {
@@ -5378,8 +5395,20 @@
   background: #f5f3f8;
 }
 
+.public-menu-simple__root-options {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 14px 28px;
+  border-bottom: 1px solid #eeeaf3;
+  background: #fdfcff;
+  padding: 12px 18px 2px;
+}
+
 .public-menu-simple__group {
   display: grid;
+  min-width: 0;
   overflow: hidden;
   border: 1px solid #ded8e8;
   border-left: 5px solid #8b6fc1;
@@ -5509,22 +5538,82 @@
   padding: 14px 18px;
 }
 
+.public-menu-simple__row--root {
+  grid-template-columns: minmax(220px, 0.42fr) minmax(280px, 0.58fr);
+  align-items: end;
+  padding-top: 10px;
+}
+
 .public-menu-simple__row--child {
   position: relative;
-  margin-left: 32px;
-  border-top: 1px solid #f0edf5;
-  padding-left: 34px;
+  margin: 10px 18px 14px 50px;
+  border: 1px solid #e0dae9;
+  border-radius: 10px;
+  background: #fff;
+  padding: 14px 16px;
+  box-shadow: 0 2px 6px rgba(42, 31, 62, 0.04);
 }
 
 .public-menu-simple__row--child::before {
   content: "";
   position: absolute;
-  left: 14px;
-  top: 0;
-  bottom: 50%;
-  width: 14px;
-  border-bottom: 1px solid #b8b0c7;
-  border-left: 1px solid #b8b0c7;
+  left: -24px;
+  top: -11px;
+  bottom: auto;
+  width: 18px;
+  height: 34px;
+  border-bottom: 2px solid #c4bdce;
+  border-left: 2px solid #c4bdce;
+  border-radius: 0 0 0 6px;
+}
+
+.public-menu-simple__row--child:nth-of-type(even) {
+  border-left: 4px solid #c9a45f;
+}
+
+.public-menu-simple__row--child:nth-of-type(odd) {
+  border-left: 4px solid #8b6fc1;
+}
+
+.public-menu-simple__child-name {
+  grid-area: name;
+}
+
+.public-menu-simple__child-url {
+  grid-area: url;
+}
+
+.public-menu-simple__child-controls {
+  display: flex;
+  grid-area: controls;
+  align-items: end;
+  flex-wrap: wrap;
+  gap: 12px 22px;
+  padding-top: 4px;
+}
+
+.public-menu-simple__move-field {
+  display: grid;
+  flex: 1 1 210px;
+  max-width: 280px;
+  gap: 6px;
+  color: #494552;
+  font: 700 12px/16px var(--font-inter), Inter, sans-serif;
+}
+
+.public-menu-simple__move-field > span {
+  color: #6c6675;
+  font-size: 11px;
+}
+
+.public-menu-simple__move-field select {
+  min-height: 42px;
+  border: 1px solid #cac4d4;
+  border-radius: 8px;
+  background: #fff;
+  color: #0b1c30;
+  padding: 8px 34px 8px 12px;
+  font: 700 13px/18px var(--font-manrope), Manrope, sans-serif;
 }
 
 .public-menu-simple__field {
@@ -5581,9 +5670,11 @@
 
 .public-menu-simple__child-actions {
   display: flex;
-  align-items: end;
+  grid-area: actions;
+  align-items: center;
+  justify-content: flex-end;
   gap: 8px;
-  min-height: 64px;
+  min-height: 100%;
 }
 
 .public-menu-simple__child-actions .secondary-btn:disabled {
@@ -7826,6 +7917,21 @@
     padding: 14px;
   }
 
+  .public-menu-simple__row--child {
+    grid-template-areas:
+      "name"
+      "url"
+      "controls"
+      "actions";
+  }
+
+  .public-menu-simple__root-options {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 10px;
+    padding: 14px 14px 4px;
+  }
+
   .public-menu-simple__body {
     gap: 10px;
     padding: 8px;
@@ -7847,13 +7953,32 @@
   }
 
   .public-menu-simple__row--child {
-    margin-left: 12px;
-    padding-left: 28px;
+    margin: 10px 10px 12px 28px;
+    padding: 14px;
   }
 
   .public-menu-simple__row--child::before {
-    left: 10px;
-    width: 10px;
+    left: -18px;
+    width: 12px;
+  }
+
+  .public-menu-simple__child-controls {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .public-menu-simple__move-field {
+    flex-basis: auto;
+    max-width: none;
+  }
+
+  .public-menu-simple__child-actions {
+    justify-content: stretch;
+    min-height: 0;
+  }
+
+  .public-menu-simple__child-actions .secondary-btn {
+    flex: 1;
   }
 
   .interactive-menu-preview__bar {
