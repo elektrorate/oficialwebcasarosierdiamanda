@@ -42,9 +42,9 @@ test("rechaza campos desconocidos dentro de una sección", () => {
 });
 
 test("normaliza colores a mayúsculas y recorta texto", () => {
-  const result = validateSettingsPayload({ menu: { scroll_menu_background_color: " #8c7457 " } });
+  const result = validateSettingsPayload({ menu: { scroll_menu_background_color: " #f9f8f3 " } });
   assert.equal(result.ok, true);
-  assert.equal((result.value as { menu: Record<string, unknown> }).menu.scroll_menu_background_color, "#8C7457");
+  assert.equal((result.value as { menu: Record<string, unknown> }).menu.scroll_menu_background_color, "#F9F8F3");
 });
 
 test("rechaza zona horaria IANA no válida", () => {

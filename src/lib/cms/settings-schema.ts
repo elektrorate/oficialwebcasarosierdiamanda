@@ -118,7 +118,7 @@ function normalizeField(section: string, field: string, raw: unknown, errors: st
 
   if (COLOR_FIELDS.has(field)) {
     if (!HEX_COLOR.test(value)) {
-      errors.push(`${label}: usa un color hexadecimal, por ejemplo #8c7457.`);
+      errors.push(`${label}: usa un color hexadecimal, por ejemplo #f9f8f3.`);
       return undefined;
     }
     return value.toUpperCase();

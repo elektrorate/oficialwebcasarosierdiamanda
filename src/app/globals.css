@@ -972,7 +972,7 @@ body {
     align-items: center;
     justify-content: space-between;
     gap: 24px;
-    background: var(--site-scroll-menu-bg, #8c7457);
+    background: var(--site-scroll-menu-bg, #f9f8f3);
   }
 
   .scroll-desktop-nav {
@@ -1016,7 +1016,7 @@ body {
     display: inline-flex;
     align-items: center;
     gap: 7px;
-    color: var(--site-scroll-menu-text, #fff9f1);
+    color: var(--site-scroll-menu-text, #3f3933);
     text-decoration: none;
     font: 700 14px/1.2 var(--font-menu);
   }
@@ -1024,17 +1024,17 @@ body {
   .scroll-desktop-nav__link:hover,
   .scroll-desktop-nav__link:focus-visible,
   .scroll-desktop-nav__link[aria-current="page"] {
-    color: var(--site-scroll-menu-text, #fff9f1);
+    color: var(--site-scroll-menu-text, #3f3933);
   }
 
   .scroll-desktop-nav__plus {
-    color: var(--site-scroll-menu-icon, var(--site-scroll-menu-text, #fff9f1));
+    color: var(--site-scroll-menu-icon, var(--site-scroll-menu-text, #3f3933));
     font-size: 15px;
     line-height: 1;
   }
 
   .scroll-desktop-nav__separator {
-    color: color-mix(in srgb, var(--site-scroll-menu-text, #fff9f1) 62%, transparent);
+    color: color-mix(in srgb, var(--site-scroll-menu-text, #3f3933) 62%, transparent);
     font: 300 18px/1 var(--font-menu);
   }
 
@@ -1115,7 +1115,7 @@ body {
     width: 120px;
     height: 52px;
     display: block;
-    background: var(--site-scroll-logo-tint, var(--site-scroll-menu-icon, #fff9f1));
+    background: var(--site-scroll-logo-tint, var(--site-scroll-menu-icon, #3f3933));
     mask-position: center;
     mask-repeat: no-repeat;
     mask-size: contain;
@@ -1126,7 +1126,7 @@ body {
 
   .mobile-scroll-nav__toggle {
     display: none;
-    color: var(--site-scroll-menu-icon, var(--site-scroll-menu-text, #fff9f1));
+    color: var(--site-scroll-menu-icon, var(--site-scroll-menu-text, #3f3933));
   }
 
   .mobile-scroll-nav__icon,
@@ -1233,7 +1233,7 @@ body {
   .mobile-scroll-menu .mobile-menu__link,
   .mobile-scroll-menu .mobile-menu__toggle {
     min-height: 44px;
-    color: var(--site-scroll-menu-text, #fff9f1);
+    color: var(--site-scroll-menu-text, #3f3933);
   }
 
   .mobile-scroll-menu .mobile-menu__link {
@@ -1261,7 +1261,7 @@ body {
 
   .mobile-scroll-menu .mobile-submenu__link {
     padding: 10px 0;
-    color: var(--site-scroll-menu-text, #fff9f1);
+    color: var(--site-scroll-menu-text, #3f3933);
     font: 700 14px/1.35 var(--font-menu);
     letter-spacing: 0;
   }
@@ -1603,7 +1603,7 @@ body {
     align-items: center;
     justify-content: center;
     gap: 18px;
-    background: var(--site-scroll-menu-bg, #8c7457);
+    background: var(--site-scroll-menu-bg, #f9f8f3);
   }
 
   .mobile-scroll-nav.is-open .mobile-scroll-nav__bar {
@@ -1645,7 +1645,7 @@ body {
     height: auto;
     aspect-ratio: 2340 / 1221;
     display: block;
-    background: var(--site-scroll-logo-tint, var(--site-scroll-menu-icon, #fff9f1));
+    background: var(--site-scroll-logo-tint, var(--site-scroll-menu-icon, #3f3933));
     mask-position: center;
     mask-repeat: no-repeat;
     mask-size: contain;
@@ -1666,7 +1666,7 @@ body {
     padding: 0;
     border: 0;
     background: transparent;
-    color: var(--site-scroll-menu-icon, var(--site-scroll-menu-text, #fff9f1));
+    color: var(--site-scroll-menu-icon, var(--site-scroll-menu-text, #3f3933));
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -1684,7 +1684,7 @@ body {
     padding: 0;
     border: 0;
     background: transparent;
-    color: var(--site-hero-menu-color, var(--site-scroll-menu-icon, var(--site-scroll-menu-text, #fff9f1)));
+    color: var(--site-hero-menu-color, var(--site-scroll-menu-icon, var(--site-scroll-menu-text, #3f3933)));
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -1738,9 +1738,9 @@ body {
     max-height: calc(100dvh - 86px);
     overflow-y: auto;
     padding: 18px 16px 26px;
-    background: var(--site-scroll-menu-bg, #8c7457);
+    background: var(--site-scroll-menu-bg, #f9f8f3);
     border-radius: 0;
-    color: var(--site-scroll-menu-text, #fff9f1);
+    color: var(--site-scroll-menu-text, #3f3933);
     font: 700 16px/1.35 var(--font-menu);
   }
 
@@ -1797,7 +1797,7 @@ body {
   .mobile-scroll-menu .mobile-menu__link,
   .mobile-scroll-menu .mobile-menu__toggle {
     min-height: 44px;
-    color: var(--site-scroll-menu-text, #fff9f1);
+    color: var(--site-scroll-menu-text, #3f3933);
   }
 
   .mobile-scroll-menu .mobile-menu__link {
@@ -1816,7 +1816,7 @@ body {
     width: 44px;
     border: 0;
     background: transparent;
-    color: var(--site-scroll-menu-icon, var(--site-scroll-menu-text, #fff9f1));
+    color: var(--site-scroll-menu-icon, var(--site-scroll-menu-text, #3f3933));
     font: 300 27px/1 var(--font-menu);
   }
 
@@ -1845,7 +1845,7 @@ body {
 
   .mobile-scroll-menu .mobile-submenu__link {
     padding: 10px 0;
-    color: var(--site-scroll-menu-text, #fff9f1);
+    color: var(--site-scroll-menu-text, #3f3933);
     font: 700 14px/1.35 var(--font-menu);
     letter-spacing: 0;
   }
@@ -1854,12 +1854,12 @@ body {
   .mobile-scroll-menu .mobile-menu__link:focus-visible,
   .mobile-scroll-menu .mobile-submenu__link:hover,
   .mobile-scroll-menu .mobile-submenu__link:focus-visible {
-    color: var(--site-scroll-menu-text, #fff9f1);
+    color: var(--site-scroll-menu-text, #3f3933);
   }
 
   .mobile-scroll-menu .mobile-menu__toggle:hover,
   .mobile-scroll-menu .mobile-menu__toggle:focus-visible {
-    color: var(--site-scroll-menu-icon, var(--site-scroll-menu-text, #fff9f1));
+    color: var(--site-scroll-menu-icon, var(--site-scroll-menu-text, #3f3933));
   }
 
   @keyframes mobileMenuItemIn {

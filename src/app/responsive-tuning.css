@@ -547,8 +547,8 @@
     overflow-y: auto;
     box-sizing: border-box;
     padding: 18px 22px calc(28px + env(safe-area-inset-bottom, 0px));
-    background: var(--site-scroll-menu-bg, #8c7457);
-    color: var(--site-scroll-menu-text, #fff9f1);
+    background: var(--site-scroll-menu-bg, #f9f8f3);
+    color: var(--site-scroll-menu-text, #3f3933);
     box-shadow: 0 22px 45px rgba(40, 32, 22, 0.2);
     -webkit-overflow-scrolling: touch;
     overscroll-behavior: contain;
@@ -588,7 +588,7 @@
     min-height: 54px;
     box-sizing: border-box;
     padding: 10px 4px;
-    color: var(--site-scroll-menu-text, #fff9f1) !important;
+    color: var(--site-scroll-menu-text, #3f3933) !important;
     text-decoration: none;
     font: 600 16px/1.3 var(--font-menu);
   }
@@ -611,7 +611,7 @@
     width: 100%;
     box-sizing: border-box;
     padding: 9px 0;
-    color: var(--site-scroll-menu-text, #fff9f1) !important;
+    color: var(--site-scroll-menu-text, #3f3933) !important;
     text-decoration: none;
     font: 500 14px/1.4 var(--font-menu);
   }

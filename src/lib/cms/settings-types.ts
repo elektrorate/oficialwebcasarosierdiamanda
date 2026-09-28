@@ -67,11 +67,11 @@ export const DEFAULT_SETTINGS: SiteSettings = {
   },
   menu: {
     header_logo_url: "https://hhxftxxshwgmfxuyrjmz.supabase.co/storage/v1/object/public/media/img/logo-header.png",
-    scroll_menu_background_color: "#8c7457",
-    scroll_menu_text_color: "#fff9f1",
-    scroll_menu_icon_color: "#fff9f1",
+    scroll_menu_background_color: "#f9f8f3",
+    scroll_menu_text_color: "#3f3933",
+    scroll_menu_icon_color: "#3f3933",
     scroll_menu_logo_tint_enabled: false,
-    scroll_menu_logo_tint_color: "#fff9f1",
+    scroll_menu_logo_tint_color: "#3f3933",
   },
   contact: {
     email: "",
