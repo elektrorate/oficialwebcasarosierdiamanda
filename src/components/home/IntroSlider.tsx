@@ -34,11 +34,13 @@ export function IntroSlider({ slides }: { slides: readonly HomeIntroSlide[] }) {
           <>
             <div className="flex h-full min-h-0 w-full items-center justify-end max-[640px]:justify-center">
               <Image
-                src={assetPath(slide.image)}
+                src={/^https?:\/\//i.test(slide.image) ? slide.image : assetPath(slide.image)}
                 alt={slide.imageAlt}
                 width={480}
                 height={480}
                 sizes="(max-width: 640px) 160px, 240px"
+                // Preserve the CMS image detail instead of generating a small carousel thumbnail.
+                unoptimized
                 loading="lazy"
                 className="block w-full max-w-60 px-8 sm:px-0 object-contain max-[640px]:max-w-40"
               />
