@@ -456,6 +456,10 @@ body.class-detail-page {
   text-align: left;
 }
 
+.class-detail__price-label-break {
+  display: none;
+}
+
 .class-detail-page:is([data-promo-page="class"], [data-promo-page="workshop"], [data-promo-page="experience"], [data-promo-page="gift-card"]) .class-detail--proposal .class-detail__title--editorial,
 .class-detail-page:is([data-promo-page="class"], [data-promo-page="workshop"], [data-promo-page="experience"], [data-promo-page="gift-card"]) .class-detail--proposal .class-detail__title--editorial.class-detail__title--styled {
   max-width: 22ch;
@@ -1067,7 +1071,19 @@ body.class-detail-page {
   }
 
   .class-detail-page:is([data-promo-page="class"], [data-promo-page="workshop"], [data-promo-page="experience"], [data-promo-page="gift-card"]) .class-detail--proposal .class-detail__fact-block--price .class-detail__price-row span {
-    font-size: 9.9px !important;
+    font-size: 11.88px !important;
+  }
+
+  .class-detail-page:is([data-promo-page="class"], [data-promo-page="workshop"], [data-promo-page="experience"], [data-promo-page="gift-card"]) .class-detail--proposal .class-detail__fact-block--price .class-detail__price-list {
+    width: min(100%, 190px);
+  }
+
+  .class-detail-page:is([data-promo-page="class"], [data-promo-page="workshop"], [data-promo-page="experience"], [data-promo-page="gift-card"]) .class-detail--proposal .class-detail__fact-block--price .class-detail__price-label {
+    white-space: nowrap;
+  }
+
+  .class-detail__price-label-break {
+    display: block;
   }
 
   .class-detail-page:is([data-promo-page="class"], [data-promo-page="workshop"], [data-promo-page="experience"], [data-promo-page="gift-card"]) .class-detail--proposal .class-detail__facts--fit .class-detail__fact-block--schedule .class-detail__schedule-item h4 {

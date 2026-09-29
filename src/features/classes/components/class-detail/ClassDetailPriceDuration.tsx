@@ -4,6 +4,22 @@ type Props = {
   item: ExperienceItem;
 };
 
+const MOBILE_PRICE_LABEL_PATTERN = /^(.*?4 clases)\s+(de 2 horas semanales)$/i;
+
+function PriceOptionLabel({ label }: { label: string }) {
+  const mobileLines = label.match(MOBILE_PRICE_LABEL_PATTERN);
+
+  if (!mobileLines) return <>{label}</>;
+
+  return (
+    <>
+      {mobileLines[1]}
+      <br className="class-detail__price-label-break" />
+      {mobileLines[2]}
+    </>
+  );
+}
+
 export function ClassDetailPriceDuration({ item }: Props) {
   const hasPrices = item.priceOptions.length > 0;
   const hasSchedule = item.schedule.length > 0;
@@ -27,7 +43,9 @@ export function ClassDetailPriceDuration({ item }: Props) {
           <div className="class-detail__price-list">
             {item.priceOptions.map((option, optionIndex) => (
               <div className="class-detail__price-row" key={`${option.label}-${optionIndex}`}>
-                <span>{option.label}</span>
+                <span className="class-detail__price-label">
+                  <PriceOptionLabel label={option.label} />
+                </span>
                 <strong>{option.price}</strong>
               </div>
             ))}
