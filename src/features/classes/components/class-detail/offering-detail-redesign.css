@@ -993,9 +993,12 @@ body.class-detail-page {
 
   .class-detail-page:is([data-promo-page="class"], [data-promo-page="workshop"], [data-promo-page="experience"], [data-promo-page="gift-card"]) .class-detail--proposal .class-detail__title--editorial,
   .class-detail-page:is([data-promo-page="class"], [data-promo-page="workshop"], [data-promo-page="experience"], [data-promo-page="gift-card"]) .class-detail--proposal .class-detail__title--editorial.class-detail__title--styled {
+    width: 100%;
     max-width: none;
+    margin-inline: auto;
     font-size: clamp(27px, 8.3vw, 34px);
     line-height: 1.1;
+    text-align: center !important;
   }
 
   .class-detail-page:is([data-promo-page="class"], [data-promo-page="workshop"], [data-promo-page="experience"], [data-promo-page="gift-card"]) .class-detail--proposal .class-detail__question--editorial,
