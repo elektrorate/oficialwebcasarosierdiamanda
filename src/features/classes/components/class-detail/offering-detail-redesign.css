@@ -366,7 +366,7 @@ body.class-detail-page {
     height: min(92dvh, 720px);
     max-height: calc(100dvh - 32px);
     grid-template-columns: 1fr;
-    grid-template-rows: minmax(220px, 44dvh) minmax(0, 1fr);
+    grid-template-rows: minmax(220px, 61.6dvh) minmax(0, 1fr);
     border-radius: 16px;
   }
 
@@ -398,7 +398,7 @@ body.class-detail-page {
   .ig-modal.offering-gallery-modal .ig-modal__panel {
     width: min(100%, 340px);
     height: min(76dvh, 560px);
-    grid-template-rows: minmax(176px, 34dvh) minmax(0, 1fr);
+    grid-template-rows: minmax(176px, 47.6dvh) minmax(0, 1fr);
   }
 
   .ig-modal.offering-gallery-modal .ig-modal__content {
