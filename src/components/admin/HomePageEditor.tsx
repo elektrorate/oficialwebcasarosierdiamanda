@@ -20,7 +20,7 @@ type ModalState = { type: "success" | "error"; title: string; message?: string }
 const tabs: Array<{ key: TabKey; label: string }> = [
   { key: "hero", label: "Hero" },
   { key: "carousel", label: "Carousel destacado" },
-  { key: "classes", label: "Clases" },
+  { key: "classes", label: "Clases y experiencias" },
   { key: "workshops", label: "Workshops" },
   { key: "gifts", label: "Gift Cards" },
   { key: "preview", label: "Vista previa" },
@@ -60,14 +60,14 @@ function serializeEditorState(input: {
 
 export default function HomePageEditor({
   page,
-  classes,
+  classesAndExperiences,
   workshops,
   giftCards,
   navigationItems,
   previewMenu,
 }: {
   page: HomePageSettings;
-  classes: ExperienceItem[];
+  classesAndExperiences: ExperienceItem[];
   workshops: ExperienceItem[];
   giftCards: GiftCardItem[];
   navigationItems: NavigationItem[];
@@ -197,7 +197,7 @@ export default function HomePageEditor({
     setIsLoading(false);
   }
 
-  const selectedClasses = selectedOnly(classes, classesFeaturedIds);
+  const selectedClassesAndExperiences = selectedOnly(classesAndExperiences, classesFeaturedIds);
   const selectedWorkshops = selectedOnly(workshops, workshopsFeaturedIds);
   const selectedGiftCards = selectedOnly(giftCards, giftFeaturedIds);
 
@@ -212,7 +212,7 @@ export default function HomePageEditor({
           <div className="cms-page-editor-meta">
             <span className={`status-pill status-pill--${status}`}>{status}</span>
             <span>{introSlides.filter((slide) => slide.isVisible).length} slides visibles</span>
-            <span>{classesFeaturedIds.length} clases en home</span>
+            <span>{classesFeaturedIds.length} clases y experiencias en home</span>
             <span>{giftFeaturedIds.length} gift cards</span>
           </div>
         </div>
@@ -288,7 +288,7 @@ export default function HomePageEditor({
         ) : null}
 
         {tab === "classes" ? (
-          <FeaturedPicker title={classesTitle} subtitle={classesSubtitle} items={classes} selectedIds={classesFeaturedIds} onTitleChange={setClassesTitle} onSubtitleChange={setClassesSubtitle} onToggle={(id) => toggleSelected(id, classesFeaturedIds, setClassesFeaturedIds)} emptyText="No hay clases publicadas." />
+          <FeaturedPicker title={classesTitle} subtitle={classesSubtitle} items={classesAndExperiences} selectedIds={classesFeaturedIds} onTitleChange={setClassesTitle} onSubtitleChange={setClassesSubtitle} onToggle={(id) => toggleSelected(id, classesFeaturedIds, setClassesFeaturedIds)} emptyText="No hay clases ni experiencias publicadas." />
         ) : null}
 
         {tab === "workshops" ? (
@@ -307,7 +307,7 @@ export default function HomePageEditor({
                 <HomePreviewHeader hero={hero} navigationItems={navigationItems} previewMenu={previewMenu} />
                 <main>
                   <IntroSlider slides={introSlides.filter((slide) => slide.isVisible)} />
-                  {selectedClasses.length ? <FeaturedSection id="clases-destacadas" title={classesTitle} subtitle={classesSubtitle} items={selectedClasses} variant="classes" /> : null}
+                  {selectedClassesAndExperiences.length ? <FeaturedSection id="clases-destacadas" title={classesTitle} subtitle={classesSubtitle} items={selectedClassesAndExperiences} variant="classes" /> : null}
                   {selectedWorkshops.length ? <FeaturedSection id="workshops-destacados" title={workshopsTitle} subtitle={workshopsSubtitle} items={selectedWorkshops} variant="workshops" /> : null}
                   {selectedGiftCards.length ? <HomeGiftCardSection title={giftTitle} subtitle={giftSubtitle} items={selectedGiftCards} /> : null}
                 </main>

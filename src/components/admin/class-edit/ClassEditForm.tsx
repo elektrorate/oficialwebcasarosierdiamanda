@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useMemo } from "react";
+import { useCallback } from "react";
 import Link from "next/link";
 import AdminActionModal from "@/components/admin/AdminActionModal";
 import MediaLibraryModal from "@/components/admin/MediaLibraryModal";
@@ -33,11 +33,6 @@ export default function ClassEditForm({
   const form = useClassEditForm({ offering, mode, basePath });
   const { activeTab, updateDetails, title, subtitle } = form;
 
-  const visibleTabs = useMemo(
-    () => (offering.type === "experience" ? CLASS_EDIT_TABS.filter((tab) => tab.key !== "home") : CLASS_EDIT_TABS),
-    [offering.type],
-  );
-
   const handleHeroDetailsChange = useCallback(
     (next: Partial<ClassOfferingDetails>) => updateDetails(next),
     [updateDetails],
@@ -56,7 +51,7 @@ export default function ClassEditForm({
         onClose={form.closeToast}
       />
 
-      <ClassEditTabBar tabs={visibleTabs} activeTab={activeTab} onTabChange={form.setActiveTab} />
+      <ClassEditTabBar tabs={CLASS_EDIT_TABS} activeTab={activeTab} onTabChange={form.setActiveTab} />
 
       <form id={FORM_ID} onSubmit={form.handleSubmit} className="class-edit-form space-y-6">
         {activeTab === "hero" ? (

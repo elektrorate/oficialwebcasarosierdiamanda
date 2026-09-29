@@ -9,6 +9,7 @@ import {
 import type { GiftCardItem } from "@/data/types";
 import { getPublicExperienceItems } from "@/features/experiences/experienceDetailRouting";
 import { HomeGiftCardSection } from "@/features/home/HomeGiftCardSection";
+import { getClassAndExperienceItems } from "@/features/home/homeFeaturedItems";
 import { IdeaPromptSection } from "@/features/shared/contextual-sections/IdeaPromptSection";
 import { SitePage } from "@/features/shared/layout/SitePage";
 import { getHomePageSettings } from "@/lib/cms/home-page";
@@ -34,12 +35,15 @@ export async function HomePage() {
     getPublicExperienceItems(),
     getHomePageSettings(),
   ]);
-  const classes = experienceItems.filter((item) => item.kind === "class");
+  const classesAndExperiences = getClassAndExperienceItems(experienceItems);
   const workshops = experienceItems.filter((item) => item.kind === "workshop");
   const giftCards = experienceItems.filter(
     (item): item is GiftCardItem => item.kind === "gift-card",
   );
-  const homeClasses = pickHomeItems(classes, homePage.classesFeaturedIds);
+  const homeClassesAndExperiences = pickHomeItems(
+    classesAndExperiences,
+    homePage.classesFeaturedIds,
+  );
   const homeWorkshops = pickHomeItems(workshops, homePage.workshopsFeaturedIds);
   const homeGiftCards = pickHomeItems(giftCards, homePage.giftFeaturedIds);
   const testimonials = mapCmsTestimonialsToSlides(cmsTestimonials);
@@ -73,12 +77,12 @@ export async function HomePage() {
     >
       <h1 className="sr-only">Casa Rosier, estudio de cerámica en Barcelona</h1>
       <IntroSlider slides={homePage.introSlides} />
-      {homeClasses.length ? (
+      {homeClassesAndExperiences.length ? (
         <FeaturedSection
           id="clases-destacadas"
           title={homePage.classesTitle}
           subtitle={homePage.classesSubtitle}
-          items={homeClasses}
+          items={homeClassesAndExperiences}
           variant="classes"
         />
       ) : null}
