@@ -1,6 +1,7 @@
 "use client";
 
 import { FeaturedExperienceCards } from "@/components/home/FeaturedExperienceCards";
+import { GiftCarousel } from "@/components/home/GiftCarousel";
 import type { Offering } from "@/lib/cms/types";
 import type { ClassEditFormState } from "../hooks/useClassEditForm";
 import { buildPreviewItem } from "../utils";
@@ -34,9 +35,13 @@ export function HomeCardPreviewPanel({ offering, form }: HomeCardPreviewPanelPro
     >
       <section className={`class-edit-home-public-preview featured featured--${featuredVariant}`}>
         <div className="featured__container">
-          <div className="featured__grid cards-grid">
-            <FeaturedExperienceCards items={[previewItem]} />
-          </div>
+          {previewItem.kind === "gift-card" ? (
+            <GiftCarousel items={[previewItem]} />
+          ) : (
+            <div className="featured__grid cards-grid">
+              <FeaturedExperienceCards items={[previewItem]} />
+            </div>
+          )}
         </div>
       </section>
     </SectionCard>

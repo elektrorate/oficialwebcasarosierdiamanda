@@ -7,7 +7,6 @@ import { MarkdownContent } from "@/components/ui/MarkdownContent";
 import type { ExperienceItem } from "@/data/types";
 import { assetPath } from "@/lib/assets";
 import {
-  DEFAULT_DESCRIPTION_TYPOGRAPHY,
   DEFAULT_RICH_TEXT_TYPOGRAPHY,
   normalizeRichTextTypography,
   type RichTextTypography,
@@ -65,7 +64,6 @@ function giftHomeContent(item: ExperienceItem) {
     eyebrow,
     title: item.homeTitle || item.title,
     tagline,
-    excerpt: item.homeExcerpt || item.excerpt,
   };
 }
 
@@ -76,7 +74,6 @@ function GiftCard({ item }: { item: ExperienceItem }) {
     ...typographyVars("gift-eyebrow", item.homeEyebrowTypography, DEFAULT_GIFT_EYEBROW_TYPOGRAPHY),
     ...typographyVars("gift-title", item.homeTitleTypography, DEFAULT_GIFT_TITLE_TYPOGRAPHY),
     ...typographyVars("gift-tagline", item.homeTaglineTypography ?? item.subtitleTypography, DEFAULT_GIFT_TAGLINE_TYPOGRAPHY),
-    ...typographyVars("gift-excerpt", item.homeExcerptTypography, DEFAULT_DESCRIPTION_TYPOGRAPHY),
   };
 
   return (
@@ -84,20 +81,20 @@ function GiftCard({ item }: { item: ExperienceItem }) {
       href={href}
       aria-label={`Ver ${stripMarkdown(content.title) || item.title}`}
       style={style}
-      className="group grid items-center gap-[clamp(28px,4.5vw,52px)] text-left text-inherit no-underline grid-cols-[minmax(min(100%,240px),clamp(240px,28vw,320px))_minmax(0,1fr)] focus-visible:outline-2 focus-visible:outline-[currentColor] focus-visible:outline-offset-[6px] max-[720px]:grid-cols-1 max-[720px]:gap-[clamp(20px,5vw,28px)]"
+          className="group grid items-center gap-[clamp(28px,4.5vw,52px)] text-left text-inherit no-underline grid-cols-[280px_minmax(0,1fr)] focus-visible:outline-2 focus-visible:outline-[currentColor] focus-visible:outline-offset-[6px] max-[720px]:grid-cols-1 max-[720px]:gap-[clamp(20px,5vw,28px)]"
     >
-      <span className="relative block aspect-square w-full overflow-hidden bg-[#1a1a1a] max-[720px]:mx-auto max-[720px]:w-[min(100%,320px)]">
+      <span className="relative block aspect-[5/4] w-full overflow-hidden bg-[#1a1a1a] max-[720px]:mx-auto max-[720px]:w-[min(100%,400px)]">
         <Image
           src={assetPath(content.image)}
           alt={content.imageAlt}
           fill
-          sizes="(max-width: 720px) min(100vw, 320px), 320px"
+                sizes="(max-width: 720px) min(100vw, 400px), 280px"
           loading="lazy"
           onError={applyImageFallback}
           className="block h-full w-full object-cover"
         />
       </span>
-      <div className="flex min-w-0 flex-col items-start max-[720px]:items-center max-[720px]:text-center">
+      <div className="gift-carousel__copy flex min-w-0 flex-col items-start max-[720px]:items-center max-[720px]:text-center">
         {content.eyebrow ? (
           <MarkdownContent
             className="gift-carousel__eyebrow max-[720px]:w-full max-[720px]:text-center"
@@ -110,10 +107,6 @@ function GiftCard({ item }: { item: ExperienceItem }) {
             <MarkdownContent className="gift-carousel__tagline" source={content.tagline} />
           ) : null}
         </div>
-        <MarkdownContent
-          className="gift-carousel__text max-[720px]:text-center"
-          source={content.excerpt}
-        />
         <span
           aria-hidden="true"
           className="mt-[clamp(14px,1.75vw,18px)] inline-flex items-center justify-center border border-[#c4c4c4] bg-transparent px-6.5 py-2.5 font-medium text-[14px]/[1] leading-none lowercase text-[#707070] [font-family:var(--font-primary)] transition-[border-color,color,background-color] duration-180 ease-in-out group-hover:border-[#707070] group-hover:text-black group-focus-visible:border-[#707070] group-focus-visible:text-black max-[720px]:mx-auto"

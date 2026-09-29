@@ -75,11 +75,14 @@ function stringArray(value: unknown) {
 }
 
 function normalizeSlide(input: Partial<HomeIntroSlide>, index: number): HomeIntroSlide {
+  const id = String(input.id ?? `intro-${index + 1}`);
+
   return {
-    id: String(input.id ?? `intro-${index + 1}`),
+    id,
     text: String(input.text ?? ""),
     buttonText: String(input.buttonText ?? ""),
     buttonHref: String(input.buttonHref ?? ""),
+    showButton: input.showButton ?? id !== "intro-1788248293295",
     image: String(input.image ?? ""),
     imageAlt: String(input.imageAlt ?? ""),
     isVisible: input.isVisible !== false,

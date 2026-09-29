@@ -1193,6 +1193,7 @@ export interface HomeIntroSlide {
   text: string;
   buttonText: string;
   buttonHref: string;
+  showButton?: boolean;
   image: string;
   imageAlt: string;
   isVisible: boolean;

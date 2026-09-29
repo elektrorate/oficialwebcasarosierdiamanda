@@ -38,7 +38,7 @@ function TestimonialCarouselSectionComponent({
         <Carousel
           items={testimonials}
           ariaLabel={copy.carouselAriaLabel}
-          className={isHome ? "m-0" : "testimonial__carousel"}
+          className={isHome ? "home-testimonial__carousel m-0" : "testimonial__carousel"}
           viewportClassName={isHome ? "mx-auto max-w-[min(640px,100%)] overflow-hidden max-[640px]:w-full max-[640px]:max-w-full" : "testimonial__viewport"}
           trackClassName={isHome ? "flex w-full transition-transform duration-[420ms] ease-in-out will-change-transform" : "testimonial__track"}
           slideClassName={isHome ? "grid flex-[0_0_100%] grid-cols-[clamp(96px,9vw,112px)_minmax(0,1fr)] items-center gap-[clamp(20px,2.8vw,28px)] rounded-none bg-transparent p-0 max-[640px]:grid-cols-[clamp(72px,22vw,88px)_minmax(0,1fr)] max-[640px]:items-start max-[640px]:gap-4" : "testimonial__slide"}

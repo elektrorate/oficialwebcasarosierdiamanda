@@ -979,6 +979,14 @@ body.class-detail-page {
     padding: 32px 0 84px;
   }
 
+  .class-detail-page:is([data-promo-page="class"], [data-promo-page="workshop"], [data-promo-page="experience"], [data-promo-page="gift-card"]) .class-detail--proposal .class-gallery__thumbs {
+    /* Centrado como base; `safe` evita que una miniatura se corte al desbordar. */
+    justify-content: center;
+    justify-content: safe center;
+    max-width: 354px;
+    margin-inline: auto;
+  }
+
   .class-detail-page:is([data-promo-page="class"], [data-promo-page="workshop"], [data-promo-page="experience"], [data-promo-page="gift-card"]) .class-detail--proposal .class-detail__container {
     width: min(calc(100% - 36px), 480px);
   }

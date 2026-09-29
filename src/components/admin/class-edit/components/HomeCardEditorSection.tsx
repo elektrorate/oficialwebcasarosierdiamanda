@@ -4,7 +4,6 @@ import { AdminInput } from "@/components/ui/AdminField";
 import { AdminRichTextField } from "@/components/ui/AdminRichTextField";
 import Switch from "@/components/ui/Switch";
 import {
-  DEFAULT_DESCRIPTION_TYPOGRAPHY,
   DEFAULT_RICH_TEXT_TYPOGRAPHY,
   normalizeRichTextTypography,
 } from "@/lib/cms/rich-text-typography";
@@ -35,7 +34,6 @@ export function HomeCardEditorSection({ offering, form }: HomeCardEditorSectionP
   const taglineTypography = normalizeRichTextTypography(
     details.homeCard.taglineTypography ?? { ...DEFAULT_RICH_TEXT_TYPOGRAPHY, fontSize: 21 },
   );
-  const excerptTypography = normalizeRichTextTypography(details.homeCard.excerptTypography ?? DEFAULT_DESCRIPTION_TYPOGRAPHY);
 
   return (
     <SectionCard
@@ -125,19 +123,21 @@ export function HomeCardEditorSection({ offering, form }: HomeCardEditorSectionP
             />
           </div>
 
-          <AdminRichTextField
-            label="Descripción corta para Home"
-            labelPlacement="editor"
-            value={details.homeCard.excerpt}
-            typography={excerptTypography}
-            controls={DETAIL_PAGE_RICH_TEXT_CONTROLS}
-            layout="compact"
-            onChange={(value) => updateHomeCard({ excerpt: value })}
-            onTypographyChange={(next) => updateHomeCard({ excerptTypography: next })}
-            minHeight="120px"
-            placeholder={details.highlightDescription || "Resumen breve para la tarjeta de portada."}
-            help="Tipografía global en el panel inferior. Usa negrita, cursiva o subrayado para énfasis parcial."
-          />
+          {!supportsExtendedHomeCopy ? (
+            <AdminRichTextField
+              label="Descripción corta para Home"
+              labelPlacement="editor"
+              value={details.homeCard.excerpt}
+              typography={normalizeRichTextTypography(details.homeCard.excerptTypography)}
+              controls={DETAIL_PAGE_RICH_TEXT_CONTROLS}
+              layout="compact"
+              onChange={(value) => updateHomeCard({ excerpt: value })}
+              onTypographyChange={(next) => updateHomeCard({ excerptTypography: next })}
+              minHeight="120px"
+              placeholder={details.highlightDescription || "Resumen breve para la tarjeta de portada."}
+              help="Tipografía global en el panel inferior. Usa negrita, cursiva o subrayado para énfasis parcial."
+            />
+          ) : null}
         </div>
       </div>
     </SectionCard>

@@ -66,18 +66,21 @@ export function FeaturedExperienceCards({ items }: { items: readonly ExperienceI
                   </div>
                 </div>
               </div>
-              <div className="mt-[clamp(11px,1.9vw,15px)] px-[clamp(4px,1vw,8px)] text-center [font-family:var(--font-nunito)] max-[640px]:mt-3.25">
+              <div className="mt-[clamp(11px,1.9vw,15px)] px-[clamp(4px,1vw,8px)] text-center [font-family:var(--font-nunito)] min-[641px]:mt-4 min-[641px]:px-4 max-[640px]:mt-3.25">
                 <MarkdownContent
                   className="home-feature-card__title text-[clamp(13px,1.05vw,15px)] font-light uppercase tracking-[0.07em] text-[#2f2b28] [&_p]:m-0 max-[640px]:text-[13px] max-[640px]:tracking-[0.06em]"
                   source={label}
                   style={{ lineHeight: titleLineHeight }}
                 />
                 {tagline ? (
-                  <MarkdownContent
-                    className="home-feature-card__tagline mx-auto mt-1.5 max-w-[34ch] text-[clamp(12px,0.95vw,14px)] font-light leading-[1.4] tracking-[0.015em] text-[#766e68] [&_p]:m-0 max-[640px]:mt-1 max-[640px]:text-[12px]"
-                    source={tagline}
-                    style={{ lineHeight: item.homeTaglineTypography?.lineHeight ?? 1.4 }}
-                  />
+                  <>
+                    <span aria-hidden="true" className="home-feature-card__accent mx-auto mt-3 hidden h-px w-[34px] bg-[#c98e69] min-[641px]:block" />
+                    <MarkdownContent
+                      className="home-feature-card__tagline mx-auto mt-1.5 max-w-[34ch] text-[clamp(12px,0.95vw,14px)] font-light leading-[1.4] tracking-[0.015em] text-[#766e68] [&_p]:m-0 min-[641px]:mt-2 max-[640px]:mt-1 max-[640px]:text-[12px]"
+                      source={tagline}
+                      style={{ lineHeight: item.homeTaglineTypography?.lineHeight ?? 1.4 }}
+                    />
+                  </>
                 ) : null}
               </div>
             </Link>

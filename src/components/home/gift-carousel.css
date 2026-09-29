@@ -40,7 +40,7 @@
   display: block;
   margin: 0;
   padding-top: 1px;
-  color: #000;
+  color: #89786f;
   font-family: var(--font-primary);
   font-size: var(--gift-tagline-font-size, var(--text-lead));
   font-weight: var(--gift-tagline-font-weight, 400);
@@ -48,7 +48,7 @@
   font-style: var(--gift-tagline-font-style, normal);
   font-variation-settings: "wdth" var(--gift-tagline-font-width, 100), "wght" var(--gift-tagline-font-weight, 400);
   line-height: 1.3;
-  letter-spacing: -0.01em;
+  letter-spacing: 0.02em;
   text-transform: lowercase;
 }
 
@@ -96,6 +96,17 @@
 
 .gift-carousel__text.markdown-content > * + * {
   margin-top: 0.35em !important;
+}
+
+@media (min-width: 721px) {
+  .gift-carousel__copy {
+    max-width: 430px;
+  }
+
+  .gift-carousel__title {
+    font-size: 22px;
+    margin-bottom: 18px;
+  }
 }
 
 @media (max-width: 720px) {

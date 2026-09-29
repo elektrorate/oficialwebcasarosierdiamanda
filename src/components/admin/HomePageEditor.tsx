@@ -126,6 +126,7 @@ export default function HomePageEditor({
         text: "",
         buttonText: "Ver más",
         buttonHref: "/clases",
+        showButton: true,
         image: "/img/hero-bg.jpg",
         imageAlt: "Imagen de Casa Rosier",
         isVisible: true,
@@ -275,6 +276,10 @@ export default function HomePageEditor({
                       <label className="field span-2"><span>Texto</span><textarea rows={3} value={slide.text} onChange={(event) => updateSlide(index, { text: event.target.value })} /></label>
                       <label className="field"><span>Boton</span><input value={slide.buttonText} onChange={(event) => updateSlide(index, { buttonText: event.target.value })} /></label>
                       <label className="field"><span>Link</span><input value={slide.buttonHref} onChange={(event) => updateSlide(index, { buttonHref: event.target.value })} /></label>
+                      <label className="cms-switch-row">
+                        <input type="checkbox" checked={slide.showButton !== false} onChange={(event) => updateSlide(index, { showButton: event.target.checked })} />
+                        <span>Mostrar botón</span>
+                      </label>
                       <label className="field span-2"><span>Texto alternativo</span><input value={slide.imageAlt} onChange={(event) => updateSlide(index, { imageAlt: event.target.value })} /></label>
                     </div>
                     <div className="cms-home-slide-card__actions">
