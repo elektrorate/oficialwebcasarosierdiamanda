@@ -432,11 +432,6 @@
     justify-content: flex-start;
   }
 
-  .site-nav-shell .mobile-scroll-nav:not(.is-at-top) .mobile-scroll-nav__logo-image {
-    filter: brightness(0) saturate(100%) invert(1) !important;
-    opacity: 1 !important;
-  }
-
   .native-mobile-nav__summary {
     position: absolute !important;
     top: 24px !important;

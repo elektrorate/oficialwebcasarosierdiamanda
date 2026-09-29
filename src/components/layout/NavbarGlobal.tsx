@@ -13,6 +13,7 @@ import { ScrollStickyNavBar } from "@/components/layout/scroll-nav/ScrollStickyN
 const DESKTOP_SUBMENU_CLOSE_DELAY = 320;
 const DESKTOP_NAV_BREAKPOINT = 1025;
 const DESKTOP_SCROLL_HYSTERESIS = 40;
+const SCROLL_LOGO_COLOR = "#3f3933";
 
 export function NavbarGlobal({
   home = false,
@@ -22,8 +23,6 @@ export function NavbarGlobal({
   scrollMenuBackgroundColor = "#f9f8f3",
   scrollMenuTextColor = "#3f3933",
   scrollMenuIconColor = "#3f3933",
-  scrollMenuLogoTintEnabled = false,
-  scrollMenuLogoTintColor = "#3f3933",
   scrollThreshold = 12,
   tabletScrollThreshold = scrollThreshold,
   mobileScrollThreshold = scrollThreshold,
@@ -105,7 +104,7 @@ export function NavbarGlobal({
     "--site-scroll-menu-bg": scrollMenuBackgroundColor,
     "--site-scroll-menu-text": scrollMenuTextColor,
     "--site-scroll-menu-icon": effectiveScrollIconColor,
-    "--site-scroll-logo-tint": scrollMenuLogoTintColor,
+    "--site-scroll-logo-tint": SCROLL_LOGO_COLOR,
     "--site-hero-menu-color": heroMenuColor,
     "--site-hero-menu-scale": heroMenuScale,
     "--hero-logo-position-x": heroLogoPositionX || "50%",
@@ -439,11 +438,7 @@ export function NavbarGlobal({
           variant={home || editorialScrollNav ? "editorial" : "default"}
           items={scrollDesktopItems}
           logoUrl={logoUrl}
-          useLogoTint={
-            mobileScrolled || mobileOpen
-              ? scrollMenuLogoTintEnabled
-              : Boolean(heroMenuColor)
-          }
+          useLogoTint={mobileScrolled || mobileOpen || Boolean(heroMenuColor)}
           logoTintStyle={scrollLogoTintStyle}
           openHref={scrollDesktopOpen}
           current={current}
@@ -564,7 +559,7 @@ export function NavbarGlobal({
                 variant="editorial"
                 items={scrollDesktopItems}
                 logoUrl={logoUrl}
-                useLogoTint={scrollMenuLogoTintEnabled}
+                useLogoTint
                 logoTintStyle={scrollLogoTintStyle}
                 openHref={scrollDesktopOpen}
                 current={current}

@@ -114,7 +114,7 @@
     height: auto !important;
     max-height: none !important;
     aspect-ratio: 2340 / 1221;
-    background: #403b36 !important;
+    background: var(--site-scroll-logo-tint, #3f3933) !important;
     mask-position: center;
     mask-repeat: no-repeat;
     mask-size: contain;
