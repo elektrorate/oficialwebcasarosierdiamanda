@@ -59,7 +59,7 @@ export function IntroSlider({ slides }: { slides: readonly HomeIntroSlide[] }) {
               >
                 <div className="w-full max-w-84 text-center max-[1024px]:max-w-72 max-[640px]:max-w-full">
                   {isFeatured ? <h2 className="home-intro-slider__title">DESCUBRE LA CERÁMICA</h2> : null}
-                  <p className="home-intro-slider__text m-0 text-[24px] font-light leading-[1.22] text-[#5f5852] max-[640px]:mx-auto max-[640px]:max-w-[300px] max-[640px]:text-[10.2px] max-[640px]:leading-[1.3]">
+                  <p className="home-intro-slider__text m-0 text-[24px] font-light leading-[1.22] text-[#5f5852] max-[640px]:mx-auto max-[640px]:max-w-[300px] max-[640px]:text-[15px] max-[640px]:leading-[1.3]">
                     {slide.text}
                   </p>
                   {slide.showButton !== false ? (

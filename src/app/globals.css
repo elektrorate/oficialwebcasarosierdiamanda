@@ -5499,6 +5499,42 @@ body {
   text-underline-offset: 0.18em;
 }
 
+/* En móvil, el modal reserva espacio para el contenido y la foto llena su área. */
+@media (max-width: 900px) {
+  .ig-modal.social-gallery-modal .ig-modal__panel {
+    display: grid;
+    width: min(100%, 360px);
+    height: min(92dvh, 720px);
+    max-height: calc(100dvh - 32px);
+    grid-template-columns: 1fr;
+    grid-template-rows: minmax(0, 60%) minmax(0, 40%);
+    overflow: hidden;
+    background: #fff;
+  }
+
+  .ig-modal.social-gallery-modal .ig-modal__media {
+    display: grid;
+    place-items: center;
+    aspect-ratio: auto;
+    align-self: stretch;
+    height: 100%;
+    min-height: 0;
+    max-height: none;
+    overflow: hidden;
+    background: #fff;
+  }
+
+  .ig-modal.social-gallery-modal .ig-modal__media img {
+    position: absolute;
+    inset: 0;
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+  }
+}
+
 /* Navegación responsive: jerarquía editorial para los submenús. */
 @media (max-width: 1024px) {
   .mobile-scroll-menu .mobile-menu__list {
