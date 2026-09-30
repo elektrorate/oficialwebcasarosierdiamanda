@@ -508,7 +508,7 @@ export function NavbarGlobal({
                         aria-label={`${open ? "Cerrar" : "Abrir"} submenu de ${item.label}`}
                         onClick={toggleSubmenu}
                       >
-                        <span aria-hidden="true">{open ? "x" : "+"}</span>
+                        <span aria-hidden="true">{open ? "×" : "+"}</span>
                       </button>
                     )}
                   </div>

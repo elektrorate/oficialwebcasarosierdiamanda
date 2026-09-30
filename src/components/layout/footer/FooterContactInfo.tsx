@@ -63,7 +63,7 @@ export function FooterContactInfo({
         <div className="mt-[clamp(20px,2.8vw,32px)] w-full flex justify-center">
           {isEditorial ? (
             <a
-              className="inline-flex flex-col items-center gap-0 text-[#b5a48b] text-[clamp(17.6px,2.12vw,22.4px)] leading-[1.35] font-light no-underline lowercase tracking-[0.03em] text-center [font-family:var(--font-menu)] hover:text-[#957a4e] hover:no-underline focus-visible:text-[#957a4e] focus-visible:outline-none"
+              className="footer-map-link inline-flex flex-col items-center gap-0 text-[clamp(17.6px,2.12vw,22.4px)] leading-[1.35] font-light no-underline lowercase tracking-[0.03em] text-center [font-family:var(--font-menu)] hover:no-underline focus-visible:outline-none"
               href={model.mapUrl}
               target="_blank"
               rel="noopener noreferrer"

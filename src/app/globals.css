@@ -90,6 +90,16 @@ button:disabled {
   pointer-events: none;
 }
 
+.footer-map-link {
+  color: #b5a48b !important;
+  transition: color 200ms ease-out;
+}
+
+.footer-map-link:hover,
+.footer-map-link:focus-visible {
+  color: #965c3d !important;
+}
+
 @media (min-width: 641px) {
   .home-feature-card__title,
   .home-feature-card__title.markdown-content > * {
@@ -5487,4 +5497,81 @@ body {
   color: inherit;
   text-decoration-thickness: 1px;
   text-underline-offset: 0.18em;
+}
+
+/* Navegación responsive: jerarquía editorial para los submenús. */
+@media (max-width: 1024px) {
+  .mobile-scroll-menu .mobile-menu__list {
+    max-width: none;
+    margin: 0;
+    gap: 14px;
+  }
+
+  .mobile-scroll-menu .mobile-menu__row {
+    justify-content: flex-start;
+    gap: 14px;
+  }
+
+  .mobile-scroll-menu .mobile-menu__link {
+    flex: 0 1 auto;
+    min-height: 48px;
+    padding: 0;
+    color: var(--site-scroll-menu-text, #3f3933);
+    font: 400 clamp(26px, 4vw, 33px) / 1.12 var(--font-menu);
+    letter-spacing: -0.025em;
+  }
+
+  .mobile-scroll-menu .mobile-menu__toggle {
+    flex: 0 0 auto;
+    width: auto;
+    min-width: 34px;
+    min-height: 48px;
+    padding: 0;
+    color: var(--site-scroll-menu-icon, var(--site-scroll-menu-text, #3f3933));
+    font: 300 clamp(34px, 4.6vw, 40px) / 1 var(--font-menu);
+  }
+
+  .mobile-scroll-menu .mobile-menu__item--open .mobile-menu__toggle span {
+    display: block;
+    font-family: Arial, sans-serif;
+    font-size: 1.16em;
+    font-weight: 200;
+    line-height: 1;
+  }
+
+  .mobile-scroll-menu .mobile-submenu {
+    padding: 0;
+  }
+
+  .mobile-scroll-menu .mobile-submenu__list {
+    width: min(100% - 34px, 550px);
+    margin: 38px 0 12px 34px;
+    padding: 0;
+    border-radius: 0;
+    background: transparent;
+  }
+
+  .mobile-scroll-menu .mobile-submenu__list > li {
+    border-top: 1px solid rgba(91, 87, 82, 0.38);
+  }
+
+  .mobile-scroll-menu .mobile-submenu__list > li:last-child {
+    border-bottom: 1px solid rgba(91, 87, 82, 0.38);
+  }
+
+  .mobile-scroll-menu .mobile-submenu__link {
+    display: block;
+    padding: 7px 0 8px;
+    color: #76655c;
+    font: 400 clamp(20px, 3.5vw, 28px) / 1.22 var(--font-menu);
+    letter-spacing: 0.035em;
+    text-transform: uppercase;
+  }
+
+  .mobile-scroll-menu .mobile-menu__link:hover,
+  .mobile-scroll-menu .mobile-menu__link:focus-visible,
+  .mobile-scroll-menu .mobile-submenu__link:hover,
+  .mobile-scroll-menu .mobile-submenu__link:focus-visible {
+    color: #5c514a;
+  }
 }
