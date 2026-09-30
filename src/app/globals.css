@@ -5545,7 +5545,7 @@ body {
 
   .mobile-scroll-menu .mobile-submenu__list {
     width: min(100% - 34px, 550px);
-    margin: 38px 0 12px 34px;
+    margin: 20px 0 12px 34px;
     padding: 0;
     border-radius: 0;
     background: transparent;
@@ -5563,7 +5563,7 @@ body {
     display: block;
     padding: 7px 0 8px;
     color: #76655c;
-    font: 400 clamp(20px, 3.5vw, 28px) / 1.22 var(--font-menu);
+    font: 400 17px / 1.22 var(--font-menu);
     letter-spacing: 0.035em;
     text-transform: uppercase;
   }
