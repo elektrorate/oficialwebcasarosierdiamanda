@@ -12,6 +12,7 @@ import { refreshOfferingPaths } from "@/lib/cms/offering-routes";
 import { expirationSaveError } from "@/lib/cms/offering-expiration";
 import { internalApiError } from "@/lib/security/api-response";
 import { publicSlugError } from "@/lib/seo/public-slug";
+import { offeringGalleryModalContentError } from "@/lib/cms/modal-content";
 
 export async function PUT(request: NextRequest, context: { params: Promise<{ id: string }> }) {
   const session = await requireAdminApi();
@@ -24,6 +25,11 @@ export async function PUT(request: NextRequest, context: { params: Promise<{ id:
   if (body.slug) {
     const slugError = publicSlugError(body.slug);
     if (slugError) return NextResponse.json({ error: slugError }, { status: 400 });
+  }
+
+  const modalContentError = offeringGalleryModalContentError(body);
+  if (modalContentError) {
+    return NextResponse.json({ error: modalContentError }, { status: 400 });
   }
 
   const expirationError = expirationSaveError({

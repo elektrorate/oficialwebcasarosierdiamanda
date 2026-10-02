@@ -5,7 +5,6 @@ import { getHomePageSettings } from "@/lib/cms/home-page";
 import { getPublicNavigationItems } from "@/lib/cms/navigation-public";
 import { getSettings } from "@/lib/cms/settings";
 import type { GiftCardItem } from "@/data/types";
-import { getClassAndExperienceItems } from "@/features/home/homeFeaturedItems";
 
 export default async function HomeAdminPage() {
   const [page, experienceItems, navigationItems, settings] = await Promise.all([
@@ -14,16 +13,14 @@ export default async function HomeAdminPage() {
     getPublicNavigationItems("main"),
     getSettings(),
   ]);
-  const classesAndExperiences = getClassAndExperienceItems(experienceItems);
-  const workshops = experienceItems.filter((item) => item.kind === "workshop");
+  const featuredItems = experienceItems.filter((item) => item.kind !== "gift-card");
   const giftCards = experienceItems.filter((item): item is GiftCardItem => item.kind === "gift-card");
 
   return (
     <AdminShell>
       <HomePageEditor
         page={page}
-        classesAndExperiences={classesAndExperiences}
-        workshops={workshops}
+        featuredItems={featuredItems}
         giftCards={giftCards}
         navigationItems={navigationItems}
         previewMenu={{

@@ -1104,7 +1104,9 @@ main {
     grid-template-columns: 1fr;
     overflow: auto;
   }
-  .ig-modal__media {
+  /* Este límite pertenece al modal histórico; los modales social y offering
+     reservan su propia proporción de imagen y contenido. */
+  .ig-modal:not(.social-gallery-modal):not(.offering-gallery-modal) .ig-modal__media {
     min-height: 0;
     max-height: 32dvh;
   }

@@ -67,9 +67,9 @@ export const adminSections: AdminNavSection[] = [
     label: "Actividades",
     icon: "school",
     children: [
-      { label: "Clases", href: adminRoutes.classes },
-      { label: "Workshops", href: adminRoutes.workshops },
       { label: "Experiencias", href: adminRoutes.experiences },
+      { label: "Cursos", href: adminRoutes.classes },
+      { label: "Workshops", href: adminRoutes.workshops },
       { label: "Gift Cards", href: adminRoutes.giftCards },
       { label: "Reservas", href: adminRoutes.reservations },
     ],

@@ -12,6 +12,7 @@ import { ImagePreview } from "../fields/ImagePreview";
 import { ListItemActions } from "./ListItemActions";
 import { SectionCard } from "./SectionCard";
 import { MAX_GALLERY_IMAGES } from "../constants";
+import { MODAL_CONTENT_LIMITS } from "@/lib/cms/modal-content";
 
 type GalleryImagesSectionProps = {
   form: ClassEditFormState;
@@ -69,6 +70,8 @@ function GalleryImagesSectionComponent({ form }: GalleryImagesSectionProps) {
             item={item}
             index={index}
             error={errors[`gallery-${index}`]}
+            modalTitleError={errors[`gallery-modal-title-${index}`]}
+            modalDescriptionError={errors[`gallery-modal-description-${index}`]}
             uploadInfo={galleryUploadInfo[item.image]}
             onDragStart={() => dragDrop.onDragStart(index)}
             onDragOver={dragDrop.onDragOver}
@@ -138,6 +141,8 @@ const GalleryImageRow = memo(function GalleryImageRow({
   item,
   index,
   error,
+  modalTitleError,
+  modalDescriptionError,
   uploadInfo,
   onDragStart,
   onDragOver,
@@ -161,6 +166,8 @@ const GalleryImageRow = memo(function GalleryImageRow({
   item: OfferingGalleryImage;
   index: number;
   error?: string;
+  modalTitleError?: string;
+  modalDescriptionError?: string;
   uploadInfo?: { originalSize: number; finalSize: number; reductionPercent: number };
   onDragStart: () => void;
   onDragOver: (event: DragEvent) => void;
@@ -259,16 +266,22 @@ const GalleryImageRow = memo(function GalleryImageRow({
         />
         <AdminInput
           label="Título del modal"
-          help="Sustituye el título general del Offering cuando se abre esta imagen. Si queda vacío, no se mostrará ningún título."
+          help={`Sustituye el título general del Offering. Máximo ${MODAL_CONTENT_LIMITS.title} caracteres (${(item.modalTitle ?? "").trim().length}/${MODAL_CONTENT_LIMITS.title}).`}
           placeholder="Título específico para esta imagen"
           value={item.modalTitle ?? ""}
+          maxLength={MODAL_CONTENT_LIMITS.title}
+          error={modalTitleError}
+          validationKey={`gallery-modal-title-${index}`}
           onChange={(event) => onModalTitleChange(event.target.value)}
         />
         <AdminTextarea
           label="Descripción pública de la imagen"
-          help="Se mostrará junto a la imagen cuando se abra la galería ampliada."
+          help={`Se mostrará junto a la imagen sin scroll. Máximo ${MODAL_CONTENT_LIMITS.description} caracteres (${(item.modalDescription ?? "").trim().length}/${MODAL_CONTENT_LIMITS.description}).`}
           placeholder="Describe la imagen, la pieza o el proceso..."
           value={item.modalDescription ?? ""}
+          maxLength={MODAL_CONTENT_LIMITS.description}
+          error={modalDescriptionError}
+          validationKey={`gallery-modal-description-${index}`}
           onChange={(event) => onModalDescriptionChange(event.target.value)}
         />
         <div className="grid gap-3 md:col-start-2">

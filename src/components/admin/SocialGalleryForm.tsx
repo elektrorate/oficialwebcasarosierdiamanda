@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import type { SocialGallery, SocialGalleryItem } from "@/lib/cms/types";
 import AdminActionModal from "./AdminActionModal";
 import MediaSelectField from "./MediaSelectField";
+import { MODAL_CONTENT_LIMITS, socialGalleryModalContentError } from "@/lib/cms/modal-content";
 
 type Notice = { type: "success" | "error"; title: string; message: string };
 
@@ -95,6 +96,13 @@ export default function SocialGalleryForm({
       cta_url: "",
       items: items.map((galleryItem, order) => ({ ...galleryItem, is_visible: true, sort_order: order })),
     };
+
+    const contentError = socialGalleryModalContentError(body);
+    if (contentError) {
+      setIsLoading(false);
+      setNotice({ type: "error", title: "Revisa el contenido", message: contentError });
+      return;
+    }
 
     try {
       const response = await fetch(
@@ -205,16 +213,16 @@ export default function SocialGalleryForm({
                   </div>
                   <div className="grid-2">
                     <label className="field">
-                      <span>Título</span>
-                      <input value={galleryItem.title} onChange={(event) => updateItem(index, "title", event.target.value)} />
+                      <span>Título ({galleryItem.title.trim().length}/{MODAL_CONTENT_LIMITS.title})</span>
+                      <input maxLength={MODAL_CONTENT_LIMITS.title} value={galleryItem.title} onChange={(event) => updateItem(index, "title", event.target.value)} />
                     </label>
                     <label className="field">
                       <span>Link del post</span>
                       <input value={galleryItem.instagram_url} onChange={(event) => updateItem(index, "instagram_url", event.target.value)} placeholder="https://instagram.com/p/..." />
                     </label>
                     <label className="field span-2">
-                      <span>Texto</span>
-                      <textarea rows={3} value={galleryItem.description} onChange={(event) => updateItem(index, "description", event.target.value)} />
+                      <span>Texto ({galleryItem.description.trim().length}/{MODAL_CONTENT_LIMITS.description})</span>
+                      <textarea maxLength={MODAL_CONTENT_LIMITS.description} rows={3} value={galleryItem.description} onChange={(event) => updateItem(index, "description", event.target.value)} />
                     </label>
                   </div>
                 </div>

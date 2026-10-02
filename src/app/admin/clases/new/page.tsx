@@ -44,7 +44,7 @@ export default async function NewClassPage() {
   return (
     <AdminShell>
       <TopBar
-        title="Nueva clase"
+        title="Nuevo curso"
         subtitle="Crea una página de producto personalizada"
         actions={
           <>

@@ -21,8 +21,8 @@ export default async function EditClassPage({ params }: { params: Promise<{ id: 
       <AdminShell>
         <EmptyState
           icon="school"
-          title="Clase no encontrada"
-          description="La clase que intentas editar no existe o fue eliminada."
+          title="Curso no encontrado"
+          description="El curso que intentas editar no existe o fue eliminado."
           action={<Button href="/admin/clases">Volver al listado</Button>}
         />
       </AdminShell>
@@ -32,7 +32,7 @@ export default async function EditClassPage({ params }: { params: Promise<{ id: 
   return (
     <AdminShell>
       <TopBar
-        title={offering.title || "Editar clase"}
+        title={offering.title || "Editar curso"}
         subtitle="Edición personalizada de página de producto"
         actions={
           <>

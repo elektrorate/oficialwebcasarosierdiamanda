@@ -29,8 +29,8 @@ export default async function ClassDetailPage({ params }: { params: Promise<{ id
       <AdminShell>
         <EmptyState
           icon="school"
-          title="Clase no encontrada"
-          description="La clase que intentas ver no existe o fue eliminada."
+          title="Curso no encontrado"
+          description="El curso que intentas ver no existe o fue eliminado."
           action={<Button href="/admin/clases">Volver al listado</Button>}
         />
       </AdminShell>
@@ -44,7 +44,7 @@ export default async function ClassDetailPage({ params }: { params: Promise<{ id
     <AdminShell>
       <TopBar
         title={offering.title}
-        subtitle={offering.subtitle || "Detalle de clase"}
+        subtitle={offering.subtitle || "Detalle de curso"}
         actions={
           <>
             <Button href={`/admin/clases/${offering.id}/edit`} variant="outlined">
@@ -100,7 +100,7 @@ export default async function ClassDetailPage({ params }: { params: Promise<{ id
               <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
                 {offering.gallery.map((url) => (
                   <div key={url} className="relative rounded-lg overflow-hidden border border-outline-variant aspect-square">
-                    <Image src={url} alt="Galería clase" fill sizes="(min-width: 640px) 33vw, 50vw" className="object-cover" unoptimized />
+                    <Image src={url} alt="Galería del curso" fill sizes="(min-width: 640px) 33vw, 50vw" className="object-cover" unoptimized />
                   </div>
                 ))}
               </div>
@@ -150,7 +150,7 @@ export default async function ClassDetailPage({ params }: { params: Promise<{ id
             <h3 className="text-headline-sm text-on-surface mb-4">Acciones</h3>
             <div className="flex flex-col gap-3">
               <Button href={`/admin/clases/${offering.id}/edit`} icon="edit">
-                Editar clase
+                Editar curso
               </Button>
               <Link href="/admin/clases" className="text-label-md text-primary font-semibold hover:underline">
                 Volver al listado

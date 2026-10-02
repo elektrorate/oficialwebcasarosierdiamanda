@@ -28,6 +28,7 @@ import {
 } from "@/lib/cms/rich-text-typography";
 import { normalizePresentationHeroForPersist } from "@/components/admin/shared-hero-editor/heroEditorModel";
 import { resolvePresentationHeroContent } from "@/components/admin/shared-hero-editor/utils";
+import { MODAL_CONTENT_LIMITS, modalTextError } from "@/lib/cms/modal-content";
 
 export function formatFileSize(bytes: number) {
   if (bytes < 1024 * 1024) return `${Math.max(1, Math.round(bytes / 1024))} KB`;
@@ -864,6 +865,18 @@ export function validateClassEditForm({
   });
   details.galleryImages.forEach((item, index) => {
     if (item.image && !item.alt.trim()) nextErrors[`gallery-${index}`] = "El texto alternativo es obligatorio.";
+    const modalTitleError = modalTextError(
+      item.modalTitle,
+      MODAL_CONTENT_LIMITS.title,
+      "El título del modal",
+    );
+    if (modalTitleError) nextErrors[`gallery-modal-title-${index}`] = modalTitleError;
+    const modalDescriptionError = modalTextError(
+      item.modalDescription,
+      MODAL_CONTENT_LIMITS.description,
+      "La descripción del modal",
+    );
+    if (modalDescriptionError) nextErrors[`gallery-modal-description-${index}`] = modalDescriptionError;
   });
   if (details.calendarLabels.length > MAX_CALENDAR_LABELS) nextErrors.calendarLabels = "Puedes crear hasta seis etiquetas calendario.";
   details.calendarLabels.forEach((item, index) => {

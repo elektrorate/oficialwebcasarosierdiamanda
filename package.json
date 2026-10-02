@@ -12,6 +12,8 @@
     "supabase:push": "npx supabase db push",
     "supabase:seed": "node scripts/seed-supabase.mjs",
     "test:backend": "node --no-warnings --test --experimental-strip-types tests/*.test.ts",
+    "test:e2e": "node scripts/test-responsive-ui.mjs",
+    "audit:images": "node scripts/audit-public-images.mjs",
     "lint:backend": "eslint src/app/api src/lib --quiet",
     "check:backend": "npm run lint:backend && npm run typecheck && npm run test:backend"
   },

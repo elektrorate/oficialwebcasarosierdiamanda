@@ -14,14 +14,14 @@ import AdminActionModal from "./AdminActionModal";
 import MediaSelectField from "./MediaSelectField";
 import SharedHeroEditor from "./SharedHeroEditor";
 
-type TabKey = "hero" | "carousel" | "classes" | "workshops" | "gifts" | "preview";
+type TabKey = "hero" | "carousel" | "featured" | "gifts" | "preview";
+type FeaturedDestination = "none" | "experiences" | "workshops";
 type ModalState = { type: "success" | "error"; title: string; message?: string } | null;
 
 const tabs: Array<{ key: TabKey; label: string }> = [
   { key: "hero", label: "Hero" },
   { key: "carousel", label: "Carousel destacado" },
-  { key: "classes", label: "Clases y experiencias" },
-  { key: "workshops", label: "Workshops" },
+  { key: "featured", label: "Destacados en Home" },
   { key: "gifts", label: "Gift Cards" },
   { key: "preview", label: "Vista previa" },
 ];
@@ -60,15 +60,13 @@ function serializeEditorState(input: {
 
 export default function HomePageEditor({
   page,
-  classesAndExperiences,
-  workshops,
+  featuredItems,
   giftCards,
   navigationItems,
   previewMenu,
 }: {
   page: HomePageSettings;
-  classesAndExperiences: ExperienceItem[];
-  workshops: ExperienceItem[];
+  featuredItems: ExperienceItem[];
   giftCards: GiftCardItem[];
   navigationItems: NavigationItem[];
   previewMenu: {
@@ -140,6 +138,23 @@ export default function HomePageEditor({
     setIntroSlides((current) => current.filter((_, slideIndex) => slideIndex !== index).map((slide, sortOrder) => ({ ...slide, sortOrder })));
   }
 
+  function featuredDestination(id: string): FeaturedDestination {
+    if (workshopsFeaturedIds.includes(id)) return "workshops";
+    if (classesFeaturedIds.includes(id)) return "experiences";
+    return "none";
+  }
+
+  function setFeaturedDestination(id: string, destination: FeaturedDestination) {
+    setClassesFeaturedIds((current) => {
+      const withoutItem = current.filter((item) => item !== id);
+      return destination === "experiences" ? [...withoutItem, id] : withoutItem;
+    });
+    setWorkshopsFeaturedIds((current) => {
+      const withoutItem = current.filter((item) => item !== id);
+      return destination === "workshops" ? [...withoutItem, id] : withoutItem;
+    });
+  }
+
   function toggleSelected(id: string, selectedIds: string[], setSelectedIds: (ids: string[]) => void) {
     setSelectedIds(selectedIds.includes(id) ? selectedIds.filter((item) => item !== id) : [...selectedIds, id]);
   }
@@ -198,8 +213,8 @@ export default function HomePageEditor({
     setIsLoading(false);
   }
 
-  const selectedClassesAndExperiences = selectedOnly(classesAndExperiences, classesFeaturedIds);
-  const selectedWorkshops = selectedOnly(workshops, workshopsFeaturedIds);
+  const selectedClassesAndExperiences = selectedOnly(featuredItems, classesFeaturedIds);
+  const selectedWorkshops = selectedOnly(featuredItems, workshopsFeaturedIds);
   const selectedGiftCards = selectedOnly(giftCards, giftFeaturedIds);
 
   return (
@@ -213,7 +228,7 @@ export default function HomePageEditor({
           <div className="cms-page-editor-meta">
             <span className={`status-pill status-pill--${status}`}>{status}</span>
             <span>{introSlides.filter((slide) => slide.isVisible).length} slides visibles</span>
-            <span>{classesFeaturedIds.length} clases y experiencias en home</span>
+            <span>{classesFeaturedIds.length + workshopsFeaturedIds.length} destacados en home</span>
             <span>{giftFeaturedIds.length} gift cards</span>
           </div>
         </div>
@@ -292,12 +307,20 @@ export default function HomePageEditor({
           </section>
         ) : null}
 
-        {tab === "classes" ? (
-          <FeaturedPicker title={classesTitle} subtitle={classesSubtitle} items={classesAndExperiences} selectedIds={classesFeaturedIds} onTitleChange={setClassesTitle} onSubtitleChange={setClassesSubtitle} onToggle={(id) => toggleSelected(id, classesFeaturedIds, setClassesFeaturedIds)} emptyText="No hay clases ni experiencias publicadas." />
-        ) : null}
-
-        {tab === "workshops" ? (
-          <FeaturedPicker title={workshopsTitle} subtitle={workshopsSubtitle} items={workshops} selectedIds={workshopsFeaturedIds} onTitleChange={setWorkshopsTitle} onSubtitleChange={setWorkshopsSubtitle} onToggle={(id) => toggleSelected(id, workshopsFeaturedIds, setWorkshopsFeaturedIds)} emptyText="No hay workshops publicados." />
+        {tab === "featured" ? (
+          <FeaturedHomePicker
+            experiencesTitle={classesTitle}
+            experiencesSubtitle={classesSubtitle}
+            workshopsTitle={workshopsTitle}
+            workshopsSubtitle={workshopsSubtitle}
+            items={featuredItems}
+            destinationFor={featuredDestination}
+            onExperiencesTitleChange={setClassesTitle}
+            onExperiencesSubtitleChange={setClassesSubtitle}
+            onWorkshopsTitleChange={setWorkshopsTitle}
+            onWorkshopsSubtitleChange={setWorkshopsSubtitle}
+            onDestinationChange={setFeaturedDestination}
+          />
         ) : null}
 
         {tab === "gifts" ? (
@@ -349,6 +372,81 @@ function HomePreviewHeader({
   );
 }
 
+function featuredKindLabel(item: ExperienceItem) {
+  if (item.kind === "class") return "Curso";
+  if (item.kind === "private-booking") return "Experiencia";
+  return "Workshop";
+}
+
+function FeaturedHomePicker({
+  experiencesTitle,
+  experiencesSubtitle,
+  workshopsTitle,
+  workshopsSubtitle,
+  items,
+  destinationFor,
+  onExperiencesTitleChange,
+  onExperiencesSubtitleChange,
+  onWorkshopsTitleChange,
+  onWorkshopsSubtitleChange,
+  onDestinationChange,
+}: {
+  experiencesTitle: string;
+  experiencesSubtitle: string;
+  workshopsTitle: string;
+  workshopsSubtitle: string;
+  items: ExperienceItem[];
+  destinationFor: (id: string) => FeaturedDestination;
+  onExperiencesTitleChange: (value: string) => void;
+  onExperiencesSubtitleChange: (value: string) => void;
+  onWorkshopsTitleChange: (value: string) => void;
+  onWorkshopsSubtitleChange: (value: string) => void;
+  onDestinationChange: (id: string, destination: FeaturedDestination) => void;
+}) {
+  return (
+    <section className="form-block cms-editor-card cms-home-editor-card">
+      <div className="cms-editor-card__head">
+        <div>
+          <p className="auth-kicker">Home</p>
+          <h3>Destacados</h3>
+          <p className="cms-editor-card__description">Elige para cada curso, experiencia o workshop la sección del Home donde debe aparecer. Un contenido solo puede estar en una sección.</p>
+        </div>
+      </div>
+      <div className="cms-home-section-settings grid-2">
+        <label className="field"><span>Título: Experiencias y talleres</span><input value={experiencesTitle} onChange={(event) => onExperiencesTitleChange(event.target.value)} /></label>
+        <label className="field"><span>Subtítulo: Experiencias y talleres</span><input value={experiencesSubtitle} onChange={(event) => onExperiencesSubtitleChange(event.target.value)} /></label>
+        <label className="field"><span>Título: Workshops de especialización</span><input value={workshopsTitle} onChange={(event) => onWorkshopsTitleChange(event.target.value)} /></label>
+        <label className="field"><span>Subtítulo: Workshops de especialización</span><input value={workshopsSubtitle} onChange={(event) => onWorkshopsSubtitleChange(event.target.value)} /></label>
+      </div>
+      <div className="cms-home-feature-grid">
+        {items.length ? items.map((item) => (
+          <article className={`cms-home-feature-card ${destinationFor(item.id) !== "none" ? "is-selected" : ""}`} key={item.id}>
+            <span className="cms-home-feature-card__image">
+              <img src={assetPath(item.homeImage || item.coverImage)} alt={item.homeImageAlt || item.homeTitle || item.title} loading="lazy" decoding="async" />
+            </span>
+            <span className="cms-home-feature-card__content">
+              <span className="cms-home-feature-card__topline">
+                <span>{featuredKindLabel(item)}</span>
+              </span>
+              <strong>{item.homeTitle || item.title}</strong>
+              <small>{item.homeEyebrow || item.category}</small>
+              <span className="cms-home-feature-card__excerpt">{item.homeExcerpt || item.excerpt}</span>
+              <label className="field">
+                <span>Destacar en Home</span>
+                <select value={destinationFor(item.id)} onChange={(event) => onDestinationChange(item.id, event.target.value as FeaturedDestination)}>
+                  <option value="none">No destacar</option>
+                  <option value="experiences">Experiencias y talleres de cerámica</option>
+                  <option value="workshops">Workshops de especialización</option>
+                </select>
+              </label>
+            </span>
+          </article>
+        )) : <p className="muted">No hay cursos, experiencias ni workshops publicados.</p>}
+      </div>
+    </section>
+  );
+}
+
 function FeaturedPicker({
   title,
   subtitle,
@@ -361,7 +459,7 @@ function FeaturedPicker({
 }: {
   title: string;
   subtitle: string;
-  items: ExperienceItem[];
+  items: GiftCardItem[];
   selectedIds: string[];
   onTitleChange: (value: string) => void;
   onSubtitleChange: (value: string) => void;
@@ -372,7 +470,7 @@ function FeaturedPicker({
     <section className="form-block cms-editor-card cms-home-editor-card">
       <div className="cms-home-section-settings grid-2">
         <label className="field"><span>Título</span><input value={title} onChange={(event) => onTitleChange(event.target.value)} /></label>
-        <label className="field"><span>Subtitulo</span><input value={subtitle} onChange={(event) => onSubtitleChange(event.target.value)} /></label>
+        <label className="field"><span>Subtítulo</span><input value={subtitle} onChange={(event) => onSubtitleChange(event.target.value)} /></label>
       </div>
       <div className="cms-home-feature-grid">
         {items.length ? items.map((item) => (

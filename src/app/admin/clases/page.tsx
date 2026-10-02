@@ -7,15 +7,15 @@ export default async function ClasesPage({ searchParams }: { searchParams?: Prom
 
   return (
     <OfferingsCategoryPage
-      title="Clases"
-      subtitle="Administra únicamente clases"
+      title="Cursos"
+      subtitle="Administra únicamente cursos"
       type="class"
       basePath="/admin/clases"
-      typeLabel="Clase"
+      typeLabel="Curso"
       emptyIcon="school"
-      emptyTitle="No hay clases creadas todavía."
-      emptyDescription="Crea la primera clase para empezar."
-      createLabel="Crear nueva clase"
+      emptyTitle="No hay cursos creados todavía."
+      emptyDescription="Crea el primer curso para empezar."
+      createLabel="Crear nuevo curso"
       searchParams={params}
     />
   );

@@ -106,6 +106,12 @@ function normalizeHomePageSettings(input: Partial<HomePageSettings> | null | und
   const rawSlides = Array.isArray(input?.introSlides ?? row?.intro_slides)
     ? (input?.introSlides ?? row?.intro_slides) as Partial<HomeIntroSlide>[]
     : [];
+  // A featured item has one Home destination. Workshop destination wins when
+  // legacy data contains the same id in both lists.
+  const workshopsFeaturedIds = stringArray(input?.workshopsFeaturedIds ?? row?.workshops_featured_ids);
+  const workshopIds = new Set(workshopsFeaturedIds);
+  const classesFeaturedIds = stringArray(input?.classesFeaturedIds ?? row?.classes_featured_ids)
+    .filter((id) => !workshopIds.has(id));
 
   return {
     id: SETTINGS_ID,
@@ -114,10 +120,10 @@ function normalizeHomePageSettings(input: Partial<HomePageSettings> | null | und
     introSlides: rawSlides.map(normalizeSlide).sort((a, b) => a.sortOrder - b.sortOrder),
     classesTitle: String(input?.classesTitle ?? row?.classes_title ?? defaultHomePageSettings.classesTitle),
     classesSubtitle: String(input?.classesSubtitle ?? row?.classes_subtitle ?? defaultHomePageSettings.classesSubtitle),
-    classesFeaturedIds: stringArray(input?.classesFeaturedIds ?? row?.classes_featured_ids),
+    classesFeaturedIds,
     workshopsTitle: String(input?.workshopsTitle ?? row?.workshops_title ?? defaultHomePageSettings.workshopsTitle),
     workshopsSubtitle: String(input?.workshopsSubtitle ?? row?.workshops_subtitle ?? defaultHomePageSettings.workshopsSubtitle),
-    workshopsFeaturedIds: stringArray(input?.workshopsFeaturedIds ?? row?.workshops_featured_ids),
+    workshopsFeaturedIds,
     giftTitle: String(input?.giftTitle ?? row?.gift_title ?? defaultHomePageSettings.giftTitle),
     giftSubtitle: String(input?.giftSubtitle ?? row?.gift_subtitle ?? defaultHomePageSettings.giftSubtitle),
     giftFeaturedIds: stringArray(input?.giftFeaturedIds ?? row?.gift_featured_ids),
