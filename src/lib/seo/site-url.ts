@@ -1,14 +1,18 @@
-const DEFAULT_SITE_URL = "https://casarosierceramica.com";
+const LOCAL_SITE_URL = "http://localhost:3000";
 
 export function getSiteUrl() {
   const configuredUrl = process.env.NEXT_PUBLIC_SITE_URL?.trim();
 
-  if (!configuredUrl) return DEFAULT_SITE_URL;
+  if (!configuredUrl) {
+    if (process.env.NODE_ENV !== "production") return LOCAL_SITE_URL;
+    throw new Error("Falta NEXT_PUBLIC_SITE_URL en producción.");
+  }
 
   try {
     return new URL(configuredUrl).origin;
   } catch {
-    return DEFAULT_SITE_URL;
+    if (process.env.NODE_ENV !== "production") return LOCAL_SITE_URL;
+    throw new Error("NEXT_PUBLIC_SITE_URL debe ser una URL absoluta válida.");
   }
 }
 

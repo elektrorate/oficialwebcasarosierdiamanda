@@ -7,8 +7,12 @@ const missingAssetFallbacks: Record<string, string> = {
   "img/5fd27c84-15dd-43ef-b039-2e8458a3f1a6.png": "/img/social-5.png"
 };
 
-const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL ?? "https://hhxftxxshwgmfxuyrjmz.supabase.co";
-const STORAGE_MEDIA_ORIGIN = `${SUPABASE_URL}/storage/v1/object/public/media`;
+// No usar un proyecto real como respaldo: un entorno mal configurado no debe
+// cargar silenciosamente sus medios desde producción.
+const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL?.replace(/\/$/, "");
+const STORAGE_MEDIA_ORIGIN = SUPABASE_URL
+  ? `${SUPABASE_URL}/storage/v1/object/public/media`
+  : "";
 const STORAGE_IMAGE_EXT = /\.(avif|jpe?g|png|webp)$/i;
 
 export function assetPath(
@@ -19,6 +23,7 @@ export function assetPath(
   if (/^(data:|blob:|\/)/.test(value)) return value;
   if (/^https?:/.test(value)) {
     if (
+      STORAGE_MEDIA_ORIGIN &&
       value.startsWith(STORAGE_MEDIA_ORIGIN) &&
       STORAGE_IMAGE_EXT.test(value.split("?")[0])
     ) {
