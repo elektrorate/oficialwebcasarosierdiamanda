@@ -3,7 +3,6 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { CmsRichTextField } from "@/components/admin/CmsRichTextField";
-import { DEFAULT_PRIVACY_POLICY_MARKDOWN } from "@/lib/cms/types";
 
 interface PrivacyPolicySettings {
   privacy_policy_title?: string;
@@ -13,7 +12,7 @@ interface PrivacyPolicySettings {
 export default function LegalForm() {
   const router = useRouter();
   const [title, setTitle] = useState("Políticas de privacidad");
-  const [content, setContent] = useState(DEFAULT_PRIVACY_POLICY_MARKDOWN);
+  const [content, setContent] = useState("");
   const [isReady, setIsReady] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [saved, setSaved] = useState(false);
@@ -29,11 +28,7 @@ export default function LegalForm() {
         const settings = (await response.json()) as PrivacyPolicySettings;
         if (!isMounted) return;
         setTitle(settings.privacy_policy_title || "Políticas de privacidad");
-        setContent(
-          settings.privacy_policy_content?.trim()
-            ? settings.privacy_policy_content
-            : DEFAULT_PRIVACY_POLICY_MARKDOWN,
-        );
+        setContent(settings.privacy_policy_content?.trim() || "");
       } catch {
         if (isMounted) {
           setError("No se pudo cargar la política. Revisa tu sesión e intenta de nuevo.");
@@ -59,7 +54,7 @@ export default function LegalForm() {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         privacy_policy_title: title.trim() || "Políticas de privacidad",
-        privacy_policy_content: content.trim() || DEFAULT_PRIVACY_POLICY_MARKDOWN,
+        privacy_policy_content: content.trim(),
       }),
     });
 

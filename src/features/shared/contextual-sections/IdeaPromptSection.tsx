@@ -10,7 +10,6 @@ export async function IdeaPromptSection({
 }: {
   context: IdeaPromptContext;
 }) {
-  const content = getIdeaPromptContent(context);
   const gallery = await getPublicSocialGallery();
 
   const posts = gallery?.items
@@ -23,14 +22,17 @@ export async function IdeaPromptSection({
       instagramUrl: item.instagram_url,
     }));
 
+  if (!posts?.length) return null;
+
+  const content = getIdeaPromptContent(context);
   return (
     <SocialGallery
       id={content.id}
-      title={gallery?.title || content.title}
-      subtitle={gallery?.description || content.subtitle}
-      posts={posts?.length ? posts : content.posts}
+      title={gallery?.title || ""}
+      subtitle={gallery?.description || ""}
+      posts={posts}
       ariaLabel={content.ariaLabel}
-      sourceHref={gallery ? gallery.cta_url : content.sourceHref}
+      sourceHref={gallery?.cta_url || ""}
       variant={context === "home" ? "home-strip" : "default"}
     />
   );

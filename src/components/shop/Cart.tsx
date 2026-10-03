@@ -10,7 +10,7 @@ import {
 } from "@/lib/cart";
 
 export function Cart({
-  whatsappHref = "https://wa.me/34633788860",
+  whatsappHref = "",
 }: {
   whatsappHref?: string;
 }) {
@@ -128,14 +128,16 @@ export function Cart({
               </div>
             ))}
           </div>
-          <a
-            className="class-detail__button class-detail__button--primary"
-            href={whatsappHref}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Finalizar por WhatsApp
-          </a>
+          {whatsappHref ? (
+            <a
+              className="class-detail__button class-detail__button--primary"
+              href={whatsappHref}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Finalizar por WhatsApp
+            </a>
+          ) : null}
         </div>
       </aside>
     </div>

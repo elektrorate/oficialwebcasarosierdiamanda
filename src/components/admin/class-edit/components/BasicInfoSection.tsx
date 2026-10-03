@@ -129,7 +129,7 @@ export function BasicInfoSection({ form }: BasicInfoSectionProps) {
           value={details.whatsappNumber}
           error={errors.whatsappNumber}
           validationKey="whatsappNumber"
-          help="Formato internacional sin espacios. Ej: 34633788860"
+          help="Formato internacional sin espacios. Ej: 34123456789"
           onChange={(event) => updateDetails({ whatsappNumber: event.target.value })}
         />
       </div>

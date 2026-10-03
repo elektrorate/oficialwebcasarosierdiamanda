@@ -1,6 +1,7 @@
 import { getSettings } from "@/lib/cms/settings";
 
-export const DEFAULT_WHATSAPP_NUMBER = "34633788860";
+/** Un teléfono vacío significa que el CMS aún no ha configurado WhatsApp. */
+export const DEFAULT_WHATSAPP_NUMBER = "";
 
 export function normalizeWhatsappNumber(value: string | null | undefined): string {
   if (!value) return "";
@@ -9,9 +10,10 @@ export function normalizeWhatsappNumber(value: string | null | undefined): strin
 
 export async function getWhatsappNumber(): Promise<string> {
   const settings = await getSettings();
-  return normalizeWhatsappNumber(settings.contact.whatsapp) || DEFAULT_WHATSAPP_NUMBER;
+  return normalizeWhatsappNumber(settings.contact.whatsapp);
 }
 
 export async function getWhatsappHref(): Promise<string> {
-  return `https://wa.me/${await getWhatsappNumber()}`;
+  const number = await getWhatsappNumber();
+  return number ? `https://wa.me/${number}` : "";
 }

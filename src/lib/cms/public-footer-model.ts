@@ -3,7 +3,6 @@ import { resolvePublicFooterContact, type SiteContactSlice } from "./footer-cont
 import {
   DEFAULT_FOOTER_CONTACT_TEXT,
   DEFAULT_FOOTER_CONTACT_TITLE,
-  DEFAULT_FOOTER_SOCIAL_LINKS,
   DEFAULT_FOOTER_SOCIAL_TITLE,
   DEFAULT_FOOTER_THEME,
 } from "./footer-defaults";
@@ -172,7 +171,7 @@ export function buildPublicFooterViewModel(input: {
     ? socialFromFooter
     : socialFromSettings.length
       ? socialFromSettings
-      : DEFAULT_FOOTER_SOCIAL_LINKS;
+      : [];
 
   const showContactInfo = input.showContactInfo !== false;
   const showSocialLinks = input.showSocialLinks !== false;
@@ -185,7 +184,7 @@ export function buildPublicFooterViewModel(input: {
   const legalCopy =
     legalFromFooter ||
     legalFromSettings ||
-    `© ${input.siteName.trim() || "Casa Rosier"}`;
+    (input.siteName.trim() ? `© ${input.siteName.trim()}` : "");
 
   return {
     themeStyle: {

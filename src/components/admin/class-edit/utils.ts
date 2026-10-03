@@ -85,8 +85,8 @@ export function firstText(...values: unknown[]) {
 }
 
 export function defaultCtaHref(details: Pick<ClassOfferingDetails, "whatsappNumber" | "content">) {
-  const whatsapp = firstText(details.whatsappNumber, details.content?.contactWhatsapp, "34633788860").replace(/\D/g, "");
-  return `https://wa.me/${whatsapp || "34633788860"}`;
+  const whatsapp = firstText(details.whatsappNumber, details.content?.contactWhatsapp).replace(/\D/g, "");
+  return whatsapp ? `https://wa.me/${whatsapp}` : "";
 }
 
 export function defaultConsultLabel(type: Offering["type"]) {

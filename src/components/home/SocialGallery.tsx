@@ -25,42 +25,13 @@ export interface SocialGalleryProps {
   variant?: "default" | "home-strip";
 }
 
-const DEFAULT_INSTAGRAM_URL = "https://www.instagram.com/casarosier";
-
-export const defaultSocialGalleryPosts: readonly SocialGalleryPost[] = [
-  {
-    image: "/img/social-1.jpg",
-    title: "Serie en proceso",
-    body: "Pieza en estudio: pruebas de forma, secado y acabados de superficie.",
-    date: "10 de enero de 2026"
-  },
-  {
-    image: "/img/social-2.jpg",
-    title: "Materia y ritmo",
-    body: "Una mirada al proceso cotidiano dentro del taller.",
-    date: "18 de enero de 2026"
-  },
-  {
-    image: "/img/social-3.jpg",
-    title: "Color y superficie",
-    body: "Pruebas de esmaltes, capas y pequenas decisiones de acabado.",
-    date: "24 de enero de 2026"
-  },
-  {
-    image: "/img/social-4.jpeg",
-    title: "El taller por dentro",
-    body: "Herramientas, piezas y momentos de trabajo compartido.",
-    date: "2 de febrero de 2026"
-  }
-];
-
 export function SocialGallery({
   id = "galeria-social",
-  title = "Y tu, cuando tuviste\ntu ultima idea?",
-  subtitle = "siguenos en instagram - @casarosier",
-  posts = defaultSocialGalleryPosts,
+  title = "",
+  subtitle = "",
+  posts = [],
   ariaLabel = "Galeria continua de Instagram",
-  sourceHref = DEFAULT_INSTAGRAM_URL,
+  sourceHref = "",
   variant = "default",
 }: SocialGalleryProps = {}) {
   const [active, setActive] = useState<number | null>(null);
@@ -68,7 +39,7 @@ export function SocialGallery({
   const postCount = posts.length;
   const current = active === null ? null : posts[active];
   const currentLink =
-    current?.instagramUrl?.trim() || sourceHref?.trim() || DEFAULT_INSTAGRAM_URL;
+    current?.instagramUrl?.trim() || sourceHref?.trim() || "";
 
   useEffect(() => {
     if (active === null) return;
@@ -93,6 +64,8 @@ export function SocialGallery({
       document.removeEventListener("keydown", onKey);
     };
   }, [active, postCount]);
+
+  if (!postCount) return null;
 
   const isHomeStrip = variant === "home-strip";
 

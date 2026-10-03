@@ -153,8 +153,9 @@ function fallbackWhatsappHref(
   details: LegacyOfferingDetails,
   defaultNumber = DEFAULT_WHATSAPP_NUMBER,
 ) {
-  const whatsapp = details.whatsappNumber || details.content?.contactWhatsapp || defaultNumber;
-  return `https://wa.me/${whatsapp}`;
+  const whatsapp = stringValue(details.whatsappNumber || details.content?.contactWhatsapp || defaultNumber)
+    .replace(/\D/g, "");
+  return whatsapp ? `https://wa.me/${whatsapp}` : "";
 }
 
 function ctaConsultHref(

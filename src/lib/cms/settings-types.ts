@@ -66,7 +66,7 @@ export const DEFAULT_SETTINGS: SiteSettings = {
     timezone: "Europe/Madrid",
   },
   menu: {
-    header_logo_url: "https://hhxftxxshwgmfxuyrjmz.supabase.co/storage/v1/object/public/media/img/logo-header.png",
+    header_logo_url: "",
     scroll_menu_background_color: "#f9f8f3",
     scroll_menu_text_color: "#3f3933",
     scroll_menu_icon_color: "#3f3933",

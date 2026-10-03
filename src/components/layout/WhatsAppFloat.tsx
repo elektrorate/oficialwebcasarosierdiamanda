@@ -3,6 +3,8 @@ import { getWhatsappHref } from "@/lib/whatsapp";
 export async function WhatsAppFloat() {
   const href = await getWhatsappHref();
 
+  if (!href) return null;
+
   return (
     <a
       href={href}

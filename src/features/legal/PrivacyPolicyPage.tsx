@@ -4,13 +4,12 @@ import { MarkdownContent } from "@/components/ui/MarkdownContent";
 import { SitePage } from "@/features/shared/layout/SitePage";
 import { getLegalSettings } from "@/lib/cms/legal";
 import { getSettings } from "@/lib/cms/settings";
-import { DEFAULT_PRIVACY_POLICY_MARKDOWN } from "@/lib/cms/types";
 import { formatDate } from "@/lib/utils";
 
 export async function PrivacyPolicyPage() {
   const [settings, siteSettings] = await Promise.all([getLegalSettings(), getSettings()]);
   const title = settings.privacy_policy_title || "Política de privacidad";
-  const content = settings.privacy_policy_content.trim() || DEFAULT_PRIVACY_POLICY_MARKDOWN;
+  const content = settings.privacy_policy_content.trim();
   const updatedAt = settings.updated_at
     ? formatDate(settings.updated_at, siteSettings.site.timezone)
     : null;
@@ -26,7 +25,7 @@ export async function PrivacyPolicyPage() {
               {title}
             </h1>
             <p className="blog-post-hero__meta">
-              Casa Rosier{updatedAt ? ` · Actualizado el ${updatedAt}` : ""}
+              {updatedAt ? `Actualizado el ${updatedAt}` : ""}
             </p>
           </>
         </HeaderInterno>
@@ -39,7 +38,11 @@ export async function PrivacyPolicyPage() {
             <h2 className="article-title blog-post__article-title">{title}</h2>
           </div>
           <article className="article-content blog-post__content legal-policy__content">
-            <LegalText content={content} />
+            {content ? (
+              <LegalText content={content} />
+            ) : (
+              <p>Este documento aún no está disponible. Contacta con el responsable del sitio para solicitar información.</p>
+            )}
           </article>
         </div>
       </section>

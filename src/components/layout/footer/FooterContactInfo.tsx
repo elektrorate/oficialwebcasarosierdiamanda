@@ -27,7 +27,9 @@ export function FooterContactInfo({
       {model.extraAddress ? <p className="m-0 text-[clamp(13px,1.15vw,15px)] leading-normal font-light text-[#3a3a3a] [font-family:var(--font-menu)]">{model.extraAddress}</p> : null}
       {model.socialLinks.length > 0 ? (
         <>
-          <p className="mt-[clamp(6px,1vw,10px)] mb-0 text-[clamp(13px,1.15vw,15px)] leading-normal font-light text-[#3a3a3a] [font-family:var(--font-menu)]">{model.socialTitle}</p>
+          {model.socialTitle ? (
+            <p className="mt-[clamp(6px,1vw,10px)] mb-0 text-[clamp(13px,1.15vw,15px)] leading-normal font-light text-[#3a3a3a] [font-family:var(--font-menu)]">{model.socialTitle}</p>
+          ) : null}
           <div className="mt-[clamp(8px,1.2vw,12px)] flex items-center justify-center gap-4">
             {model.socialLinks.map((link, index) => (
               <a

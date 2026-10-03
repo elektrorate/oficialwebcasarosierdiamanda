@@ -1758,7 +1758,7 @@ export function defaultLegalSettings(): LegalSettings {
     cookies_banner_text: "Utilizamos cookies propias y de terceros para mejorar tu experiencia en nuestro sitio web.",
     accept_button_text: "Aceptar todas", reject_button_text: "Rechazar", preferences_button_text: "Preferencias",
     analytics_consent_required: true, marketing_consent_required: true, functional_consent_required: false,
-    privacy_policy_title: "Políticas de privacidad", privacy_policy_content: DEFAULT_PRIVACY_POLICY_MARKDOWN,
+    privacy_policy_title: "Políticas de privacidad", privacy_policy_content: "",
     cookies_policy_title: "Política de Cookies", cookies_policy_content: "",
     legal_notice_title: "Aviso Legal", legal_notice_content: "",
     terms_title: "Términos y Condiciones", terms_content: "",

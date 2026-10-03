@@ -94,7 +94,7 @@ function ClassContentMainCardComponent({
         <ClassContentTextField
           label="WhatsApp de contacto"
           value={content.contactWhatsapp}
-          placeholder="34633788860"
+          placeholder="34123456789"
           help="Sin espacios ni símbolos. Se usa como fallback en el botón de inscripción."
           onChange={(event) => setField("contactWhatsapp", event.target.value)}
         />

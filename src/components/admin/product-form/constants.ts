@@ -9,7 +9,7 @@ export const STATUS_LABELS: Record<string, string> = {
 };
 
 export const DEFAULT_CTA_LABEL = "Comprar";
-export const DEFAULT_CTA_URL = "https://wa.me/34633788860";
+export const DEFAULT_CTA_URL = "";
 export const DEFAULT_LOW_STOCK_THRESHOLD = 5;
 
 export const CATEGORIES_ENDPOINT = "/api/admin/shop/categories?usable=1";

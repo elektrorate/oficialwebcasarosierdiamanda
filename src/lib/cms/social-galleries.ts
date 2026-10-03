@@ -239,21 +239,10 @@ async function ensureDefaultSocialGalleryInSupabase(): Promise<void> {
 export async function getSocialGalleries() {
   const fromSupabase = await readAllFromSupabase();
   if (fromSupabase && fromSupabase.length > 0) {
-    if (!fromSupabase.some((gallery) => gallery.items.length > 0)) {
-      await ensureDefaultSocialGalleryInSupabase();
-      const refreshed = await readAllFromSupabase();
-      if (refreshed && refreshed.length > 0) {
-        return refreshed.map((gallery) => ({ ...gallery, status: "published" as const, deleted_at: null }));
-      }
-    }
     return fromSupabase.map((gallery) => ({ ...gallery, status: "published" as const, deleted_at: null }));
   }
   const localGalleries = await readJsonFile<SocialGallery[]>(FILE_NAME, []);
-  const localGallery = localGalleries.find((gallery) => gallery.slug === SINGLE_GALLERY_SLUG);
-  const items = localGallery?.items.length ? localGalleries : [getDefaultSocialGallery()];
-  if (!localGallery?.items.length) await ensureDefaultSocialGalleryInSupabase();
-  else await seedSupabase(items);
-  return items.map((gallery) => ({ ...gallery, status: "published" as const, deleted_at: null }));
+  return localGalleries.map((gallery) => ({ ...gallery, status: "published" as const, deleted_at: null }));
 }
 
 export async function getSocialGalleryById(id: string) {

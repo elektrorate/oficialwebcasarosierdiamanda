@@ -10,62 +10,21 @@ const FILE_PATH = path.join(process.cwd(), "data", "home-page-settings.json");
 const SETTINGS_ID = "home-page";
 const USE_LOCAL_DATA = process.env.CMS_USE_LOCAL_DATA === "true";
 
-export const defaultHomeIntroSlides: HomeIntroSlide[] = [
-  {
-    id: "intro-1",
-    text: "Un espacio para tocar la arcilla, aprender con calma y crear piezas con una mirada propia.",
-    buttonText: "Reserva una experiencia",
-    buttonHref: "/clases",
-    image: "img/1766778567125-t8t5rt.png",
-    imageAlt: "Composicion visual de piezas ceramicas y retrato en Casa Rosier",
-    isVisible: true,
-    sortOrder: 0,
-  },
-  {
-    id: "intro-2",
-    text: "Ceramica, materia y tiempo para crear con las manos en Barcelona.",
-    buttonText: "Ver clases",
-    buttonHref: "/clases",
-    image: "img/intro-e.jpg",
-    imageAlt: "Retrato editorial junto a piezas ceramicas claras",
-    isVisible: true,
-    sortOrder: 1,
-  },
-  {
-    id: "intro-3",
-    text: "Clases y workshops para explorar la ceramica desde la practica y el proceso.",
-    buttonText: "Ver workshops",
-    buttonHref: "/workshops",
-    image: "img/workshop-3.jpg",
-    imageAlt: "Piezas ceramicas esmaltadas en rojo y azul sobre pedestales",
-    isVisible: true,
-    sortOrder: 2,
-  },
-  {
-    id: "intro-4",
-    text: "Un taller para probar, equivocarse, volver a empezar y descubrir nuevas formas.",
-    buttonText: "Conoce el estudio",
-    buttonHref: "/el-estudio",
-    image: "img/social-5.png",
-    imageAlt: "Coleccion de cuencos y piezas ceramicas en tonos claros",
-    isVisible: true,
-    sortOrder: 3,
-  },
-];
+export const defaultHomeIntroSlides: HomeIntroSlide[] = [];
 
 export const defaultHomePageSettings: HomePageSettings = {
   id: SETTINGS_ID,
   status: "published",
-  hero: { ...defaultHeroSettings, heroTitle: "Casa Rosier", heroSubtitle: "Cerámica con las manos" },
+  hero: { ...defaultHeroSettings, heroTitle: "", heroSubtitle: "" },
   introSlides: defaultHomeIntroSlides,
-  classesTitle: "Cursos y Talleres de Ceramica",
-  classesSubtitle: "En Barcelona",
+  classesTitle: "",
+  classesSubtitle: "",
   classesFeaturedIds: [],
-  workshopsTitle: "Workshops de Especializacion",
-  workshopsSubtitle: "En Barcelona",
+  workshopsTitle: "",
+  workshopsSubtitle: "",
   workshopsFeaturedIds: [],
-  giftTitle: "Experiencia en Ceramica",
-  giftSubtitle: "Regala una Gift Card",
+  giftTitle: "",
+  giftSubtitle: "",
   giftFeaturedIds: [],
   updated_at: "",
 };

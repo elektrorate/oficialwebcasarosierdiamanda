@@ -8,11 +8,7 @@ const TABLE = "blog_page_settings";
 const FILE_PATH = path.join(process.cwd(), "data", "blog-page-settings.json");
 const SETTINGS_ID = "blog-page";
 
-const DEFAULT_INTRO = {
-  heading: "Bitácora cerámica",
-  kicker: "Casa Rosier",
-  text: "Un espacio para compartir procesos, técnicas, reflexiones y pequeñas historias alrededor de la cerámica contemporánea, el taller y la creación con las manos.",
-};
+const DEFAULT_INTRO = { heading: "", kicker: "", text: "" };
 
 export const defaultBlogPageSettings: BlogPageSettings = {
   id: SETTINGS_ID,
@@ -20,11 +16,10 @@ export const defaultBlogPageSettings: BlogPageSettings = {
   hero: normalizeHeroSettings({
     ...defaultHeroSettings,
     heroVariant: "text",
-    heroTitle: "Bitacora ceramica",
-    heroSubtitle: "Casa Rosier",
-    heroImage: "/img/hero-bg.jpg",
-    heroPresentationText:
-      "# Bitacora ceramica\n\nProcesos, tecnicas y reflexiones alrededor de la ceramica contemporanea.",
+    heroTitle: "",
+    heroSubtitle: "",
+    heroImage: "",
+    heroPresentationText: "",
   }),
   introHeading: DEFAULT_INTRO.heading,
   introKicker: DEFAULT_INTRO.kicker,
@@ -32,9 +27,8 @@ export const defaultBlogPageSettings: BlogPageSettings = {
   showIdeaPromptSection: true,
   showFaqSection: false,
   faqGroupId: "",
-  seo_title: "Blog | Casa Rosier Ceramica",
-  seo_description:
-    "Articulos, procesos y reflexiones sobre ceramica, talleres, tecnicas y creacion en Casa Rosier Ceramica Barcelona.",
+  seo_title: "",
+  seo_description: "",
   seo_image: "",
   updated_at: "",
 };
@@ -61,9 +55,9 @@ function normalizeBlogPageSettings(
     id: SETTINGS_ID,
     status: input?.status === "draft" ? "draft" : "published",
     hero: normalizeHeroSettings(input?.hero, {
-      heroTitle: "Bitacora ceramica",
-      heroSubtitle: "Casa Rosier",
-      heroImage: "/img/hero-bg.jpg",
+      heroTitle: "",
+      heroSubtitle: "",
+      heroImage: "",
     }),
     introHeading: String(
       input?.introHeading ??
