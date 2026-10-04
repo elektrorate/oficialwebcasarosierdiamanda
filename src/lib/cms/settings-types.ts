@@ -49,6 +49,7 @@ export interface SiteSettings {
     default_og_image_url: string;
     robots_index: boolean;
     robots_follow: boolean;
+    sitemap_enabled: boolean;
   };
   system: {
     maintenance_mode: boolean;
@@ -102,6 +103,7 @@ export const DEFAULT_SETTINGS: SiteSettings = {
     default_og_image_url: "",
     robots_index: true,
     robots_follow: true,
+    sitemap_enabled: true,
   },
   system: {
     maintenance_mode: false,

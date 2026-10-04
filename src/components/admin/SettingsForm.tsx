@@ -577,6 +577,14 @@ export default function SettingsForm({
               />
               <span>Permitir follow (nofollow cuando se desmarca)</span>
             </label>
+            <label className="checkbox-field">
+              <input
+                type="checkbox"
+                checked={settings.seo.sitemap_enabled}
+                onChange={(e) => updateSection("seo", { sitemap_enabled: e.target.checked })}
+              />
+              <span>Publicar sitemap.xml</span>
+            </label>
             <small>
               Se aplican por separado. Desmarcar la indexación también bloquea el rastreo en
               robots.txt; «follow» no tiene equivalente en robots.txt.

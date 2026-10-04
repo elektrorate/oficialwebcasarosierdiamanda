@@ -7,6 +7,7 @@ import { getAbsoluteSiteUrl } from "@/lib/seo/site-url";
 import { isValidPublicSlug } from "@/lib/seo/public-slug";
 import { getPublicSectionRoutes } from "@/lib/cms/public-section-routes";
 import { canonicalMenuPath } from "@/lib/cms/menu-routing";
+import { getSettings } from "@/lib/cms/settings";
 
 export const revalidate = 900;
 
@@ -36,6 +37,9 @@ function validLastModified(value: string | null | undefined) {
 }
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  const settings = await getSettings();
+  if (!settings.seo.sitemap_enabled) return [];
+
   const [offerings, blogPosts, products, landingPages] = await Promise.all([
     getOfferings(),
     getBlogPosts(),

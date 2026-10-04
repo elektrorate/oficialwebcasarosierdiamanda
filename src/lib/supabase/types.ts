@@ -1907,6 +1907,7 @@ export interface SiteSettingRow {
   default_og_image_url: string | null;
   robots_index: boolean;
   robots_follow: boolean;
+  sitemap_enabled: boolean;
 }
 
 export interface SiteSettingInsert {
@@ -1948,6 +1949,7 @@ export interface SiteSettingInsert {
   default_og_image_url?: string | null;
   robots_index?: boolean;
   robots_follow?: boolean;
+  sitemap_enabled?: boolean;
 }
 
 export interface SiteSettingUpdate {
@@ -1989,6 +1991,7 @@ export interface SiteSettingUpdate {
   default_og_image_url?: string | null;
   robots_index?: boolean;
   robots_follow?: boolean;
+  sitemap_enabled?: boolean;
 }
 
 export interface SocialGalleryRow {

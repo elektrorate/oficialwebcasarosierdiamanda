@@ -64,7 +64,7 @@ test("todos los campos están presentes en el mapa", () => {
     "footer.footer_logo_url", "footer.footer_text", "footer.legal_text",
     "footer.show_social_links", "footer.show_contact_info",
     "seo.default_seo_title", "seo.default_seo_description", "seo.default_og_image_url",
-    "seo.robots_index", "seo.robots_follow",
+    "seo.robots_index", "seo.robots_follow", "seo.sitemap_enabled",
     "system.maintenance_mode",
   ];
   for (const field of expected) {

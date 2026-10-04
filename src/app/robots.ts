@@ -19,6 +19,6 @@ export default async function robots(): Promise<MetadataRoute.Robots> {
           userAgent: "*",
           disallow: "/",
         },
-    sitemap: getAbsoluteSiteUrl("/sitemap.xml"),
+    ...(settings.seo.sitemap_enabled ? { sitemap: getAbsoluteSiteUrl("/sitemap.xml") } : {}),
   };
 }

@@ -43,7 +43,7 @@ const SECTION_STRING_FIELDS: Record<string, readonly string[]> = {
 const SECTION_BOOLEAN_FIELDS: Record<string, readonly string[]> = {
   menu: ["scroll_menu_logo_tint_enabled"],
   footer: ["show_social_links", "show_contact_info"],
-  seo: ["robots_index", "robots_follow"],
+  seo: ["robots_index", "robots_follow", "sitemap_enabled"],
   system: ["maintenance_mode"],
 };
 

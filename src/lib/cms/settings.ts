@@ -57,6 +57,7 @@ type SiteSettingsRow = {
   default_og_image_url: string | null;
   robots_index: boolean;
   robots_follow: boolean;
+  sitemap_enabled: boolean;
   maintenance_mode: boolean;
   updated_at: string;
 };
@@ -97,6 +98,7 @@ function flattenSettings(s: SiteSettings): SiteSettingUpdate {
     default_og_image_url: s.seo.default_og_image_url || null,
     robots_index: s.seo.robots_index,
     robots_follow: s.seo.robots_follow,
+    sitemap_enabled: s.seo.sitemap_enabled,
     maintenance_mode: s.system.maintenance_mode,
   };
 }
@@ -157,6 +159,7 @@ function rowToSettings(row: SiteSettingsRow): SiteSettings {
       default_og_image_url: row.default_og_image_url ?? "",
       robots_index: row.robots_index,
       robots_follow: row.robots_follow,
+      sitemap_enabled: row.sitemap_enabled ?? DEFAULT_SETTINGS.seo.sitemap_enabled,
     },
     system: {
       maintenance_mode: row.maintenance_mode,

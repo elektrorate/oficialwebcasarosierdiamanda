@@ -1,10 +1,11 @@
 import { createAdminClient } from "../supabase/admin";
 import { getBlogPosts } from "./blog";
 import { getLandingPages } from "./landing-pages";
-import { getOfferings } from "./offerings";
-import { getPages } from "./pages";
+import { getOfferings, isPubliclyVisibleOffering } from "./offerings";
 import { getProducts } from "./products";
 import { readJsonFile, writeJsonFile } from "./local-storage";
+import { getSettings, updateSettings } from "./settings";
+import type { SiteSettings } from "./settings-types";
 import { defaultMarketingSettings } from "./types";
 import type {
   BlogPost,
@@ -12,7 +13,7 @@ import type {
   MarketingCampaign, MarketingConversion, MarketingEventLog, MarketingEventType,
   MarketingPageMetric, MarketingReport, MarketingSearchConsolePage,
   MarketingSearchConsoleQuery, MarketingSearchConsoleSummary, MarketingSeoAudit,
-  MarketingSettings, MarketingTrafficSource, Offering, Page, Product,
+  MarketingSettings, MarketingTrafficSource, Offering, Product,
 } from "./types";
 
 const SETTINGS_ID = "00000000-0000-0000-0000-000000000002";
@@ -166,9 +167,20 @@ export async function getMarketingSettings(): Promise<MarketingSettings> {
 
   const fromSupabase = await withTimeout(readSettingsFromSupabase(), MARKETING_READ_TIMEOUT_MS, null);
   const data = await readJsonFile<Partial<MarketingSettings>>("marketing.json", {});
-  const result = fromSupabase
+  const stored = fromSupabase
     ? { ...fromSupabase, ...(Array.isArray(data.public_button_links) ? { public_button_links: data.public_button_links } : {}) }
     : { ...defaultMarketingSettings(), ...data };
+  const siteSettings = await getSettings();
+  const result: MarketingSettings = {
+    ...stored,
+    // The public site reads site_settings. Keep this legacy marketing view in
+    // sync so the admin panel edits the values that reach the frontend.
+    seo_global_title: siteSettings.seo.default_seo_title || stored.seo_global_title,
+    seo_global_description: siteSettings.seo.default_seo_description || stored.seo_global_description,
+    seo_og_image: siteSettings.seo.default_og_image_url || stored.seo_og_image,
+    robots_enabled: siteSettings.seo.robots_index,
+    sitemap_enabled: siteSettings.seo.sitemap_enabled,
+  };
 
   cacheMarketingSettings(result);
   return result;
@@ -178,6 +190,19 @@ export async function updateMarketingSettings(input: Partial<MarketingSettings>)
   const current = await getMarketingSettings();
   const next: MarketingSettings = { ...current, ...input, updated_at: new Date().toISOString() };
   if (input.meta_access_token === undefined) next.meta_access_token = current.meta_access_token;
+
+  const seoPatch: Partial<SiteSettings["seo"]> = {};
+  if (input.seo_global_title !== undefined) seoPatch.default_seo_title = String(input.seo_global_title).trim();
+  if (input.seo_global_description !== undefined) {
+    seoPatch.default_seo_description = String(input.seo_global_description).trim();
+  }
+  if (input.seo_og_image !== undefined) seoPatch.default_og_image_url = String(input.seo_og_image).trim();
+  if (input.robots_enabled !== undefined) seoPatch.robots_index = input.robots_enabled;
+  if (input.sitemap_enabled !== undefined) seoPatch.sitemap_enabled = input.sitemap_enabled;
+  if (Object.keys(seoPatch).length > 0) {
+    await updateSettings({ seo: seoPatch as SiteSettings["seo"] });
+  }
+
   await writeSettingsToSupabase(next);
   await writeJsonFile("marketing.json", next);
   cacheMarketingSettings(next);
@@ -826,9 +851,13 @@ function offeringEditPath(type: Offering["type"], id: string): string {
   return `/admin/${prefix}/${id}/edit`;
 }
 
+function offeringSeoImage(offering: Offering) {
+  const classSeoImage = offering.details.class?.seoImage;
+  return classSeoImage || offering.cover_image_url || offering.gallery[0] || "";
+}
+
 async function collectSeoTargets() {
-  const [pages, landingPages, blogPosts, offerings, products] = await Promise.all([
-    getPages(),
+  const [landingPages, blogPosts, offerings, products] = await Promise.all([
     getLandingPages(),
     getBlogPosts(),
     getOfferings(),
@@ -837,31 +866,15 @@ async function collectSeoTargets() {
 
   const targets: MarketingSeoAudit[] = [];
 
-  for (const page of pages.filter((item): item is Page => item.status !== "deleted")) {
-    targets.push(buildAuditRow({
-      contentId: page.id,
-      editUrl: `/admin/pages/${page.id}/edit`,
-      pageUrl: pagePath(page.slug),
-      pageTitle: page.title,
-      contentType: "page",
-      metaTitle: page.seo_title,
-      metaDescription: page.seo_description,
-      ogImage: page.seo_image,
-      canonicalUrl: pagePath(page.slug),
-      isIndexable: true,
-      slug: page.slug,
-    }));
-  }
-
-  for (const landingPage of landingPages.filter((item): item is LandingPage => item.status !== "deleted")) {
+  for (const landingPage of landingPages.filter((item): item is LandingPage => item.status === "published" && !item.deleted_at)) {
     targets.push(buildAuditRow({
       contentId: landingPage.id,
       editUrl: `/admin/landing-pages/${landingPage.id}/edit`,
       pageUrl: pagePath(`landing/${landingPage.slug}`),
       pageTitle: landingPage.title,
       contentType: "page",
-      metaTitle: landingPage.seo_title,
-      metaDescription: landingPage.seo_description,
+      metaTitle: landingPage.seo_title || landingPage.title,
+      metaDescription: landingPage.seo_description || landingPage.hero_subtitle || landingPage.intro_text,
       ogImage: landingPage.seo_image,
       canonicalUrl: pagePath(`landing/${landingPage.slug}`),
       isIndexable: true,
@@ -869,48 +882,48 @@ async function collectSeoTargets() {
     }));
   }
 
-  for (const post of blogPosts.filter((item): item is BlogPost => item.status !== "deleted")) {
+  for (const post of blogPosts.filter((item): item is BlogPost => item.status === "published" && !item.deleted_at)) {
     targets.push(buildAuditRow({
       contentId: post.id,
       editUrl: `/admin/bitacora/${post.id}/edit`,
       pageUrl: pagePath(`blog/${post.slug}`),
       pageTitle: post.title,
       contentType: "blog_post",
-      metaTitle: post.seo_title,
-      metaDescription: post.seo_description,
-      ogImage: post.seo_image,
+      metaTitle: post.seo_title || post.title,
+      metaDescription: post.seo_description || post.excerpt,
+      ogImage: post.seo_image || post.featured_image_id || "img/social-2.jpg",
       canonicalUrl: pagePath(`blog/${post.slug}`),
       isIndexable: true,
       slug: post.slug,
     }));
   }
 
-  for (const offering of offerings.filter((item): item is Offering => item.status !== "deleted")) {
+  for (const offering of offerings.filter((item): item is Offering => isPubliclyVisibleOffering(item))) {
     targets.push(buildAuditRow({
       contentId: offering.id,
       editUrl: offeringEditPath(offering.type, offering.id),
       pageUrl: offeringPath(offering.type, offering.slug),
       pageTitle: offering.title,
       contentType: offering.type,
-      metaTitle: offering.seo_title,
-      metaDescription: offering.seo_description,
-      ogImage: offering.cover_image_url,
+      metaTitle: offering.seo_title || offering.title,
+      metaDescription: offering.seo_description || offering.excerpt,
+      ogImage: offeringSeoImage(offering),
       canonicalUrl: offeringPath(offering.type, offering.slug),
       isIndexable: true,
       slug: offering.slug,
     }));
   }
 
-  for (const product of products.filter((item): item is Product => item.status !== "deleted")) {
+  for (const product of products.filter((item): item is Product => item.status === "published" && !item.deleted_at)) {
     targets.push(buildAuditRow({
       contentId: product.id,
       editUrl: `/admin/shop/products/${product.id}/edit`,
       pageUrl: pagePath(`shop/${product.slug}`),
       pageTitle: product.name,
       contentType: "product",
-      metaTitle: product.seo_title,
-      metaDescription: product.seo_description,
-      ogImage: product.seo_image,
+      metaTitle: product.seo_title || product.name,
+      metaDescription: product.seo_description || product.excerpt || product.description,
+      ogImage: product.seo_image || product.main_image_id || product.gallery[0] || "/img/social-2.jpg",
       canonicalUrl: pagePath(`shop/${product.slug}`),
       isIndexable: true,
       slug: product.slug,

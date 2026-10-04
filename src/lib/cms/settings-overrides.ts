@@ -47,6 +47,7 @@ export type GlobalSettingsField =
   | "seo.default_og_image_url"
   | "seo.robots_index"
   | "seo.robots_follow"
+  | "seo.sitemap_enabled"
   | "system.maintenance_mode";
 
 export type SettingsOrigin = "global" | "footer-override" | "page-override";
@@ -139,6 +140,7 @@ export function resolveSettingsOrigins(
     origin("seo.default_og_image_url"),
     origin("seo.robots_index"),
     origin("seo.robots_follow"),
+    origin("seo.sitemap_enabled"),
     origin("system.maintenance_mode"),
   ];
 

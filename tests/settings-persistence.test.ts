@@ -13,7 +13,7 @@ function mkSettings(): SiteSettings {
     contact: { email: "", phone: "", whatsapp: "", address: "", city: "", country: "", map_url: "" },
     social: { instagram_url: "", tiktok_url: "", facebook_url: "", youtube_url: "", pinterest_url: "" },
     footer: { footer_logo_url: "", footer_text: "", legal_text: "", show_social_links: true, show_contact_info: true },
-    seo: { default_seo_title: "", default_seo_description: "", default_og_image_url: "", robots_index: true, robots_follow: true },
+    seo: { default_seo_title: "", default_seo_description: "", default_og_image_url: "", robots_index: true, robots_follow: true, sitemap_enabled: true },
     system: { maintenance_mode: false, updated_at: "" },
   };
 }
