@@ -16,7 +16,7 @@ export async function createTestDatabase() {
  await db.exec("alter table public.offerings add column details jsonb default '{}'::jsonb;");
  const visual=fs.readFileSync('supabase/migrations/20260717001700_menu_visual_settings.sql','utf8');
  await db.exec(visual.slice(visual.indexOf('create table'),visual.indexOf('insert into')));
- await db.exec(fs.readFileSync('supabase/migrations/20260928085241_coordinated_menu_publication.sql','utf8'));
+ await db.exec(fs.readFileSync('supabase/migrations/20260928160028_coordinated_menu_publication.sql','utf8'));
  await db.exec('grant all on public.menus,public.menu_items,public.offerings,public.redirects,public.menu_visual_settings to service_role;');
  const menu='00000000-0000-4000-8000-000000000010';
  const offering='00000000-0000-4000-8000-000000000020';
