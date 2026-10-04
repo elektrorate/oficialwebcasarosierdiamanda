@@ -26,8 +26,9 @@ const dynamicMenuConfig: Record<DynamicMenuKey, {
 
 function staticFallbackItems(siteName: string): NavigationItem[] {
   return [
-    { label: "Inicio", href: "/#hero", order: 0, visible: true },
-    ...Object.values(dynamicMenuConfig).map((item) => ({
+    { id: "section:inicio", label: "Inicio", href: "/#hero", order: 0, visible: true },
+    ...Object.entries(dynamicMenuConfig).map(([key, item]) => ({
+      id: `section:${key}`,
       label: item.label,
       href: item.href,
       order: item.order,
@@ -35,6 +36,7 @@ function staticFallbackItems(siteName: string): NavigationItem[] {
       children: [],
     })),
     {
+      id: "section:comunidad",
       label: "Comunidad",
       href: "/el-estudio",
       order: 5,
@@ -44,7 +46,7 @@ function staticFallbackItems(siteName: string): NavigationItem[] {
         { label: "Bitácora", href: "/blog", order: 1, visible: true },
       ],
     },
-    { label: siteName, href: "/shop", order: 6, visible: true },
+    { id: "section:shop", label: siteName, href: "/shop", order: 6, visible: true },
   ];
 }
 
@@ -80,6 +82,7 @@ function targetForHref(href: string, openInNewTab: boolean) {
 function toNavigationItem(item: MenuItem, children: MenuItem[]): NavigationItem {
   const href = hrefForItem(item);
   return {
+    id: item.id,
     label: item.label,
     href,
     order: item.sort_order,
@@ -152,6 +155,7 @@ function menuTitleForOffering(offering: Offering) {
 
 function offeringToNavigationItem(offering: Offering, order: number): NavigationItem {
   return {
+    id: `offering:${offering.id}`,
     label: menuTitleForOffering(offering),
     href: experienceHref(kindForOffering(offering.type), offering.slug),
     order,
@@ -184,6 +188,7 @@ function mergeGeneratedChildrenWithSavedOrder(generated: NavigationItem[], saved
         usedHrefs.add(byId.href);
         merged.push({
           ...byId,
+          id: child.id || byId.id,
           label: child.label || byId.label,
           visible: child.visible,
           target: targetForHref(byId.href, child.target === "_blank"),
@@ -196,6 +201,7 @@ function mergeGeneratedChildrenWithSavedOrder(generated: NavigationItem[], saved
       usedHrefs.add(child.href);
       merged.push({
         ...byHref,
+        id: child.id || byHref.id,
         label: child.label || byHref.label,
         visible: child.visible,
         target: targetForHref(byHref.href, child.target === "_blank"),
@@ -244,6 +250,7 @@ function withDynamicChildren(items: NavigationItem[], dynamicChildren: Record<Dy
     if (seen.has(key)) continue;
     const config = dynamicMenuConfig[key];
     enhanced.push({
+      id: `section:${key}`,
       label: config.label,
       href: config.href,
       order: config.order,

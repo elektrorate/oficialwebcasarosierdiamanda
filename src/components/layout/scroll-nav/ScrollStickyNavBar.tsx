@@ -1,21 +1,21 @@
 "use client";
 
 import type { CSSProperties, RefObject } from "react";
-import type { NavigationItem } from "@/data/types";
+import type { IdentifiedNavigationItem } from "@/lib/navigation-ui";
 import { classNames } from "@/lib/utils";
 import { ScrollDesktopNavList, ScrollStickyLogo } from "./ScrollDesktopNavList";
 import { splitNavigationColumns } from "./splitNavigationColumns";
 
 type Props = {
   variant?: "default" | "editorial" | "home";
-  items: NavigationItem[];
+  items: IdentifiedNavigationItem[];
   logoUrl: string;
   useLogoTint: boolean;
   logoTintStyle: CSSProperties;
-  openHref: string | null;
+  openId: string | null;
   current: (href: string) => boolean;
-  onOpen: (href: string) => void;
-  onScheduleClose: () => void;
+  onOpen: (id: string) => void;
+  onScheduleClose: (id: string) => void;
   onClose: () => void;
   showDesktopNav: boolean;
   mobileToggleRef: RefObject<HTMLButtonElement | null>;
@@ -29,7 +29,7 @@ export function ScrollStickyNavBar({
   logoUrl,
   useLogoTint,
   logoTintStyle,
-  openHref,
+  openId,
   current,
   onOpen,
   onScheduleClose,
@@ -55,7 +55,7 @@ export function ScrollStickyNavBar({
           <ScrollDesktopNavList
             className="scroll-desktop-nav--left"
             items={left}
-            openHref={openHref}
+            openId={openId}
             current={current}
             onOpen={onOpen}
             onScheduleClose={onScheduleClose}
@@ -70,7 +70,7 @@ export function ScrollStickyNavBar({
           <ScrollDesktopNavList
             className="scroll-desktop-nav--right"
             items={right}
-            openHref={openHref}
+            openId={openId}
             current={current}
             onOpen={onOpen}
             onScheduleClose={onScheduleClose}
@@ -88,7 +88,7 @@ export function ScrollStickyNavBar({
           {showDesktopNav ? (
             <ScrollDesktopNavList
               items={items}
-              openHref={openHref}
+              openId={openId}
               current={current}
               onOpen={onOpen}
               onScheduleClose={onScheduleClose}

@@ -1,0 +1,4292 @@
+{
+  "baseUrl": "http://localhost:4050",
+  "checks": [
+    {
+      "label": "/ 1025px hero setup/coverage",
+      "status": "skip",
+      "reason": "Home hero desktop navigation is hidden by the existing design"
+    },
+    {
+      "label": "/ 1025px sticky hover/focus Experiencias+ [43676cc8-ef7c-4902-9b80-be262be15930]",
+      "status": "pass",
+      "details": {
+        "id": "43676cc8-ef7c-4902-9b80-be262be15930",
+        "hidden": false,
+        "left": 16,
+        "right": 332,
+        "width": 316,
+        "viewport": 1025
+      }
+    },
+    {
+      "label": "/ 1025px sticky hover/focus Clases+ [066c2961-232e-4e14-aef2-42faae466d4d]",
+      "status": "pass",
+      "details": {
+        "id": "066c2961-232e-4e14-aef2-42faae466d4d",
+        "hidden": false,
+        "left": 95.609375,
+        "right": 411.609375,
+        "width": 316,
+        "viewport": 1025
+      }
+    },
+    {
+      "label": "/ 1025px sticky hover/focus CURSOS+ [357f4ca1-2ee2-4186-9c71-21cf72767851]",
+      "status": "pass",
+      "details": {
+        "id": "357f4ca1-2ee2-4186-9c71-21cf72767851",
+        "hidden": false,
+        "left": 192.09375,
+        "right": 508.09375,
+        "width": 316,
+        "viewport": 1025
+      }
+    },
+    {
+      "label": "/ 1025px sticky hover/focus Workshops+ [8cf7a252-2081-4c0b-8e69-92623a4da209]",
+      "status": "pass",
+      "details": {
+        "id": "8cf7a252-2081-4c0b-8e69-92623a4da209",
+        "hidden": false,
+        "left": 300.703125,
+        "right": 616.703125,
+        "width": 316,
+        "viewport": 1025
+      }
+    },
+    {
+      "label": "/ 1025px sticky hover/focus GiftCards+ [42a425d1-5b92-4b75-bee6-a2c5f659ea4b]",
+      "status": "pass",
+      "details": {
+        "id": "42a425d1-5b92-4b75-bee6-a2c5f659ea4b",
+        "hidden": false,
+        "left": 632.5,
+        "right": 948.5,
+        "width": 316,
+        "viewport": 1025
+      }
+    },
+    {
+      "label": "/ 1025px sticky hover/focus Comunidad+ [e9fe8697-5075-4b5f-9f85-5c36109c6ccc]",
+      "status": "pass",
+      "details": {
+        "id": "e9fe8697-5075-4b5f-9f85-5c36109c6ccc",
+        "hidden": false,
+        "left": 739,
+        "right": 1009,
+        "width": 270,
+        "viewport": 1025
+      }
+    },
+    {
+      "label": "/ 1025px sticky Clases/CURSOS independent shared href",
+      "status": "pass",
+      "details": {
+        "href": "/cursos",
+        "ids": [
+          "066c2961-232e-4e14-aef2-42faae466d4d",
+          "357f4ca1-2ee2-4186-9c71-21cf72767851"
+        ]
+      }
+    },
+    {
+      "label": "/ 1025px sticky pointer and keyboard focus retain the owning dropdown",
+      "status": "pass"
+    },
+    {
+      "label": "/ 1025px sticky navigation closes and returning to top has no stale root",
+      "status": "pass",
+      "details": {
+        "destination": "/cursos/coworking-de-investigacion-tecnica-de-esmaltes-y-engobes"
+      }
+    },
+    {
+      "label": "/ 1025px sticky desktop to mobile closes all desktop dropdowns",
+      "status": "pass"
+    },
+    {
+      "label": "/ 1025px sticky setup/coverage",
+      "status": "pass",
+      "details": {
+        "rootIds": [
+          "43676cc8-ef7c-4902-9b80-be262be15930",
+          "066c2961-232e-4e14-aef2-42faae466d4d",
+          "357f4ca1-2ee2-4186-9c71-21cf72767851",
+          "8cf7a252-2081-4c0b-8e69-92623a4da209",
+          "42a425d1-5b92-4b75-bee6-a2c5f659ea4b",
+          "e9fe8697-5075-4b5f-9f85-5c36109c6ccc",
+          "a15b98cf-2135-458e-89b0-597cd2915458"
+        ],
+        "testedChildren": 6
+      }
+    },
+    {
+      "label": "/experiencias/clases-regulares-de-modelado 1025px hero hover/focus Experiencias [43676cc8-ef7c-4902-9b80-be262be15930]",
+      "status": "pass",
+      "details": {
+        "id": "43676cc8-ef7c-4902-9b80-be262be15930",
+        "hidden": false,
+        "left": 171.4296875,
+        "right": 451.4296875,
+        "width": 280,
+        "viewport": 1025
+      }
+    },
+    {
+      "label": "/experiencias/clases-regulares-de-modelado 1025px hero hover/focus Clases [066c2961-232e-4e14-aef2-42faae466d4d]",
+      "status": "pass",
+      "details": {
+        "id": "066c2961-232e-4e14-aef2-42faae466d4d",
+        "hidden": false,
+        "left": 302.6953125,
+        "right": 702.6953125,
+        "width": 400,
+        "viewport": 1025
+      }
+    },
+    {
+      "label": "/experiencias/clases-regulares-de-modelado 1025px hero hover/focus CURSOS [357f4ca1-2ee2-4186-9c71-21cf72767851]",
+      "status": "pass",
+      "details": {
+        "id": "357f4ca1-2ee2-4186-9c71-21cf72767851",
+        "hidden": false,
+        "left": 394.8984375,
+        "right": 794.8984375,
+        "width": 400,
+        "viewport": 1025
+      }
+    },
+    {
+      "label": "/experiencias/clases-regulares-de-modelado 1025px hero hover/focus Workshops [8cf7a252-2081-4c0b-8e69-92623a4da209]",
+      "status": "pass",
+      "details": {
+        "id": "8cf7a252-2081-4c0b-8e69-92623a4da209",
+        "hidden": false,
+        "left": 499.4453125,
+        "right": 860.1328125,
+        "width": 360.6875,
+        "viewport": 1025
+      }
+    },
+    {
+      "label": "/experiencias/clases-regulares-de-modelado 1025px hero hover/focus GiftCards [42a425d1-5b92-4b75-bee6-a2c5f659ea4b]",
+      "status": "pass",
+      "details": {
+        "id": "42a425d1-5b92-4b75-bee6-a2c5f659ea4b",
+        "hidden": false,
+        "left": 620.1171875,
+        "right": 879.1328125,
+        "width": 259.015625,
+        "viewport": 1025
+      }
+    },
+    {
+      "label": "/experiencias/clases-regulares-de-modelado 1025px hero hover/focus Comunidad [e9fe8697-5075-4b5f-9f85-5c36109c6ccc]",
+      "status": "pass",
+      "details": {
+        "id": "e9fe8697-5075-4b5f-9f85-5c36109c6ccc",
+        "hidden": false,
+        "left": 730.7578125,
+        "right": 962.7578125,
+        "width": 232,
+        "viewport": 1025
+      }
+    },
+    {
+      "label": "/experiencias/clases-regulares-de-modelado 1025px hero Clases/CURSOS independent shared href",
+      "status": "pass",
+      "details": {
+        "href": "/cursos",
+        "ids": [
+          "066c2961-232e-4e14-aef2-42faae466d4d",
+          "357f4ca1-2ee2-4186-9c71-21cf72767851"
+        ]
+      }
+    },
+    {
+      "label": "/experiencias/clases-regulares-de-modelado 1025px hero pointer and keyboard focus retain the owning dropdown",
+      "status": "pass"
+    },
+    {
+      "label": "/experiencias/clases-regulares-de-modelado 1025px hero navigation closes and returning to top has no stale root",
+      "status": "pass",
+      "details": {
+        "destination": "/cursos/coworking-de-investigacion-tecnica-de-esmaltes-y-engobes"
+      }
+    },
+    {
+      "label": "/experiencias/clases-regulares-de-modelado 1025px hero desktop to mobile closes all desktop dropdowns",
+      "status": "pass"
+    },
+    {
+      "label": "/experiencias/clases-regulares-de-modelado 1025px hero setup/coverage",
+      "status": "pass",
+      "details": {
+        "rootIds": [
+          "e5a7f46c-26cc-4b5f-b819-b1e84cfb1d89",
+          "43676cc8-ef7c-4902-9b80-be262be15930",
+          "066c2961-232e-4e14-aef2-42faae466d4d",
+          "357f4ca1-2ee2-4186-9c71-21cf72767851",
+          "8cf7a252-2081-4c0b-8e69-92623a4da209",
+          "42a425d1-5b92-4b75-bee6-a2c5f659ea4b",
+          "e9fe8697-5075-4b5f-9f85-5c36109c6ccc",
+          "a15b98cf-2135-458e-89b0-597cd2915458"
+        ],
+        "testedChildren": 6
+      }
+    },
+    {
+      "label": "/experiencias/clases-regulares-de-modelado 1025px sticky hover/focus Experiencias+ [43676cc8-ef7c-4902-9b80-be262be15930]",
+      "status": "pass",
+      "details": {
+        "id": "43676cc8-ef7c-4902-9b80-be262be15930",
+        "hidden": false,
+        "left": 81.828125,
+        "right": 397.828125,
+        "width": 316,
+        "viewport": 1025
+      }
+    },
+    {
+      "label": "/experiencias/clases-regulares-de-modelado 1025px sticky hover/focus Clases+ [066c2961-232e-4e14-aef2-42faae466d4d]",
+      "status": "pass",
+      "details": {
+        "id": "066c2961-232e-4e14-aef2-42faae466d4d",
+        "hidden": false,
+        "left": 223.40625,
+        "right": 539.40625,
+        "width": 316,
+        "viewport": 1025
+      }
+    },
+    {
+      "label": "/experiencias/clases-regulares-de-modelado 1025px sticky hover/focus CURSOS+ [357f4ca1-2ee2-4186-9c71-21cf72767851]",
+      "status": "pass",
+      "details": {
+        "id": "357f4ca1-2ee2-4186-9c71-21cf72767851",
+        "hidden": false,
+        "left": 319.890625,
+        "right": 635.890625,
+        "width": 316,
+        "viewport": 1025
+      }
+    },
+    {
+      "label": "/experiencias/clases-regulares-de-modelado 1025px sticky hover/focus Workshops+ [8cf7a252-2081-4c0b-8e69-92623a4da209]",
+      "status": "pass",
+      "details": {
+        "id": "8cf7a252-2081-4c0b-8e69-92623a4da209",
+        "hidden": false,
+        "left": 632.5,
+        "right": 948.5,
+        "width": 316,
+        "viewport": 1025
+      }
+    },
+    {
+      "label": "/experiencias/clases-regulares-de-modelado 1025px sticky hover/focus GiftCards+ [42a425d1-5b92-4b75-bee6-a2c5f659ea4b]",
+      "status": "pass",
+      "details": {
+        "id": "42a425d1-5b92-4b75-bee6-a2c5f659ea4b",
+        "hidden": false,
+        "left": 739,
+        "right": 1009,
+        "width": 270,
+        "viewport": 1025
+      }
+    },
+    {
+      "label": "/experiencias/clases-regulares-de-modelado 1025px sticky hover/focus Comunidad+ [e9fe8697-5075-4b5f-9f85-5c36109c6ccc]",
+      "status": "pass",
+      "details": {
+        "id": "e9fe8697-5075-4b5f-9f85-5c36109c6ccc",
+        "hidden": false,
+        "left": 739,
+        "right": 1009,
+        "width": 270,
+        "viewport": 1025
+      }
+    },
+    {
+      "label": "/experiencias/clases-regulares-de-modelado 1025px sticky Clases/CURSOS independent shared href",
+      "status": "pass",
+      "details": {
+        "href": "/cursos",
+        "ids": [
+          "066c2961-232e-4e14-aef2-42faae466d4d",
+          "357f4ca1-2ee2-4186-9c71-21cf72767851"
+        ]
+      }
+    },
+    {
+      "label": "/experiencias/clases-regulares-de-modelado 1025px sticky pointer and keyboard focus retain the owning dropdown",
+      "status": "pass"
+    },
+    {
+      "label": "/experiencias/clases-regulares-de-modelado 1025px sticky navigation closes and returning to top has no stale root",
+      "status": "pass",
+      "details": {
+        "destination": "/cursos/coworking-de-investigacion-tecnica-de-esmaltes-y-engobes"
+      }
+    },
+    {
+      "label": "/experiencias/clases-regulares-de-modelado 1025px sticky desktop to mobile closes all desktop dropdowns",
+      "status": "pass"
+    },
+    {
+      "label": "/experiencias/clases-regulares-de-modelado 1025px sticky setup/coverage",
+      "status": "pass",
+      "details": {
+        "rootIds": [
+          "e5a7f46c-26cc-4b5f-b819-b1e84cfb1d89",
+          "43676cc8-ef7c-4902-9b80-be262be15930",
+          "066c2961-232e-4e14-aef2-42faae466d4d",
+          "357f4ca1-2ee2-4186-9c71-21cf72767851",
+          "8cf7a252-2081-4c0b-8e69-92623a4da209",
+          "42a425d1-5b92-4b75-bee6-a2c5f659ea4b",
+          "e9fe8697-5075-4b5f-9f85-5c36109c6ccc",
+          "a15b98cf-2135-458e-89b0-597cd2915458"
+        ],
+        "testedChildren": 6
+      }
+    },
+    {
+      "label": "/experiencias/clases-regulares-de-modelado 1025px hero/sticky share IDs",
+      "status": "pass"
+    },
+    {
+      "label": "/cursos 1025px hero hover/focus Experiencias [43676cc8-ef7c-4902-9b80-be262be15930]",
+      "status": "pass",
+      "details": {
+        "id": "43676cc8-ef7c-4902-9b80-be262be15930",
+        "hidden": false,
+        "left": 153.3828125,
+        "right": 433.3828125,
+        "width": 280,
+        "viewport": 1025
+      }
+    },
+    {
+      "label": "/cursos 1025px hero hover/focus Clases [066c2961-232e-4e14-aef2-42faae466d4d]",
+      "status": "pass",
+      "details": {
+        "id": "066c2961-232e-4e14-aef2-42faae466d4d",
+        "hidden": false,
+        "left": 291.5859375,
+        "right": 691.5859375,
+        "width": 400,
+        "viewport": 1025
+      }
+    },
+    {
+      "label": "/cursos 1025px hero hover/focus CURSOS [357f4ca1-2ee2-4186-9c71-21cf72767851]",
+      "status": "pass",
+      "details": {
+        "id": "357f4ca1-2ee2-4186-9c71-21cf72767851",
+        "hidden": false,
+        "left": 388.6796875,
+        "right": 788.6796875,
+        "width": 400,
+        "viewport": 1025
+      }
+    },
+    {
+      "label": "/cursos 1025px hero hover/focus Workshops [8cf7a252-2081-4c0b-8e69-92623a4da209]",
+      "status": "pass",
+      "details": {
+        "id": "8cf7a252-2081-4c0b-8e69-92623a4da209",
+        "hidden": false,
+        "left": 498.7578125,
+        "right": 859.4453125,
+        "width": 360.6875,
+        "viewport": 1025
+      }
+    },
+    {
+      "label": "/cursos 1025px hero hover/focus GiftCards [42a425d1-5b92-4b75-bee6-a2c5f659ea4b]",
+      "status": "pass",
+      "details": {
+        "id": "42a425d1-5b92-4b75-bee6-a2c5f659ea4b",
+        "hidden": false,
+        "left": 625.8046875,
+        "right": 884.8203125,
+        "width": 259.015625,
+        "viewport": 1025
+      }
+    },
+    {
+      "label": "/cursos 1025px hero hover/focus Comunidad [e9fe8697-5075-4b5f-9f85-5c36109c6ccc]",
+      "status": "pass",
+      "details": {
+        "id": "e9fe8697-5075-4b5f-9f85-5c36109c6ccc",
+        "hidden": false,
+        "left": 742.3046875,
+        "right": 974.3046875,
+        "width": 232,
+        "viewport": 1025
+      }
+    },
+    {
+      "label": "/cursos 1025px hero Clases/CURSOS independent shared href",
+      "status": "pass",
+      "details": {
+        "href": "/cursos",
+        "ids": [
+          "066c2961-232e-4e14-aef2-42faae466d4d",
+          "357f4ca1-2ee2-4186-9c71-21cf72767851"
+        ]
+      }
+    },
+    {
+      "label": "/cursos 1025px hero pointer and keyboard focus retain the owning dropdown",
+      "status": "pass"
+    },
+    {
+      "label": "/cursos 1025px hero navigation closes and returning to top has no stale root",
+      "status": "pass",
+      "details": {
+        "destination": "/cursos/coworking-de-investigacion-tecnica-de-esmaltes-y-engobes"
+      }
+    },
+    {
+      "label": "/cursos 1025px hero desktop to mobile closes all desktop dropdowns",
+      "status": "pass"
+    },
+    {
+      "label": "/cursos 1025px hero setup/coverage",
+      "status": "pass",
+      "details": {
+        "rootIds": [
+          "e5a7f46c-26cc-4b5f-b819-b1e84cfb1d89",
+          "43676cc8-ef7c-4902-9b80-be262be15930",
+          "066c2961-232e-4e14-aef2-42faae466d4d",
+          "357f4ca1-2ee2-4186-9c71-21cf72767851",
+          "8cf7a252-2081-4c0b-8e69-92623a4da209",
+          "42a425d1-5b92-4b75-bee6-a2c5f659ea4b",
+          "e9fe8697-5075-4b5f-9f85-5c36109c6ccc",
+          "a15b98cf-2135-458e-89b0-597cd2915458"
+        ],
+        "testedChildren": 6
+      }
+    },
+    {
+      "label": "/cursos 1025px sticky hover/focus Experiencias+ [43676cc8-ef7c-4902-9b80-be262be15930]",
+      "status": "pass",
+      "details": {
+        "id": "43676cc8-ef7c-4902-9b80-be262be15930",
+        "hidden": false,
+        "left": 81.828125,
+        "right": 397.828125,
+        "width": 316,
+        "viewport": 1025
+      }
+    },
+    {
+      "label": "/cursos 1025px sticky hover/focus Clases+ [066c2961-232e-4e14-aef2-42faae466d4d]",
+      "status": "pass",
+      "details": {
+        "id": "066c2961-232e-4e14-aef2-42faae466d4d",
+        "hidden": false,
+        "left": 223.40625,
+        "right": 539.40625,
+        "width": 316,
+        "viewport": 1025
+      }
+    },
+    {
+      "label": "/cursos 1025px sticky hover/focus CURSOS+ [357f4ca1-2ee2-4186-9c71-21cf72767851]",
+      "status": "pass",
+      "details": {
+        "id": "357f4ca1-2ee2-4186-9c71-21cf72767851",
+        "hidden": false,
+        "left": 319.890625,
+        "right": 635.890625,
+        "width": 316,
+        "viewport": 1025
+      }
+    },
+    {
+      "label": "/cursos 1025px sticky hover/focus Workshops+ [8cf7a252-2081-4c0b-8e69-92623a4da209]",
+      "status": "pass",
+      "details": {
+        "id": "8cf7a252-2081-4c0b-8e69-92623a4da209",
+        "hidden": false,
+        "left": 632.5,
+        "right": 948.5,
+        "width": 316,
+        "viewport": 1025
+      }
+    },
+    {
+      "label": "/cursos 1025px sticky hover/focus GiftCards+ [42a425d1-5b92-4b75-bee6-a2c5f659ea4b]",
+      "status": "pass",
+      "details": {
+        "id": "42a425d1-5b92-4b75-bee6-a2c5f659ea4b",
+        "hidden": false,
+        "left": 739,
+        "right": 1009,
+        "width": 270,
+        "viewport": 1025
+      }
+    },
+    {
+      "label": "/cursos 1025px sticky hover/focus Comunidad+ [e9fe8697-5075-4b5f-9f85-5c36109c6ccc]",
+      "status": "pass",
+      "details": {
+        "id": "e9fe8697-5075-4b5f-9f85-5c36109c6ccc",
+        "hidden": false,
+        "left": 739,
+        "right": 1009,
+        "width": 270,
+        "viewport": 1025
+      }
+    },
+    {
+      "label": "/cursos 1025px sticky Clases/CURSOS independent shared href",
+      "status": "pass",
+      "details": {
+        "href": "/cursos",
+        "ids": [
+          "066c2961-232e-4e14-aef2-42faae466d4d",
+          "357f4ca1-2ee2-4186-9c71-21cf72767851"
+        ]
+      }
+    },
+    {
+      "label": "/cursos 1025px sticky pointer and keyboard focus retain the owning dropdown",
+      "status": "pass"
+    },
+    {
+      "label": "/cursos 1025px sticky navigation closes and returning to top has no stale root",
+      "status": "pass",
+      "details": {
+        "destination": "/cursos/coworking-de-investigacion-tecnica-de-esmaltes-y-engobes"
+      }
+    },
+    {
+      "label": "/cursos 1025px sticky desktop to mobile closes all desktop dropdowns",
+      "status": "pass"
+    },
+    {
+      "label": "/cursos 1025px sticky setup/coverage",
+      "status": "pass",
+      "details": {
+        "rootIds": [
+          "e5a7f46c-26cc-4b5f-b819-b1e84cfb1d89",
+          "43676cc8-ef7c-4902-9b80-be262be15930",
+          "066c2961-232e-4e14-aef2-42faae466d4d",
+          "357f4ca1-2ee2-4186-9c71-21cf72767851",
+          "8cf7a252-2081-4c0b-8e69-92623a4da209",
+          "42a425d1-5b92-4b75-bee6-a2c5f659ea4b",
+          "e9fe8697-5075-4b5f-9f85-5c36109c6ccc",
+          "a15b98cf-2135-458e-89b0-597cd2915458"
+        ],
+        "testedChildren": 6
+      }
+    },
+    {
+      "label": "/cursos 1025px hero/sticky share IDs",
+      "status": "pass"
+    },
+    {
+      "label": "/ 1100px hero setup/coverage",
+      "status": "skip",
+      "reason": "Home hero desktop navigation is hidden by the existing design"
+    },
+    {
+      "label": "/ 1100px sticky hover/focus Experiencias+ [43676cc8-ef7c-4902-9b80-be262be15930]",
+      "status": "pass",
+      "details": {
+        "id": "43676cc8-ef7c-4902-9b80-be262be15930",
+        "hidden": false,
+        "left": 16,
+        "right": 332,
+        "width": 316,
+        "viewport": 1100
+      }
+    },
+    {
+      "label": "/ 1100px sticky hover/focus Clases+ [066c2961-232e-4e14-aef2-42faae466d4d]",
+      "status": "pass",
+      "details": {
+        "id": "066c2961-232e-4e14-aef2-42faae466d4d",
+        "hidden": false,
+        "left": 133.109375,
+        "right": 449.109375,
+        "width": 316,
+        "viewport": 1100
+      }
+    },
+    {
+      "label": "/ 1100px sticky hover/focus CURSOS+ [357f4ca1-2ee2-4186-9c71-21cf72767851]",
+      "status": "pass",
+      "details": {
+        "id": "357f4ca1-2ee2-4186-9c71-21cf72767851",
+        "hidden": false,
+        "left": 229.59375,
+        "right": 545.59375,
+        "width": 316,
+        "viewport": 1100
+      }
+    },
+    {
+      "label": "/ 1100px sticky hover/focus Workshops+ [8cf7a252-2081-4c0b-8e69-92623a4da209]",
+      "status": "pass",
+      "details": {
+        "id": "8cf7a252-2081-4c0b-8e69-92623a4da209",
+        "hidden": false,
+        "left": 338.203125,
+        "right": 654.203125,
+        "width": 316,
+        "viewport": 1100
+      }
+    },
+    {
+      "label": "/ 1100px sticky hover/focus GiftCards+ [42a425d1-5b92-4b75-bee6-a2c5f659ea4b]",
+      "status": "pass",
+      "details": {
+        "id": "42a425d1-5b92-4b75-bee6-a2c5f659ea4b",
+        "hidden": false,
+        "left": 670,
+        "right": 986,
+        "width": 316,
+        "viewport": 1100
+      }
+    },
+    {
+      "label": "/ 1100px sticky hover/focus Comunidad+ [e9fe8697-5075-4b5f-9f85-5c36109c6ccc]",
+      "status": "pass",
+      "details": {
+        "id": "e9fe8697-5075-4b5f-9f85-5c36109c6ccc",
+        "hidden": false,
+        "left": 778.140625,
+        "right": 1048.140625,
+        "width": 270,
+        "viewport": 1100
+      }
+    },
+    {
+      "label": "/ 1100px sticky Clases/CURSOS independent shared href",
+      "status": "pass",
+      "details": {
+        "href": "/cursos",
+        "ids": [
+          "066c2961-232e-4e14-aef2-42faae466d4d",
+          "357f4ca1-2ee2-4186-9c71-21cf72767851"
+        ]
+      }
+    },
+    {
+      "label": "/ 1100px sticky pointer and keyboard focus retain the owning dropdown",
+      "status": "pass"
+    },
+    {
+      "label": "/ 1100px sticky navigation closes and returning to top has no stale root",
+      "status": "pass",
+      "details": {
+        "destination": "/cursos/coworking-de-investigacion-tecnica-de-esmaltes-y-engobes"
+      }
+    },
+    {
+      "label": "/ 1100px sticky desktop to mobile closes all desktop dropdowns",
+      "status": "pass"
+    },
+    {
+      "label": "/ 1100px sticky setup/coverage",
+      "status": "pass",
+      "details": {
+        "rootIds": [
+          "43676cc8-ef7c-4902-9b80-be262be15930",
+          "066c2961-232e-4e14-aef2-42faae466d4d",
+          "357f4ca1-2ee2-4186-9c71-21cf72767851",
+          "8cf7a252-2081-4c0b-8e69-92623a4da209",
+          "42a425d1-5b92-4b75-bee6-a2c5f659ea4b",
+          "e9fe8697-5075-4b5f-9f85-5c36109c6ccc",
+          "a15b98cf-2135-458e-89b0-597cd2915458"
+        ],
+        "testedChildren": 6
+      }
+    },
+    {
+      "label": "/experiencias/clases-regulares-de-modelado 1100px hero hover/focus Experiencias [43676cc8-ef7c-4902-9b80-be262be15930]",
+      "status": "pass",
+      "details": {
+        "id": "43676cc8-ef7c-4902-9b80-be262be15930",
+        "hidden": false,
+        "left": 208.9296875,
+        "right": 488.9296875,
+        "width": 280,
+        "viewport": 1100
+      }
+    },
+    {
+      "label": "/experiencias/clases-regulares-de-modelado 1100px hero hover/focus Clases [066c2961-232e-4e14-aef2-42faae466d4d]",
+      "status": "pass",
+      "details": {
+        "id": "066c2961-232e-4e14-aef2-42faae466d4d",
+        "hidden": false,
+        "left": 340.1953125,
+        "right": 740.1953125,
+        "width": 400,
+        "viewport": 1100
+      }
+    },
+    {
+      "label": "/experiencias/clases-regulares-de-modelado 1100px hero hover/focus CURSOS [357f4ca1-2ee2-4186-9c71-21cf72767851]",
+      "status": "pass",
+      "details": {
+        "id": "357f4ca1-2ee2-4186-9c71-21cf72767851",
+        "hidden": false,
+        "left": 432.3984375,
+        "right": 832.3984375,
+        "width": 400,
+        "viewport": 1100
+      }
+    },
+    {
+      "label": "/experiencias/clases-regulares-de-modelado 1100px hero hover/focus Workshops [8cf7a252-2081-4c0b-8e69-92623a4da209]",
+      "status": "pass",
+      "details": {
+        "id": "8cf7a252-2081-4c0b-8e69-92623a4da209",
+        "hidden": false,
+        "left": 536.9453125,
+        "right": 897.6328125,
+        "width": 360.6875,
+        "viewport": 1100
+      }
+    },
+    {
+      "label": "/experiencias/clases-regulares-de-modelado 1100px hero hover/focus GiftCards [42a425d1-5b92-4b75-bee6-a2c5f659ea4b]",
+      "status": "pass",
+      "details": {
+        "id": "42a425d1-5b92-4b75-bee6-a2c5f659ea4b",
+        "hidden": false,
+        "left": 657.6171875,
+        "right": 916.6328125,
+        "width": 259.015625,
+        "viewport": 1100
+      }
+    },
+    {
+      "label": "/experiencias/clases-regulares-de-modelado 1100px hero hover/focus Comunidad [e9fe8697-5075-4b5f-9f85-5c36109c6ccc]",
+      "status": "pass",
+      "details": {
+        "id": "e9fe8697-5075-4b5f-9f85-5c36109c6ccc",
+        "hidden": false,
+        "left": 768.2578125,
+        "right": 1000.2578125,
+        "width": 232,
+        "viewport": 1100
+      }
+    },
+    {
+      "label": "/experiencias/clases-regulares-de-modelado 1100px hero Clases/CURSOS independent shared href",
+      "status": "pass",
+      "details": {
+        "href": "/cursos",
+        "ids": [
+          "066c2961-232e-4e14-aef2-42faae466d4d",
+          "357f4ca1-2ee2-4186-9c71-21cf72767851"
+        ]
+      }
+    },
+    {
+      "label": "/experiencias/clases-regulares-de-modelado 1100px hero pointer and keyboard focus retain the owning dropdown",
+      "status": "pass"
+    },
+    {
+      "label": "/experiencias/clases-regulares-de-modelado 1100px hero navigation closes and returning to top has no stale root",
+      "status": "pass",
+      "details": {
+        "destination": "/cursos/coworking-de-investigacion-tecnica-de-esmaltes-y-engobes"
+      }
+    },
+    {
+      "label": "/experiencias/clases-regulares-de-modelado 1100px hero desktop to mobile closes all desktop dropdowns",
+      "status": "pass"
+    },
+    {
+      "label": "/experiencias/clases-regulares-de-modelado 1100px hero setup/coverage",
+      "status": "pass",
+      "details": {
+        "rootIds": [
+          "e5a7f46c-26cc-4b5f-b819-b1e84cfb1d89",
+          "43676cc8-ef7c-4902-9b80-be262be15930",
+          "066c2961-232e-4e14-aef2-42faae466d4d",
+          "357f4ca1-2ee2-4186-9c71-21cf72767851",
+          "8cf7a252-2081-4c0b-8e69-92623a4da209",
+          "42a425d1-5b92-4b75-bee6-a2c5f659ea4b",
+          "e9fe8697-5075-4b5f-9f85-5c36109c6ccc",
+          "a15b98cf-2135-458e-89b0-597cd2915458"
+        ],
+        "testedChildren": 6
+      }
+    },
+    {
+      "label": "/experiencias/clases-regulares-de-modelado 1100px sticky hover/focus Experiencias+ [43676cc8-ef7c-4902-9b80-be262be15930]",
+      "status": "pass",
+      "details": {
+        "id": "43676cc8-ef7c-4902-9b80-be262be15930",
+        "hidden": false,
+        "left": 119.328125,
+        "right": 435.328125,
+        "width": 316,
+        "viewport": 1100
+      }
+    },
+    {
+      "label": "/experiencias/clases-regulares-de-modelado 1100px sticky hover/focus Clases+ [066c2961-232e-4e14-aef2-42faae466d4d]",
+      "status": "pass",
+      "details": {
+        "id": "066c2961-232e-4e14-aef2-42faae466d4d",
+        "hidden": false,
+        "left": 260.90625,
+        "right": 576.90625,
+        "width": 316,
+        "viewport": 1100
+      }
+    },
+    {
+      "label": "/experiencias/clases-regulares-de-modelado 1100px sticky hover/focus CURSOS+ [357f4ca1-2ee2-4186-9c71-21cf72767851]",
+      "status": "pass",
+      "details": {
+        "id": "357f4ca1-2ee2-4186-9c71-21cf72767851",
+        "hidden": false,
+        "left": 357.390625,
+        "right": 673.390625,
+        "width": 316,
+        "viewport": 1100
+      }
+    },
+    {
+      "label": "/experiencias/clases-regulares-de-modelado 1100px sticky hover/focus Workshops+ [8cf7a252-2081-4c0b-8e69-92623a4da209]",
+      "status": "pass",
+      "details": {
+        "id": "8cf7a252-2081-4c0b-8e69-92623a4da209",
+        "hidden": false,
+        "left": 670,
+        "right": 986,
+        "width": 316,
+        "viewport": 1100
+      }
+    },
+    {
+      "label": "/experiencias/clases-regulares-de-modelado 1100px sticky hover/focus GiftCards+ [42a425d1-5b92-4b75-bee6-a2c5f659ea4b]",
+      "status": "pass",
+      "details": {
+        "id": "42a425d1-5b92-4b75-bee6-a2c5f659ea4b",
+        "hidden": false,
+        "left": 787.984375,
+        "right": 1057.984375,
+        "width": 270,
+        "viewport": 1100
+      }
+    },
+    {
+      "label": "/experiencias/clases-regulares-de-modelado 1100px sticky hover/focus Comunidad+ [e9fe8697-5075-4b5f-9f85-5c36109c6ccc]",
+      "status": "pass",
+      "details": {
+        "id": "e9fe8697-5075-4b5f-9f85-5c36109c6ccc",
+        "hidden": false,
+        "left": 814,
+        "right": 1084,
+        "width": 270,
+        "viewport": 1100
+      }
+    },
+    {
+      "label": "/experiencias/clases-regulares-de-modelado 1100px sticky Clases/CURSOS independent shared href",
+      "status": "pass",
+      "details": {
+        "href": "/cursos",
+        "ids": [
+          "066c2961-232e-4e14-aef2-42faae466d4d",
+          "357f4ca1-2ee2-4186-9c71-21cf72767851"
+        ]
+      }
+    },
+    {
+      "label": "/experiencias/clases-regulares-de-modelado 1100px sticky pointer and keyboard focus retain the owning dropdown",
+      "status": "pass"
+    },
+    {
+      "label": "/experiencias/clases-regulares-de-modelado 1100px sticky navigation closes and returning to top has no stale root",
+      "status": "pass",
+      "details": {
+        "destination": "/cursos/coworking-de-investigacion-tecnica-de-esmaltes-y-engobes"
+      }
+    },
+    {
+      "label": "/experiencias/clases-regulares-de-modelado 1100px sticky desktop to mobile closes all desktop dropdowns",
+      "status": "pass"
+    },
+    {
+      "label": "/experiencias/clases-regulares-de-modelado 1100px sticky setup/coverage",
+      "status": "pass",
+      "details": {
+        "rootIds": [
+          "e5a7f46c-26cc-4b5f-b819-b1e84cfb1d89",
+          "43676cc8-ef7c-4902-9b80-be262be15930",
+          "066c2961-232e-4e14-aef2-42faae466d4d",
+          "357f4ca1-2ee2-4186-9c71-21cf72767851",
+          "8cf7a252-2081-4c0b-8e69-92623a4da209",
+          "42a425d1-5b92-4b75-bee6-a2c5f659ea4b",
+          "e9fe8697-5075-4b5f-9f85-5c36109c6ccc",
+          "a15b98cf-2135-458e-89b0-597cd2915458"
+        ],
+        "testedChildren": 6
+      }
+    },
+    {
+      "label": "/experiencias/clases-regulares-de-modelado 1100px hero/sticky share IDs",
+      "status": "pass"
+    },
+    {
+      "label": "/cursos 1100px hero hover/focus Experiencias [43676cc8-ef7c-4902-9b80-be262be15930]",
+      "status": "pass",
+      "details": {
+        "id": "43676cc8-ef7c-4902-9b80-be262be15930",
+        "hidden": false,
+        "left": 190.8828125,
+        "right": 470.8828125,
+        "width": 280,
+        "viewport": 1100
+      }
+    },
+    {
+      "label": "/cursos 1100px hero hover/focus Clases [066c2961-232e-4e14-aef2-42faae466d4d]",
+      "status": "pass",
+      "details": {
+        "id": "066c2961-232e-4e14-aef2-42faae466d4d",
+        "hidden": false,
+        "left": 329.0859375,
+        "right": 729.0859375,
+        "width": 400,
+        "viewport": 1100
+      }
+    },
+    {
+      "label": "/cursos 1100px hero hover/focus CURSOS [357f4ca1-2ee2-4186-9c71-21cf72767851]",
+      "status": "pass",
+      "details": {
+        "id": "357f4ca1-2ee2-4186-9c71-21cf72767851",
+        "hidden": false,
+        "left": 426.1796875,
+        "right": 826.1796875,
+        "width": 400,
+        "viewport": 1100
+      }
+    },
+    {
+      "label": "/cursos 1100px hero hover/focus Workshops [8cf7a252-2081-4c0b-8e69-92623a4da209]",
+      "status": "pass",
+      "details": {
+        "id": "8cf7a252-2081-4c0b-8e69-92623a4da209",
+        "hidden": false,
+        "left": 536.2578125,
+        "right": 896.9453125,
+        "width": 360.6875,
+        "viewport": 1100
+      }
+    },
+    {
+      "label": "/cursos 1100px hero hover/focus GiftCards [42a425d1-5b92-4b75-bee6-a2c5f659ea4b]",
+      "status": "pass",
+      "details": {
+        "id": "42a425d1-5b92-4b75-bee6-a2c5f659ea4b",
+        "hidden": false,
+        "left": 663.3046875,
+        "right": 922.3203125,
+        "width": 259.015625,
+        "viewport": 1100
+      }
+    },
+    {
+      "label": "/cursos 1100px hero hover/focus Comunidad [e9fe8697-5075-4b5f-9f85-5c36109c6ccc]",
+      "status": "pass",
+      "details": {
+        "id": "e9fe8697-5075-4b5f-9f85-5c36109c6ccc",
+        "hidden": false,
+        "left": 779.8046875,
+        "right": 1011.8046875,
+        "width": 232,
+        "viewport": 1100
+      }
+    },
+    {
+      "label": "/cursos 1100px hero Clases/CURSOS independent shared href",
+      "status": "pass",
+      "details": {
+        "href": "/cursos",
+        "ids": [
+          "066c2961-232e-4e14-aef2-42faae466d4d",
+          "357f4ca1-2ee2-4186-9c71-21cf72767851"
+        ]
+      }
+    },
+    {
+      "label": "/cursos 1100px hero pointer and keyboard focus retain the owning dropdown",
+      "status": "pass"
+    },
+    {
+      "label": "/cursos 1100px hero navigation closes and returning to top has no stale root",
+      "status": "pass",
+      "details": {
+        "destination": "/cursos/coworking-de-investigacion-tecnica-de-esmaltes-y-engobes"
+      }
+    },
+    {
+      "label": "/cursos 1100px hero desktop to mobile closes all desktop dropdowns",
+      "status": "pass"
+    },
+    {
+      "label": "/cursos 1100px hero setup/coverage",
+      "status": "pass",
+      "details": {
+        "rootIds": [
+          "e5a7f46c-26cc-4b5f-b819-b1e84cfb1d89",
+          "43676cc8-ef7c-4902-9b80-be262be15930",
+          "066c2961-232e-4e14-aef2-42faae466d4d",
+          "357f4ca1-2ee2-4186-9c71-21cf72767851",
+          "8cf7a252-2081-4c0b-8e69-92623a4da209",
+          "42a425d1-5b92-4b75-bee6-a2c5f659ea4b",
+          "e9fe8697-5075-4b5f-9f85-5c36109c6ccc",
+          "a15b98cf-2135-458e-89b0-597cd2915458"
+        ],
+        "testedChildren": 6
+      }
+    },
+    {
+      "label": "/cursos 1100px sticky hover/focus Experiencias+ [43676cc8-ef7c-4902-9b80-be262be15930]",
+      "status": "pass",
+      "details": {
+        "id": "43676cc8-ef7c-4902-9b80-be262be15930",
+        "hidden": false,
+        "left": 119.328125,
+        "right": 435.328125,
+        "width": 316,
+        "viewport": 1100
+      }
+    },
+    {
+      "label": "/cursos 1100px sticky hover/focus Clases+ [066c2961-232e-4e14-aef2-42faae466d4d]",
+      "status": "pass",
+      "details": {
+        "id": "066c2961-232e-4e14-aef2-42faae466d4d",
+        "hidden": false,
+        "left": 260.90625,
+        "right": 576.90625,
+        "width": 316,
+        "viewport": 1100
+      }
+    },
+    {
+      "label": "/cursos 1100px sticky hover/focus CURSOS+ [357f4ca1-2ee2-4186-9c71-21cf72767851]",
+      "status": "pass",
+      "details": {
+        "id": "357f4ca1-2ee2-4186-9c71-21cf72767851",
+        "hidden": false,
+        "left": 357.390625,
+        "right": 673.390625,
+        "width": 316,
+        "viewport": 1100
+      }
+    },
+    {
+      "label": "/cursos 1100px sticky hover/focus Workshops+ [8cf7a252-2081-4c0b-8e69-92623a4da209]",
+      "status": "pass",
+      "details": {
+        "id": "8cf7a252-2081-4c0b-8e69-92623a4da209",
+        "hidden": false,
+        "left": 670,
+        "right": 986,
+        "width": 316,
+        "viewport": 1100
+      }
+    },
+    {
+      "label": "/cursos 1100px sticky hover/focus GiftCards+ [42a425d1-5b92-4b75-bee6-a2c5f659ea4b]",
+      "status": "pass",
+      "details": {
+        "id": "42a425d1-5b92-4b75-bee6-a2c5f659ea4b",
+        "hidden": false,
+        "left": 787.984375,
+        "right": 1057.984375,
+        "width": 270,
+        "viewport": 1100
+      }
+    },
+    {
+      "label": "/cursos 1100px sticky hover/focus Comunidad+ [e9fe8697-5075-4b5f-9f85-5c36109c6ccc]",
+      "status": "pass",
+      "details": {
+        "id": "e9fe8697-5075-4b5f-9f85-5c36109c6ccc",
+        "hidden": false,
+        "left": 814,
+        "right": 1084,
+        "width": 270,
+        "viewport": 1100
+      }
+    },
+    {
+      "label": "/cursos 1100px sticky Clases/CURSOS independent shared href",
+      "status": "pass",
+      "details": {
+        "href": "/cursos",
+        "ids": [
+          "066c2961-232e-4e14-aef2-42faae466d4d",
+          "357f4ca1-2ee2-4186-9c71-21cf72767851"
+        ]
+      }
+    },
+    {
+      "label": "/cursos 1100px sticky pointer and keyboard focus retain the owning dropdown",
+      "status": "pass"
+    },
+    {
+      "label": "/cursos 1100px sticky navigation closes and returning to top has no stale root",
+      "status": "pass",
+      "details": {
+        "destination": "/cursos/coworking-de-investigacion-tecnica-de-esmaltes-y-engobes"
+      }
+    },
+    {
+      "label": "/cursos 1100px sticky desktop to mobile closes all desktop dropdowns",
+      "status": "pass"
+    },
+    {
+      "label": "/cursos 1100px sticky setup/coverage",
+      "status": "pass",
+      "details": {
+        "rootIds": [
+          "e5a7f46c-26cc-4b5f-b819-b1e84cfb1d89",
+          "43676cc8-ef7c-4902-9b80-be262be15930",
+          "066c2961-232e-4e14-aef2-42faae466d4d",
+          "357f4ca1-2ee2-4186-9c71-21cf72767851",
+          "8cf7a252-2081-4c0b-8e69-92623a4da209",
+          "42a425d1-5b92-4b75-bee6-a2c5f659ea4b",
+          "e9fe8697-5075-4b5f-9f85-5c36109c6ccc",
+          "a15b98cf-2135-458e-89b0-597cd2915458"
+        ],
+        "testedChildren": 6
+      }
+    },
+    {
+      "label": "/cursos 1100px hero/sticky share IDs",
+      "status": "pass"
+    },
+    {
+      "label": "/ 1280px hero setup/coverage",
+      "status": "skip",
+      "reason": "Home hero desktop navigation is hidden by the existing design"
+    },
+    {
+      "label": "/ 1280px sticky hover/focus Experiencias+ [43676cc8-ef7c-4902-9b80-be262be15930]",
+      "status": "pass",
+      "details": {
+        "id": "43676cc8-ef7c-4902-9b80-be262be15930",
+        "hidden": false,
+        "left": 91.34375,
+        "right": 407.34375,
+        "width": 316,
+        "viewport": 1280
+      }
+    },
+    {
+      "label": "/ 1280px sticky hover/focus Clases+ [066c2961-232e-4e14-aef2-42faae466d4d]",
+      "status": "pass",
+      "details": {
+        "id": "066c2961-232e-4e14-aef2-42faae466d4d",
+        "hidden": false,
+        "left": 223.109375,
+        "right": 539.109375,
+        "width": 316,
+        "viewport": 1280
+      }
+    },
+    {
+      "label": "/ 1280px sticky hover/focus CURSOS+ [357f4ca1-2ee2-4186-9c71-21cf72767851]",
+      "status": "pass",
+      "details": {
+        "id": "357f4ca1-2ee2-4186-9c71-21cf72767851",
+        "hidden": false,
+        "left": 319.59375,
+        "right": 635.59375,
+        "width": 316,
+        "viewport": 1280
+      }
+    },
+    {
+      "label": "/ 1280px sticky hover/focus Workshops+ [8cf7a252-2081-4c0b-8e69-92623a4da209]",
+      "status": "pass",
+      "details": {
+        "id": "8cf7a252-2081-4c0b-8e69-92623a4da209",
+        "hidden": false,
+        "left": 428.203125,
+        "right": 744.203125,
+        "width": 316,
+        "viewport": 1280
+      }
+    },
+    {
+      "label": "/ 1280px sticky hover/focus GiftCards+ [42a425d1-5b92-4b75-bee6-a2c5f659ea4b]",
+      "status": "pass",
+      "details": {
+        "id": "42a425d1-5b92-4b75-bee6-a2c5f659ea4b",
+        "hidden": false,
+        "left": 760,
+        "right": 1076,
+        "width": 316,
+        "viewport": 1280
+      }
+    },
+    {
+      "label": "/ 1280px sticky hover/focus Comunidad+ [e9fe8697-5075-4b5f-9f85-5c36109c6ccc]",
+      "status": "pass",
+      "details": {
+        "id": "e9fe8697-5075-4b5f-9f85-5c36109c6ccc",
+        "hidden": false,
+        "left": 868.140625,
+        "right": 1184.140625,
+        "width": 316,
+        "viewport": 1280
+      }
+    },
+    {
+      "label": "/ 1280px sticky Clases/CURSOS independent shared href",
+      "status": "pass",
+      "details": {
+        "href": "/cursos",
+        "ids": [
+          "066c2961-232e-4e14-aef2-42faae466d4d",
+          "357f4ca1-2ee2-4186-9c71-21cf72767851"
+        ]
+      }
+    },
+    {
+      "label": "/ 1280px sticky pointer and keyboard focus retain the owning dropdown",
+      "status": "pass"
+    },
+    {
+      "label": "/ 1280px sticky navigation closes and returning to top has no stale root",
+      "status": "pass",
+      "details": {
+        "destination": "/cursos/coworking-de-investigacion-tecnica-de-esmaltes-y-engobes"
+      }
+    },
+    {
+      "label": "/ 1280px sticky desktop to mobile closes all desktop dropdowns",
+      "status": "pass"
+    },
+    {
+      "label": "/ 1280px sticky setup/coverage",
+      "status": "pass",
+      "details": {
+        "rootIds": [
+          "43676cc8-ef7c-4902-9b80-be262be15930",
+          "066c2961-232e-4e14-aef2-42faae466d4d",
+          "357f4ca1-2ee2-4186-9c71-21cf72767851",
+          "8cf7a252-2081-4c0b-8e69-92623a4da209",
+          "42a425d1-5b92-4b75-bee6-a2c5f659ea4b",
+          "e9fe8697-5075-4b5f-9f85-5c36109c6ccc",
+          "a15b98cf-2135-458e-89b0-597cd2915458"
+        ],
+        "testedChildren": 6
+      }
+    },
+    {
+      "label": "/experiencias/clases-regulares-de-modelado 1280px hero hover/focus Experiencias [43676cc8-ef7c-4902-9b80-be262be15930]",
+      "status": "pass",
+      "details": {
+        "id": "43676cc8-ef7c-4902-9b80-be262be15930",
+        "hidden": false,
+        "left": 298.9296875,
+        "right": 578.9296875,
+        "width": 280,
+        "viewport": 1280
+      }
+    },
+    {
+      "label": "/experiencias/clases-regulares-de-modelado 1280px hero hover/focus Clases [066c2961-232e-4e14-aef2-42faae466d4d]",
+      "status": "pass",
+      "details": {
+        "id": "066c2961-232e-4e14-aef2-42faae466d4d",
+        "hidden": false,
+        "left": 430.1953125,
+        "right": 830.1953125,
+        "width": 400,
+        "viewport": 1280
+      }
+    },
+    {
+      "label": "/experiencias/clases-regulares-de-modelado 1280px hero hover/focus CURSOS [357f4ca1-2ee2-4186-9c71-21cf72767851]",
+      "status": "pass",
+      "details": {
+        "id": "357f4ca1-2ee2-4186-9c71-21cf72767851",
+        "hidden": false,
+        "left": 522.3984375,
+        "right": 922.3984375,
+        "width": 400,
+        "viewport": 1280
+      }
+    },
+    {
+      "label": "/experiencias/clases-regulares-de-modelado 1280px hero hover/focus Workshops [8cf7a252-2081-4c0b-8e69-92623a4da209]",
+      "status": "pass",
+      "details": {
+        "id": "8cf7a252-2081-4c0b-8e69-92623a4da209",
+        "hidden": false,
+        "left": 626.9453125,
+        "right": 987.6328125,
+        "width": 360.6875,
+        "viewport": 1280
+      }
+    },
+    {
+      "label": "/experiencias/clases-regulares-de-modelado 1280px hero hover/focus GiftCards [42a425d1-5b92-4b75-bee6-a2c5f659ea4b]",
+      "status": "pass",
+      "details": {
+        "id": "42a425d1-5b92-4b75-bee6-a2c5f659ea4b",
+        "hidden": false,
+        "left": 747.6171875,
+        "right": 1006.6328125,
+        "width": 259.015625,
+        "viewport": 1280
+      }
+    },
+    {
+      "label": "/experiencias/clases-regulares-de-modelado 1280px hero hover/focus Comunidad [e9fe8697-5075-4b5f-9f85-5c36109c6ccc]",
+      "status": "pass",
+      "details": {
+        "id": "e9fe8697-5075-4b5f-9f85-5c36109c6ccc",
+        "hidden": false,
+        "left": 858.2578125,
+        "right": 1090.2578125,
+        "width": 232,
+        "viewport": 1280
+      }
+    },
+    {
+      "label": "/experiencias/clases-regulares-de-modelado 1280px hero Clases/CURSOS independent shared href",
+      "status": "pass",
+      "details": {
+        "href": "/cursos",
+        "ids": [
+          "066c2961-232e-4e14-aef2-42faae466d4d",
+          "357f4ca1-2ee2-4186-9c71-21cf72767851"
+        ]
+      }
+    },
+    {
+      "label": "/experiencias/clases-regulares-de-modelado 1280px hero pointer and keyboard focus retain the owning dropdown",
+      "status": "pass"
+    },
+    {
+      "label": "/experiencias/clases-regulares-de-modelado 1280px hero navigation closes and returning to top has no stale root",
+      "status": "pass",
+      "details": {
+        "destination": "/cursos/coworking-de-investigacion-tecnica-de-esmaltes-y-engobes"
+      }
+    },
+    {
+      "label": "/experiencias/clases-regulares-de-modelado 1280px hero desktop to mobile closes all desktop dropdowns",
+      "status": "pass"
+    },
+    {
+      "label": "/experiencias/clases-regulares-de-modelado 1280px hero setup/coverage",
+      "status": "pass",
+      "details": {
+        "rootIds": [
+          "e5a7f46c-26cc-4b5f-b819-b1e84cfb1d89",
+          "43676cc8-ef7c-4902-9b80-be262be15930",
+          "066c2961-232e-4e14-aef2-42faae466d4d",
+          "357f4ca1-2ee2-4186-9c71-21cf72767851",
+          "8cf7a252-2081-4c0b-8e69-92623a4da209",
+          "42a425d1-5b92-4b75-bee6-a2c5f659ea4b",
+          "e9fe8697-5075-4b5f-9f85-5c36109c6ccc",
+          "a15b98cf-2135-458e-89b0-597cd2915458"
+        ],
+        "testedChildren": 6
+      }
+    },
+    {
+      "label": "/experiencias/clases-regulares-de-modelado 1280px sticky hover/focus Experiencias+ [43676cc8-ef7c-4902-9b80-be262be15930]",
+      "status": "pass",
+      "details": {
+        "id": "43676cc8-ef7c-4902-9b80-be262be15930",
+        "hidden": false,
+        "left": 209.328125,
+        "right": 525.328125,
+        "width": 316,
+        "viewport": 1280
+      }
+    },
+    {
+      "label": "/experiencias/clases-regulares-de-modelado 1280px sticky hover/focus Clases+ [066c2961-232e-4e14-aef2-42faae466d4d]",
+      "status": "pass",
+      "details": {
+        "id": "066c2961-232e-4e14-aef2-42faae466d4d",
+        "hidden": false,
+        "left": 350.90625,
+        "right": 666.90625,
+        "width": 316,
+        "viewport": 1280
+      }
+    },
+    {
+      "label": "/experiencias/clases-regulares-de-modelado 1280px sticky hover/focus CURSOS+ [357f4ca1-2ee2-4186-9c71-21cf72767851]",
+      "status": "pass",
+      "details": {
+        "id": "357f4ca1-2ee2-4186-9c71-21cf72767851",
+        "hidden": false,
+        "left": 447.390625,
+        "right": 763.390625,
+        "width": 316,
+        "viewport": 1280
+      }
+    },
+    {
+      "label": "/experiencias/clases-regulares-de-modelado 1280px sticky hover/focus Workshops+ [8cf7a252-2081-4c0b-8e69-92623a4da209]",
+      "status": "pass",
+      "details": {
+        "id": "8cf7a252-2081-4c0b-8e69-92623a4da209",
+        "hidden": false,
+        "left": 760,
+        "right": 1076,
+        "width": 316,
+        "viewport": 1280
+      }
+    },
+    {
+      "label": "/experiencias/clases-regulares-de-modelado 1280px sticky hover/focus GiftCards+ [42a425d1-5b92-4b75-bee6-a2c5f659ea4b]",
+      "status": "pass",
+      "details": {
+        "id": "42a425d1-5b92-4b75-bee6-a2c5f659ea4b",
+        "hidden": false,
+        "left": 877.984375,
+        "right": 1193.984375,
+        "width": 316,
+        "viewport": 1280
+      }
+    },
+    {
+      "label": "/experiencias/clases-regulares-de-modelado 1280px sticky hover/focus Comunidad+ [e9fe8697-5075-4b5f-9f85-5c36109c6ccc]",
+      "status": "pass",
+      "details": {
+        "id": "e9fe8697-5075-4b5f-9f85-5c36109c6ccc",
+        "hidden": false,
+        "left": 948,
+        "right": 1264,
+        "width": 316,
+        "viewport": 1280
+      }
+    },
+    {
+      "label": "/experiencias/clases-regulares-de-modelado 1280px sticky Clases/CURSOS independent shared href",
+      "status": "pass",
+      "details": {
+        "href": "/cursos",
+        "ids": [
+          "066c2961-232e-4e14-aef2-42faae466d4d",
+          "357f4ca1-2ee2-4186-9c71-21cf72767851"
+        ]
+      }
+    },
+    {
+      "label": "/experiencias/clases-regulares-de-modelado 1280px sticky pointer and keyboard focus retain the owning dropdown",
+      "status": "pass"
+    },
+    {
+      "label": "/experiencias/clases-regulares-de-modelado 1280px sticky navigation closes and returning to top has no stale root",
+      "status": "pass",
+      "details": {
+        "destination": "/cursos/coworking-de-investigacion-tecnica-de-esmaltes-y-engobes"
+      }
+    },
+    {
+      "label": "/experiencias/clases-regulares-de-modelado 1280px sticky desktop to mobile closes all desktop dropdowns",
+      "status": "pass"
+    },
+    {
+      "label": "/experiencias/clases-regulares-de-modelado 1280px sticky setup/coverage",
+      "status": "pass",
+      "details": {
+        "rootIds": [
+          "e5a7f46c-26cc-4b5f-b819-b1e84cfb1d89",
+          "43676cc8-ef7c-4902-9b80-be262be15930",
+          "066c2961-232e-4e14-aef2-42faae466d4d",
+          "357f4ca1-2ee2-4186-9c71-21cf72767851",
+          "8cf7a252-2081-4c0b-8e69-92623a4da209",
+          "42a425d1-5b92-4b75-bee6-a2c5f659ea4b",
+          "e9fe8697-5075-4b5f-9f85-5c36109c6ccc",
+          "a15b98cf-2135-458e-89b0-597cd2915458"
+        ],
+        "testedChildren": 6
+      }
+    },
+    {
+      "label": "/experiencias/clases-regulares-de-modelado 1280px hero/sticky share IDs",
+      "status": "pass"
+    },
+    {
+      "label": "/cursos 1280px hero hover/focus Experiencias [43676cc8-ef7c-4902-9b80-be262be15930]",
+      "status": "pass",
+      "details": {
+        "id": "43676cc8-ef7c-4902-9b80-be262be15930",
+        "hidden": false,
+        "left": 280.8828125,
+        "right": 560.8828125,
+        "width": 280,
+        "viewport": 1280
+      }
+    },
+    {
+      "label": "/cursos 1280px hero hover/focus Clases [066c2961-232e-4e14-aef2-42faae466d4d]",
+      "status": "pass",
+      "details": {
+        "id": "066c2961-232e-4e14-aef2-42faae466d4d",
+        "hidden": false,
+        "left": 419.0859375,
+        "right": 819.0859375,
+        "width": 400,
+        "viewport": 1280
+      }
+    },
+    {
+      "label": "/cursos 1280px hero hover/focus CURSOS [357f4ca1-2ee2-4186-9c71-21cf72767851]",
+      "status": "pass",
+      "details": {
+        "id": "357f4ca1-2ee2-4186-9c71-21cf72767851",
+        "hidden": false,
+        "left": 516.1796875,
+        "right": 916.1796875,
+        "width": 400,
+        "viewport": 1280
+      }
+    },
+    {
+      "label": "/cursos 1280px hero hover/focus Workshops [8cf7a252-2081-4c0b-8e69-92623a4da209]",
+      "status": "pass",
+      "details": {
+        "id": "8cf7a252-2081-4c0b-8e69-92623a4da209",
+        "hidden": false,
+        "left": 626.2578125,
+        "right": 986.9453125,
+        "width": 360.6875,
+        "viewport": 1280
+      }
+    },
+    {
+      "label": "/cursos 1280px hero hover/focus GiftCards [42a425d1-5b92-4b75-bee6-a2c5f659ea4b]",
+      "status": "pass",
+      "details": {
+        "id": "42a425d1-5b92-4b75-bee6-a2c5f659ea4b",
+        "hidden": false,
+        "left": 753.3046875,
+        "right": 1012.3203125,
+        "width": 259.015625,
+        "viewport": 1280
+      }
+    },
+    {
+      "label": "/cursos 1280px hero hover/focus Comunidad [e9fe8697-5075-4b5f-9f85-5c36109c6ccc]",
+      "status": "pass",
+      "details": {
+        "id": "e9fe8697-5075-4b5f-9f85-5c36109c6ccc",
+        "hidden": false,
+        "left": 869.8046875,
+        "right": 1101.8046875,
+        "width": 232,
+        "viewport": 1280
+      }
+    },
+    {
+      "label": "/cursos 1280px hero Clases/CURSOS independent shared href",
+      "status": "pass",
+      "details": {
+        "href": "/cursos",
+        "ids": [
+          "066c2961-232e-4e14-aef2-42faae466d4d",
+          "357f4ca1-2ee2-4186-9c71-21cf72767851"
+        ]
+      }
+    },
+    {
+      "label": "/cursos 1280px hero pointer and keyboard focus retain the owning dropdown",
+      "status": "pass"
+    },
+    {
+      "label": "/cursos 1280px hero navigation closes and returning to top has no stale root",
+      "status": "pass",
+      "details": {
+        "destination": "/cursos/coworking-de-investigacion-tecnica-de-esmaltes-y-engobes"
+      }
+    },
+    {
+      "label": "/cursos 1280px hero desktop to mobile closes all desktop dropdowns",
+      "status": "pass"
+    },
+    {
+      "label": "/cursos 1280px hero setup/coverage",
+      "status": "pass",
+      "details": {
+        "rootIds": [
+          "e5a7f46c-26cc-4b5f-b819-b1e84cfb1d89",
+          "43676cc8-ef7c-4902-9b80-be262be15930",
+          "066c2961-232e-4e14-aef2-42faae466d4d",
+          "357f4ca1-2ee2-4186-9c71-21cf72767851",
+          "8cf7a252-2081-4c0b-8e69-92623a4da209",
+          "42a425d1-5b92-4b75-bee6-a2c5f659ea4b",
+          "e9fe8697-5075-4b5f-9f85-5c36109c6ccc",
+          "a15b98cf-2135-458e-89b0-597cd2915458"
+        ],
+        "testedChildren": 6
+      }
+    },
+    {
+      "label": "/cursos 1280px sticky hover/focus Experiencias+ [43676cc8-ef7c-4902-9b80-be262be15930]",
+      "status": "pass",
+      "details": {
+        "id": "43676cc8-ef7c-4902-9b80-be262be15930",
+        "hidden": false,
+        "left": 209.328125,
+        "right": 525.328125,
+        "width": 316,
+        "viewport": 1280
+      }
+    },
+    {
+      "label": "/cursos 1280px sticky hover/focus Clases+ [066c2961-232e-4e14-aef2-42faae466d4d]",
+      "status": "pass",
+      "details": {
+        "id": "066c2961-232e-4e14-aef2-42faae466d4d",
+        "hidden": false,
+        "left": 350.90625,
+        "right": 666.90625,
+        "width": 316,
+        "viewport": 1280
+      }
+    },
+    {
+      "label": "/cursos 1280px sticky hover/focus CURSOS+ [357f4ca1-2ee2-4186-9c71-21cf72767851]",
+      "status": "pass",
+      "details": {
+        "id": "357f4ca1-2ee2-4186-9c71-21cf72767851",
+        "hidden": false,
+        "left": 447.390625,
+        "right": 763.390625,
+        "width": 316,
+        "viewport": 1280
+      }
+    },
+    {
+      "label": "/cursos 1280px sticky hover/focus Workshops+ [8cf7a252-2081-4c0b-8e69-92623a4da209]",
+      "status": "pass",
+      "details": {
+        "id": "8cf7a252-2081-4c0b-8e69-92623a4da209",
+        "hidden": false,
+        "left": 760,
+        "right": 1076,
+        "width": 316,
+        "viewport": 1280
+      }
+    },
+    {
+      "label": "/cursos 1280px sticky hover/focus GiftCards+ [42a425d1-5b92-4b75-bee6-a2c5f659ea4b]",
+      "status": "pass",
+      "details": {
+        "id": "42a425d1-5b92-4b75-bee6-a2c5f659ea4b",
+        "hidden": false,
+        "left": 877.984375,
+        "right": 1193.984375,
+        "width": 316,
+        "viewport": 1280
+      }
+    },
+    {
+      "label": "/cursos 1280px sticky hover/focus Comunidad+ [e9fe8697-5075-4b5f-9f85-5c36109c6ccc]",
+      "status": "pass",
+      "details": {
+        "id": "e9fe8697-5075-4b5f-9f85-5c36109c6ccc",
+        "hidden": false,
+        "left": 948,
+        "right": 1264,
+        "width": 316,
+        "viewport": 1280
+      }
+    },
+    {
+      "label": "/cursos 1280px sticky Clases/CURSOS independent shared href",
+      "status": "pass",
+      "details": {
+        "href": "/cursos",
+        "ids": [
+          "066c2961-232e-4e14-aef2-42faae466d4d",
+          "357f4ca1-2ee2-4186-9c71-21cf72767851"
+        ]
+      }
+    },
+    {
+      "label": "/cursos 1280px sticky pointer and keyboard focus retain the owning dropdown",
+      "status": "pass"
+    },
+    {
+      "label": "/cursos 1280px sticky navigation closes and returning to top has no stale root",
+      "status": "pass",
+      "details": {
+        "destination": "/cursos/coworking-de-investigacion-tecnica-de-esmaltes-y-engobes"
+      }
+    },
+    {
+      "label": "/cursos 1280px sticky desktop to mobile closes all desktop dropdowns",
+      "status": "pass"
+    },
+    {
+      "label": "/cursos 1280px sticky setup/coverage",
+      "status": "pass",
+      "details": {
+        "rootIds": [
+          "e5a7f46c-26cc-4b5f-b819-b1e84cfb1d89",
+          "43676cc8-ef7c-4902-9b80-be262be15930",
+          "066c2961-232e-4e14-aef2-42faae466d4d",
+          "357f4ca1-2ee2-4186-9c71-21cf72767851",
+          "8cf7a252-2081-4c0b-8e69-92623a4da209",
+          "42a425d1-5b92-4b75-bee6-a2c5f659ea4b",
+          "e9fe8697-5075-4b5f-9f85-5c36109c6ccc",
+          "a15b98cf-2135-458e-89b0-597cd2915458"
+        ],
+        "testedChildren": 6
+      }
+    },
+    {
+      "label": "/cursos 1280px hero/sticky share IDs",
+      "status": "pass"
+    },
+    {
+      "label": "/ 1440px hero setup/coverage",
+      "status": "skip",
+      "reason": "Home hero desktop navigation is hidden by the existing design"
+    },
+    {
+      "label": "/ 1440px sticky hover/focus Experiencias+ [43676cc8-ef7c-4902-9b80-be262be15930]",
+      "status": "pass",
+      "details": {
+        "id": "43676cc8-ef7c-4902-9b80-be262be15930",
+        "hidden": false,
+        "left": 124.25,
+        "right": 440.25,
+        "width": 316,
+        "viewport": 1440
+      }
+    },
+    {
+      "label": "/ 1440px sticky hover/focus Clases+ [066c2961-232e-4e14-aef2-42faae466d4d]",
+      "status": "pass",
+      "details": {
+        "id": "066c2961-232e-4e14-aef2-42faae466d4d",
+        "hidden": false,
+        "left": 262.96875,
+        "right": 578.96875,
+        "width": 316,
+        "viewport": 1440
+      }
+    },
+    {
+      "label": "/ 1440px sticky hover/focus CURSOS+ [357f4ca1-2ee2-4186-9c71-21cf72767851]",
+      "status": "pass",
+      "details": {
+        "id": "357f4ca1-2ee2-4186-9c71-21cf72767851",
+        "hidden": false,
+        "left": 360.984375,
+        "right": 676.984375,
+        "width": 316,
+        "viewport": 1440
+      }
+    },
+    {
+      "label": "/ 1440px sticky hover/focus Workshops+ [8cf7a252-2081-4c0b-8e69-92623a4da209]",
+      "status": "pass",
+      "details": {
+        "id": "8cf7a252-2081-4c0b-8e69-92623a4da209",
+        "hidden": false,
+        "left": 472.078125,
+        "right": 788.078125,
+        "width": 316,
+        "viewport": 1440
+      }
+    },
+    {
+      "label": "/ 1440px sticky hover/focus GiftCards+ [42a425d1-5b92-4b75-bee6-a2c5f659ea4b]",
+      "status": "pass",
+      "details": {
+        "id": "42a425d1-5b92-4b75-bee6-a2c5f659ea4b",
+        "hidden": false,
+        "left": 871.1875,
+        "right": 1187.1875,
+        "width": 316,
+        "viewport": 1440
+      }
+    },
+    {
+      "label": "/ 1440px sticky hover/focus Comunidad+ [e9fe8697-5075-4b5f-9f85-5c36109c6ccc]",
+      "status": "pass",
+      "details": {
+        "id": "e9fe8697-5075-4b5f-9f85-5c36109c6ccc",
+        "hidden": false,
+        "left": 983.484375,
+        "right": 1299.484375,
+        "width": 316,
+        "viewport": 1440
+      }
+    },
+    {
+      "label": "/ 1440px sticky Clases/CURSOS independent shared href",
+      "status": "pass",
+      "details": {
+        "href": "/cursos",
+        "ids": [
+          "066c2961-232e-4e14-aef2-42faae466d4d",
+          "357f4ca1-2ee2-4186-9c71-21cf72767851"
+        ]
+      }
+    },
+    {
+      "label": "/ 1440px sticky pointer and keyboard focus retain the owning dropdown",
+      "status": "pass"
+    },
+    {
+      "label": "/ 1440px sticky navigation closes and returning to top has no stale root",
+      "status": "pass",
+      "details": {
+        "destination": "/cursos/coworking-de-investigacion-tecnica-de-esmaltes-y-engobes"
+      }
+    },
+    {
+      "label": "/ 1440px sticky desktop to mobile closes all desktop dropdowns",
+      "status": "pass"
+    },
+    {
+      "label": "/ 1440px sticky setup/coverage",
+      "status": "pass",
+      "details": {
+        "rootIds": [
+          "43676cc8-ef7c-4902-9b80-be262be15930",
+          "066c2961-232e-4e14-aef2-42faae466d4d",
+          "357f4ca1-2ee2-4186-9c71-21cf72767851",
+          "8cf7a252-2081-4c0b-8e69-92623a4da209",
+          "42a425d1-5b92-4b75-bee6-a2c5f659ea4b",
+          "e9fe8697-5075-4b5f-9f85-5c36109c6ccc",
+          "a15b98cf-2135-458e-89b0-597cd2915458"
+        ],
+        "testedChildren": 6
+      }
+    },
+    {
+      "label": "/experiencias/clases-regulares-de-modelado 1440px hero hover/focus Experiencias [43676cc8-ef7c-4902-9b80-be262be15930]",
+      "status": "pass",
+      "details": {
+        "id": "43676cc8-ef7c-4902-9b80-be262be15930",
+        "hidden": false,
+        "left": 310.53125,
+        "right": 590.53125,
+        "width": 280,
+        "viewport": 1440
+      }
+    },
+    {
+      "label": "/experiencias/clases-regulares-de-modelado 1440px hero hover/focus Clases [066c2961-232e-4e14-aef2-42faae466d4d]",
+      "status": "pass",
+      "details": {
+        "id": "066c2961-232e-4e14-aef2-42faae466d4d",
+        "hidden": false,
+        "left": 466.421875,
+        "right": 866.421875,
+        "width": 400,
+        "viewport": 1440
+      }
+    },
+    {
+      "label": "/experiencias/clases-regulares-de-modelado 1440px hero hover/focus CURSOS [357f4ca1-2ee2-4186-9c71-21cf72767851]",
+      "status": "pass",
+      "details": {
+        "id": "357f4ca1-2ee2-4186-9c71-21cf72767851",
+        "hidden": false,
+        "left": 579.203125,
+        "right": 979.203125,
+        "width": 400,
+        "viewport": 1440
+      }
+    },
+    {
+      "label": "/experiencias/clases-regulares-de-modelado 1440px hero hover/focus Workshops [8cf7a252-2081-4c0b-8e69-92623a4da209]",
+      "status": "pass",
+      "details": {
+        "id": "8cf7a252-2081-4c0b-8e69-92623a4da209",
+        "hidden": false,
+        "left": 705.59375,
+        "right": 1066.28125,
+        "width": 360.6875,
+        "viewport": 1440
+      }
+    },
+    {
+      "label": "/experiencias/clases-regulares-de-modelado 1440px hero hover/focus GiftCards [42a425d1-5b92-4b75-bee6-a2c5f659ea4b]",
+      "status": "pass",
+      "details": {
+        "id": "42a425d1-5b92-4b75-bee6-a2c5f659ea4b",
+        "hidden": false,
+        "left": 849.78125,
+        "right": 1108.796875,
+        "width": 259.015625,
+        "viewport": 1440
+      }
+    },
+    {
+      "label": "/experiencias/clases-regulares-de-modelado 1440px hero hover/focus Comunidad [e9fe8697-5075-4b5f-9f85-5c36109c6ccc]",
+      "status": "pass",
+      "details": {
+        "id": "e9fe8697-5075-4b5f-9f85-5c36109c6ccc",
+        "hidden": false,
+        "left": 982.90625,
+        "right": 1214.90625,
+        "width": 232,
+        "viewport": 1440
+      }
+    },
+    {
+      "label": "/experiencias/clases-regulares-de-modelado 1440px hero Clases/CURSOS independent shared href",
+      "status": "pass",
+      "details": {
+        "href": "/cursos",
+        "ids": [
+          "066c2961-232e-4e14-aef2-42faae466d4d",
+          "357f4ca1-2ee2-4186-9c71-21cf72767851"
+        ]
+      }
+    },
+    {
+      "label": "/experiencias/clases-regulares-de-modelado 1440px hero pointer and keyboard focus retain the owning dropdown",
+      "status": "pass"
+    },
+    {
+      "label": "/experiencias/clases-regulares-de-modelado 1440px hero navigation closes and returning to top has no stale root",
+      "status": "pass",
+      "details": {
+        "destination": "/cursos/coworking-de-investigacion-tecnica-de-esmaltes-y-engobes"
+      }
+    },
+    {
+      "label": "/experiencias/clases-regulares-de-modelado 1440px hero desktop to mobile closes all desktop dropdowns",
+      "status": "pass"
+    },
+    {
+      "label": "/experiencias/clases-regulares-de-modelado 1440px hero setup/coverage",
+      "status": "pass",
+      "details": {
+        "rootIds": [
+          "e5a7f46c-26cc-4b5f-b819-b1e84cfb1d89",
+          "43676cc8-ef7c-4902-9b80-be262be15930",
+          "066c2961-232e-4e14-aef2-42faae466d4d",
+          "357f4ca1-2ee2-4186-9c71-21cf72767851",
+          "8cf7a252-2081-4c0b-8e69-92623a4da209",
+          "42a425d1-5b92-4b75-bee6-a2c5f659ea4b",
+          "e9fe8697-5075-4b5f-9f85-5c36109c6ccc",
+          "a15b98cf-2135-458e-89b0-597cd2915458"
+        ],
+        "testedChildren": 6
+      }
+    },
+    {
+      "label": "/experiencias/clases-regulares-de-modelado 1440px sticky hover/focus Experiencias+ [43676cc8-ef7c-4902-9b80-be262be15930]",
+      "status": "pass",
+      "details": {
+        "id": "43676cc8-ef7c-4902-9b80-be262be15930",
+        "hidden": false,
+        "left": 247.171875,
+        "right": 563.171875,
+        "width": 316,
+        "viewport": 1440
+      }
+    },
+    {
+      "label": "/experiencias/clases-regulares-de-modelado 1440px sticky hover/focus Clases+ [066c2961-232e-4e14-aef2-42faae466d4d]",
+      "status": "pass",
+      "details": {
+        "id": "066c2961-232e-4e14-aef2-42faae466d4d",
+        "hidden": false,
+        "left": 395.703125,
+        "right": 711.703125,
+        "width": 316,
+        "viewport": 1440
+      }
+    },
+    {
+      "label": "/experiencias/clases-regulares-de-modelado 1440px sticky hover/focus CURSOS+ [357f4ca1-2ee2-4186-9c71-21cf72767851]",
+      "status": "pass",
+      "details": {
+        "id": "357f4ca1-2ee2-4186-9c71-21cf72767851",
+        "hidden": false,
+        "left": 493.71875,
+        "right": 809.71875,
+        "width": 316,
+        "viewport": 1440
+      }
+    },
+    {
+      "label": "/experiencias/clases-regulares-de-modelado 1440px sticky hover/focus Workshops+ [8cf7a252-2081-4c0b-8e69-92623a4da209]",
+      "status": "pass",
+      "details": {
+        "id": "8cf7a252-2081-4c0b-8e69-92623a4da209",
+        "hidden": false,
+        "left": 871.1875,
+        "right": 1187.1875,
+        "width": 316,
+        "viewport": 1440
+      }
+    },
+    {
+      "label": "/experiencias/clases-regulares-de-modelado 1440px sticky hover/focus GiftCards+ [42a425d1-5b92-4b75-bee6-a2c5f659ea4b]",
+      "status": "pass",
+      "details": {
+        "id": "42a425d1-5b92-4b75-bee6-a2c5f659ea4b",
+        "hidden": false,
+        "left": 994.109375,
+        "right": 1310.109375,
+        "width": 316,
+        "viewport": 1440
+      }
+    },
+    {
+      "label": "/experiencias/clases-regulares-de-modelado 1440px sticky hover/focus Comunidad+ [e9fe8697-5075-4b5f-9f85-5c36109c6ccc]",
+      "status": "pass",
+      "details": {
+        "id": "e9fe8697-5075-4b5f-9f85-5c36109c6ccc",
+        "hidden": false,
+        "left": 1108,
+        "right": 1424,
+        "width": 316,
+        "viewport": 1440
+      }
+    },
+    {
+      "label": "/experiencias/clases-regulares-de-modelado 1440px sticky Clases/CURSOS independent shared href",
+      "status": "pass",
+      "details": {
+        "href": "/cursos",
+        "ids": [
+          "066c2961-232e-4e14-aef2-42faae466d4d",
+          "357f4ca1-2ee2-4186-9c71-21cf72767851"
+        ]
+      }
+    },
+    {
+      "label": "/experiencias/clases-regulares-de-modelado 1440px sticky pointer and keyboard focus retain the owning dropdown",
+      "status": "pass"
+    },
+    {
+      "label": "/experiencias/clases-regulares-de-modelado 1440px sticky navigation closes and returning to top has no stale root",
+      "status": "pass",
+      "details": {
+        "destination": "/cursos/coworking-de-investigacion-tecnica-de-esmaltes-y-engobes"
+      }
+    },
+    {
+      "label": "/experiencias/clases-regulares-de-modelado 1440px sticky desktop to mobile closes all desktop dropdowns",
+      "status": "pass"
+    },
+    {
+      "label": "/experiencias/clases-regulares-de-modelado 1440px sticky setup/coverage",
+      "status": "pass",
+      "details": {
+        "rootIds": [
+          "e5a7f46c-26cc-4b5f-b819-b1e84cfb1d89",
+          "43676cc8-ef7c-4902-9b80-be262be15930",
+          "066c2961-232e-4e14-aef2-42faae466d4d",
+          "357f4ca1-2ee2-4186-9c71-21cf72767851",
+          "8cf7a252-2081-4c0b-8e69-92623a4da209",
+          "42a425d1-5b92-4b75-bee6-a2c5f659ea4b",
+          "e9fe8697-5075-4b5f-9f85-5c36109c6ccc",
+          "a15b98cf-2135-458e-89b0-597cd2915458"
+        ],
+        "testedChildren": 6
+      }
+    },
+    {
+      "label": "/experiencias/clases-regulares-de-modelado 1440px hero/sticky share IDs",
+      "status": "pass"
+    },
+    {
+      "label": "/cursos 1440px hero hover/focus Experiencias [43676cc8-ef7c-4902-9b80-be262be15930]",
+      "status": "pass",
+      "details": {
+        "id": "43676cc8-ef7c-4902-9b80-be262be15930",
+        "hidden": false,
+        "left": 288.8828125,
+        "right": 568.8828125,
+        "width": 280,
+        "viewport": 1440
+      }
+    },
+    {
+      "label": "/cursos 1440px hero hover/focus Clases [066c2961-232e-4e14-aef2-42faae466d4d]",
+      "status": "pass",
+      "details": {
+        "id": "066c2961-232e-4e14-aef2-42faae466d4d",
+        "hidden": false,
+        "left": 453.0234375,
+        "right": 853.0234375,
+        "width": 400,
+        "viewport": 1440
+      }
+    },
+    {
+      "label": "/cursos 1440px hero hover/focus CURSOS [357f4ca1-2ee2-4186-9c71-21cf72767851]",
+      "status": "pass",
+      "details": {
+        "id": "357f4ca1-2ee2-4186-9c71-21cf72767851",
+        "hidden": false,
+        "left": 571.7578125,
+        "right": 971.7578125,
+        "width": 400,
+        "viewport": 1440
+      }
+    },
+    {
+      "label": "/cursos 1440px hero hover/focus Workshops [8cf7a252-2081-4c0b-8e69-92623a4da209]",
+      "status": "pass",
+      "details": {
+        "id": "8cf7a252-2081-4c0b-8e69-92623a4da209",
+        "hidden": false,
+        "left": 704.8359375,
+        "right": 1065.5234375,
+        "width": 360.6875,
+        "viewport": 1440
+      }
+    },
+    {
+      "label": "/cursos 1440px hero hover/focus GiftCards [42a425d1-5b92-4b75-bee6-a2c5f659ea4b]",
+      "status": "pass",
+      "details": {
+        "id": "42a425d1-5b92-4b75-bee6-a2c5f659ea4b",
+        "hidden": false,
+        "left": 856.6484375,
+        "right": 1115.6640625,
+        "width": 259.015625,
+        "viewport": 1440
+      }
+    },
+    {
+      "label": "/cursos 1440px hero hover/focus Comunidad [e9fe8697-5075-4b5f-9f85-5c36109c6ccc]",
+      "status": "pass",
+      "details": {
+        "id": "e9fe8697-5075-4b5f-9f85-5c36109c6ccc",
+        "hidden": false,
+        "left": 996.8046875,
+        "right": 1228.8046875,
+        "width": 232,
+        "viewport": 1440
+      }
+    },
+    {
+      "label": "/cursos 1440px hero Clases/CURSOS independent shared href",
+      "status": "pass",
+      "details": {
+        "href": "/cursos",
+        "ids": [
+          "066c2961-232e-4e14-aef2-42faae466d4d",
+          "357f4ca1-2ee2-4186-9c71-21cf72767851"
+        ]
+      }
+    },
+    {
+      "label": "/cursos 1440px hero pointer and keyboard focus retain the owning dropdown",
+      "status": "pass"
+    },
+    {
+      "label": "/cursos 1440px hero navigation closes and returning to top has no stale root",
+      "status": "pass",
+      "details": {
+        "destination": "/cursos/coworking-de-investigacion-tecnica-de-esmaltes-y-engobes"
+      }
+    },
+    {
+      "label": "/cursos 1440px hero desktop to mobile closes all desktop dropdowns",
+      "status": "pass"
+    },
+    {
+      "label": "/cursos 1440px hero setup/coverage",
+      "status": "pass",
+      "details": {
+        "rootIds": [
+          "e5a7f46c-26cc-4b5f-b819-b1e84cfb1d89",
+          "43676cc8-ef7c-4902-9b80-be262be15930",
+          "066c2961-232e-4e14-aef2-42faae466d4d",
+          "357f4ca1-2ee2-4186-9c71-21cf72767851",
+          "8cf7a252-2081-4c0b-8e69-92623a4da209",
+          "42a425d1-5b92-4b75-bee6-a2c5f659ea4b",
+          "e9fe8697-5075-4b5f-9f85-5c36109c6ccc",
+          "a15b98cf-2135-458e-89b0-597cd2915458"
+        ],
+        "testedChildren": 6
+      }
+    },
+    {
+      "label": "/cursos 1440px sticky hover/focus Experiencias+ [43676cc8-ef7c-4902-9b80-be262be15930]",
+      "status": "pass",
+      "details": {
+        "id": "43676cc8-ef7c-4902-9b80-be262be15930",
+        "hidden": false,
+        "left": 247.171875,
+        "right": 563.171875,
+        "width": 316,
+        "viewport": 1440
+      }
+    },
+    {
+      "label": "/cursos 1440px sticky hover/focus Clases+ [066c2961-232e-4e14-aef2-42faae466d4d]",
+      "status": "pass",
+      "details": {
+        "id": "066c2961-232e-4e14-aef2-42faae466d4d",
+        "hidden": false,
+        "left": 395.703125,
+        "right": 711.703125,
+        "width": 316,
+        "viewport": 1440
+      }
+    },
+    {
+      "label": "/cursos 1440px sticky hover/focus CURSOS+ [357f4ca1-2ee2-4186-9c71-21cf72767851]",
+      "status": "pass",
+      "details": {
+        "id": "357f4ca1-2ee2-4186-9c71-21cf72767851",
+        "hidden": false,
+        "left": 493.71875,
+        "right": 809.71875,
+        "width": 316,
+        "viewport": 1440
+      }
+    },
+    {
+      "label": "/cursos 1440px sticky hover/focus Workshops+ [8cf7a252-2081-4c0b-8e69-92623a4da209]",
+      "status": "pass",
+      "details": {
+        "id": "8cf7a252-2081-4c0b-8e69-92623a4da209",
+        "hidden": false,
+        "left": 871.1875,
+        "right": 1187.1875,
+        "width": 316,
+        "viewport": 1440
+      }
+    },
+    {
+      "label": "/cursos 1440px sticky hover/focus GiftCards+ [42a425d1-5b92-4b75-bee6-a2c5f659ea4b]",
+      "status": "pass",
+      "details": {
+        "id": "42a425d1-5b92-4b75-bee6-a2c5f659ea4b",
+        "hidden": false,
+        "left": 994.109375,
+        "right": 1310.109375,
+        "width": 316,
+        "viewport": 1440
+      }
+    },
+    {
+      "label": "/cursos 1440px sticky hover/focus Comunidad+ [e9fe8697-5075-4b5f-9f85-5c36109c6ccc]",
+      "status": "pass",
+      "details": {
+        "id": "e9fe8697-5075-4b5f-9f85-5c36109c6ccc",
+        "hidden": false,
+        "left": 1108,
+        "right": 1424,
+        "width": 316,
+        "viewport": 1440
+      }
+    },
+    {
+      "label": "/cursos 1440px sticky Clases/CURSOS independent shared href",
+      "status": "pass",
+      "details": {
+        "href": "/cursos",
+        "ids": [
+          "066c2961-232e-4e14-aef2-42faae466d4d",
+          "357f4ca1-2ee2-4186-9c71-21cf72767851"
+        ]
+      }
+    },
+    {
+      "label": "/cursos 1440px sticky pointer and keyboard focus retain the owning dropdown",
+      "status": "pass"
+    },
+    {
+      "label": "/cursos 1440px sticky navigation closes and returning to top has no stale root",
+      "status": "pass",
+      "details": {
+        "destination": "/cursos/coworking-de-investigacion-tecnica-de-esmaltes-y-engobes"
+      }
+    },
+    {
+      "label": "/cursos 1440px sticky desktop to mobile closes all desktop dropdowns",
+      "status": "pass"
+    },
+    {
+      "label": "/cursos 1440px sticky setup/coverage",
+      "status": "pass",
+      "details": {
+        "rootIds": [
+          "e5a7f46c-26cc-4b5f-b819-b1e84cfb1d89",
+          "43676cc8-ef7c-4902-9b80-be262be15930",
+          "066c2961-232e-4e14-aef2-42faae466d4d",
+          "357f4ca1-2ee2-4186-9c71-21cf72767851",
+          "8cf7a252-2081-4c0b-8e69-92623a4da209",
+          "42a425d1-5b92-4b75-bee6-a2c5f659ea4b",
+          "e9fe8697-5075-4b5f-9f85-5c36109c6ccc",
+          "a15b98cf-2135-458e-89b0-597cd2915458"
+        ],
+        "testedChildren": 6
+      }
+    },
+    {
+      "label": "/cursos 1440px hero/sticky share IDs",
+      "status": "pass"
+    },
+    {
+      "label": "/ 1920px hero setup/coverage",
+      "status": "skip",
+      "reason": "Home hero desktop navigation is hidden by the existing design"
+    },
+    {
+      "label": "/ 1920px sticky hover/focus Experiencias+ [43676cc8-ef7c-4902-9b80-be262be15930]",
+      "status": "pass",
+      "details": {
+        "id": "43676cc8-ef7c-4902-9b80-be262be15930",
+        "hidden": false,
+        "left": 285.703125,
+        "right": 601.703125,
+        "width": 316,
+        "viewport": 1920
+      }
+    },
+    {
+      "label": "/ 1920px sticky hover/focus Clases+ [066c2961-232e-4e14-aef2-42faae466d4d]",
+      "status": "pass",
+      "details": {
+        "id": "066c2961-232e-4e14-aef2-42faae466d4d",
+        "hidden": false,
+        "left": 446.078125,
+        "right": 762.078125,
+        "width": 316,
+        "viewport": 1920
+      }
+    },
+    {
+      "label": "/ 1920px sticky hover/focus CURSOS+ [357f4ca1-2ee2-4186-9c71-21cf72767851]",
+      "status": "pass",
+      "details": {
+        "id": "357f4ca1-2ee2-4186-9c71-21cf72767851",
+        "hidden": false,
+        "left": 559.46875,
+        "right": 875.46875,
+        "width": 316,
+        "viewport": 1920
+      }
+    },
+    {
+      "label": "/ 1920px sticky hover/focus Workshops+ [8cf7a252-2081-4c0b-8e69-92623a4da209]",
+      "status": "pass",
+      "details": {
+        "id": "8cf7a252-2081-4c0b-8e69-92623a4da209",
+        "hidden": false,
+        "left": 687.5625,
+        "right": 1003.5625,
+        "width": 316,
+        "viewport": 1920
+      }
+    },
+    {
+      "label": "/ 1920px sticky hover/focus GiftCards+ [42a425d1-5b92-4b75-bee6-a2c5f659ea4b]",
+      "status": "pass",
+      "details": {
+        "id": "42a425d1-5b92-4b75-bee6-a2c5f659ea4b",
+        "hidden": false,
+        "left": 1116,
+        "right": 1432,
+        "width": 316,
+        "viewport": 1920
+      }
+    },
+    {
+      "label": "/ 1920px sticky hover/focus Comunidad+ [e9fe8697-5075-4b5f-9f85-5c36109c6ccc]",
+      "status": "pass",
+      "details": {
+        "id": "e9fe8697-5075-4b5f-9f85-5c36109c6ccc",
+        "hidden": false,
+        "left": 1246.65625,
+        "right": 1562.65625,
+        "width": 316,
+        "viewport": 1920
+      }
+    },
+    {
+      "label": "/ 1920px sticky Clases/CURSOS independent shared href",
+      "status": "pass",
+      "details": {
+        "href": "/cursos",
+        "ids": [
+          "066c2961-232e-4e14-aef2-42faae466d4d",
+          "357f4ca1-2ee2-4186-9c71-21cf72767851"
+        ]
+      }
+    },
+    {
+      "label": "/ 1920px sticky pointer and keyboard focus retain the owning dropdown",
+      "status": "pass"
+    },
+    {
+      "label": "/ 1920px sticky navigation closes and returning to top has no stale root",
+      "status": "pass",
+      "details": {
+        "destination": "/cursos/coworking-de-investigacion-tecnica-de-esmaltes-y-engobes"
+      }
+    },
+    {
+      "label": "/ 1920px sticky desktop to mobile closes all desktop dropdowns",
+      "status": "pass"
+    },
+    {
+      "label": "/ 1920px sticky setup/coverage",
+      "status": "pass",
+      "details": {
+        "rootIds": [
+          "43676cc8-ef7c-4902-9b80-be262be15930",
+          "066c2961-232e-4e14-aef2-42faae466d4d",
+          "357f4ca1-2ee2-4186-9c71-21cf72767851",
+          "8cf7a252-2081-4c0b-8e69-92623a4da209",
+          "42a425d1-5b92-4b75-bee6-a2c5f659ea4b",
+          "e9fe8697-5075-4b5f-9f85-5c36109c6ccc",
+          "a15b98cf-2135-458e-89b0-597cd2915458"
+        ],
+        "testedChildren": 6
+      }
+    },
+    {
+      "label": "/experiencias/clases-regulares-de-modelado 1920px hero hover/focus Experiencias [43676cc8-ef7c-4902-9b80-be262be15930]",
+      "status": "pass",
+      "details": {
+        "id": "43676cc8-ef7c-4902-9b80-be262be15930",
+        "hidden": false,
+        "left": 470.078125,
+        "right": 750.078125,
+        "width": 280,
+        "viewport": 1920
+      }
+    },
+    {
+      "label": "/experiencias/clases-regulares-de-modelado 1920px hero hover/focus Clases [066c2961-232e-4e14-aef2-42faae466d4d]",
+      "status": "pass",
+      "details": {
+        "id": "066c2961-232e-4e14-aef2-42faae466d4d",
+        "hidden": false,
+        "left": 656.828125,
+        "right": 1056.828125,
+        "width": 400,
+        "viewport": 1920
+      }
+    },
+    {
+      "label": "/experiencias/clases-regulares-de-modelado 1920px hero hover/focus CURSOS [357f4ca1-2ee2-4186-9c71-21cf72767851]",
+      "status": "pass",
+      "details": {
+        "id": "357f4ca1-2ee2-4186-9c71-21cf72767851",
+        "hidden": false,
+        "left": 791.5,
+        "right": 1191.5,
+        "width": 400,
+        "viewport": 1920
+      }
+    },
+    {
+      "label": "/experiencias/clases-regulares-de-modelado 1920px hero hover/focus Workshops [8cf7a252-2081-4c0b-8e69-92623a4da209]",
+      "status": "pass",
+      "details": {
+        "id": "8cf7a252-2081-4c0b-8e69-92623a4da209",
+        "hidden": false,
+        "left": 942.609375,
+        "right": 1303.296875,
+        "width": 360.6875,
+        "viewport": 1920
+      }
+    },
+    {
+      "label": "/experiencias/clases-regulares-de-modelado 1920px hero hover/focus GiftCards [42a425d1-5b92-4b75-bee6-a2c5f659ea4b]",
+      "status": "pass",
+      "details": {
+        "id": "42a425d1-5b92-4b75-bee6-a2c5f659ea4b",
+        "hidden": false,
+        "left": 1115.21875,
+        "right": 1374.234375,
+        "width": 259.015625,
+        "viewport": 1920
+      }
+    },
+    {
+      "label": "/experiencias/clases-regulares-de-modelado 1920px hero hover/focus Comunidad [e9fe8697-5075-4b5f-9f85-5c36109c6ccc]",
+      "status": "pass",
+      "details": {
+        "id": "e9fe8697-5075-4b5f-9f85-5c36109c6ccc",
+        "hidden": false,
+        "left": 1274.453125,
+        "right": 1506.453125,
+        "width": 232,
+        "viewport": 1920
+      }
+    },
+    {
+      "label": "/experiencias/clases-regulares-de-modelado 1920px hero Clases/CURSOS independent shared href",
+      "status": "pass",
+      "details": {
+        "href": "/cursos",
+        "ids": [
+          "066c2961-232e-4e14-aef2-42faae466d4d",
+          "357f4ca1-2ee2-4186-9c71-21cf72767851"
+        ]
+      }
+    },
+    {
+      "label": "/experiencias/clases-regulares-de-modelado 1920px hero pointer and keyboard focus retain the owning dropdown",
+      "status": "pass"
+    },
+    {
+      "label": "/experiencias/clases-regulares-de-modelado 1920px hero navigation closes and returning to top has no stale root",
+      "status": "pass",
+      "details": {
+        "destination": "/cursos/coworking-de-investigacion-tecnica-de-esmaltes-y-engobes"
+      }
+    },
+    {
+      "label": "/experiencias/clases-regulares-de-modelado 1920px hero desktop to mobile closes all desktop dropdowns",
+      "status": "pass"
+    },
+    {
+      "label": "/experiencias/clases-regulares-de-modelado 1920px hero setup/coverage",
+      "status": "pass",
+      "details": {
+        "rootIds": [
+          "e5a7f46c-26cc-4b5f-b819-b1e84cfb1d89",
+          "43676cc8-ef7c-4902-9b80-be262be15930",
+          "066c2961-232e-4e14-aef2-42faae466d4d",
+          "357f4ca1-2ee2-4186-9c71-21cf72767851",
+          "8cf7a252-2081-4c0b-8e69-92623a4da209",
+          "42a425d1-5b92-4b75-bee6-a2c5f659ea4b",
+          "e9fe8697-5075-4b5f-9f85-5c36109c6ccc",
+          "a15b98cf-2135-458e-89b0-597cd2915458"
+        ],
+        "testedChildren": 6
+      }
+    },
+    {
+      "label": "/experiencias/clases-regulares-de-modelado 1920px sticky hover/focus Experiencias+ [43676cc8-ef7c-4902-9b80-be262be15930]",
+      "status": "pass",
+      "details": {
+        "id": "43676cc8-ef7c-4902-9b80-be262be15930",
+        "hidden": false,
+        "left": 428.328125,
+        "right": 744.328125,
+        "width": 316,
+        "viewport": 1920
+      }
+    },
+    {
+      "label": "/experiencias/clases-regulares-de-modelado 1920px sticky hover/focus Clases+ [066c2961-232e-4e14-aef2-42faae466d4d]",
+      "status": "pass",
+      "details": {
+        "id": "066c2961-232e-4e14-aef2-42faae466d4d",
+        "hidden": false,
+        "left": 598.515625,
+        "right": 914.515625,
+        "width": 316,
+        "viewport": 1920
+      }
+    },
+    {
+      "label": "/experiencias/clases-regulares-de-modelado 1920px sticky hover/focus CURSOS+ [357f4ca1-2ee2-4186-9c71-21cf72767851]",
+      "status": "pass",
+      "details": {
+        "id": "357f4ca1-2ee2-4186-9c71-21cf72767851",
+        "hidden": false,
+        "left": 711.90625,
+        "right": 1027.90625,
+        "width": 316,
+        "viewport": 1920
+      }
+    },
+    {
+      "label": "/experiencias/clases-regulares-de-modelado 1920px sticky hover/focus Workshops+ [8cf7a252-2081-4c0b-8e69-92623a4da209]",
+      "status": "pass",
+      "details": {
+        "id": "8cf7a252-2081-4c0b-8e69-92623a4da209",
+        "hidden": false,
+        "left": 1116,
+        "right": 1432,
+        "width": 316,
+        "viewport": 1920
+      }
+    },
+    {
+      "label": "/experiencias/clases-regulares-de-modelado 1920px sticky hover/focus GiftCards+ [42a425d1-5b92-4b75-bee6-a2c5f659ea4b]",
+      "status": "pass",
+      "details": {
+        "id": "42a425d1-5b92-4b75-bee6-a2c5f659ea4b",
+        "hidden": false,
+        "left": 1258.625,
+        "right": 1574.625,
+        "width": 316,
+        "viewport": 1920
+      }
+    },
+    {
+      "label": "/experiencias/clases-regulares-de-modelado 1920px sticky hover/focus Comunidad+ [e9fe8697-5075-4b5f-9f85-5c36109c6ccc]",
+      "status": "pass",
+      "details": {
+        "id": "e9fe8697-5075-4b5f-9f85-5c36109c6ccc",
+        "hidden": false,
+        "left": 1399.09375,
+        "right": 1715.09375,
+        "width": 316,
+        "viewport": 1920
+      }
+    },
+    {
+      "label": "/experiencias/clases-regulares-de-modelado 1920px sticky Clases/CURSOS independent shared href",
+      "status": "pass",
+      "details": {
+        "href": "/cursos",
+        "ids": [
+          "066c2961-232e-4e14-aef2-42faae466d4d",
+          "357f4ca1-2ee2-4186-9c71-21cf72767851"
+        ]
+      }
+    },
+    {
+      "label": "/experiencias/clases-regulares-de-modelado 1920px sticky pointer and keyboard focus retain the owning dropdown",
+      "status": "pass"
+    },
+    {
+      "label": "/experiencias/clases-regulares-de-modelado 1920px sticky navigation closes and returning to top has no stale root",
+      "status": "pass",
+      "details": {
+        "destination": "/cursos/coworking-de-investigacion-tecnica-de-esmaltes-y-engobes"
+      }
+    },
+    {
+      "label": "/experiencias/clases-regulares-de-modelado 1920px sticky desktop to mobile closes all desktop dropdowns",
+      "status": "pass"
+    },
+    {
+      "label": "/experiencias/clases-regulares-de-modelado 1920px sticky setup/coverage",
+      "status": "pass",
+      "details": {
+        "rootIds": [
+          "e5a7f46c-26cc-4b5f-b819-b1e84cfb1d89",
+          "43676cc8-ef7c-4902-9b80-be262be15930",
+          "066c2961-232e-4e14-aef2-42faae466d4d",
+          "357f4ca1-2ee2-4186-9c71-21cf72767851",
+          "8cf7a252-2081-4c0b-8e69-92623a4da209",
+          "42a425d1-5b92-4b75-bee6-a2c5f659ea4b",
+          "e9fe8697-5075-4b5f-9f85-5c36109c6ccc",
+          "a15b98cf-2135-458e-89b0-597cd2915458"
+        ],
+        "testedChildren": 6
+      }
+    },
+    {
+      "label": "/experiencias/clases-regulares-de-modelado 1920px hero/sticky share IDs",
+      "status": "pass"
+    },
+    {
+      "label": "/cursos 1920px hero hover/focus Experiencias [43676cc8-ef7c-4902-9b80-be262be15930]",
+      "status": "pass",
+      "details": {
+        "id": "43676cc8-ef7c-4902-9b80-be262be15930",
+        "hidden": false,
+        "left": 444.1953125,
+        "right": 724.1953125,
+        "width": 280,
+        "viewport": 1920
+      }
+    },
+    {
+      "label": "/cursos 1920px hero hover/focus Clases [066c2961-232e-4e14-aef2-42faae466d4d]",
+      "status": "pass",
+      "details": {
+        "id": "066c2961-232e-4e14-aef2-42faae466d4d",
+        "hidden": false,
+        "left": 640.8046875,
+        "right": 1040.8046875,
+        "width": 400,
+        "viewport": 1920
+      }
+    },
+    {
+      "label": "/cursos 1920px hero hover/focus CURSOS [357f4ca1-2ee2-4186-9c71-21cf72767851]",
+      "status": "pass",
+      "details": {
+        "id": "357f4ca1-2ee2-4186-9c71-21cf72767851",
+        "hidden": false,
+        "left": 782.5859375,
+        "right": 1182.5859375,
+        "width": 400,
+        "viewport": 1920
+      }
+    },
+    {
+      "label": "/cursos 1920px hero hover/focus Workshops [8cf7a252-2081-4c0b-8e69-92623a4da209]",
+      "status": "pass",
+      "details": {
+        "id": "8cf7a252-2081-4c0b-8e69-92623a4da209",
+        "hidden": false,
+        "left": 941.6796875,
+        "right": 1302.3671875,
+        "width": 360.6875,
+        "viewport": 1920
+      }
+    },
+    {
+      "label": "/cursos 1920px hero hover/focus GiftCards [42a425d1-5b92-4b75-bee6-a2c5f659ea4b]",
+      "status": "pass",
+      "details": {
+        "id": "42a425d1-5b92-4b75-bee6-a2c5f659ea4b",
+        "hidden": false,
+        "left": 1123.4140625,
+        "right": 1382.4296875,
+        "width": 259.015625,
+        "viewport": 1920
+      }
+    },
+    {
+      "label": "/cursos 1920px hero hover/focus Comunidad [e9fe8697-5075-4b5f-9f85-5c36109c6ccc]",
+      "status": "pass",
+      "details": {
+        "id": "e9fe8697-5075-4b5f-9f85-5c36109c6ccc",
+        "hidden": false,
+        "left": 1291.0703125,
+        "right": 1523.0703125,
+        "width": 232,
+        "viewport": 1920
+      }
+    },
+    {
+      "label": "/cursos 1920px hero Clases/CURSOS independent shared href",
+      "status": "pass",
+      "details": {
+        "href": "/cursos",
+        "ids": [
+          "066c2961-232e-4e14-aef2-42faae466d4d",
+          "357f4ca1-2ee2-4186-9c71-21cf72767851"
+        ]
+      }
+    },
+    {
+      "label": "/cursos 1920px hero pointer and keyboard focus retain the owning dropdown",
+      "status": "pass"
+    },
+    {
+      "label": "/cursos 1920px hero navigation closes and returning to top has no stale root",
+      "status": "pass",
+      "details": {
+        "destination": "/cursos/coworking-de-investigacion-tecnica-de-esmaltes-y-engobes"
+      }
+    },
+    {
+      "label": "/cursos 1920px hero desktop to mobile closes all desktop dropdowns",
+      "status": "pass"
+    },
+    {
+      "label": "/cursos 1920px hero setup/coverage",
+      "status": "pass",
+      "details": {
+        "rootIds": [
+          "e5a7f46c-26cc-4b5f-b819-b1e84cfb1d89",
+          "43676cc8-ef7c-4902-9b80-be262be15930",
+          "066c2961-232e-4e14-aef2-42faae466d4d",
+          "357f4ca1-2ee2-4186-9c71-21cf72767851",
+          "8cf7a252-2081-4c0b-8e69-92623a4da209",
+          "42a425d1-5b92-4b75-bee6-a2c5f659ea4b",
+          "e9fe8697-5075-4b5f-9f85-5c36109c6ccc",
+          "a15b98cf-2135-458e-89b0-597cd2915458"
+        ],
+        "testedChildren": 6
+      }
+    },
+    {
+      "label": "/cursos 1920px sticky hover/focus Experiencias+ [43676cc8-ef7c-4902-9b80-be262be15930]",
+      "status": "pass",
+      "details": {
+        "id": "43676cc8-ef7c-4902-9b80-be262be15930",
+        "hidden": false,
+        "left": 428.328125,
+        "right": 744.328125,
+        "width": 316,
+        "viewport": 1920
+      }
+    },
+    {
+      "label": "/cursos 1920px sticky hover/focus Clases+ [066c2961-232e-4e14-aef2-42faae466d4d]",
+      "status": "pass",
+      "details": {
+        "id": "066c2961-232e-4e14-aef2-42faae466d4d",
+        "hidden": false,
+        "left": 598.515625,
+        "right": 914.515625,
+        "width": 316,
+        "viewport": 1920
+      }
+    },
+    {
+      "label": "/cursos 1920px sticky hover/focus CURSOS+ [357f4ca1-2ee2-4186-9c71-21cf72767851]",
+      "status": "pass",
+      "details": {
+        "id": "357f4ca1-2ee2-4186-9c71-21cf72767851",
+        "hidden": false,
+        "left": 711.90625,
+        "right": 1027.90625,
+        "width": 316,
+        "viewport": 1920
+      }
+    },
+    {
+      "label": "/cursos 1920px sticky hover/focus Workshops+ [8cf7a252-2081-4c0b-8e69-92623a4da209]",
+      "status": "pass",
+      "details": {
+        "id": "8cf7a252-2081-4c0b-8e69-92623a4da209",
+        "hidden": false,
+        "left": 1116,
+        "right": 1432,
+        "width": 316,
+        "viewport": 1920
+      }
+    },
+    {
+      "label": "/cursos 1920px sticky hover/focus GiftCards+ [42a425d1-5b92-4b75-bee6-a2c5f659ea4b]",
+      "status": "pass",
+      "details": {
+        "id": "42a425d1-5b92-4b75-bee6-a2c5f659ea4b",
+        "hidden": false,
+        "left": 1258.625,
+        "right": 1574.625,
+        "width": 316,
+        "viewport": 1920
+      }
+    },
+    {
+      "label": "/cursos 1920px sticky hover/focus Comunidad+ [e9fe8697-5075-4b5f-9f85-5c36109c6ccc]",
+      "status": "pass",
+      "details": {
+        "id": "e9fe8697-5075-4b5f-9f85-5c36109c6ccc",
+        "hidden": false,
+        "left": 1399.09375,
+        "right": 1715.09375,
+        "width": 316,
+        "viewport": 1920
+      }
+    },
+    {
+      "label": "/cursos 1920px sticky Clases/CURSOS independent shared href",
+      "status": "pass",
+      "details": {
+        "href": "/cursos",
+        "ids": [
+          "066c2961-232e-4e14-aef2-42faae466d4d",
+          "357f4ca1-2ee2-4186-9c71-21cf72767851"
+        ]
+      }
+    },
+    {
+      "label": "/cursos 1920px sticky pointer and keyboard focus retain the owning dropdown",
+      "status": "pass"
+    },
+    {
+      "label": "/cursos 1920px sticky navigation closes and returning to top has no stale root",
+      "status": "pass",
+      "details": {
+        "destination": "/cursos/coworking-de-investigacion-tecnica-de-esmaltes-y-engobes"
+      }
+    },
+    {
+      "label": "/cursos 1920px sticky desktop to mobile closes all desktop dropdowns",
+      "status": "pass"
+    },
+    {
+      "label": "/cursos 1920px sticky setup/coverage",
+      "status": "pass",
+      "details": {
+        "rootIds": [
+          "e5a7f46c-26cc-4b5f-b819-b1e84cfb1d89",
+          "43676cc8-ef7c-4902-9b80-be262be15930",
+          "066c2961-232e-4e14-aef2-42faae466d4d",
+          "357f4ca1-2ee2-4186-9c71-21cf72767851",
+          "8cf7a252-2081-4c0b-8e69-92623a4da209",
+          "42a425d1-5b92-4b75-bee6-a2c5f659ea4b",
+          "e9fe8697-5075-4b5f-9f85-5c36109c6ccc",
+          "a15b98cf-2135-458e-89b0-597cd2915458"
+        ],
+        "testedChildren": 6
+      }
+    },
+    {
+      "label": "/cursos 1920px hero/sticky share IDs",
+      "status": "pass"
+    },
+    {
+      "label": "/ 360px mobile identity/accordion",
+      "status": "pass",
+      "details": {
+        "width": 360,
+        "rootIds": [
+          "e5a7f46c-26cc-4b5f-b819-b1e84cfb1d89",
+          "43676cc8-ef7c-4902-9b80-be262be15930",
+          "066c2961-232e-4e14-aef2-42faae466d4d",
+          "357f4ca1-2ee2-4186-9c71-21cf72767851",
+          "8cf7a252-2081-4c0b-8e69-92623a4da209",
+          "42a425d1-5b92-4b75-bee6-a2c5f659ea4b",
+          "e9fe8697-5075-4b5f-9f85-5c36109c6ccc",
+          "a15b98cf-2135-458e-89b0-597cd2915458"
+        ],
+        "accordionIds": [
+          "066c2961-232e-4e14-aef2-42faae466d4d",
+          "357f4ca1-2ee2-4186-9c71-21cf72767851"
+        ]
+      }
+    },
+    {
+      "label": "/experiencias/clases-regulares-de-modelado 360px mobile identity/accordion",
+      "status": "pass",
+      "details": {
+        "width": 360,
+        "rootIds": [
+          "e5a7f46c-26cc-4b5f-b819-b1e84cfb1d89",
+          "43676cc8-ef7c-4902-9b80-be262be15930",
+          "066c2961-232e-4e14-aef2-42faae466d4d",
+          "357f4ca1-2ee2-4186-9c71-21cf72767851",
+          "8cf7a252-2081-4c0b-8e69-92623a4da209",
+          "42a425d1-5b92-4b75-bee6-a2c5f659ea4b",
+          "e9fe8697-5075-4b5f-9f85-5c36109c6ccc",
+          "a15b98cf-2135-458e-89b0-597cd2915458"
+        ],
+        "accordionIds": [
+          "066c2961-232e-4e14-aef2-42faae466d4d",
+          "357f4ca1-2ee2-4186-9c71-21cf72767851"
+        ]
+      }
+    },
+    {
+      "label": "/cursos 360px mobile identity/accordion",
+      "status": "pass",
+      "details": {
+        "width": 360,
+        "rootIds": [
+          "e5a7f46c-26cc-4b5f-b819-b1e84cfb1d89",
+          "43676cc8-ef7c-4902-9b80-be262be15930",
+          "066c2961-232e-4e14-aef2-42faae466d4d",
+          "357f4ca1-2ee2-4186-9c71-21cf72767851",
+          "8cf7a252-2081-4c0b-8e69-92623a4da209",
+          "42a425d1-5b92-4b75-bee6-a2c5f659ea4b",
+          "e9fe8697-5075-4b5f-9f85-5c36109c6ccc",
+          "a15b98cf-2135-458e-89b0-597cd2915458"
+        ],
+        "accordionIds": [
+          "066c2961-232e-4e14-aef2-42faae466d4d",
+          "357f4ca1-2ee2-4186-9c71-21cf72767851"
+        ]
+      }
+    },
+    {
+      "label": "/ 390px mobile identity/accordion",
+      "status": "pass",
+      "details": {
+        "width": 390,
+        "rootIds": [
+          "e5a7f46c-26cc-4b5f-b819-b1e84cfb1d89",
+          "43676cc8-ef7c-4902-9b80-be262be15930",
+          "066c2961-232e-4e14-aef2-42faae466d4d",
+          "357f4ca1-2ee2-4186-9c71-21cf72767851",
+          "8cf7a252-2081-4c0b-8e69-92623a4da209",
+          "42a425d1-5b92-4b75-bee6-a2c5f659ea4b",
+          "e9fe8697-5075-4b5f-9f85-5c36109c6ccc",
+          "a15b98cf-2135-458e-89b0-597cd2915458"
+        ],
+        "accordionIds": [
+          "066c2961-232e-4e14-aef2-42faae466d4d",
+          "357f4ca1-2ee2-4186-9c71-21cf72767851"
+        ]
+      }
+    },
+    {
+      "label": "/experiencias/clases-regulares-de-modelado 390px mobile identity/accordion",
+      "status": "pass",
+      "details": {
+        "width": 390,
+        "rootIds": [
+          "e5a7f46c-26cc-4b5f-b819-b1e84cfb1d89",
+          "43676cc8-ef7c-4902-9b80-be262be15930",
+          "066c2961-232e-4e14-aef2-42faae466d4d",
+          "357f4ca1-2ee2-4186-9c71-21cf72767851",
+          "8cf7a252-2081-4c0b-8e69-92623a4da209",
+          "42a425d1-5b92-4b75-bee6-a2c5f659ea4b",
+          "e9fe8697-5075-4b5f-9f85-5c36109c6ccc",
+          "a15b98cf-2135-458e-89b0-597cd2915458"
+        ],
+        "accordionIds": [
+          "066c2961-232e-4e14-aef2-42faae466d4d",
+          "357f4ca1-2ee2-4186-9c71-21cf72767851"
+        ]
+      }
+    },
+    {
+      "label": "/cursos 390px mobile identity/accordion",
+      "status": "pass",
+      "details": {
+        "width": 390,
+        "rootIds": [
+          "e5a7f46c-26cc-4b5f-b819-b1e84cfb1d89",
+          "43676cc8-ef7c-4902-9b80-be262be15930",
+          "066c2961-232e-4e14-aef2-42faae466d4d",
+          "357f4ca1-2ee2-4186-9c71-21cf72767851",
+          "8cf7a252-2081-4c0b-8e69-92623a4da209",
+          "42a425d1-5b92-4b75-bee6-a2c5f659ea4b",
+          "e9fe8697-5075-4b5f-9f85-5c36109c6ccc",
+          "a15b98cf-2135-458e-89b0-597cd2915458"
+        ],
+        "accordionIds": [
+          "066c2961-232e-4e14-aef2-42faae466d4d",
+          "357f4ca1-2ee2-4186-9c71-21cf72767851"
+        ]
+      }
+    },
+    {
+      "label": "/ 430px mobile identity/accordion",
+      "status": "pass",
+      "details": {
+        "width": 430,
+        "rootIds": [
+          "e5a7f46c-26cc-4b5f-b819-b1e84cfb1d89",
+          "43676cc8-ef7c-4902-9b80-be262be15930",
+          "066c2961-232e-4e14-aef2-42faae466d4d",
+          "357f4ca1-2ee2-4186-9c71-21cf72767851",
+          "8cf7a252-2081-4c0b-8e69-92623a4da209",
+          "42a425d1-5b92-4b75-bee6-a2c5f659ea4b",
+          "e9fe8697-5075-4b5f-9f85-5c36109c6ccc",
+          "a15b98cf-2135-458e-89b0-597cd2915458"
+        ],
+        "accordionIds": [
+          "066c2961-232e-4e14-aef2-42faae466d4d",
+          "357f4ca1-2ee2-4186-9c71-21cf72767851"
+        ]
+      }
+    },
+    {
+      "label": "/experiencias/clases-regulares-de-modelado 430px mobile identity/accordion",
+      "status": "pass",
+      "details": {
+        "width": 430,
+        "rootIds": [
+          "e5a7f46c-26cc-4b5f-b819-b1e84cfb1d89",
+          "43676cc8-ef7c-4902-9b80-be262be15930",
+          "066c2961-232e-4e14-aef2-42faae466d4d",
+          "357f4ca1-2ee2-4186-9c71-21cf72767851",
+          "8cf7a252-2081-4c0b-8e69-92623a4da209",
+          "42a425d1-5b92-4b75-bee6-a2c5f659ea4b",
+          "e9fe8697-5075-4b5f-9f85-5c36109c6ccc",
+          "a15b98cf-2135-458e-89b0-597cd2915458"
+        ],
+        "accordionIds": [
+          "066c2961-232e-4e14-aef2-42faae466d4d",
+          "357f4ca1-2ee2-4186-9c71-21cf72767851"
+        ]
+      }
+    },
+    {
+      "label": "/cursos 430px mobile identity/accordion",
+      "status": "pass",
+      "details": {
+        "width": 430,
+        "rootIds": [
+          "e5a7f46c-26cc-4b5f-b819-b1e84cfb1d89",
+          "43676cc8-ef7c-4902-9b80-be262be15930",
+          "066c2961-232e-4e14-aef2-42faae466d4d",
+          "357f4ca1-2ee2-4186-9c71-21cf72767851",
+          "8cf7a252-2081-4c0b-8e69-92623a4da209",
+          "42a425d1-5b92-4b75-bee6-a2c5f659ea4b",
+          "e9fe8697-5075-4b5f-9f85-5c36109c6ccc",
+          "a15b98cf-2135-458e-89b0-597cd2915458"
+        ],
+        "accordionIds": [
+          "066c2961-232e-4e14-aef2-42faae466d4d",
+          "357f4ca1-2ee2-4186-9c71-21cf72767851"
+        ]
+      }
+    },
+    {
+      "label": "Browser cleanup",
+      "status": "pass"
+    }
+  ],
+  "blockedRequests": [
+    {
+      "method": "POST",
+      "url": "https://player.vimeo.com/cdn-cgi/challenge-platform/h/b/precursor/d76008a69eab/0.6345029438862223:1791137120:a6P2uh-kdWAR346Z9j7hMVEaMTcurhmH7Y2Ajt6t-sw/a4563b79a874fc51"
+    },
+    {
+      "method": "POST",
+      "url": "https://player.vimeo.com/cdn-cgi/challenge-platform/h/b/precursor/d76008a69eab/0.6345029438862223:1791137120:a6P2uh-kdWAR346Z9j7hMVEaMTcurhmH7Y2Ajt6t-sw/a4563b79a876fc51"
+    },
+    {
+      "method": "POST",
+      "url": "http://localhost:4050/api/marketing/track-event"
+    },
+    {
+      "method": "POST",
+      "url": "http://localhost:4050/api/marketing/track-event"
+    },
+    {
+      "method": "POST",
+      "url": "https://challenges.cloudflare.com/cdn-cgi/challenge-platform/h/b/fo/4030313746:1791137116:6LPHZua7J0NxqCk06cnOsdUE9Jujz_Pj9YdhmnC1bBo/a4563b7c9f05f781/NaMV1sEebjWJESnfH6kxwiaLrtjdXWUzeScvAsqkkYo-1791138359-1.2.1.1-dRQPPHIAUruOYSQRmrgmKBPMAXDfdgVTra4txde9o2TNyiojl932A64kCLrxcGvK"
+    },
+    {
+      "method": "POST",
+      "url": "https://challenges.cloudflare.com/cdn-cgi/challenge-platform/h/b/fo/4030313746:1791137116:6LPHZua7J0NxqCk06cnOsdUE9Jujz_Pj9YdhmnC1bBo/a4563b7c9f05f781/NaMV1sEebjWJESnfH6kxwiaLrtjdXWUzeScvAsqkkYo-1791138359-1.2.1.1-dRQPPHIAUruOYSQRmrgmKBPMAXDfdgVTra4txde9o2TNyiojl932A64kCLrxcGvK"
+    },
+    {
+      "method": "POST",
+      "url": "https://player.vimeo.com/cdn-cgi/challenge-platform/h/b/precursor/d76008a69eab/0.6345029438862223:1791137120:a6P2uh-kdWAR346Z9j7hMVEaMTcurhmH7Y2Ajt6t-sw/a4563b981c84cbbb"
+    },
+    {
+      "method": "POST",
+      "url": "https://player.vimeo.com/cdn-cgi/challenge-platform/h/b/precursor/d76008a69eab/0.6345029438862223:1791137120:a6P2uh-kdWAR346Z9j7hMVEaMTcurhmH7Y2Ajt6t-sw/a4563b981c86cbbb"
+    },
+    {
+      "method": "POST",
+      "url": "https://challenges.cloudflare.com/cdn-cgi/challenge-platform/h/b/fo/4030313746:1791137116:6LPHZua7J0NxqCk06cnOsdUE9Jujz_Pj9YdhmnC1bBo/a4563b9a284df781/gYb5ARDTLeoeIagNYndDe.VmEgu6qFv87MRJXOIYIKA-1791138364-1.2.1.1-BZaN69Mtj2mXVavd8xAFZIGS2p1UU9zFBBnEGSd48U5CcWN.3hzjcy_XdNreMfqd"
+    },
+    {
+      "method": "POST",
+      "url": "https://challenges.cloudflare.com/cdn-cgi/challenge-platform/h/b/fo/4030313746:1791137116:6LPHZua7J0NxqCk06cnOsdUE9Jujz_Pj9YdhmnC1bBo/a4563b9a284df781/gYb5ARDTLeoeIagNYndDe.VmEgu6qFv87MRJXOIYIKA-1791138364-1.2.1.1-BZaN69Mtj2mXVavd8xAFZIGS2p1UU9zFBBnEGSd48U5CcWN.3hzjcy_XdNreMfqd"
+    },
+    {
+      "method": "POST",
+      "url": "http://localhost:4050/api/marketing/track-event"
+    },
+    {
+      "method": "POST",
+      "url": "https://challenges.cloudflare.com/cdn-cgi/challenge-platform/h/b/fo/4030313746:1791137116:6LPHZua7J0NxqCk06cnOsdUE9Jujz_Pj9YdhmnC1bBo/a4563b9a284df781/gYb5ARDTLeoeIagNYndDe.VmEgu6qFv87MRJXOIYIKA-1791138364-1.2.1.1-BZaN69Mtj2mXVavd8xAFZIGS2p1UU9zFBBnEGSd48U5CcWN.3hzjcy_XdNreMfqd"
+    },
+    {
+      "method": "POST",
+      "url": "http://localhost:4050/api/marketing/track-event"
+    },
+    {
+      "method": "POST",
+      "url": "http://localhost:4050/api/marketing/track-event"
+    },
+    {
+      "method": "POST",
+      "url": "http://localhost:4050/api/marketing/track-event"
+    },
+    {
+      "method": "POST",
+      "url": "https://player.vimeo.com/cdn-cgi/challenge-platform/h/b/precursor/d76008a69eab/0.6345029438862223:1791137120:a6P2uh-kdWAR346Z9j7hMVEaMTcurhmH7Y2Ajt6t-sw/a4563bf30e58cbbb"
+    },
+    {
+      "method": "POST",
+      "url": "https://player.vimeo.com/cdn-cgi/challenge-platform/h/b/precursor/d76008a69eab/0.6345029438862223:1791137120:a6P2uh-kdWAR346Z9j7hMVEaMTcurhmH7Y2Ajt6t-sw/a4563bf30e57cbbb"
+    },
+    {
+      "method": "POST",
+      "url": "https://challenges.cloudflare.com/cdn-cgi/challenge-platform/h/b/fo/4030313746:1791137116:6LPHZua7J0NxqCk06cnOsdUE9Jujz_Pj9YdhmnC1bBo/a4563bf55edbf781/1q1n7_hwbXbLUjXaXzQrdwJA006rVvqk_qaLK31Sudg-1791138379-1.2.1.1-oo6WdrZvTMQA2j_Gr1ysiiJC8V7usyvnsgg0BPvidBr6Qc2MheGq2GDefD02zInL"
+    },
+    {
+      "method": "POST",
+      "url": "https://challenges.cloudflare.com/cdn-cgi/challenge-platform/h/b/fo/4030313746:1791137116:6LPHZua7J0NxqCk06cnOsdUE9Jujz_Pj9YdhmnC1bBo/a4563bf55edbf781/1q1n7_hwbXbLUjXaXzQrdwJA006rVvqk_qaLK31Sudg-1791138379-1.2.1.1-oo6WdrZvTMQA2j_Gr1ysiiJC8V7usyvnsgg0BPvidBr6Qc2MheGq2GDefD02zInL"
+    },
+    {
+      "method": "POST",
+      "url": "https://player.vimeo.com/cdn-cgi/challenge-platform/h/b/precursor/d76008a69eab/0.6345029438862223:1791137120:a6P2uh-kdWAR346Z9j7hMVEaMTcurhmH7Y2Ajt6t-sw/a4563bfccb62cbbb"
+    },
+    {
+      "method": "POST",
+      "url": "https://player.vimeo.com/cdn-cgi/challenge-platform/h/b/precursor/d76008a69eab/0.6345029438862223:1791137120:a6P2uh-kdWAR346Z9j7hMVEaMTcurhmH7Y2Ajt6t-sw/a4563bfccb64cbbb"
+    },
+    {
+      "method": "POST",
+      "url": "https://challenges.cloudflare.com/cdn-cgi/challenge-platform/h/b/fo/4030313746:1791137116:6LPHZua7J0NxqCk06cnOsdUE9Jujz_Pj9YdhmnC1bBo/a4563c025a0ef781/ixx3isIG93wFNrpZZv_5Dw2cEOuCrDbcyanKPzmU8sg-1791138381-1.2.1.1-WCpSX2Aj9AfxcVG13rEpMug1m7o7kO2Mt7turLSDisY1hAyQuqS6Pz9d0xpNMpiu"
+    },
+    {
+      "method": "POST",
+      "url": "https://challenges.cloudflare.com/cdn-cgi/challenge-platform/h/b/fo/4030313746:1791137116:6LPHZua7J0NxqCk06cnOsdUE9Jujz_Pj9YdhmnC1bBo/a4563c025a0ef781/ixx3isIG93wFNrpZZv_5Dw2cEOuCrDbcyanKPzmU8sg-1791138381-1.2.1.1-WCpSX2Aj9AfxcVG13rEpMug1m7o7kO2Mt7turLSDisY1hAyQuqS6Pz9d0xpNMpiu"
+    },
+    {
+      "method": "POST",
+      "url": "http://localhost:4050/api/marketing/track-event"
+    },
+    {
+      "method": "POST",
+      "url": "http://localhost:4050/api/marketing/track-event"
+    },
+    {
+      "method": "POST",
+      "url": "https://challenges.cloudflare.com/cdn-cgi/challenge-platform/h/b/fo/4030313746:1791137116:6LPHZua7J0NxqCk06cnOsdUE9Jujz_Pj9YdhmnC1bBo/a4563c025a0ef781/ixx3isIG93wFNrpZZv_5Dw2cEOuCrDbcyanKPzmU8sg-1791138381-1.2.1.1-WCpSX2Aj9AfxcVG13rEpMug1m7o7kO2Mt7turLSDisY1hAyQuqS6Pz9d0xpNMpiu"
+    },
+    {
+      "method": "POST",
+      "url": "http://localhost:4050/api/marketing/track-event"
+    },
+    {
+      "method": "POST",
+      "url": "http://localhost:4050/api/marketing/track-event"
+    },
+    {
+      "method": "POST",
+      "url": "http://localhost:4050/api/marketing/track-event"
+    },
+    {
+      "method": "POST",
+      "url": "http://localhost:4050/api/marketing/track-event"
+    },
+    {
+      "method": "POST",
+      "url": "http://localhost:4050/api/marketing/track-event"
+    },
+    {
+      "method": "POST",
+      "url": "http://localhost:4050/api/marketing/track-event"
+    },
+    {
+      "method": "POST",
+      "url": "http://localhost:4050/api/marketing/track-event"
+    },
+    {
+      "method": "POST",
+      "url": "http://localhost:4050/api/marketing/track-event"
+    },
+    {
+      "method": "POST",
+      "url": "http://localhost:4050/api/marketing/track-event"
+    },
+    {
+      "method": "POST",
+      "url": "http://localhost:4050/api/marketing/track-event"
+    },
+    {
+      "method": "POST",
+      "url": "http://localhost:4050/api/marketing/track-event"
+    },
+    {
+      "method": "POST",
+      "url": "http://localhost:4050/api/marketing/track-event"
+    },
+    {
+      "method": "POST",
+      "url": "http://localhost:4050/api/marketing/track-event"
+    },
+    {
+      "method": "POST",
+      "url": "http://localhost:4050/api/marketing/track-event"
+    },
+    {
+      "method": "POST",
+      "url": "http://localhost:4050/api/marketing/track-event"
+    },
+    {
+      "method": "POST",
+      "url": "http://localhost:4050/api/marketing/track-event"
+    },
+    {
+      "method": "POST",
+      "url": "http://localhost:4050/api/marketing/track-event"
+    },
+    {
+      "method": "POST",
+      "url": "http://localhost:4050/api/marketing/track-event"
+    },
+    {
+      "method": "POST",
+      "url": "http://localhost:4050/api/marketing/track-event"
+    },
+    {
+      "method": "POST",
+      "url": "http://localhost:4050/api/marketing/track-event"
+    },
+    {
+      "method": "POST",
+      "url": "http://localhost:4050/api/marketing/track-event"
+    },
+    {
+      "method": "POST",
+      "url": "http://localhost:4050/api/marketing/track-event"
+    },
+    {
+      "method": "POST",
+      "url": "http://localhost:4050/api/marketing/track-event"
+    },
+    {
+      "method": "POST",
+      "url": "http://localhost:4050/api/marketing/track-event"
+    },
+    {
+      "method": "POST",
+      "url": "https://player.vimeo.com/cdn-cgi/challenge-platform/h/b/precursor/d76008a69eab/0.6345029438862223:1791137120:a6P2uh-kdWAR346Z9j7hMVEaMTcurhmH7Y2Ajt6t-sw/a4563e22def1da33"
+    },
+    {
+      "method": "POST",
+      "url": "https://player.vimeo.com/cdn-cgi/challenge-platform/h/b/precursor/d76008a69eab/0.6345029438862223:1791137120:a6P2uh-kdWAR346Z9j7hMVEaMTcurhmH7Y2Ajt6t-sw/a4563e22ceefda33"
+    },
+    {
+      "method": "POST",
+      "url": "https://challenges.cloudflare.com/cdn-cgi/challenge-platform/h/b/fo/4030313746:1791137116:6LPHZua7J0NxqCk06cnOsdUE9Jujz_Pj9YdhmnC1bBo/a4563e26ff7f8706/QAgltMZLNjCZRAJth4xDZ8R2fPaF1ksPL2S9zrLP9KM-1791138468-1.2.1.1-XEJzxCJgWashisoBE8_0K561ja_nr6i8hWGcZ0OJIg4Nor8Q_Z6oXXy4FXly6N.C"
+    },
+    {
+      "method": "POST",
+      "url": "https://challenges.cloudflare.com/cdn-cgi/challenge-platform/h/b/fo/4030313746:1791137116:6LPHZua7J0NxqCk06cnOsdUE9Jujz_Pj9YdhmnC1bBo/a4563e26ff7f8706/QAgltMZLNjCZRAJth4xDZ8R2fPaF1ksPL2S9zrLP9KM-1791138468-1.2.1.1-XEJzxCJgWashisoBE8_0K561ja_nr6i8hWGcZ0OJIg4Nor8Q_Z6oXXy4FXly6N.C"
+    },
+    {
+      "method": "POST",
+      "url": "http://localhost:4050/api/marketing/track-event"
+    },
+    {
+      "method": "POST",
+      "url": "http://localhost:4050/api/marketing/track-event"
+    },
+    {
+      "method": "POST",
+      "url": "https://challenges.cloudflare.com/cdn-cgi/challenge-platform/h/b/fo/4030313746:1791137116:6LPHZua7J0NxqCk06cnOsdUE9Jujz_Pj9YdhmnC1bBo/a4563e26ff7f8706/QAgltMZLNjCZRAJth4xDZ8R2fPaF1ksPL2S9zrLP9KM-1791138468-1.2.1.1-XEJzxCJgWashisoBE8_0K561ja_nr6i8hWGcZ0OJIg4Nor8Q_Z6oXXy4FXly6N.C"
+    },
+    {
+      "method": "POST",
+      "url": "https://player.vimeo.com/cdn-cgi/challenge-platform/h/b/precursor/d76008a69eab/0.6345029438862223:1791137120:a6P2uh-kdWAR346Z9j7hMVEaMTcurhmH7Y2Ajt6t-sw/a4563e3a2f630366"
+    },
+    {
+      "method": "POST",
+      "url": "https://player.vimeo.com/cdn-cgi/challenge-platform/h/b/precursor/d76008a69eab/0.6345029438862223:1791137120:a6P2uh-kdWAR346Z9j7hMVEaMTcurhmH7Y2Ajt6t-sw/a4563e3a2f610366"
+    },
+    {
+      "method": "POST",
+      "url": "https://challenges.cloudflare.com/cdn-cgi/challenge-platform/h/b/fo/4030313746:1791137116:6LPHZua7J0NxqCk06cnOsdUE9Jujz_Pj9YdhmnC1bBo/a4563e3d2c748706/mWCqj_xm1S2SYlw4wA__LhtkV_jXrVp5R1vspyMIRZ0-1791138472-1.2.1.1-PFUeQ8u1ZrRcFmyCDK5j80I1JYPDnyUbLaFdXPjUKlCD1eM8T7tvP.CTB70MU9Ai"
+    },
+    {
+      "method": "POST",
+      "url": "https://challenges.cloudflare.com/cdn-cgi/challenge-platform/h/b/fo/4030313746:1791137116:6LPHZua7J0NxqCk06cnOsdUE9Jujz_Pj9YdhmnC1bBo/a4563e3d2c748706/mWCqj_xm1S2SYlw4wA__LhtkV_jXrVp5R1vspyMIRZ0-1791138472-1.2.1.1-PFUeQ8u1ZrRcFmyCDK5j80I1JYPDnyUbLaFdXPjUKlCD1eM8T7tvP.CTB70MU9Ai"
+    },
+    {
+      "method": "POST",
+      "url": "http://localhost:4050/api/marketing/track-event"
+    },
+    {
+      "method": "POST",
+      "url": "http://localhost:4050/api/marketing/track-event"
+    },
+    {
+      "method": "POST",
+      "url": "https://challenges.cloudflare.com/cdn-cgi/challenge-platform/h/b/fo/4030313746:1791137116:6LPHZua7J0NxqCk06cnOsdUE9Jujz_Pj9YdhmnC1bBo/a4563e3d2c748706/mWCqj_xm1S2SYlw4wA__LhtkV_jXrVp5R1vspyMIRZ0-1791138472-1.2.1.1-PFUeQ8u1ZrRcFmyCDK5j80I1JYPDnyUbLaFdXPjUKlCD1eM8T7tvP.CTB70MU9Ai"
+    },
+    {
+      "method": "POST",
+      "url": "http://localhost:4050/api/marketing/track-event"
+    },
+    {
+      "method": "POST",
+      "url": "http://localhost:4050/api/marketing/track-event"
+    },
+    {
+      "method": "POST",
+      "url": "https://player.vimeo.com/cdn-cgi/challenge-platform/h/b/precursor/d76008a69eab/0.6345029438862223:1791137120:a6P2uh-kdWAR346Z9j7hMVEaMTcurhmH7Y2Ajt6t-sw/a4563e906db50366"
+    },
+    {
+      "method": "POST",
+      "url": "https://player.vimeo.com/cdn-cgi/challenge-platform/h/b/precursor/d76008a69eab/0.6345029438862223:1791137120:a6P2uh-kdWAR346Z9j7hMVEaMTcurhmH7Y2Ajt6t-sw/a4563e906dbd0366"
+    },
+    {
+      "method": "POST",
+      "url": "https://challenges.cloudflare.com/cdn-cgi/challenge-platform/h/b/fo/4030313746:1791137116:6LPHZua7J0NxqCk06cnOsdUE9Jujz_Pj9YdhmnC1bBo/a4563e924f808706/hDYFAhPeI5BFGui976M42dE_Ia2oM_OPw2vyQfIvpkI-1791138486-1.2.1.1-uOQxpFcuGzVecnn6Q2dvicZdHrIDbmB.e_bwPFcoO5sh61TVn9eGCUgDHNhrOxwb"
+    },
+    {
+      "method": "POST",
+      "url": "https://challenges.cloudflare.com/cdn-cgi/challenge-platform/h/b/fo/4030313746:1791137116:6LPHZua7J0NxqCk06cnOsdUE9Jujz_Pj9YdhmnC1bBo/a4563e924f808706/hDYFAhPeI5BFGui976M42dE_Ia2oM_OPw2vyQfIvpkI-1791138486-1.2.1.1-uOQxpFcuGzVecnn6Q2dvicZdHrIDbmB.e_bwPFcoO5sh61TVn9eGCUgDHNhrOxwb"
+    },
+    {
+      "method": "POST",
+      "url": "https://player.vimeo.com/cdn-cgi/challenge-platform/h/b/precursor/d76008a69eab/0.6345029438862223:1791137120:a6P2uh-kdWAR346Z9j7hMVEaMTcurhmH7Y2Ajt6t-sw/a4563e9799ba0366"
+    },
+    {
+      "method": "POST",
+      "url": "https://player.vimeo.com/cdn-cgi/challenge-platform/h/b/precursor/d76008a69eab/0.6345029438862223:1791137120:a6P2uh-kdWAR346Z9j7hMVEaMTcurhmH7Y2Ajt6t-sw/a4563e9799b80366"
+    },
+    {
+      "method": "POST",
+      "url": "https://challenges.cloudflare.com/cdn-cgi/challenge-platform/h/b/fo/4030313746:1791137116:6LPHZua7J0NxqCk06cnOsdUE9Jujz_Pj9YdhmnC1bBo/a4563e9aa8fa8706/jrlPwO18B9DN1Qcx3BAxLuXvgVlM.mvzSU728_SxyPM-1791138487-1.2.1.1-3I7Si9HMSz9uxx1JL0dV7p1ykBUlxayj_NWz.RbvVsNPS.PbGOrRp2oDTPrSTO_d"
+    },
+    {
+      "method": "POST",
+      "url": "https://challenges.cloudflare.com/cdn-cgi/challenge-platform/h/b/fo/4030313746:1791137116:6LPHZua7J0NxqCk06cnOsdUE9Jujz_Pj9YdhmnC1bBo/a4563e9aa8fa8706/jrlPwO18B9DN1Qcx3BAxLuXvgVlM.mvzSU728_SxyPM-1791138487-1.2.1.1-3I7Si9HMSz9uxx1JL0dV7p1ykBUlxayj_NWz.RbvVsNPS.PbGOrRp2oDTPrSTO_d"
+    },
+    {
+      "method": "POST",
+      "url": "http://localhost:4050/api/marketing/track-event"
+    },
+    {
+      "method": "POST",
+      "url": "http://localhost:4050/api/marketing/track-event"
+    },
+    {
+      "method": "POST",
+      "url": "https://challenges.cloudflare.com/cdn-cgi/challenge-platform/h/b/fo/4030313746:1791137116:6LPHZua7J0NxqCk06cnOsdUE9Jujz_Pj9YdhmnC1bBo/a4563e9aa8fa8706/jrlPwO18B9DN1Qcx3BAxLuXvgVlM.mvzSU728_SxyPM-1791138487-1.2.1.1-3I7Si9HMSz9uxx1JL0dV7p1ykBUlxayj_NWz.RbvVsNPS.PbGOrRp2oDTPrSTO_d"
+    },
+    {
+      "method": "POST",
+      "url": "http://localhost:4050/api/marketing/track-event"
+    },
+    {
+      "method": "POST",
+      "url": "http://localhost:4050/api/marketing/track-event"
+    },
+    {
+      "method": "POST",
+      "url": "http://localhost:4050/api/marketing/track-event"
+    },
+    {
+      "method": "POST",
+      "url": "http://localhost:4050/api/marketing/track-event"
+    },
+    {
+      "method": "POST",
+      "url": "http://localhost:4050/api/marketing/track-event"
+    },
+    {
+      "method": "POST",
+      "url": "http://localhost:4050/api/marketing/track-event"
+    },
+    {
+      "method": "POST",
+      "url": "http://localhost:4050/api/marketing/track-event"
+    },
+    {
+      "method": "POST",
+      "url": "http://localhost:4050/api/marketing/track-event"
+    },
+    {
+      "method": "POST",
+      "url": "http://localhost:4050/api/marketing/track-event"
+    },
+    {
+      "method": "POST",
+      "url": "http://localhost:4050/api/marketing/track-event"
+    },
+    {
+      "method": "POST",
+      "url": "http://localhost:4050/api/marketing/track-event"
+    },
+    {
+      "method": "POST",
+      "url": "http://localhost:4050/api/marketing/track-event"
+    },
+    {
+      "method": "POST",
+      "url": "http://localhost:4050/api/marketing/track-event"
+    },
+    {
+      "method": "POST",
+      "url": "http://localhost:4050/api/marketing/track-event"
+    },
+    {
+      "method": "POST",
+      "url": "http://localhost:4050/api/marketing/track-event"
+    },
+    {
+      "method": "POST",
+      "url": "http://localhost:4050/api/marketing/track-event"
+    },
+    {
+      "method": "POST",
+      "url": "http://localhost:4050/api/marketing/track-event"
+    },
+    {
+      "method": "POST",
+      "url": "http://localhost:4050/api/marketing/track-event"
+    },
+    {
+      "method": "POST",
+      "url": "http://localhost:4050/api/marketing/track-event"
+    },
+    {
+      "method": "POST",
+      "url": "http://localhost:4050/api/marketing/track-event"
+    },
+    {
+      "method": "POST",
+      "url": "http://localhost:4050/api/marketing/track-event"
+    },
+    {
+      "method": "POST",
+      "url": "http://localhost:4050/api/marketing/track-event"
+    },
+    {
+      "method": "POST",
+      "url": "http://localhost:4050/api/marketing/track-event"
+    },
+    {
+      "method": "POST",
+      "url": "http://localhost:4050/api/marketing/track-event"
+    },
+    {
+      "method": "POST",
+      "url": "https://player.vimeo.com/cdn-cgi/challenge-platform/h/b/precursor/d76008a69eab/0.6345029438862223:1791137120:a6P2uh-kdWAR346Z9j7hMVEaMTcurhmH7Y2Ajt6t-sw/a45640af6970ddef"
+    },
+    {
+      "method": "POST",
+      "url": "https://player.vimeo.com/cdn-cgi/challenge-platform/h/b/precursor/d76008a69eab/0.6345029438862223:1791137120:a6P2uh-kdWAR346Z9j7hMVEaMTcurhmH7Y2Ajt6t-sw/a45640af6963ddef"
+    },
+    {
+      "method": "POST",
+      "url": "https://challenges.cloudflare.com/cdn-cgi/challenge-platform/h/b/fo/4030313746:1791137116:6LPHZua7J0NxqCk06cnOsdUE9Jujz_Pj9YdhmnC1bBo/a45640b39cbaf91f/1WRtpv5oGX7swyOcvl_acyKBYUj1TUa2wng15YO2tfc-1791138573-1.2.1.1-gCU1n86zPqa9T2QtUeDJUFUvNlbMGMaE9EUKWNUxQmpqFUyYGj.YyzAGCO4JdPmx"
+    },
+    {
+      "method": "POST",
+      "url": "https://challenges.cloudflare.com/cdn-cgi/challenge-platform/h/b/fo/4030313746:1791137116:6LPHZua7J0NxqCk06cnOsdUE9Jujz_Pj9YdhmnC1bBo/a45640b39cbaf91f/1WRtpv5oGX7swyOcvl_acyKBYUj1TUa2wng15YO2tfc-1791138573-1.2.1.1-gCU1n86zPqa9T2QtUeDJUFUvNlbMGMaE9EUKWNUxQmpqFUyYGj.YyzAGCO4JdPmx"
+    },
+    {
+      "method": "POST",
+      "url": "http://localhost:4050/api/marketing/track-event"
+    },
+    {
+      "method": "POST",
+      "url": "http://localhost:4050/api/marketing/track-event"
+    },
+    {
+      "method": "POST",
+      "url": "https://challenges.cloudflare.com/cdn-cgi/challenge-platform/h/b/fo/4030313746:1791137116:6LPHZua7J0NxqCk06cnOsdUE9Jujz_Pj9YdhmnC1bBo/a45640b39cbaf91f/1WRtpv5oGX7swyOcvl_acyKBYUj1TUa2wng15YO2tfc-1791138573-1.2.1.1-gCU1n86zPqa9T2QtUeDJUFUvNlbMGMaE9EUKWNUxQmpqFUyYGj.YyzAGCO4JdPmx"
+    },
+    {
+      "method": "POST",
+      "url": "https://player.vimeo.com/cdn-cgi/challenge-platform/h/b/precursor/d76008a69eab/0.6345029438862223:1791137120:a6P2uh-kdWAR346Z9j7hMVEaMTcurhmH7Y2Ajt6t-sw/a45640c71b4f8df2"
+    },
+    {
+      "method": "POST",
+      "url": "https://player.vimeo.com/cdn-cgi/challenge-platform/h/b/precursor/d76008a69eab/0.6345029438862223:1791137120:a6P2uh-kdWAR346Z9j7hMVEaMTcurhmH7Y2Ajt6t-sw/a45640c71b518df2"
+    },
+    {
+      "method": "POST",
+      "url": "https://challenges.cloudflare.com/cdn-cgi/challenge-platform/h/b/fo/4030313746:1791137116:6LPHZua7J0NxqCk06cnOsdUE9Jujz_Pj9YdhmnC1bBo/a45640ca081af91f/7ByNyZtNrdC2vXQ011qYDbvHBM041tweq1XprjXUE7g-1791138576-1.2.1.1-jE6FUH3UB8KWfbnpAsDiSD046.dN.y.gmcHPybSK3sWLfU3qa6FBcW98DOgrwgIq"
+    },
+    {
+      "method": "POST",
+      "url": "https://challenges.cloudflare.com/cdn-cgi/challenge-platform/h/b/fo/4030313746:1791137116:6LPHZua7J0NxqCk06cnOsdUE9Jujz_Pj9YdhmnC1bBo/a45640ca081af91f/7ByNyZtNrdC2vXQ011qYDbvHBM041tweq1XprjXUE7g-1791138576-1.2.1.1-jE6FUH3UB8KWfbnpAsDiSD046.dN.y.gmcHPybSK3sWLfU3qa6FBcW98DOgrwgIq"
+    },
+    {
+      "method": "POST",
+      "url": "http://localhost:4050/api/marketing/track-event"
+    },
+    {
+      "method": "POST",
+      "url": "http://localhost:4050/api/marketing/track-event"
+    },
+    {
+      "method": "POST",
+      "url": "https://challenges.cloudflare.com/cdn-cgi/challenge-platform/h/b/fo/4030313746:1791137116:6LPHZua7J0NxqCk06cnOsdUE9Jujz_Pj9YdhmnC1bBo/a45640ca081af91f/7ByNyZtNrdC2vXQ011qYDbvHBM041tweq1XprjXUE7g-1791138576-1.2.1.1-jE6FUH3UB8KWfbnpAsDiSD046.dN.y.gmcHPybSK3sWLfU3qa6FBcW98DOgrwgIq"
+    },
+    {
+      "method": "POST",
+      "url": "http://localhost:4050/api/marketing/track-event"
+    },
+    {
+      "method": "POST",
+      "url": "http://localhost:4050/api/marketing/track-event"
+    },
+    {
+      "method": "POST",
+      "url": "https://player.vimeo.com/cdn-cgi/challenge-platform/h/b/precursor/d76008a69eab/0.6345029438862223:1791137120:a6P2uh-kdWAR346Z9j7hMVEaMTcurhmH7Y2Ajt6t-sw/a456411d7bd08df2"
+    },
+    {
+      "method": "POST",
+      "url": "https://player.vimeo.com/cdn-cgi/challenge-platform/h/b/precursor/d76008a69eab/0.6345029438862223:1791137120:a6P2uh-kdWAR346Z9j7hMVEaMTcurhmH7Y2Ajt6t-sw/a456411d7bd18df2"
+    },
+    {
+      "method": "POST",
+      "url": "https://challenges.cloudflare.com/cdn-cgi/challenge-platform/h/b/fo/4030313746:1791137116:6LPHZua7J0NxqCk06cnOsdUE9Jujz_Pj9YdhmnC1bBo/a456411f486df91f/JDCtFKOec_S82V3YGAUIuzvtpBsK1SGH6lV5lnbT8a8-1791138590-1.2.1.1-jsKqCvKVBgCGKpgeJ4liQZ8xGqEpkoqOpBZ_52W6HsQFqE9639Yfl2vZss7_NFEu"
+    },
+    {
+      "method": "POST",
+      "url": "https://challenges.cloudflare.com/cdn-cgi/challenge-platform/h/b/fo/4030313746:1791137116:6LPHZua7J0NxqCk06cnOsdUE9Jujz_Pj9YdhmnC1bBo/a456411f486df91f/JDCtFKOec_S82V3YGAUIuzvtpBsK1SGH6lV5lnbT8a8-1791138590-1.2.1.1-jsKqCvKVBgCGKpgeJ4liQZ8xGqEpkoqOpBZ_52W6HsQFqE9639Yfl2vZss7_NFEu"
+    },
+    {
+      "method": "POST",
+      "url": "https://player.vimeo.com/cdn-cgi/challenge-platform/h/b/precursor/d76008a69eab/0.6345029438862223:1791137120:a6P2uh-kdWAR346Z9j7hMVEaMTcurhmH7Y2Ajt6t-sw/a4564125395b8df2"
+    },
+    {
+      "method": "POST",
+      "url": "https://player.vimeo.com/cdn-cgi/challenge-platform/h/b/precursor/d76008a69eab/0.6345029438862223:1791137120:a6P2uh-kdWAR346Z9j7hMVEaMTcurhmH7Y2Ajt6t-sw/a456412539598df2"
+    },
+    {
+      "method": "POST",
+      "url": "https://challenges.cloudflare.com/cdn-cgi/challenge-platform/h/b/fo/4030313746:1791137116:6LPHZua7J0NxqCk06cnOsdUE9Jujz_Pj9YdhmnC1bBo/a45641274a09f91f/8yoOuGplwcbMJNGp96Bh24DUZSS.ofDl2jeGo8M9PvY-1791138591-1.2.1.1-PcubYz_fBUj.YftDk2G3duXouaKePEDfxXLOFMb_zmL9HyJWvMtECc5S17W4GcC1"
+    },
+    {
+      "method": "POST",
+      "url": "https://challenges.cloudflare.com/cdn-cgi/challenge-platform/h/b/fo/4030313746:1791137116:6LPHZua7J0NxqCk06cnOsdUE9Jujz_Pj9YdhmnC1bBo/a45641274a09f91f/8yoOuGplwcbMJNGp96Bh24DUZSS.ofDl2jeGo8M9PvY-1791138591-1.2.1.1-PcubYz_fBUj.YftDk2G3duXouaKePEDfxXLOFMb_zmL9HyJWvMtECc5S17W4GcC1"
+    },
+    {
+      "method": "POST",
+      "url": "http://localhost:4050/api/marketing/track-event"
+    },
+    {
+      "method": "POST",
+      "url": "http://localhost:4050/api/marketing/track-event"
+    },
+    {
+      "method": "POST",
+      "url": "https://challenges.cloudflare.com/cdn-cgi/challenge-platform/h/b/fo/4030313746:1791137116:6LPHZua7J0NxqCk06cnOsdUE9Jujz_Pj9YdhmnC1bBo/a45641274a09f91f/8yoOuGplwcbMJNGp96Bh24DUZSS.ofDl2jeGo8M9PvY-1791138591-1.2.1.1-PcubYz_fBUj.YftDk2G3duXouaKePEDfxXLOFMb_zmL9HyJWvMtECc5S17W4GcC1"
+    },
+    {
+      "method": "POST",
+      "url": "http://localhost:4050/api/marketing/track-event"
+    },
+    {
+      "method": "POST",
+      "url": "http://localhost:4050/api/marketing/track-event"
+    },
+    {
+      "method": "POST",
+      "url": "http://localhost:4050/api/marketing/track-event"
+    },
+    {
+      "method": "POST",
+      "url": "http://localhost:4050/api/marketing/track-event"
+    },
+    {
+      "method": "POST",
+      "url": "http://localhost:4050/api/marketing/track-event"
+    },
+    {
+      "method": "POST",
+      "url": "http://localhost:4050/api/marketing/track-event"
+    },
+    {
+      "method": "POST",
+      "url": "http://localhost:4050/api/marketing/track-event"
+    },
+    {
+      "method": "POST",
+      "url": "http://localhost:4050/api/marketing/track-event"
+    },
+    {
+      "method": "POST",
+      "url": "http://localhost:4050/api/marketing/track-event"
+    },
+    {
+      "method": "POST",
+      "url": "http://localhost:4050/api/marketing/track-event"
+    },
+    {
+      "method": "POST",
+      "url": "http://localhost:4050/api/marketing/track-event"
+    },
+    {
+      "method": "POST",
+      "url": "http://localhost:4050/api/marketing/track-event"
+    },
+    {
+      "method": "POST",
+      "url": "http://localhost:4050/api/marketing/track-event"
+    },
+    {
+      "method": "POST",
+      "url": "http://localhost:4050/api/marketing/track-event"
+    },
+    {
+      "method": "POST",
+      "url": "http://localhost:4050/api/marketing/track-event"
+    },
+    {
+      "method": "POST",
+      "url": "http://localhost:4050/api/marketing/track-event"
+    },
+    {
+      "method": "POST",
+      "url": "http://localhost:4050/api/marketing/track-event"
+    },
+    {
+      "method": "POST",
+      "url": "http://localhost:4050/api/marketing/track-event"
+    },
+    {
+      "method": "POST",
+      "url": "http://localhost:4050/api/marketing/track-event"
+    },
+    {
+      "method": "POST",
+      "url": "http://localhost:4050/api/marketing/track-event"
+    },
+    {
+      "method": "POST",
+      "url": "http://localhost:4050/api/marketing/track-event"
+    },
+    {
+      "method": "POST",
+      "url": "http://localhost:4050/api/marketing/track-event"
+    },
+    {
+      "method": "POST",
+      "url": "http://localhost:4050/api/marketing/track-event"
+    },
+    {
+      "method": "POST",
+      "url": "http://localhost:4050/api/marketing/track-event"
+    },
+    {
+      "method": "POST",
+      "url": "https://player.vimeo.com/cdn-cgi/challenge-platform/h/b/precursor/d76008a69eab/0.6345029438862223:1791137120:a6P2uh-kdWAR346Z9j7hMVEaMTcurhmH7Y2Ajt6t-sw/a45643361922b177"
+    },
+    {
+      "method": "POST",
+      "url": "https://player.vimeo.com/cdn-cgi/challenge-platform/h/b/precursor/d76008a69eab/0.6345029438862223:1791137120:a6P2uh-kdWAR346Z9j7hMVEaMTcurhmH7Y2Ajt6t-sw/a4564336191fb177"
+    },
+    {
+      "method": "POST",
+      "url": "https://challenges.cloudflare.com/cdn-cgi/challenge-platform/h/b/fo/4030313746:1791137116:6LPHZua7J0NxqCk06cnOsdUE9Jujz_Pj9YdhmnC1bBo/a4564339f996aa8d/u.JiePCnNtl6l.jlZ98J7CEiDV1WSbKOdRYCLKpST0I-1791138676-1.2.1.1-_yv8Q9womDLiCeikPkNqcFddSPFmd3EvjBdxaEdTfbWmqIOVtsuHe2UFytdIEAb."
+    },
+    {
+      "method": "POST",
+      "url": "https://challenges.cloudflare.com/cdn-cgi/challenge-platform/h/b/fo/4030313746:1791137116:6LPHZua7J0NxqCk06cnOsdUE9Jujz_Pj9YdhmnC1bBo/a4564339f996aa8d/u.JiePCnNtl6l.jlZ98J7CEiDV1WSbKOdRYCLKpST0I-1791138676-1.2.1.1-_yv8Q9womDLiCeikPkNqcFddSPFmd3EvjBdxaEdTfbWmqIOVtsuHe2UFytdIEAb."
+    },
+    {
+      "method": "POST",
+      "url": "http://localhost:4050/api/marketing/track-event"
+    },
+    {
+      "method": "POST",
+      "url": "http://localhost:4050/api/marketing/track-event"
+    },
+    {
+      "method": "POST",
+      "url": "https://challenges.cloudflare.com/cdn-cgi/challenge-platform/h/b/fo/4030313746:1791137116:6LPHZua7J0NxqCk06cnOsdUE9Jujz_Pj9YdhmnC1bBo/a4564339f996aa8d/u.JiePCnNtl6l.jlZ98J7CEiDV1WSbKOdRYCLKpST0I-1791138676-1.2.1.1-_yv8Q9womDLiCeikPkNqcFddSPFmd3EvjBdxaEdTfbWmqIOVtsuHe2UFytdIEAb."
+    },
+    {
+      "method": "POST",
+      "url": "https://player.vimeo.com/cdn-cgi/challenge-platform/h/b/precursor/d76008a69eab/0.6345029438862223:1791137120:a6P2uh-kdWAR346Z9j7hMVEaMTcurhmH7Y2Ajt6t-sw/a456434a4d110270"
+    },
+    {
+      "method": "POST",
+      "url": "https://player.vimeo.com/cdn-cgi/challenge-platform/h/b/precursor/d76008a69eab/0.6345029438862223:1791137120:a6P2uh-kdWAR346Z9j7hMVEaMTcurhmH7Y2Ajt6t-sw/a456434a4d120270"
+    },
+    {
+      "method": "POST",
+      "url": "https://challenges.cloudflare.com/cdn-cgi/challenge-platform/h/b/fo/4030313746:1791137116:6LPHZua7J0NxqCk06cnOsdUE9Jujz_Pj9YdhmnC1bBo/a456434c4cb4aa8d/qs6xB386tum6SUtVyl0htIAEMy4tQ4qx3F_KdsWoBkg-1791138679-1.2.1.1-dz1l_uGA3kD1D4yNhuwzMhuZzgpNMS7RdZQBljdsEYF9pGuQO1FPuqAohcV9kOYP"
+    },
+    {
+      "method": "POST",
+      "url": "https://challenges.cloudflare.com/cdn-cgi/challenge-platform/h/b/fo/4030313746:1791137116:6LPHZua7J0NxqCk06cnOsdUE9Jujz_Pj9YdhmnC1bBo/a456434c4cb4aa8d/qs6xB386tum6SUtVyl0htIAEMy4tQ4qx3F_KdsWoBkg-1791138679-1.2.1.1-dz1l_uGA3kD1D4yNhuwzMhuZzgpNMS7RdZQBljdsEYF9pGuQO1FPuqAohcV9kOYP"
+    },
+    {
+      "method": "POST",
+      "url": "http://localhost:4050/api/marketing/track-event"
+    },
+    {
+      "method": "POST",
+      "url": "http://localhost:4050/api/marketing/track-event"
+    },
+    {
+      "method": "POST",
+      "url": "https://challenges.cloudflare.com/cdn-cgi/challenge-platform/h/b/fo/4030313746:1791137116:6LPHZua7J0NxqCk06cnOsdUE9Jujz_Pj9YdhmnC1bBo/a456434c4cb4aa8d/qs6xB386tum6SUtVyl0htIAEMy4tQ4qx3F_KdsWoBkg-1791138679-1.2.1.1-dz1l_uGA3kD1D4yNhuwzMhuZzgpNMS7RdZQBljdsEYF9pGuQO1FPuqAohcV9kOYP"
+    },
+    {
+      "method": "POST",
+      "url": "http://localhost:4050/api/marketing/track-event"
+    },
+    {
+      "method": "POST",
+      "url": "http://localhost:4050/api/marketing/track-event"
+    },
+    {
+      "method": "POST",
+      "url": "https://player.vimeo.com/cdn-cgi/challenge-platform/h/b/precursor/d76008a69eab/0.6345029438862223:1791137120:a6P2uh-kdWAR346Z9j7hMVEaMTcurhmH7Y2Ajt6t-sw/a45643a14a5e0270"
+    },
+    {
+      "method": "POST",
+      "url": "https://player.vimeo.com/cdn-cgi/challenge-platform/h/b/precursor/d76008a69eab/0.6345029438862223:1791137120:a6P2uh-kdWAR346Z9j7hMVEaMTcurhmH7Y2Ajt6t-sw/a45643a14a580270"
+    },
+    {
+      "method": "POST",
+      "url": "https://challenges.cloudflare.com/cdn-cgi/challenge-platform/h/b/fo/4030313746:1791137116:6LPHZua7J0NxqCk06cnOsdUE9Jujz_Pj9YdhmnC1bBo/a45643a2fd06aa8d/uGesnnRE498pghD10L9qlyKTkVY1D04rE0jXkwdq5zY-1791138693-1.2.1.1-3ihvMdRFT0BEWv0uFx1svW7Ioyj7llzujtY59m9drKY3JRLOIsVhCjFjl7JzA8.Y"
+    },
+    {
+      "method": "POST",
+      "url": "https://challenges.cloudflare.com/cdn-cgi/challenge-platform/h/b/fo/4030313746:1791137116:6LPHZua7J0NxqCk06cnOsdUE9Jujz_Pj9YdhmnC1bBo/a45643a2fd06aa8d/uGesnnRE498pghD10L9qlyKTkVY1D04rE0jXkwdq5zY-1791138693-1.2.1.1-3ihvMdRFT0BEWv0uFx1svW7Ioyj7llzujtY59m9drKY3JRLOIsVhCjFjl7JzA8.Y"
+    },
+    {
+      "method": "POST",
+      "url": "https://player.vimeo.com/cdn-cgi/challenge-platform/h/b/precursor/d76008a69eab/0.6345029438862223:1791137120:a6P2uh-kdWAR346Z9j7hMVEaMTcurhmH7Y2Ajt6t-sw/a45643a8ef270270"
+    },
+    {
+      "method": "POST",
+      "url": "https://player.vimeo.com/cdn-cgi/challenge-platform/h/b/precursor/d76008a69eab/0.6345029438862223:1791137120:a6P2uh-kdWAR346Z9j7hMVEaMTcurhmH7Y2Ajt6t-sw/a45643a8ef240270"
+    },
+    {
+      "method": "POST",
+      "url": "https://challenges.cloudflare.com/cdn-cgi/challenge-platform/h/b/fo/4030313746:1791137116:6LPHZua7J0NxqCk06cnOsdUE9Jujz_Pj9YdhmnC1bBo/a45643ab0e4eaa8d/51WHTHUjybgSGpgXSq_745pPxfL3gHcEiqE2UhXLukE-1791138694-1.2.1.1-oA2f0soGoujs0cLXRYe1GpYKpQkVZWgtjcTw5YjdDwZ3vEsyb6CnuobwgM7P9.Fd"
+    },
+    {
+      "method": "POST",
+      "url": "https://challenges.cloudflare.com/cdn-cgi/challenge-platform/h/b/fo/4030313746:1791137116:6LPHZua7J0NxqCk06cnOsdUE9Jujz_Pj9YdhmnC1bBo/a45643ab0e4eaa8d/51WHTHUjybgSGpgXSq_745pPxfL3gHcEiqE2UhXLukE-1791138694-1.2.1.1-oA2f0soGoujs0cLXRYe1GpYKpQkVZWgtjcTw5YjdDwZ3vEsyb6CnuobwgM7P9.Fd"
+    },
+    {
+      "method": "POST",
+      "url": "http://localhost:4050/api/marketing/track-event"
+    },
+    {
+      "method": "POST",
+      "url": "http://localhost:4050/api/marketing/track-event"
+    },
+    {
+      "method": "POST",
+      "url": "https://challenges.cloudflare.com/cdn-cgi/challenge-platform/h/b/fo/4030313746:1791137116:6LPHZua7J0NxqCk06cnOsdUE9Jujz_Pj9YdhmnC1bBo/a45643ab0e4eaa8d/51WHTHUjybgSGpgXSq_745pPxfL3gHcEiqE2UhXLukE-1791138694-1.2.1.1-oA2f0soGoujs0cLXRYe1GpYKpQkVZWgtjcTw5YjdDwZ3vEsyb6CnuobwgM7P9.Fd"
+    },
+    {
+      "method": "POST",
+      "url": "http://localhost:4050/api/marketing/track-event"
+    },
+    {
+      "method": "POST",
+      "url": "http://localhost:4050/api/marketing/track-event"
+    },
+    {
+      "method": "POST",
+      "url": "http://localhost:4050/api/marketing/track-event"
+    },
+    {
+      "method": "POST",
+      "url": "http://localhost:4050/api/marketing/track-event"
+    },
+    {
+      "method": "POST",
+      "url": "http://localhost:4050/api/marketing/track-event"
+    },
+    {
+      "method": "POST",
+      "url": "http://localhost:4050/api/marketing/track-event"
+    },
+    {
+      "method": "POST",
+      "url": "http://localhost:4050/api/marketing/track-event"
+    },
+    {
+      "method": "POST",
+      "url": "http://localhost:4050/api/marketing/track-event"
+    },
+    {
+      "method": "POST",
+      "url": "http://localhost:4050/api/marketing/track-event"
+    },
+    {
+      "method": "POST",
+      "url": "http://localhost:4050/api/marketing/track-event"
+    },
+    {
+      "method": "POST",
+      "url": "http://localhost:4050/api/marketing/track-event"
+    },
+    {
+      "method": "POST",
+      "url": "http://localhost:4050/api/marketing/track-event"
+    },
+    {
+      "method": "POST",
+      "url": "http://localhost:4050/api/marketing/track-event"
+    },
+    {
+      "method": "POST",
+      "url": "http://localhost:4050/api/marketing/track-event"
+    },
+    {
+      "method": "POST",
+      "url": "http://localhost:4050/api/marketing/track-event"
+    },
+    {
+      "method": "POST",
+      "url": "http://localhost:4050/api/marketing/track-event"
+    },
+    {
+      "method": "POST",
+      "url": "http://localhost:4050/api/marketing/track-event"
+    },
+    {
+      "method": "POST",
+      "url": "http://localhost:4050/api/marketing/track-event"
+    },
+    {
+      "method": "POST",
+      "url": "http://localhost:4050/api/marketing/track-event"
+    },
+    {
+      "method": "POST",
+      "url": "http://localhost:4050/api/marketing/track-event"
+    },
+    {
+      "method": "POST",
+      "url": "http://localhost:4050/api/marketing/track-event"
+    },
+    {
+      "method": "POST",
+      "url": "http://localhost:4050/api/marketing/track-event"
+    },
+    {
+      "method": "POST",
+      "url": "http://localhost:4050/api/marketing/track-event"
+    },
+    {
+      "method": "POST",
+      "url": "http://localhost:4050/api/marketing/track-event"
+    },
+    {
+      "method": "POST",
+      "url": "https://player.vimeo.com/cdn-cgi/challenge-platform/h/b/precursor/d76008a69eab/0.6345029438862223:1791137120:a6P2uh-kdWAR346Z9j7hMVEaMTcurhmH7Y2Ajt6t-sw/a45645bd896f344b"
+    },
+    {
+      "method": "POST",
+      "url": "https://player.vimeo.com/cdn-cgi/challenge-platform/h/b/precursor/d76008a69eab/0.6345029438862223:1791137120:a6P2uh-kdWAR346Z9j7hMVEaMTcurhmH7Y2Ajt6t-sw/a45645bd8968344b"
+    },
+    {
+      "method": "POST",
+      "url": "https://challenges.cloudflare.com/cdn-cgi/challenge-platform/h/b/fo/4030313746:1791137116:6LPHZua7J0NxqCk06cnOsdUE9Jujz_Pj9YdhmnC1bBo/a45645c0b924f2f5/_7vZkrD.FgyGykUcubQw25p45wArK7mjDrf9lALEsqQ-1791138780-1.2.1.1-GNsNHDrDuI7PQ_YsnMMc7kSkNpwwJQd6y9NcQHRJj0Mp3OqFEGZHuC.QpO2TLVBb"
+    },
+    {
+      "method": "POST",
+      "url": "https://challenges.cloudflare.com/cdn-cgi/challenge-platform/h/b/fo/4030313746:1791137116:6LPHZua7J0NxqCk06cnOsdUE9Jujz_Pj9YdhmnC1bBo/a45645c0b924f2f5/_7vZkrD.FgyGykUcubQw25p45wArK7mjDrf9lALEsqQ-1791138780-1.2.1.1-GNsNHDrDuI7PQ_YsnMMc7kSkNpwwJQd6y9NcQHRJj0Mp3OqFEGZHuC.QpO2TLVBb"
+    },
+    {
+      "method": "POST",
+      "url": "http://localhost:4050/api/marketing/track-event"
+    },
+    {
+      "method": "POST",
+      "url": "http://localhost:4050/api/marketing/track-event"
+    },
+    {
+      "method": "POST",
+      "url": "https://challenges.cloudflare.com/cdn-cgi/challenge-platform/h/b/fo/4030313746:1791137116:6LPHZua7J0NxqCk06cnOsdUE9Jujz_Pj9YdhmnC1bBo/a45645c0b924f2f5/_7vZkrD.FgyGykUcubQw25p45wArK7mjDrf9lALEsqQ-1791138780-1.2.1.1-GNsNHDrDuI7PQ_YsnMMc7kSkNpwwJQd6y9NcQHRJj0Mp3OqFEGZHuC.QpO2TLVBb"
+    },
+    {
+      "method": "POST",
+      "url": "https://player.vimeo.com/cdn-cgi/challenge-platform/h/b/precursor/d76008a69eab/0.6345029438862223:1791137120:a6P2uh-kdWAR346Z9j7hMVEaMTcurhmH7Y2Ajt6t-sw/a45645d10e7b1db4"
+    },
+    {
+      "method": "POST",
+      "url": "https://player.vimeo.com/cdn-cgi/challenge-platform/h/b/precursor/d76008a69eab/0.6345029438862223:1791137120:a6P2uh-kdWAR346Z9j7hMVEaMTcurhmH7Y2Ajt6t-sw/a45645d10e781db4"
+    },
+    {
+      "method": "POST",
+      "url": "https://challenges.cloudflare.com/cdn-cgi/challenge-platform/h/b/fo/4030313746:1791137116:6LPHZua7J0NxqCk06cnOsdUE9Jujz_Pj9YdhmnC1bBo/a45645d36c25f2f5/9Hu1s7WfHYcrjqGr43OaLeKyXr_5pKR77ijag4PTuBU-1791138783-1.2.1.1-GLwKXjsiYYHEicZ07DcJrejP2jbAcMqEaG1kOaiNDv7VKu67eL4FnsTBxCLkzno2"
+    },
+    {
+      "method": "POST",
+      "url": "https://challenges.cloudflare.com/cdn-cgi/challenge-platform/h/b/fo/4030313746:1791137116:6LPHZua7J0NxqCk06cnOsdUE9Jujz_Pj9YdhmnC1bBo/a45645d36c25f2f5/9Hu1s7WfHYcrjqGr43OaLeKyXr_5pKR77ijag4PTuBU-1791138783-1.2.1.1-GLwKXjsiYYHEicZ07DcJrejP2jbAcMqEaG1kOaiNDv7VKu67eL4FnsTBxCLkzno2"
+    },
+    {
+      "method": "POST",
+      "url": "http://localhost:4050/api/marketing/track-event"
+    },
+    {
+      "method": "POST",
+      "url": "http://localhost:4050/api/marketing/track-event"
+    },
+    {
+      "method": "POST",
+      "url": "https://challenges.cloudflare.com/cdn-cgi/challenge-platform/h/b/fo/4030313746:1791137116:6LPHZua7J0NxqCk06cnOsdUE9Jujz_Pj9YdhmnC1bBo/a45645d36c25f2f5/9Hu1s7WfHYcrjqGr43OaLeKyXr_5pKR77ijag4PTuBU-1791138783-1.2.1.1-GLwKXjsiYYHEicZ07DcJrejP2jbAcMqEaG1kOaiNDv7VKu67eL4FnsTBxCLkzno2"
+    },
+    {
+      "method": "POST",
+      "url": "http://localhost:4050/api/marketing/track-event"
+    },
+    {
+      "method": "POST",
+      "url": "http://localhost:4050/api/marketing/track-event"
+    },
+    {
+      "method": "POST",
+      "url": "https://player.vimeo.com/cdn-cgi/challenge-platform/h/b/precursor/d76008a69eab/0.6345029438862223:1791137120:a6P2uh-kdWAR346Z9j7hMVEaMTcurhmH7Y2Ajt6t-sw/a456462a6a9c1db4"
+    },
+    {
+      "method": "POST",
+      "url": "https://player.vimeo.com/cdn-cgi/challenge-platform/h/b/precursor/d76008a69eab/0.6345029438862223:1791137120:a6P2uh-kdWAR346Z9j7hMVEaMTcurhmH7Y2Ajt6t-sw/a456462a6a981db4"
+    },
+    {
+      "method": "POST",
+      "url": "https://challenges.cloudflare.com/cdn-cgi/challenge-platform/h/b/fo/4030313746:1791137116:6LPHZua7J0NxqCk06cnOsdUE9Jujz_Pj9YdhmnC1bBo/a456462c4bdff2f5/m4O0Xgz5YwEkKw7NvCO.6p6YE3lAMLNyP.00d729vcU-1791138797-1.2.1.1-3rQFivQ1_8FCd7dpgSlSAJfDXzZigSbnigPJXOQmyxPlc5AdcAOEfZJuLctKJlkF"
+    },
+    {
+      "method": "POST",
+      "url": "https://challenges.cloudflare.com/cdn-cgi/challenge-platform/h/b/fo/4030313746:1791137116:6LPHZua7J0NxqCk06cnOsdUE9Jujz_Pj9YdhmnC1bBo/a456462c4bdff2f5/m4O0Xgz5YwEkKw7NvCO.6p6YE3lAMLNyP.00d729vcU-1791138797-1.2.1.1-3rQFivQ1_8FCd7dpgSlSAJfDXzZigSbnigPJXOQmyxPlc5AdcAOEfZJuLctKJlkF"
+    },
+    {
+      "method": "POST",
+      "url": "https://player.vimeo.com/cdn-cgi/challenge-platform/h/b/precursor/d76008a69eab/0.6345029438862223:1791137120:a6P2uh-kdWAR346Z9j7hMVEaMTcurhmH7Y2Ajt6t-sw/a45646328f1c1db4"
+    },
+    {
+      "method": "POST",
+      "url": "https://player.vimeo.com/cdn-cgi/challenge-platform/h/b/precursor/d76008a69eab/0.6345029438862223:1791137120:a6P2uh-kdWAR346Z9j7hMVEaMTcurhmH7Y2Ajt6t-sw/a45646328f161db4"
+    },
+    {
+      "method": "POST",
+      "url": "https://challenges.cloudflare.com/cdn-cgi/challenge-platform/h/b/fo/4030313746:1791137116:6LPHZua7J0NxqCk06cnOsdUE9Jujz_Pj9YdhmnC1bBo/a45646344d83f2f5/eir3oNSlgsnBb94_A_bbgqnDeJQJbOEVY6wHhxg4o_M-1791138798-1.2.1.1-copiwCDangcMWM2RNDGss0mrFsg7r8JMDG5hsW.s9U0yYAkaZ4DYH1BFqV44gdbs"
+    },
+    {
+      "method": "POST",
+      "url": "https://challenges.cloudflare.com/cdn-cgi/challenge-platform/h/b/fo/4030313746:1791137116:6LPHZua7J0NxqCk06cnOsdUE9Jujz_Pj9YdhmnC1bBo/a45646344d83f2f5/eir3oNSlgsnBb94_A_bbgqnDeJQJbOEVY6wHhxg4o_M-1791138798-1.2.1.1-copiwCDangcMWM2RNDGss0mrFsg7r8JMDG5hsW.s9U0yYAkaZ4DYH1BFqV44gdbs"
+    },
+    {
+      "method": "POST",
+      "url": "http://localhost:4050/api/marketing/track-event"
+    },
+    {
+      "method": "POST",
+      "url": "http://localhost:4050/api/marketing/track-event"
+    },
+    {
+      "method": "POST",
+      "url": "https://challenges.cloudflare.com/cdn-cgi/challenge-platform/h/b/fo/4030313746:1791137116:6LPHZua7J0NxqCk06cnOsdUE9Jujz_Pj9YdhmnC1bBo/a45646344d83f2f5/eir3oNSlgsnBb94_A_bbgqnDeJQJbOEVY6wHhxg4o_M-1791138798-1.2.1.1-copiwCDangcMWM2RNDGss0mrFsg7r8JMDG5hsW.s9U0yYAkaZ4DYH1BFqV44gdbs"
+    },
+    {
+      "method": "POST",
+      "url": "http://localhost:4050/api/marketing/track-event"
+    },
+    {
+      "method": "POST",
+      "url": "http://localhost:4050/api/marketing/track-event"
+    },
+    {
+      "method": "POST",
+      "url": "http://localhost:4050/api/marketing/track-event"
+    },
+    {
+      "method": "POST",
+      "url": "http://localhost:4050/api/marketing/track-event"
+    },
+    {
+      "method": "POST",
+      "url": "http://localhost:4050/api/marketing/track-event"
+    },
+    {
+      "method": "POST",
+      "url": "http://localhost:4050/api/marketing/track-event"
+    },
+    {
+      "method": "POST",
+      "url": "http://localhost:4050/api/marketing/track-event"
+    },
+    {
+      "method": "POST",
+      "url": "http://localhost:4050/api/marketing/track-event"
+    },
+    {
+      "method": "POST",
+      "url": "http://localhost:4050/api/marketing/track-event"
+    },
+    {
+      "method": "POST",
+      "url": "http://localhost:4050/api/marketing/track-event"
+    },
+    {
+      "method": "POST",
+      "url": "http://localhost:4050/api/marketing/track-event"
+    },
+    {
+      "method": "POST",
+      "url": "http://localhost:4050/api/marketing/track-event"
+    },
+    {
+      "method": "POST",
+      "url": "http://localhost:4050/api/marketing/track-event"
+    },
+    {
+      "method": "POST",
+      "url": "http://localhost:4050/api/marketing/track-event"
+    },
+    {
+      "method": "POST",
+      "url": "http://localhost:4050/api/marketing/track-event"
+    },
+    {
+      "method": "POST",
+      "url": "http://localhost:4050/api/marketing/track-event"
+    },
+    {
+      "method": "POST",
+      "url": "http://localhost:4050/api/marketing/track-event"
+    },
+    {
+      "method": "POST",
+      "url": "http://localhost:4050/api/marketing/track-event"
+    },
+    {
+      "method": "POST",
+      "url": "http://localhost:4050/api/marketing/track-event"
+    },
+    {
+      "method": "POST",
+      "url": "http://localhost:4050/api/marketing/track-event"
+    },
+    {
+      "method": "POST",
+      "url": "http://localhost:4050/api/marketing/track-event"
+    },
+    {
+      "method": "POST",
+      "url": "http://localhost:4050/api/marketing/track-event"
+    },
+    {
+      "method": "POST",
+      "url": "http://localhost:4050/api/marketing/track-event"
+    },
+    {
+      "method": "POST",
+      "url": "http://localhost:4050/api/marketing/track-event"
+    },
+    {
+      "method": "POST",
+      "url": "https://player.vimeo.com/cdn-cgi/challenge-platform/h/b/precursor/d76008a69eab/0.6345029438862223:1791137120:a6P2uh-kdWAR346Z9j7hMVEaMTcurhmH7Y2Ajt6t-sw/a4564822cecc1db4"
+    },
+    {
+      "method": "POST",
+      "url": "https://player.vimeo.com/cdn-cgi/challenge-platform/h/b/precursor/d76008a69eab/0.6345029438862223:1791137120:a6P2uh-kdWAR346Z9j7hMVEaMTcurhmH7Y2Ajt6t-sw/a4564822ced21db4"
+    },
+    {
+      "method": "POST",
+      "url": "https://challenges.cloudflare.com/cdn-cgi/challenge-platform/h/b/fo/4030313746:1791137116:6LPHZua7J0NxqCk06cnOsdUE9Jujz_Pj9YdhmnC1bBo/a45648259ca6eca6/3bJ5EysFQGrPwLIHObcXVoanBWsxzIwLdgT2UQPA5aI-1791138878-1.2.1.1-JQvjkcbS9KMAoX66dwtMSNP44QVIpcnJ0vkBQvwBbDNccMlhx7d01I_sYrp6Fce_"
+    },
+    {
+      "method": "POST",
+      "url": "http://localhost:4050/api/marketing/track-event"
+    },
+    {
+      "method": "POST",
+      "url": "http://localhost:4050/api/marketing/track-event"
+    },
+    {
+      "method": "POST",
+      "url": "https://challenges.cloudflare.com/cdn-cgi/challenge-platform/h/b/fo/4030313746:1791137116:6LPHZua7J0NxqCk06cnOsdUE9Jujz_Pj9YdhmnC1bBo/a45648259ca6eca6/3bJ5EysFQGrPwLIHObcXVoanBWsxzIwLdgT2UQPA5aI-1791138878-1.2.1.1-JQvjkcbS9KMAoX66dwtMSNP44QVIpcnJ0vkBQvwBbDNccMlhx7d01I_sYrp6Fce_"
+    },
+    {
+      "method": "POST",
+      "url": "https://challenges.cloudflare.com/cdn-cgi/challenge-platform/h/b/fo/4030313746:1791137116:6LPHZua7J0NxqCk06cnOsdUE9Jujz_Pj9YdhmnC1bBo/a45648259ca6eca6/3bJ5EysFQGrPwLIHObcXVoanBWsxzIwLdgT2UQPA5aI-1791138878-1.2.1.1-JQvjkcbS9KMAoX66dwtMSNP44QVIpcnJ0vkBQvwBbDNccMlhx7d01I_sYrp6Fce_"
+    },
+    {
+      "method": "POST",
+      "url": "http://localhost:4050/api/marketing/track-event"
+    },
+    {
+      "method": "POST",
+      "url": "http://localhost:4050/api/marketing/track-event"
+    },
+    {
+      "method": "POST",
+      "url": "http://localhost:4050/api/marketing/track-event"
+    },
+    {
+      "method": "POST",
+      "url": "http://localhost:4050/api/marketing/track-event"
+    },
+    {
+      "method": "POST",
+      "url": "https://player.vimeo.com/cdn-cgi/challenge-platform/h/b/precursor/d76008a69eab/0.6345029438862223:1791137120:a6P2uh-kdWAR346Z9j7hMVEaMTcurhmH7Y2Ajt6t-sw/a45648658e5d0349"
+    },
+    {
+      "method": "POST",
+      "url": "https://player.vimeo.com/cdn-cgi/challenge-platform/h/b/precursor/d76008a69eab/0.6345029438862223:1791137120:a6P2uh-kdWAR346Z9j7hMVEaMTcurhmH7Y2Ajt6t-sw/a45648658e610349"
+    },
+    {
+      "method": "POST",
+      "url": "https://challenges.cloudflare.com/cdn-cgi/challenge-platform/h/b/fo/4030313746:1791137116:6LPHZua7J0NxqCk06cnOsdUE9Jujz_Pj9YdhmnC1bBo/a4564867bb0b4ad8/BVYMqf4VjN6JgOVcR.Eet7Aed7rP1enlIeyF6kPvIcI-1791138888-1.2.1.1-AqNrWMVshV.xcKOJCyL5itC2f4r62X6WzGW88xM6tZA2LrTQ7UIb_xq8gx6ygb3c"
+    },
+    {
+      "method": "POST",
+      "url": "https://challenges.cloudflare.com/cdn-cgi/challenge-platform/h/b/fo/4030313746:1791137116:6LPHZua7J0NxqCk06cnOsdUE9Jujz_Pj9YdhmnC1bBo/a4564867bb0b4ad8/BVYMqf4VjN6JgOVcR.Eet7Aed7rP1enlIeyF6kPvIcI-1791138888-1.2.1.1-AqNrWMVshV.xcKOJCyL5itC2f4r62X6WzGW88xM6tZA2LrTQ7UIb_xq8gx6ygb3c"
+    },
+    {
+      "method": "POST",
+      "url": "http://localhost:4050/api/marketing/track-event"
+    },
+    {
+      "method": "POST",
+      "url": "http://localhost:4050/api/marketing/track-event"
+    },
+    {
+      "method": "POST",
+      "url": "https://challenges.cloudflare.com/cdn-cgi/challenge-platform/h/b/fo/4030313746:1791137116:6LPHZua7J0NxqCk06cnOsdUE9Jujz_Pj9YdhmnC1bBo/a4564867bb0b4ad8/BVYMqf4VjN6JgOVcR.Eet7Aed7rP1enlIeyF6kPvIcI-1791138888-1.2.1.1-AqNrWMVshV.xcKOJCyL5itC2f4r62X6WzGW88xM6tZA2LrTQ7UIb_xq8gx6ygb3c"
+    },
+    {
+      "method": "POST",
+      "url": "http://localhost:4050/api/marketing/track-event"
+    },
+    {
+      "method": "POST",
+      "url": "http://localhost:4050/api/marketing/track-event"
+    },
+    {
+      "method": "POST",
+      "url": "http://localhost:4050/api/marketing/track-event"
+    },
+    {
+      "method": "POST",
+      "url": "http://localhost:4050/api/marketing/track-event"
+    },
+    {
+      "method": "POST",
+      "url": "https://player.vimeo.com/cdn-cgi/challenge-platform/h/b/precursor/d76008a69eab/0.6345029438862223:1791137120:a6P2uh-kdWAR346Z9j7hMVEaMTcurhmH7Y2Ajt6t-sw/a45648a61eb8aa8d"
+    },
+    {
+      "method": "POST",
+      "url": "https://player.vimeo.com/cdn-cgi/challenge-platform/h/b/precursor/d76008a69eab/0.6345029438862223:1791137120:a6P2uh-kdWAR346Z9j7hMVEaMTcurhmH7Y2Ajt6t-sw/a45648a61eadaa8d"
+    },
+    {
+      "method": "POST",
+      "url": "https://challenges.cloudflare.com/cdn-cgi/challenge-platform/h/b/fo/4030313746:1791137116:6LPHZua7J0NxqCk06cnOsdUE9Jujz_Pj9YdhmnC1bBo/a45648a8f934dc2f/5PoIBwYnujMJXDBG6xLU9eDdI7D8pq.AvJkXT8TZ8nE-1791138899-1.2.1.1-z1TM4zIghk.ErJ2e.R4BN5zOTZ7fY8XBpv.c5YHEVNFj5MDGZWsrBT0bpkCJ7Yuw"
+    },
+    {
+      "method": "POST",
+      "url": "http://localhost:4050/api/marketing/track-event"
+    },
+    {
+      "method": "POST",
+      "url": "https://challenges.cloudflare.com/cdn-cgi/challenge-platform/h/b/fo/4030313746:1791137116:6LPHZua7J0NxqCk06cnOsdUE9Jujz_Pj9YdhmnC1bBo/a45648a8f934dc2f/5PoIBwYnujMJXDBG6xLU9eDdI7D8pq.AvJkXT8TZ8nE-1791138899-1.2.1.1-z1TM4zIghk.ErJ2e.R4BN5zOTZ7fY8XBpv.c5YHEVNFj5MDGZWsrBT0bpkCJ7Yuw"
+    },
+    {
+      "method": "POST",
+      "url": "http://localhost:4050/api/marketing/track-event"
+    },
+    {
+      "method": "POST",
+      "url": "https://challenges.cloudflare.com/cdn-cgi/challenge-platform/h/b/fo/4030313746:1791137116:6LPHZua7J0NxqCk06cnOsdUE9Jujz_Pj9YdhmnC1bBo/a45648a8f934dc2f/5PoIBwYnujMJXDBG6xLU9eDdI7D8pq.AvJkXT8TZ8nE-1791138899-1.2.1.1-z1TM4zIghk.ErJ2e.R4BN5zOTZ7fY8XBpv.c5YHEVNFj5MDGZWsrBT0bpkCJ7Yuw"
+    },
+    {
+      "method": "POST",
+      "url": "http://localhost:4050/api/marketing/track-event"
+    },
+    {
+      "method": "POST",
+      "url": "http://localhost:4050/api/marketing/track-event"
+    },
+    {
+      "method": "POST",
+      "url": "http://localhost:4050/api/marketing/track-event"
+    },
+    {
+      "method": "POST",
+      "url": "http://localhost:4050/api/marketing/track-event"
+    }
+  ],
+  "summary": {
+    "passed": 295,
+    "failed": 0,
+    "skipped": 5,
+    "blockedRequests": 287
+  },
+  "checkedAt": "2026-10-04T18:35:09.274Z",
+  "menuDataUnchanged": true,
+  "exitCode": 0
+}

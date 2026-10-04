@@ -1007,6 +1007,7 @@ body {
   top: calc(100% - 8px);
   min-width: 232px;
   padding: 8px 0 !important;
+  translate: var(--nav-dropdown-shift-x, 0px) 0;
 }
 
 .nav-submenu__item + .nav-submenu__item {
@@ -1144,6 +1145,7 @@ body {
 
   .scroll-desktop-submenu {
     position: absolute;
+    translate: var(--nav-dropdown-shift-x, 0px) 0;
     top: calc(100% + 2px);
     left: 0;
     z-index: 2;

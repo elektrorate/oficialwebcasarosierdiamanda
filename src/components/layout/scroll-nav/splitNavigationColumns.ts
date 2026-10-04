@@ -1,7 +1,7 @@
 import type { NavigationItem } from "@/data/types";
 
 /** Split visible nav into left / right groups around a centered logo. */
-export function splitNavigationColumns(items: NavigationItem[]) {
+export function splitNavigationColumns<T extends NavigationItem>(items: T[]) {
 
   const visible = items
     .filter((item) => item.visible)

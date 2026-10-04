@@ -4,11 +4,13 @@ import Link from "next/link";
 import { createPortal } from "react-dom";
 import { usePathname } from "next/navigation";
 import type { CSSProperties } from "react";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useId, useRef, useState } from "react";
 import type { NavigationItem } from "@/data/types";
 import { systemMenuRootKey } from "@/lib/cms/menu-links";
 import { classNames } from "@/lib/utils";
 import { ScrollStickyNavBar } from "@/components/layout/scroll-nav/ScrollStickyNavBar";
+import { identifyNavigationItems } from "@/lib/navigation-ui";
+import { useDesktopDropdownPosition } from "./useDesktopDropdownPosition";
 
 const DESKTOP_SUBMENU_CLOSE_DELAY = 320;
 const DESKTOP_NAV_BREAKPOINT = 1025;
@@ -70,6 +72,7 @@ export function NavbarGlobal({
   heroMenuMobilePositionY?: string;
 }) {
   const pathname = usePathname();
+  const idPrefix = useId();
   const rootRef = useRef<HTMLDivElement>(null);
   const desktopPortalRef = useRef<HTMLDivElement>(null);
   const scrollMobileToggleRef = useRef<HTMLButtonElement>(null);
@@ -84,14 +87,14 @@ export function NavbarGlobal({
   const [mobileScrolledAny, setMobileScrolledAny] = useState(false);
   const [desktopScrolled, setDesktopScrolled] = useState(false);
   const [isDesktopViewport, setIsDesktopViewport] = useState(false);
-  const [desktopOpen, setDesktopOpen] = useState<string | null>(null);
-  const [scrollDesktopOpen, setScrollDesktopOpen] = useState<string | null>(
+  const [desktopOpenId, setDesktopOpenId] = useState<string | null>(null);
+  const [scrollDesktopOpenId, setScrollDesktopOpenId] = useState<string | null>(
     null
   );
-  const [mobileAccordion, setMobileAccordion] = useState<string | null>(null);
-  const mobileItems = navigationItems
+  const [mobileAccordionId, setMobileAccordionId] = useState<string | null>(null);
+  const mobileItems = identifyNavigationItems(navigationItems
     .filter((item) => item.visible)
-    .sort((a, b) => a.order - b.order);
+    .sort((a, b) => a.order - b.order));
   const desktopItems = mobileItems;
   const scrollDesktopItems = home
     ? desktopItems.filter(
@@ -99,6 +102,17 @@ export function NavbarGlobal({
       )
     : desktopItems;
   const showDesktopScrollNav = isDesktopViewport && desktopScrolled;
+  const navigationContext = `${pathname}:${desktopScrolled ? "sticky" : "normal"}`;
+  const [previousNavigationContext, setPreviousNavigationContext] = useState(navigationContext);
+  // Open panels are transient, unlike the navigation items themselves.
+  if (previousNavigationContext !== navigationContext) {
+    setPreviousNavigationContext(navigationContext);
+    setDesktopOpenId(null);
+    setScrollDesktopOpenId(null);
+    setMobileAccordionId(null);
+    setMobileOpen(false);
+  }
+  useDesktopDropdownPosition(rootRef, desktopOpenId);
   const effectiveScrollIconColor = scrollMenuIconColor || scrollMenuTextColor;
   const navStyle = {
     "--site-scroll-menu-bg": scrollMenuBackgroundColor,
@@ -142,41 +156,51 @@ export function NavbarGlobal({
     }
   }, []);
 
-  const openDesktopMenu = useCallback((href: string) => {
+  const openDesktopMenu = useCallback((id: string) => {
     clearDesktopCloseTimeout();
-    setDesktopOpen(href);
+    setDesktopOpenId(id);
   }, [clearDesktopCloseTimeout]);
 
   const closeDesktopMenu = useCallback(() => {
     clearDesktopCloseTimeout();
-    setDesktopOpen(null);
+    setDesktopOpenId(null);
   }, [clearDesktopCloseTimeout]);
 
-  const scheduleDesktopMenuClose = useCallback(() => {
+  const scheduleDesktopMenuClose = useCallback((id: string) => {
+    if (desktopOpenId !== id) return;
     clearDesktopCloseTimeout();
     desktopCloseTimeoutRef.current = setTimeout(() => {
-      setDesktopOpen(null);
       desktopCloseTimeoutRef.current = null;
+      const owner = Array.from(rootRef.current?.querySelectorAll<HTMLElement>("[data-menu-id]") ?? [])
+        .find((element) => element.dataset.menuId === id);
+      if (!owner || (!owner.matches(":hover") && !owner.contains(document.activeElement))) {
+        setDesktopOpenId((currentId) => currentId === id ? null : currentId);
+      }
     }, DESKTOP_SUBMENU_CLOSE_DELAY);
-  }, [clearDesktopCloseTimeout]);
+  }, [clearDesktopCloseTimeout, desktopOpenId]);
 
-  const openScrollDesktopMenu = useCallback((href: string) => {
+  const openScrollDesktopMenu = useCallback((id: string) => {
     clearScrollDesktopCloseTimeout();
-    setScrollDesktopOpen(href);
+    setScrollDesktopOpenId(id);
   }, [clearScrollDesktopCloseTimeout]);
 
   const closeScrollDesktopMenu = useCallback(() => {
     clearScrollDesktopCloseTimeout();
-    setScrollDesktopOpen(null);
+    setScrollDesktopOpenId(null);
   }, [clearScrollDesktopCloseTimeout]);
 
-  const scheduleScrollDesktopMenuClose = useCallback(() => {
+  const scheduleScrollDesktopMenuClose = useCallback((id: string) => {
+    if (scrollDesktopOpenId !== id) return;
     clearScrollDesktopCloseTimeout();
     scrollDesktopCloseTimeoutRef.current = setTimeout(() => {
-      setScrollDesktopOpen(null);
       scrollDesktopCloseTimeoutRef.current = null;
+      const owner = Array.from(desktopPortalRef.current?.querySelectorAll<HTMLElement>("[data-menu-id]") ?? [])
+        .find((element) => element.dataset.menuId === id);
+      if (!owner || (!owner.matches(":hover") && !owner.contains(document.activeElement))) {
+        setScrollDesktopOpenId((currentId) => currentId === id ? null : currentId);
+      }
     }, DESKTOP_SUBMENU_CLOSE_DELAY);
-  }, [clearScrollDesktopCloseTimeout]);
+  }, [clearScrollDesktopCloseTimeout, scrollDesktopOpenId]);
 
   useEffect(() => {
     const onKeyDown = (event: KeyboardEvent) => {
@@ -184,8 +208,9 @@ export function NavbarGlobal({
         setMobileOpen(false);
         clearDesktopCloseTimeout();
         clearScrollDesktopCloseTimeout();
-        setDesktopOpen(null);
-        setScrollDesktopOpen(null);
+        setDesktopOpenId(null);
+        setScrollDesktopOpenId(null);
+        setMobileAccordionId(null);
       }
     };
     const onPointerDown = (event: PointerEvent) => {
@@ -198,8 +223,9 @@ export function NavbarGlobal({
         setMobileOpen(false);
         clearDesktopCloseTimeout();
         clearScrollDesktopCloseTimeout();
-        setDesktopOpen(null);
-        setScrollDesktopOpen(null);
+        setDesktopOpenId(null);
+        setScrollDesktopOpenId(null);
+        setMobileAccordionId(null);
       }
     };
     document.addEventListener("keydown", onKeyDown);
@@ -233,8 +259,16 @@ export function NavbarGlobal({
       const threshold = currentThreshold();
       const scrollY = window.scrollY;
       const scrolled = scrollY > threshold;
+      rootRef.current?.setAttribute("data-navigation-ready", "true");
 
       setIsDesktopViewport((previous) => previous === isDesktop ? previous : isDesktop);
+      if (isDesktop) {
+        setMobileOpen(false);
+        setMobileAccordionId(null);
+      } else {
+        setDesktopOpenId(null);
+        setScrollDesktopOpenId(null);
+      }
       setMobileScrolledAny((previous) => {
         const next = scrollY > 0;
         return previous === next ? previous : next;
@@ -250,8 +284,7 @@ export function NavbarGlobal({
       });
 
       if (!scrolled) {
-        setMobileOpen(false);
-        setScrollDesktopOpen(null);
+        setScrollDesktopOpenId(null);
       }
     };
 
@@ -306,11 +339,11 @@ export function NavbarGlobal({
             aria-label="Principal"
           >
             <ul className="hero__nav-list">
-              {desktopItems.map((item, index) => {
+              {desktopItems.map((item) => {
                 const children =
                   item.children?.filter((child) => child.visible) ?? [];
-                const open = desktopOpen === item.href;
-                const submenuId = `desktop-submenu-${index}`;
+                const open = desktopOpenId === item.id;
+                const submenuId = `${idPrefix}-desktop-${item.id}`;
                 return (
                   <li
                     className={classNames(
@@ -318,16 +351,21 @@ export function NavbarGlobal({
                       children.length > 0 && "hero__nav-item--has-children",
                       open && "hero__nav-item--open"
                     )}
-                    key={item.label}
+                    key={item.id}
+                    data-menu-id={item.id}
                     onMouseEnter={() =>
-                      children.length > 0 && openDesktopMenu(item.href)
+                      children.length > 0 && openDesktopMenu(item.id)
                     }
-                    onMouseLeave={() =>
-                      children.length > 0 && scheduleDesktopMenuClose()
-                    }
+                    onMouseLeave={(event) => {
+                      if (children.length && !event.currentTarget.contains(document.activeElement)) scheduleDesktopMenuClose(item.id);
+                    }}
                     onFocus={() =>
-                      children.length > 0 && openDesktopMenu(item.href)
+                      children.length > 0 && openDesktopMenu(item.id)
                     }
+                    onBlur={(event) => {
+                      const next = event.relatedTarget;
+                      if (children.length && !(next instanceof Node && event.currentTarget.contains(next)) && !event.currentTarget.matches(":hover")) scheduleDesktopMenuClose(item.id);
+                    }}
                   >
                     <div className="hero__nav-group">
                       <Link
@@ -352,7 +390,7 @@ export function NavbarGlobal({
                           aria-controls={submenuId}
                           aria-label={`Abrir submenu de ${item.label}`}
                           onClick={() =>
-                            open ? closeDesktopMenu() : openDesktopMenu(item.href)
+                            open ? closeDesktopMenu() : openDesktopMenu(item.id)
                           }
                         >
                           <span className="hero__plus" aria-hidden="true" />
@@ -368,6 +406,7 @@ export function NavbarGlobal({
                             "nav-submenu--experiencias"
                         )}
                         id={submenuId}
+                        data-nav-dropdown={item.id}
                         role="menu"
                         hidden={!open}
                         aria-hidden={!open}
@@ -376,7 +415,7 @@ export function NavbarGlobal({
                           <li
                             className="nav-submenu__item"
                             role="none"
-                            key={child.href}
+                            key={child.id}
                           >
                             <Link
                               className="nav-submenu__link"
@@ -405,6 +444,7 @@ export function NavbarGlobal({
 
 
       <div
+        hidden={isDesktopViewport}
         className={classNames(
           "mobile-scroll-nav",
           !isDesktopViewport && "is-visible",
@@ -440,7 +480,7 @@ export function NavbarGlobal({
           logoUrl={logoUrl}
           useLogoTint={mobileScrolled || mobileOpen || Boolean(heroMenuColor)}
           logoTintStyle={scrollLogoTintStyle}
-          openHref={scrollDesktopOpen}
+          openId={scrollDesktopOpenId}
           current={current}
           onOpen={openScrollDesktopMenu}
           onScheduleClose={scheduleScrollDesktopMenuClose}
@@ -448,10 +488,13 @@ export function NavbarGlobal({
             closeScrollDesktopMenu();
             setMobileOpen(false);
           }}
-          showDesktopNav={showDesktopScrollNav}
+          showDesktopNav={false}
           mobileToggleRef={scrollMobileToggleRef}
           mobileOpen={mobileOpen}
-          onToggleMobile={() => setMobileOpen((open) => !open)}
+          onToggleMobile={() => {
+            setMobileOpen((open) => !open);
+            setMobileAccordionId(null);
+          }}
         />
 
         <nav
@@ -461,20 +504,21 @@ export function NavbarGlobal({
           hidden={!mobileOpen}
         >
           <ul className="mobile-menu__list">
-            {mobileItems.map((item, index) => {
+            {mobileItems.map((item) => {
               const children =
                 item.children?.filter((child) => child.visible) ?? [];
-              const open = mobileAccordion === item.label;
-              const submenuId = `mobile-submenu-${index}`;
+              const open = mobileAccordionId === item.id;
+              const submenuId = `${idPrefix}-mobile-${item.id}`;
               const toggleSubmenu = () =>
-                setMobileAccordion(open ? null : item.label);
+                setMobileAccordionId(open ? null : item.id);
               return (
                 <li
                   className={classNames(
                     "mobile-menu__item",
                     open && "mobile-menu__item--open"
                   )}
-                  key={item.label}
+                  key={item.id}
+                  data-menu-id={item.id}
                 >
                   <div className="mobile-menu__row">
                     {children.length > 0 ? (
@@ -517,7 +561,7 @@ export function NavbarGlobal({
                       <div className="mobile-submenu__inner">
                         <ul className="mobile-submenu__list">
                           {children.map((child) => (
-                            <li key={child.href}>
+                            <li key={child.id}>
                               <Link
                                 className="mobile-submenu__link"
                                 href={child.href}
@@ -554,6 +598,7 @@ export function NavbarGlobal({
               style={navStyle}
               role="navigation"
               aria-label="Navegacion fija"
+              aria-hidden={!showDesktopScrollNav}
             >
               <ScrollStickyNavBar
                 variant="editorial"
@@ -561,7 +606,7 @@ export function NavbarGlobal({
                 logoUrl={logoUrl}
                 useLogoTint
                 logoTintStyle={scrollLogoTintStyle}
-                openHref={scrollDesktopOpen}
+                openId={scrollDesktopOpenId}
                 current={current}
                 onOpen={openScrollDesktopMenu}
                 onScheduleClose={scheduleScrollDesktopMenuClose}
