@@ -7,6 +7,8 @@ import Button from "@/components/ui/Button";
 import type { MarketingPublicButtonLink, MarketingSettings } from "@/lib/cms/types";
 import TrackedLink from "@/components/marketing/TrackedLink";
 import MarketingSwitch from "./MarketingSwitch";
+import SeoReview from "@/components/admin/SeoReview";
+import { getActionWarnings } from "@/lib/admin/action-warnings";
 
 type BooleanSettingKey = {
   [K in keyof MarketingSettings]: MarketingSettings[K] extends boolean ? K : never;
@@ -54,6 +56,7 @@ export default function MarketingSettingsForm() {
   const [saving, setSaving] = useState(false);
   const [saved, setSaved] = useState(false);
   const [error, setError] = useState("");
+  const [seoWarnings, setSeoWarnings] = useState<string[]>([]);
 
   useEffect(() => {
     let cancelled = false;
@@ -110,8 +113,9 @@ export default function MarketingSettingsForm() {
     });
 
     if (res.ok) {
-      const updated = await res.json();
+      const { warnings = [], ...updated } = await res.json();
       setSettings(updated);
+      setSeoWarnings(getActionWarnings(warnings));
       setSaved(true);
       setTimeout(() => setSaved(false), 3000);
       router.refresh();
@@ -337,6 +341,8 @@ export default function MarketingSettingsForm() {
           ))}
         </div>
       </section>
+
+      <SeoReview title={settings.seo_global_title} description={settings.seo_global_description} serverWarnings={seoWarnings} />
 
       <div className="sticky bottom-4 z-10 flex flex-wrap items-center gap-3 rounded-xl border border-outline-variant bg-white/95 p-3 shadow-[0_16px_36px_rgba(11,28,48,0.12)] backdrop-blur">
         <Button onClick={handleSave} disabled={saving} icon={saving ? "progress_activity" : "save"}>{saving ? "Guardando..." : "Guardar configuración"}</Button>

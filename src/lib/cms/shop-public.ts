@@ -1,4 +1,5 @@
 import type { ShopCategory, ShopItem } from "@/data/types";
+import { getSeoContentFields, resolveSeoText } from "../seo/content";
 import { getCategories } from "./product-categories";
 import { getProducts } from "./products";
 import type { Product, ProductCategory } from "./types";
@@ -50,6 +51,7 @@ function productToShopItem(
   config: ShopSiteConfig = DEFAULT_CONFIG,
 ): ShopItem {
   const gallery = [product.main_image_id, ...(product.gallery ?? [])].filter(Boolean);
+  const seo = resolveSeoText(getSeoContentFields("product", product, config));
 
   return {
     id: product.id,
@@ -71,8 +73,8 @@ function productToShopItem(
     availabilityNote: product.excerpt || (product.stock === null ? "" : `${product.stock} disponible(s)`),
     ctaLabel: product.cta_label || "Comprar",
     ctaUrl: product.cta_url || defaultCtaUrl,
-    seoTitle: product.seo_title || `${product.name} | ${config.siteName}`,
-    seoDescription: product.seo_description || product.excerpt || product.description || config.defaultSeoDescription,
+    seoTitle: seo.title,
+    seoDescription: seo.description,
     order: orderFromProduct(product),
     isPublished: product.status === "published",
     createdAt: product.created_at,

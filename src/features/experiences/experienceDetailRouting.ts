@@ -13,6 +13,7 @@ import type { CalendarLabel, ClassOfferingDetails, Offering } from "@/lib/cms/ty
 import { normalizeCalendarUi } from "@/lib/cms/types";
 import { mergeCurrentOfferingDetails } from "@/lib/cms/offering-details-compat";
 import { DEFAULT_WHATSAPP_NUMBER, getWhatsappNumber } from "@/lib/whatsapp";
+import { getSeoContentFields, resolveSeoText } from "@/lib/seo/content";
 
 type LegacyProgramItem = {
   title?: unknown;
@@ -300,6 +301,7 @@ function cmsOfferingToExperienceItem(
   offering: Offering,
   defaultWhatsappNumber = DEFAULT_WHATSAPP_NUMBER,
 ): ExperienceItem {
+  const seo = resolveSeoText(getSeoContentFields("offering", offering));
   const details = detailsForOffering(offering);
   const content = { ...details.content };
   const classDetails = (offering.details as LegacyOfferingDetails).class;
@@ -555,8 +557,8 @@ function cmsOfferingToExperienceItem(
     ctaConsultLabel: ctaConsultLabel(details, offering.type),
     ctaEnrollLabel: ctaEnrollLabel(details, offering.type),
     showEnrollCta: details.showEnrollCta !== false,
-    seoTitle: offering.seo_title || `${offering.title} | Casa Rosier`,
-    seoDescription: offering.seo_description || offering.excerpt,
+    seoTitle: seo.title,
+    seoDescription: seo.description,
     isPublished: offering.status === "published",
     isFeatured: offering.featured,
     order: 0,

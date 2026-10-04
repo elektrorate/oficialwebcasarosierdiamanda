@@ -1,6 +1,9 @@
 "use client";
 
 import { useRouter } from "next/navigation";
+import { useState } from "react";
+import { SeoServerWarnings } from "./SeoReview";
+import { getActionWarnings } from "@/lib/admin/action-warnings";
 import Link from "@/components/admin/AdminLink";
 import type { Offering, OfferingStatus } from "@/lib/cms/types";
 import { formatAdminDate } from "@/lib/admin/date-format";
@@ -14,6 +17,7 @@ const statusBadge: Record<OfferingStatus, { label: string; variant: string }> = 
 
 export default function OfferingsTable({ offerings }: { offerings: Offering[] }) {
   const router = useRouter();
+  const [seoWarnings, setSeoWarnings] = useState<string[]>([]);
 
   async function toggleStatus(offering: Offering) {
     const action = offering.status === "published" ? "draft" : "publish";
@@ -22,7 +26,11 @@ export default function OfferingsTable({ offerings }: { offerings: Offering[] })
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ action }),
     });
-    if (res.ok) router.refresh();
+    if (res.ok) {
+      const data = await res.json().catch(() => ({})) as { warnings?: string[] };
+      setSeoWarnings(getActionWarnings(data.warnings));
+      router.refresh();
+    }
   }
 
   async function archive(offering: Offering) {
@@ -45,6 +53,7 @@ export default function OfferingsTable({ offerings }: { offerings: Offering[] })
 
   return (
     <div className="bg-surface-container-lowest border border-outline-variant rounded-xl overflow-hidden">
+      <SeoServerWarnings warnings={seoWarnings} />
       <div className="overflow-x-auto">
         <table className="w-full">
           <thead>

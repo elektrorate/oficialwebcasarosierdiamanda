@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { LandingPageView } from "@/features/landing-pages/LandingPageView";
 import { getPublishedLandingPageBySlug } from "@/lib/cms/landing-pages";
 import { assetPath } from "@/lib/assets";
+import { getSeoContentFields, resolveSeoText } from "@/lib/seo/content";
 
 export const revalidate = 300;
 
@@ -10,9 +11,10 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const { slug } = await params;
   const landing = await getPublishedLandingPageBySlug(slug);
   if (!landing) return {};
+  const { title, description } = resolveSeoText(getSeoContentFields("landing_page", landing));
   return {
-    title: landing.seo_title || landing.title,
-    description: landing.seo_description || landing.hero_subtitle || landing.intro_text,
+    title,
+    description,
     alternates: { canonical: `/landing/${landing.slug}` },
     openGraph: landing.seo_image ? { images: [assetPath(landing.seo_image)] } : undefined,
   };

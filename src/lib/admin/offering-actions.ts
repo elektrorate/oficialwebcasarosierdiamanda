@@ -1,4 +1,5 @@
 import type { Offering } from "@/lib/cms/types";
+import { getActionWarnings } from "./action-warnings";
 
 export type OfferingPatchAction = "duplicate" | "publish" | "draft" | "trash";
 
@@ -7,19 +8,21 @@ export type OfferingStatusResult = {
   offering?: Offering;
   enabled?: boolean;
   error?: string;
+  warnings?: string[];
 };
 
 async function parseOfferingResponse(response: Response): Promise<OfferingStatusResult> {
   const data = (await response.json().catch(() => ({}))) as {
     error?: string;
     offering?: Offering;
+    warnings?: string[];
   };
 
   if (!response.ok) {
     return { ok: false, error: data.error || "No se pudo completar la acción." };
   }
 
-  return { ok: true, offering: data.offering };
+  return { ok: true, offering: data.offering, warnings: getActionWarnings(data.warnings) };
 }
 
 export async function patchOfferingAction(
@@ -49,13 +52,14 @@ export async function setOfferingEnabledAction(id: string, enabled: boolean): Pr
       error?: string;
       offering?: Offering;
       enabled?: boolean;
+      warnings?: string[];
     };
 
     if (!response.ok) {
       return { ok: false, error: data.error || "No se pudo actualizar el estado." };
     }
 
-    return { ok: true, offering: data.offering, enabled: data.enabled };
+    return { ok: true, offering: data.offering, enabled: data.enabled, warnings: getActionWarnings(data.warnings) };
   } catch {
     return { ok: false, error: "No se pudo conectar con el servidor. Intenta nuevamente." };
   }

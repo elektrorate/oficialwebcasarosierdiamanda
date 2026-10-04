@@ -1,19 +1,15 @@
 import { createAdminClient } from "../supabase/admin";
-import { getBlogPosts } from "./blog";
-import { getLandingPages } from "./landing-pages";
-import { getOfferings, isPubliclyVisibleOffering } from "./offerings";
-import { getProducts } from "./products";
 import { readJsonFile, writeJsonFile } from "./local-storage";
 import { getSettings, updateSettings } from "./settings";
 import type { SiteSettings } from "./settings-types";
+import { getSeoWarnings, resolveSeoText, validateSeoInput, type SeoFields, type SeoPeer } from "../seo/content";
+import { getPublishedSeoPeers } from "./seo-review";
 import { defaultMarketingSettings } from "./types";
 import type {
-  BlogPost,
-  LandingPage,
   MarketingCampaign, MarketingConversion, MarketingEventLog, MarketingEventType,
   MarketingPageMetric, MarketingReport, MarketingSearchConsolePage,
   MarketingSearchConsoleQuery, MarketingSearchConsoleSummary, MarketingSeoAudit,
-  MarketingSettings, MarketingTrafficSource, Offering, Product,
+  MarketingSettings, MarketingTrafficSource, Offering,
 } from "./types";
 
 const SETTINGS_ID = "00000000-0000-0000-0000-000000000002";
@@ -186,15 +182,20 @@ export async function getMarketingSettings(): Promise<MarketingSettings> {
   return result;
 }
 
-export async function updateMarketingSettings(input: Partial<MarketingSettings>): Promise<MarketingSettings> {
+export async function updateMarketingSettings(payload: Partial<MarketingSettings>): Promise<MarketingSettings> {
+  validateSeoInput({ seo_title: payload.seo_global_title, seo_description: payload.seo_global_description });
+  // Response-only warnings must never become part of the persisted settings.
+  const { warnings: _warnings, ...input } = payload as Partial<MarketingSettings> & { warnings?: unknown };
   const current = await getMarketingSettings();
   const next: MarketingSettings = { ...current, ...input, updated_at: new Date().toISOString() };
+  if (input.seo_global_title !== undefined) next.seo_global_title = input.seo_global_title ?? "";
+  if (input.seo_global_description !== undefined) next.seo_global_description = input.seo_global_description ?? "";
   if (input.meta_access_token === undefined) next.meta_access_token = current.meta_access_token;
 
   const seoPatch: Partial<SiteSettings["seo"]> = {};
-  if (input.seo_global_title !== undefined) seoPatch.default_seo_title = String(input.seo_global_title).trim();
+  if (input.seo_global_title !== undefined) seoPatch.default_seo_title = input.seo_global_title ?? "";
   if (input.seo_global_description !== undefined) {
-    seoPatch.default_seo_description = String(input.seo_global_description).trim();
+    seoPatch.default_seo_description = input.seo_global_description ?? "";
   }
   if (input.seo_og_image !== undefined) seoPatch.default_og_image_url = String(input.seo_og_image).trim();
   if (input.robots_enabled !== undefined) seoPatch.robots_index = input.robots_enabled;
@@ -730,8 +731,10 @@ function buildSeoStatus(params: {
   hasMetaDescription: boolean;
   hasOgImage: boolean;
   slugStatus: MarketingSeoAudit["slug_status"];
+  hasSeoWarnings: boolean;
 }): MarketingSeoAudit["seo_status"] {
   if (!params.isIndexable) return "pending";
+  if (params.hasSeoWarnings) return "review";
   if (params.slugStatus !== "ok") return "review";
   if (!params.hasMetaTitle || !params.hasMetaDescription || !params.hasOgImage) return "incomplete";
   return "ok";
@@ -774,27 +777,28 @@ function buildAuditRow(input: {
   contentType: MarketingSeoAudit["content_type"];
   contentId: string;
   editUrl: string;
-  metaTitle: string;
-  metaDescription: string;
+  seoFields: SeoFields;
   ogImage: string;
   canonicalUrl: string;
   isIndexable: boolean;
   slug: string;
-}): MarketingSeoAudit {
-  const hasMetaTitle = Boolean(normalizeSeoValue(input.metaTitle));
-  const hasMetaDescription = Boolean(normalizeSeoValue(input.metaDescription));
+}, peers: SeoPeer[]): MarketingSeoAudit {
+  const effective = resolveSeoText(input.seoFields);
+  const seoWarnings = getSeoWarnings(input.seoFields, peers);
+  const hasMetaTitle = Boolean(effective.title);
+  const hasMetaDescription = Boolean(effective.description);
   const hasOgImage = Boolean(normalizeSeoValue(input.ogImage));
   const hasCanonical = Boolean(normalizeSeoValue(input.canonicalUrl));
   const slugStatus = buildSlugStatus(input.slug);
   const issues = buildSeoIssues({
     titleLabel: input.pageTitle,
     isIndexable: input.isIndexable,
-    metaTitle: normalizeSeoValue(input.metaTitle),
-    metaDescription: normalizeSeoValue(input.metaDescription),
+    metaTitle: effective.title,
+    metaDescription: effective.description,
     ogImage: normalizeSeoValue(input.ogImage),
     canonicalUrl: normalizeSeoValue(input.canonicalUrl),
     slugStatus,
-  });
+  }).concat(seoWarnings);
   return {
     id: "",
     content_id: input.contentId,
@@ -802,8 +806,8 @@ function buildAuditRow(input: {
     page_url: input.pageUrl,
     page_title: input.pageTitle,
     content_type: input.contentType,
-    meta_title: normalizeSeoValue(input.metaTitle),
-    meta_description: normalizeSeoValue(input.metaDescription),
+    meta_title: effective.title,
+    meta_description: effective.description,
     og_image: normalizeSeoValue(input.ogImage),
     canonical_url: normalizeSeoValue(input.canonicalUrl),
     is_indexable: input.isIndexable,
@@ -818,27 +822,14 @@ function buildAuditRow(input: {
       hasMetaDescription,
       hasOgImage,
       slugStatus,
+      hasSeoWarnings: seoWarnings.length > 0,
     }),
     issues,
-    recommendations: buildSeoRecommendations(issues),
+    recommendations: [...buildSeoRecommendations(issues), ...(seoWarnings.length ? ["Revisa los avisos de formato, longitud y duplicados SEO antes de dar la pagina por correcta."] : [])],
     last_checked_at: new Date().toISOString(),
     created_at: new Date().toISOString(),
     updated_at: new Date().toISOString(),
   };
-}
-
-function pagePath(path: string): string {
-  return path.startsWith("/") ? path : `/${path}`;
-}
-
-function offeringPath(type: Offering["type"], slug: string): string {
-  const prefix = {
-    class: "clases",
-    workshop: "workshops",
-    experience: "experiencias",
-    gift_card: "gift-cards",
-  }[type];
-  return pagePath(`${prefix}/${slug}`);
 }
 
 function offeringEditPath(type: Offering["type"], id: string): string {
@@ -851,86 +842,51 @@ function offeringEditPath(type: Offering["type"], id: string): string {
   return `/admin/${prefix}/${id}/edit`;
 }
 
-function offeringSeoImage(offering: Offering) {
-  const classSeoImage = offering.details.class?.seoImage;
-  return classSeoImage || offering.cover_image_url || offering.gallery[0] || "";
-}
-
 async function collectSeoTargets() {
-  const [landingPages, blogPosts, offerings, products] = await Promise.all([
-    getLandingPages(),
-    getBlogPosts(),
-    getOfferings(),
-    getProducts(),
-  ]);
-
-  const targets: MarketingSeoAudit[] = [];
-
-  for (const landingPage of landingPages.filter((item): item is LandingPage => item.status === "published" && !item.deleted_at)) {
-    targets.push(buildAuditRow({
-      contentId: landingPage.id,
-      editUrl: `/admin/landing-pages/${landingPage.id}/edit`,
-      pageUrl: pagePath(`landing/${landingPage.slug}`),
-      pageTitle: landingPage.title,
-      contentType: "page",
-      metaTitle: landingPage.seo_title || landingPage.title,
-      metaDescription: landingPage.seo_description || landingPage.hero_subtitle || landingPage.intro_text,
-      ogImage: landingPage.seo_image,
-      canonicalUrl: pagePath(`landing/${landingPage.slug}`),
-      isIndexable: true,
-      slug: landingPage.slug,
-    }));
-  }
-
-  for (const post of blogPosts.filter((item): item is BlogPost => item.status === "published" && !item.deleted_at)) {
-    targets.push(buildAuditRow({
-      contentId: post.id,
-      editUrl: `/admin/bitacora/${post.id}/edit`,
-      pageUrl: pagePath(`blog/${post.slug}`),
-      pageTitle: post.title,
-      contentType: "blog_post",
-      metaTitle: post.seo_title || post.title,
-      metaDescription: post.seo_description || post.excerpt,
-      ogImage: post.seo_image || post.featured_image_id || "img/social-2.jpg",
-      canonicalUrl: pagePath(`blog/${post.slug}`),
-      isIndexable: true,
-      slug: post.slug,
-    }));
-  }
-
-  for (const offering of offerings.filter((item): item is Offering => isPubliclyVisibleOffering(item))) {
-    targets.push(buildAuditRow({
-      contentId: offering.id,
-      editUrl: offeringEditPath(offering.type, offering.id),
-      pageUrl: offeringPath(offering.type, offering.slug),
-      pageTitle: offering.title,
-      contentType: offering.type,
-      metaTitle: offering.seo_title || offering.title,
-      metaDescription: offering.seo_description || offering.excerpt,
-      ogImage: offeringSeoImage(offering),
-      canonicalUrl: offeringPath(offering.type, offering.slug),
-      isIndexable: true,
-      slug: offering.slug,
-    }));
-  }
-
-  for (const product of products.filter((item): item is Product => item.status === "published" && !item.deleted_at)) {
-    targets.push(buildAuditRow({
-      contentId: product.id,
-      editUrl: `/admin/shop/products/${product.id}/edit`,
-      pageUrl: pagePath(`shop/${product.slug}`),
-      pageTitle: product.name,
-      contentType: "product",
-      metaTitle: product.seo_title || product.name,
-      metaDescription: product.seo_description || product.excerpt || product.description,
-      ogImage: product.seo_image || product.main_image_id || product.gallery[0] || "/img/social-2.jpg",
-      canonicalUrl: pagePath(`shop/${product.slug}`),
-      isIndexable: true,
-      slug: product.slug,
-    }));
-  }
-
-  return targets;
+  const peers = await getPublishedSeoPeers();
+  const settings = await getSettings();
+  const isIndexable = settings.seo.robots_index && !settings.system.maintenance_mode;
+  const sources = [
+    { kind: "blog_post", table: "blog_posts", columns: "id,slug,seo_image,featured_image_id" },
+    { kind: "product", table: "products", columns: "id,slug,seo_image,main_image_id,gallery" },
+    { kind: "offering", table: "offerings", columns: "id,slug,type,cover_image_url,class_seo_image:details->class->>seoImage" },
+    { kind: "landing_page", table: "landing_pages", columns: "id,slug,seo_image" },
+  ] as const;
+  const groups = await Promise.all(sources.map(async (source) => {
+    const selected = peers.filter((peer) => peer.kind === source.kind);
+    const targets: MarketingSeoAudit[] = [];
+    for (let offset = 0; offset < selected.length; offset += 500) {
+      const batch = selected.slice(offset, offset + 500);
+      const { data, error, count } = await sb().from(source.table)
+        .select(source.columns, { count: "exact" })
+        .in("id", batch.map((peer) => peer.id)).eq("status", "published").is("deleted_at", null);
+      if (error || count !== batch.length || data?.length !== batch.length) {
+        throw new Error(`No se pudo verificar el listado completo de imagenes SEO de ${source.table}. Reintenta la auditoria.`);
+      }
+      const rows = new Map((data as unknown as Array<Record<string, unknown>>).map((row) => [String(row.id), row]));
+      for (const peer of batch) {
+        const row = rows.get(peer.id);
+        if (!row) throw new Error("El contenido publicado cambio durante la auditoria SEO. Reintenta la auditoria.");
+        const gallery = Array.isArray(row.gallery) ? row.gallery.filter(Boolean) : [];
+        const type = row.type as Offering["type"];
+        const ogImage = source.kind === "offering"
+          ? row.class_seo_image || row.cover_image_url
+          : source.kind === "blog_post" ? row.featured_image_id || row.seo_image || "img/social-2.jpg"
+            : source.kind === "product" ? row.main_image_id || row.seo_image || gallery[0] || "/img/social-2.jpg"
+              : row.seo_image;
+        const editUrl = source.kind === "offering" ? offeringEditPath(type, peer.id)
+          : `/admin/${source.kind === "blog_post" ? "bitacora" : source.kind === "product" ? "shop/products" : "landing-pages"}/${peer.id}/edit`;
+        targets.push(buildAuditRow({
+          contentId: peer.id, editUrl, pageUrl: peer.path, pageTitle: peer.label,
+          contentType: source.kind === "offering" ? type : source.kind === "landing_page" ? "page" : source.kind,
+          seoFields: peer, ogImage: String(ogImage ?? ""), canonicalUrl: peer.path,
+          isIndexable, slug: String(row.slug ?? ""),
+        }, peers));
+      }
+    }
+    return targets;
+  }));
+  return groups.flat();
 }
 
 export async function runSeoAudit(): Promise<{ success: boolean; count: number; message: string }> {

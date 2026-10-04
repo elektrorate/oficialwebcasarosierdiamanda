@@ -6,6 +6,7 @@ import { SectionCard } from "@/components/admin/class-edit/components/SectionCar
 import { SelectField, TextAreaField, TextField } from "@/components/admin/class-edit/fields";
 import Switch from "@/components/ui/Switch";
 import type { BlogPostStatus } from "@/lib/cms/types";
+import { SEO_RECOMMENDED_DESCRIPTION_LENGTH, SEO_RECOMMENDED_TITLE_LENGTH } from "@/lib/seo/content";
 import { BLOG_POST_CATEGORY_OPTIONS, BLOG_POST_MEDIA_FOLDER } from "../constants";
 import type { BlogPostFormState } from "../hooks/useBlogPostForm";
 import { clampListingExcerpt, LISTING_EXCERPT_MAX_LENGTH, slugifyBlogPost } from "../utils/slugify";
@@ -121,16 +122,14 @@ function BlogFormStructureSectionComponent({
           <TextField
             label="SEO title"
             value={form.seoTitle}
-            maxLength={70}
-            help={`${form.seoTitle.length}/70 caracteres`}
+            help={`${form.seoTitle.length} caracteres. Recomendado: hasta ${SEO_RECOMMENDED_TITLE_LENGTH}.`}
             className="md:col-span-2"
             onChange={(event) => form.setSeoTitle(event.target.value)}
           />
           <TextAreaField
             label="SEO description"
             value={form.seoDescription}
-            maxLength={160}
-            help={`${form.seoDescription.length}/160 caracteres`}
+            help={`${form.seoDescription.length} caracteres. Recomendado: hasta ${SEO_RECOMMENDED_DESCRIPTION_LENGTH}.`}
             className="md:col-span-2"
             onChange={(event) => form.setSeoDescription(event.target.value)}
           />

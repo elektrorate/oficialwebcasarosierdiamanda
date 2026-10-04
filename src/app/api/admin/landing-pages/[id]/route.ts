@@ -4,6 +4,7 @@ import { type NextRequest, NextResponse } from "next/server";
 import { revalidatePath } from "next/cache";
 import { publicSlugError } from "@/lib/seo/public-slug";
 import { revalidatePublicSitemap } from "@/lib/seo/revalidation";
+import { getSeoContentWarnings } from "@/lib/cms/seo-review";
 
 function refreshLandingViews(...slugs: Array<string | null | undefined>) {
   for (const slug of slugs) if (slug) revalidatePath(`/landing/${slug}`);
@@ -27,7 +28,7 @@ export async function PUT(request: NextRequest, ctx: { params: Promise<{ id: str
     const item = await updateLandingPage(id, body);
     if (!item) return NextResponse.json({ error: "No encontrado" }, { status: 404 });
     refreshLandingViews(previous?.slug, item.slug);
-    return NextResponse.json({ landingPage: item });
+    return NextResponse.json({ landingPage: item, warnings: await getSeoContentWarnings("landing_page", item) });
   }
   catch (err) { return NextResponse.json({ error: err instanceof Error ? err.message : "Error" }, { status: 400 }); }
 }
@@ -40,7 +41,7 @@ export async function PATCH(request: NextRequest, ctx: { params: Promise<{ id: s
   const item = await getLandingPageById(id); if (!item) return NextResponse.json({ error: "No encontrado" }, { status: 404 });
   const ns = body.action === "publish" ? "published" : body.action === "archive" ? "archived" : body.action === "draft" ? "draft" : null;
   if (!ns) return NextResponse.json({ error: "Acción no válida" }, { status: 400 });
-  const updated = await updateLandingPage(id, { ...item, status: ns }); refreshLandingViews(item.slug, updated?.slug); return NextResponse.json({ landingPage: updated });
+  const updated = await updateLandingPage(id, { ...item, status: ns }); refreshLandingViews(item.slug, updated?.slug); return NextResponse.json({ landingPage: updated, warnings: await getSeoContentWarnings("landing_page", updated) });
 }
 export async function DELETE(request: NextRequest, ctx: { params: Promise<{ id: string }> }) {
   if (!(await requireAdminApi())) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });

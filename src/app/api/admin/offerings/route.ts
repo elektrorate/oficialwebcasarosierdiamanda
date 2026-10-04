@@ -6,6 +6,7 @@ import { expirationSaveError } from "@/lib/cms/offering-expiration";
 import { internalApiError } from "@/lib/security/api-response";
 import { publicSlugError } from "@/lib/seo/public-slug";
 import { offeringGalleryModalContentError } from "@/lib/cms/modal-content";
+import { getSeoContentWarnings } from "@/lib/cms/seo-review";
 
 export async function GET() {
   const session = await requireAdminApi();
@@ -49,7 +50,7 @@ export async function POST(request: NextRequest) {
   try {
     const offering = await createOffering(body);
     refreshOfferingPaths(offering);
-    return NextResponse.json({ offering });
+    return NextResponse.json({ offering, warnings: await getSeoContentWarnings("offering", offering) });
   } catch (error) {
     return internalApiError(error, "No se pudo crear el offering.", 400);
   }

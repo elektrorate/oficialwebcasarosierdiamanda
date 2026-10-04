@@ -2,6 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useRef, useState } from "react";
+import { getActionWarnings } from "@/lib/admin/action-warnings";
 import {
   CATEGORIES_ENDPOINT,
   PRODUCT_LIST_PATH,
@@ -26,8 +27,9 @@ import {
 
 export function useProductForm(mode: ProductFormMode, item?: Product) {
   const router = useRouter();
-  const productId = item?.id;
-  const syncKey = `${productId ?? "new"}:${item?.updated_at ?? "create"}`;
+  const [productId, setProductId] = useState(mode === "edit" ? item?.id : undefined);
+  const [seoWarnings, setSeoWarnings] = useState<string[]>([]);
+  const syncKey = `${item?.id ?? "new"}:${item?.updated_at ?? "create"}`;
   const [previousSyncKey, setPreviousSyncKey] = useState(syncKey);
   const [fields, setFields] = useState<ProductFormFields>(() => fieldsFromProduct(item));
   const [categories, setCategories] = useState<ProductCategory[]>([]);
@@ -43,6 +45,7 @@ export function useProductForm(mode: ProductFormMode, item?: Product) {
   if (syncKey !== previousSyncKey) {
     setPreviousSyncKey(syncKey);
     setFields(fieldsFromProduct(item));
+    if (mode === "edit") setProductId(item?.id);
     setError(null);
   }
 
@@ -126,9 +129,9 @@ export function useProductForm(mode: ProductFormMode, item?: Product) {
       setError(null);
 
       try {
-        const endpoint = mode === "create" ? PRODUCTS_ENDPOINT : `${PRODUCTS_ENDPOINT}/${productId}`;
+        const endpoint = productId ? `${PRODUCTS_ENDPOINT}/${productId}` : PRODUCTS_ENDPOINT;
         const response = await fetch(endpoint, {
-          method: mode === "create" ? "POST" : "PUT",
+          method: productId ? "PUT" : "POST",
           headers: { "Content-Type": "application/json" },
           cache: "no-store",
           body: JSON.stringify(buildProductPayload(fields, nextStatus)),
@@ -146,7 +149,11 @@ export function useProductForm(mode: ProductFormMode, item?: Product) {
           return;
         }
 
-        setFields((current) => ({ ...current, status: nextStatus }));
+        const data = await response.json() as { product: Product; warnings?: string[] };
+        const warnings = getActionWarnings(data.warnings);
+        setProductId(data.product.id);
+        setSeoWarnings(warnings);
+        setFields(fieldsFromProduct(data.product));
         setModal({
           type: "success",
           title: intent === "publish" ? "Producto publicado" : "Borrador guardado",
@@ -154,7 +161,7 @@ export function useProductForm(mode: ProductFormMode, item?: Product) {
             intent === "publish"
               ? "Los cambios del producto se guardaron correctamente."
               : "El producto se guardó como borrador correctamente.",
-          redirectOnClose: true,
+          redirectOnClose: warnings.length === 0,
         });
       } catch {
         const message = "No se pudo conectar con el servidor. Intenta nuevamente.";
@@ -169,7 +176,7 @@ export function useProductForm(mode: ProductFormMode, item?: Product) {
         saveInFlightRef.current = false;
       }
     },
-    [fields, mode, productId],
+    [fields, productId],
   );
 
   const handleSubmit = useCallback(
@@ -241,6 +248,8 @@ export function useProductForm(mode: ProductFormMode, item?: Product) {
   }, [modal?.redirectOnClose, router]);
 
   return {
+    recordId: productId,
+    seoWarnings,
     fields,
     categories,
     categoriesLoading,

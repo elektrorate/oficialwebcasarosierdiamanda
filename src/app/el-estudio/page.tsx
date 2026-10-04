@@ -1,6 +1,7 @@
 import { canonicalPublicPath } from "@/lib/cms/public-section-routes";
 import { getStudioPageSettings } from "@/lib/cms/studio-page";
 import { assetPath } from "@/lib/assets";
+import { resolveSeoText } from "@/lib/seo/content";
 import type { Metadata } from "next";
 import { StudioPage as StudioScreen } from "@/features/studio/StudioPage";
 
@@ -8,10 +9,11 @@ export const revalidate = 900;
 
 export async function generateMetadata(): Promise<Metadata> {
   const page = await getStudioPageSettings();
-  const title = page.seo_title || "El estudio | Casa Rosier Ceramica";
-  const description =
-    page.seo_description ||
-    "Conoce el estudio de ceramica Casa Rosier en Barcelona: un espacio para aprender, practicar y desarrollar proyectos con arcilla, torno, modelado y esmaltes.";
+  const { title, description } = resolveSeoText({
+    title: page.seo_title, description: page.seo_description,
+    fallbackTitle: "El estudio | Casa Rosier Ceramica",
+    fallbackDescription: "Conoce el estudio de ceramica Casa Rosier en Barcelona: un espacio para aprender, practicar y desarrollar proyectos con arcilla, torno, modelado y esmaltes.",
+  });
   const image = page.seo_image ? assetPath(page.seo_image) : undefined;
 
   return {

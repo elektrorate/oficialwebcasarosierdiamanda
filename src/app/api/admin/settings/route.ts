@@ -10,6 +10,7 @@ import { invalidateSettingsCaches } from "@/lib/cms/settings-cache";
 import { validateSettingsPayload } from "@/lib/cms/settings-schema";
 import { requireAdminApi } from "@/lib/auth/supabase-auth";
 import { revalidatePublicRobots } from "@/lib/seo/revalidation";
+import { getSeoWarnings } from "@/lib/seo/content";
 
 export async function GET() {
   const session = await requireAdminApi();
@@ -53,7 +54,12 @@ export async function PUT(request: NextRequest) {
     revalidatePath("/", "layout");
     revalidatePublicRobots();
 
-    return NextResponse.json({ settings: result.settings, persisted: result.write });
+    return NextResponse.json({ settings: result.settings, persisted: result.write, warnings: getSeoWarnings({
+      title: result.settings.seo.default_seo_title,
+      description: result.settings.seo.default_seo_description,
+      fallbackTitle: result.settings.site.site_name,
+      fallbackDescription: result.settings.site.site_description,
+    }) });
   } catch (err) {
     const error = err instanceof Error ? err : new Error(String(err));
     if (error instanceof SettingsPersistenceError) {
@@ -87,7 +93,12 @@ export async function POST(request: NextRequest) {
       invalidateSettingsCaches();
       revalidatePath("/", "layout");
       revalidatePublicRobots();
-      return NextResponse.json({ settings: result.settings, persisted: result.write });
+      return NextResponse.json({ settings: result.settings, persisted: result.write, warnings: getSeoWarnings({
+        title: result.settings.seo.default_seo_title,
+        description: result.settings.seo.default_seo_description,
+        fallbackTitle: result.settings.site.site_name,
+        fallbackDescription: result.settings.site.site_description,
+      }) });
     } catch (err) {
       const error = err instanceof Error ? err : new Error(String(err));
       if (error instanceof SettingsPersistenceError) {

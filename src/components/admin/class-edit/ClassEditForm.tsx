@@ -3,6 +3,7 @@
 import { useCallback } from "react";
 import Link from "next/link";
 import AdminActionModal from "@/components/admin/AdminActionModal";
+import SeoReview from "@/components/admin/SeoReview";
 import MediaLibraryModal from "@/components/admin/MediaLibraryModal";
 import SharedHeroEditor from "@/components/admin/SharedHeroEditor";
 import Button from "@/components/ui/Button";
@@ -54,6 +55,7 @@ export default function ClassEditForm({
       <ClassEditTabBar tabs={CLASS_EDIT_TABS} activeTab={activeTab} onTabChange={form.setActiveTab} />
 
       <form id={FORM_ID} onSubmit={form.handleSubmit} className="class-edit-form space-y-6">
+        <SeoReview kind="offering" id={form.recordId} title={form.seoTitle} description={form.seoDescription} fallbackTitle={form.title} fallbackDescription={form.details.highlightDescription} serverWarnings={form.seoWarnings} />
         {activeTab === "hero" ? (
           <SharedHeroEditor
             details={form.details}

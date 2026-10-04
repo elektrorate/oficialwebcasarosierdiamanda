@@ -95,8 +95,9 @@ function isSafeUrl(value: string) {
 }
 
 function textLimitFor(field: string) {
+  if (field === "default_seo_title" || field === "default_seo_description") return 50_000;
   if (field === "site_name") return MAX_TEXT_LENGTHS.siteName;
-  if (field === "site_description" || field === "default_seo_description") {
+  if (field === "site_description") {
     return MAX_TEXT_LENGTHS.description;
   }
   if (URL_FIELDS.has(field)) return MAX_TEXT_LENGTHS.url;
@@ -114,7 +115,7 @@ function normalizeField(section: string, field: string, raw: unknown, errors: st
     errors.push(`${label}: se esperaba un texto.`);
     return undefined;
   }
-  const value = raw.trim();
+  const value = section === "seo" && (field === "default_seo_title" || field === "default_seo_description") ? raw : raw.trim();
 
   if (COLOR_FIELDS.has(field)) {
     if (!HEX_COLOR.test(value)) {

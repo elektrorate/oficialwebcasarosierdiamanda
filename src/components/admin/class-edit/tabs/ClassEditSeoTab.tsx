@@ -4,7 +4,6 @@ import { memo } from "react";
 import Card from "@/components/ui/Card";
 import Button from "@/components/ui/Button";
 import { ImagePreview, TextAreaField, TextField } from "../fields";
-import { SEO_MAX_DESCRIPTION_LENGTH, SEO_MAX_TITLE_LENGTH } from "../constants";
 import type { ClassEditFormState } from "../hooks/useClassEditForm";
 import { useSeoTabHandlers } from "../hooks/useSeoTabHandlers";
 
@@ -28,14 +27,12 @@ function ClassEditSeoTabComponent({ form }: { form: ClassEditFormState }) {
         <TextField
           label="Título SEO"
           value={seoTitle}
-          maxLength={SEO_MAX_TITLE_LENGTH}
           help={seoTitleHelp}
           onChange={(event) => handleSeoTitleChange(event.target.value)}
         />
         <TextAreaField
           label="Descripción SEO"
           value={seoDescription}
-          maxLength={SEO_MAX_DESCRIPTION_LENGTH}
           help={seoDescriptionHelp}
           onChange={(event) => handleSeoDescriptionChange(event.target.value)}
           className="min-h-[100px]"

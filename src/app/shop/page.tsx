@@ -4,6 +4,7 @@ import { ShopIndexPage } from "@/features/shop/ShopIndexPage";
 import { assetPath } from "@/lib/assets";
 import { getShopPageSettings } from "@/lib/cms/shop-page";
 import { getSettings } from "@/lib/cms/settings";
+import { resolveSeoText } from "@/lib/seo/content";
 
 export async function generateMetadata(): Promise<Metadata> {
   const settings = await getSettings();
@@ -12,11 +13,12 @@ export async function generateMetadata(): Promise<Metadata> {
     settings.seo.default_seo_title,
     settings.seo.default_seo_description,
   );
-  const title = page.seo_title || settings.seo.default_seo_title || "Shop";
-  const description =
-    page.seo_description ||
-    settings.seo.default_seo_description ||
-    "Piezas ceramicas creadas en el estudio. Objetos unicos, series pequenas y piezas disponibles para compra";
+  const { title, description } = resolveSeoText({
+    title: page.seo_title || settings.seo.default_seo_title,
+    description: page.seo_description || settings.seo.default_seo_description,
+    fallbackTitle: "Shop",
+    fallbackDescription: "Piezas ceramicas creadas en el estudio. Objetos unicos, series pequenas y piezas disponibles para compra",
+  });
   const image = page.seo_image
     ? assetPath(page.seo_image)
     : settings.seo.default_og_image_url

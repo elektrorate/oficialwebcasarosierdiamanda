@@ -7,6 +7,7 @@ import { readJsonFile, writeJsonFile } from "./local-storage";
 import { isProductStatus } from "./types";
 import type { Product, ProductStatus } from "./types";
 import { logAction } from "./history-logs";
+import { validateSeoInput } from "../seo/content";
 
 const TABLE = "products";
 const FILE_NAME = "products.json";
@@ -67,6 +68,7 @@ function uniqueSlug(items: Product[], base: string, currentId?: string) {
 }
 
 function normalizeProduct(input: ProductInput, existing?: Product, allItems: Product[] = []) {
+  validateSeoInput(input);
   const now = new Date().toISOString();
   const name = String(input.name ?? existing?.name ?? "").trim();
   const slugBase = toSlug(String(input.slug ?? existing?.slug ?? "").trim()) || toSlug(name);
@@ -99,8 +101,8 @@ function normalizeProduct(input: ProductInput, existing?: Product, allItems: Pro
     dimensions: String(input.dimensions ?? existing?.dimensions ?? "").trim(),
     cta_label: String(input.cta_label ?? existing?.cta_label ?? "").trim(),
     cta_url: String(input.cta_url ?? existing?.cta_url ?? "").trim(),
-    seo_title: String(input.seo_title ?? existing?.seo_title ?? "").trim(),
-    seo_description: String(input.seo_description ?? existing?.seo_description ?? "").trim(),
+    seo_title: input.seo_title ?? existing?.seo_title ?? "",
+    seo_description: input.seo_description ?? existing?.seo_description ?? "",
     seo_image: String(input.seo_image ?? existing?.seo_image ?? "").trim(),
     created_at: existing?.created_at ?? now,
     updated_at: now,

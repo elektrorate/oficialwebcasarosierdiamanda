@@ -4,6 +4,7 @@ import { type NextRequest, NextResponse } from "next/server";
 import { revalidatePath } from "next/cache";
 import { publicSlugError } from "@/lib/seo/public-slug";
 import { revalidatePublicSitemap } from "@/lib/seo/revalidation";
+import { getSeoContentWarnings } from "@/lib/cms/seo-review";
 
 function refreshLandingViews(slug?: string) {
   if (slug) revalidatePath(`/landing/${slug}`);
@@ -28,6 +29,6 @@ export async function POST(request: NextRequest) {
     const slugError = publicSlugError(body.slug);
     if (slugError) return NextResponse.json({ error: slugError }, { status: 400 });
   }
-  try { const item = await createLandingPage(body); refreshLandingViews(item.slug); return NextResponse.json({ landingPage: item }); }
+  try { const item = await createLandingPage(body); refreshLandingViews(item.slug); return NextResponse.json({ landingPage: item, warnings: await getSeoContentWarnings("landing_page", item) }); }
   catch (err) { return NextResponse.json({ error: err instanceof Error ? err.message : "Error" }, { status: 400 }); }
 }

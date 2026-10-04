@@ -39,7 +39,6 @@ function PreviewPaneComponent({
   seoDescription,
   title,
   slug,
-  description,
 }: {
   previewItem: ExperienceItem;
   status: "draft" | "published";
@@ -79,7 +78,7 @@ function PreviewPaneComponent({
         seoDescription={seoDescription}
         title={title}
         slug={slug}
-        description={description}
+        description={details.highlightDescription}
       />
 
       <div className="cms-public-preview__toolbar">

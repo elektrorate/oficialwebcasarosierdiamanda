@@ -8,6 +8,8 @@ import SettingsSection from "./SettingsSection";
 import MediaSelectField from "./MediaSelectField";
 import ColorPickerField from "./ColorPickerField";
 import { formatAdminDateTime } from "@/lib/admin/date-format";
+import SeoReview from "./SeoReview";
+import { getActionWarnings } from "@/lib/admin/action-warnings";
 
 type EditableMenuItem = {
   id?: string;
@@ -118,6 +120,7 @@ export default function SettingsForm({
   const [success, setSuccess] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [errorDetails, setErrorDetails] = useState<string[]>([]);
+  const [seoWarnings, setSeoWarnings] = useState<string[]>([]);
 
   function updateSection<K extends keyof SiteSettings>(section: K, value: Partial<SiteSettings[K]>) {
     setSettings((prev) => ({
@@ -202,6 +205,7 @@ export default function SettingsForm({
       // El formulario se sincroniza con lo que el servidor ha confirmado,
       // incluida la fecha real de actualización.
       setSettings(data.settings as SiteSettings);
+      setSeoWarnings(getActionWarnings(data.warnings));
     } catch {
       setError("No se pudo conectar con el servidor. Revisa tu conexión e inténtalo de nuevo.");
       return;
@@ -252,6 +256,7 @@ export default function SettingsForm({
 
       const data = await response.json();
       if (data?.settings) setSettings(data.settings as SiteSettings);
+      setSeoWarnings(getActionWarnings(data.warnings));
       setSuccess("Valores iniciales restaurados.");
       setTimeout(() => setSuccess(null), 3000);
     } catch {
@@ -620,6 +625,7 @@ export default function SettingsForm({
       </SettingsSection>
 
       {success ? <p className="form-success">{success}</p> : null}
+      <SeoReview title={settings.seo.default_seo_title} description={settings.seo.default_seo_description} fallbackTitle={settings.site.site_name} fallbackDescription={settings.site.site_description} serverWarnings={seoWarnings} />
       {error ? <p className="form-error">{error}</p> : null}
       {errorDetails.length ? (
         <ul className="settings-form-errors">

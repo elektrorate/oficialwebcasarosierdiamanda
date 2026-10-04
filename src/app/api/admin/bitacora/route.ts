@@ -4,6 +4,7 @@ import { revalidatePath } from "next/cache";
 import { type NextRequest, NextResponse } from "next/server";
 import { revalidatePublicSitemap } from "@/lib/seo/revalidation";
 import { publicSlugError } from "@/lib/seo/public-slug";
+import { getSeoContentWarnings } from "@/lib/cms/seo-review";
 
 function refreshBlogViews() {
   revalidatePath("/blog");
@@ -30,6 +31,6 @@ export async function POST(request: NextRequest) {
     const slugError = publicSlugError(body.slug);
     if (slugError) return NextResponse.json({ error: slugError }, { status: 400 });
   }
-  try { const item = await createBlogPost(body); refreshBlogViews(); return NextResponse.json({ post: item }); }
+  try { const item = await createBlogPost(body); refreshBlogViews(); return NextResponse.json({ post: item, warnings: await getSeoContentWarnings("blog_post", item) }); }
   catch (err) { return NextResponse.json({ error: err instanceof Error ? err.message : "Error" }, { status: 400 }); }
 }

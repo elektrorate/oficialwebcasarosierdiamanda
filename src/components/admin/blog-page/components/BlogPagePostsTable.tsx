@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "@/components/admin/AdminLink";
 import { memo } from "react";
 import AdminActionModal from "@/components/admin/AdminActionModal";
+import { SeoServerWarnings } from "@/components/admin/SeoReview";
 import { OfferingStatusSwitch } from "@/components/admin/offerings-category/OfferingStatusSwitch";
 import { BITACORA_EDIT_PATH, BLOG_POST_STATUS_LABELS } from "@/lib/admin/bitacora-actions";
 import type { BitacoraPatchAction } from "@/lib/admin/bitacora-actions";
@@ -44,6 +45,7 @@ function BlogPagePostsTableComponent({
 
   return (
     <>
+      <SeoServerWarnings warnings={actions.seoWarnings} />
       <div className="table-card blog-table-card overflow-hidden rounded-2xl border border-outline-variant/70 shadow-sm">
         <table className="admin-table blog-admin-table blog-admin-table--v2 w-full">
           <thead>

@@ -9,6 +9,7 @@ import { getSettings } from "@/lib/cms/settings";
 import { organizationJsonLd } from "@/lib/seo/structured-data";
 import { getSiteUrl } from "@/lib/seo/site-url";
 import { resolveRobotsMetadata } from "@/lib/seo/site-robots";
+import { resolveSeoText } from "@/lib/seo/content";
 import { siteHtmlLang, siteOpenGraphLocale } from "@/lib/seo/site-language";
 import "./tailwind.css";
 import "./legacy/base.css";
@@ -73,11 +74,12 @@ const FALLBACK_FAVICON = "/img/logo-header.png";
 export async function generateMetadata(): Promise<Metadata> {
   const settings = await getSettings();
   const siteName = settings.site.site_name || "Casa Rosier";
-  const title = settings.seo.default_seo_title || siteName;
-  const description =
-    settings.seo.default_seo_description ||
-    settings.site.site_description ||
-    FALLBACK_SITE_DESCRIPTION;
+  const { title, description } = resolveSeoText({
+    title: settings.seo.default_seo_title,
+    description: settings.seo.default_seo_description,
+    fallbackTitle: siteName,
+    fallbackDescription: settings.site.site_description || FALLBACK_SITE_DESCRIPTION,
+  });
   const ogImage = settings.seo.default_og_image_url?.trim();
   const images = ogImage ? [ogImage] : undefined;
 
@@ -134,7 +136,7 @@ export default async function RootLayout({
         <JsonLd
           data={organizationJsonLd(siteName, {
             description:
-              settings.seo.default_seo_description || settings.site.site_description,
+              resolveSeoText({ description: settings.seo.default_seo_description, fallbackDescription: settings.site.site_description }).description,
             logoUrl: settings.site.logo_url?.trim(),
           })}
         />

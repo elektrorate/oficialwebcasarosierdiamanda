@@ -14,8 +14,6 @@ import {
   DEFAULT_CALENDAR_LABELS_TITLE,
   DEFAULT_HERO_IMAGE,
   MAX_CALENDAR_LABELS,
-  SEO_MAX_DESCRIPTION_LENGTH,
-  SEO_MAX_TITLE_LENGTH,
   defaultClassDetails,
 } from "./constants";
 import type { LegacyOfferingDetails, TabKey } from "./types";
@@ -29,6 +27,7 @@ import {
 import { normalizePresentationHeroForPersist } from "@/components/admin/shared-hero-editor/heroEditorModel";
 import { resolvePresentationHeroContent } from "@/components/admin/shared-hero-editor/utils";
 import { MODAL_CONTENT_LIMITS, modalTextError } from "@/lib/cms/modal-content";
+import { getSeoContentFields, resolveSeoText } from "@/lib/seo/content";
 
 export function formatFileSize(bytes: number) {
   if (bytes < 1024 * 1024) return `${Math.max(1, Math.round(bytes / 1024))} KB`;
@@ -521,11 +520,11 @@ export function buildClassEditSerpPreview({
   slug: string;
   description: string;
 }) {
-  const plainDescription = renderPlainText(description);
+  const text = resolveSeoText(getSeoContentFields("offering", { seo_title: seoTitle, seo_description: seoDescription, title, excerpt: description }));
   return {
-    title: seoTitle || title || "Título SEO",
+    title: text.title || "Título SEO",
     url: slug ? `casarosierceramica.com/clases/${slug}` : "casarosierceramica.com/clases/ejemplo",
-    description: seoDescription || plainDescription || "Descripción SEO de la clase...",
+    description: text.description || "Descripción SEO de la clase...",
   };
 }
 
@@ -964,8 +963,8 @@ function normalizeSeoFieldsForPersist(
   seoImage: string,
 ): { seoTitle: string; seoDescription: string; seoImage: string } {
   return {
-    seoTitle: seoTitle.trim().slice(0, SEO_MAX_TITLE_LENGTH),
-    seoDescription: seoDescription.trim().slice(0, SEO_MAX_DESCRIPTION_LENGTH),
+    seoTitle: seoTitle.trim(),
+    seoDescription: seoDescription.trim(),
     seoImage: seoImage.trim(),
   };
 }

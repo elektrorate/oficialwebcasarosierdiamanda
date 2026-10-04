@@ -16,11 +16,16 @@ export function useBlogPostAutosave(
   fields: BlogPostFormFields,
   status: BlogPostStatus,
   enabled: boolean,
+  onWarnings: (warnings: string[]) => void,
 ) {
   const payload = useMemo(() => buildBlogPostSavePayload(fields, status), [fields, status]);
   const save = useCallback(
-    (nextPayload: Record<string, unknown>) => saveBlogPostAction("edit", postId, nextPayload, { autosave: true }),
-    [postId],
+    async (nextPayload: Record<string, unknown>) => {
+      const result = await saveBlogPostAction("edit", postId, nextPayload, { autosave: true });
+      if (result.ok) onWarnings(result.warnings);
+      return result;
+    },
+    [onWarnings, postId],
   );
 
   return useQueuedAutosave({

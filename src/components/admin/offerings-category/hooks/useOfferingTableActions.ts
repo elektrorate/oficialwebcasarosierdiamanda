@@ -24,6 +24,7 @@ export type OfferingDeleteDialogState = {
 export function useOfferingTableActions(typeLabel: string) {
   const router = useRouter();
   const [notice, setNotice] = useState<Notice | null>(null);
+  const [seoWarnings, setSeoWarnings] = useState<string[]>([]);
   const [deleteDialog, setDeleteDialog] = useState<OfferingDeleteDialogState>(null);
   const [pendingId, setPendingId] = useState<string | null>(null);
   const [hiddenIds, setHiddenIds] = useState<Set<string>>(() => new Set());
@@ -52,6 +53,7 @@ export function useOfferingTableActions(typeLabel: string) {
       const result = await patchOfferingAction(id, action);
 
       if (result.ok) {
+        setSeoWarnings(result.warnings ?? []);
         if (result.offering && isOffering(result.offering)) mergeOffering(result.offering);
         setNotice({
           type: "success",
@@ -150,6 +152,7 @@ export function useOfferingTableActions(typeLabel: string) {
       const result = await setOfferingEnabledAction(offering.id, enabled);
 
       if (result.ok) {
+        setSeoWarnings(result.warnings ?? []);
         if (result.offering && isOffering(result.offering)) mergeOffering(result.offering);
         setStatusOverrides((current) => {
           const next = { ...current };
@@ -192,6 +195,7 @@ export function useOfferingTableActions(typeLabel: string) {
 
   return useMemo(
     () => ({
+      seoWarnings,
       notice,
       setNotice,
       deleteDialog,
@@ -216,6 +220,7 @@ export function useOfferingTableActions(typeLabel: string) {
       isBusy,
       notice,
       openPermanentDeleteDialog,
+      seoWarnings,
       openTrashDialog,
       pendingId,
       statusPendingId,

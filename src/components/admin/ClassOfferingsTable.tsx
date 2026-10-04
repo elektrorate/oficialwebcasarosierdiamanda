@@ -3,6 +3,7 @@
 import Image from "next/image";
 import Link from "@/components/admin/AdminLink";
 import AdminActionModal from "./AdminActionModal";
+import { SeoServerWarnings } from "./SeoReview";
 import { OfferingDeleteDialog } from "./offerings-category/OfferingDeleteDialog";
 import { OfferingStatusSwitch } from "./offerings-category/OfferingStatusSwitch";
 import { useOfferingTableActions } from "./offerings-category/hooks/useOfferingTableActions";
@@ -86,6 +87,7 @@ export default function ClassOfferingsTable({
 
   return (
     <>
+      <SeoServerWarnings warnings={actions.seoWarnings} />
       <AdminActionModal
         open={Boolean(actions.notice)}
         type={actions.notice?.type}

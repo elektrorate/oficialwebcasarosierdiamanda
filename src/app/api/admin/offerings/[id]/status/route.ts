@@ -3,6 +3,7 @@ import { requireAdminApi } from "@/lib/auth/supabase-auth";
 import { getOfferingById, updateOffering } from "@/lib/cms/offerings";
 import { refreshOfferingPaths } from "@/lib/cms/offering-routes";
 import type { OfferingStatus } from "@/lib/cms/types";
+import { getSeoContentWarnings } from "@/lib/cms/seo-review";
 
 function resolveStatus(enabled: boolean): OfferingStatus {
   return enabled ? "published" : "draft";
@@ -42,7 +43,7 @@ export async function PATCH(request: NextRequest, context: { params: Promise<{ i
   }
 
   if (offering.status === nextStatus) {
-    return NextResponse.json({ offering });
+    return NextResponse.json({ offering, warnings: await getSeoContentWarnings("offering", offering) });
   }
 
   const updated = await updateOffering(id, { ...offering, status: nextStatus });
@@ -51,5 +52,5 @@ export async function PATCH(request: NextRequest, context: { params: Promise<{ i
   }
 
   refreshOfferingPaths(offering, updated);
-  return NextResponse.json({ offering: updated, enabled: nextStatus === "published" });
+  return NextResponse.json({ offering: updated, enabled: nextStatus === "published", warnings: await getSeoContentWarnings("offering", updated) });
 }

@@ -1,4 +1,5 @@
 import type { BlogPost } from "@/lib/cms/types";
+import { getActionWarnings } from "./action-warnings";
 
 export const BITACORA_LIST_ADMIN_PATH = "/admin/bitacora";
 export const BITACORA_CREATE_PATH = "/admin/bitacora/new";
@@ -9,7 +10,7 @@ export const BITACORA_POST_ENDPOINT = (id: string) => `/api/admin/bitacora/${id}
 export const BITACORA_POSTS_ENDPOINT = "/api/admin/bitacora";
 
 export type BlogPostSaveResult =
-  | { ok: true; post: BlogPost }
+  | { ok: true; post: BlogPost; warnings: string[] }
   | { ok: false; error: string };
 
 export async function saveBlogPostAction(
@@ -32,6 +33,7 @@ export async function saveBlogPostAction(
 
     const data = (await response.json().catch(() => ({}))) as {
       post?: BlogPost;
+      warnings?: string[];
       error?: string;
     };
 
@@ -39,7 +41,7 @@ export async function saveBlogPostAction(
       return { ok: false, error: data.error || "No se pudo guardar la bitácora." };
     }
 
-    return { ok: true, post: data.post };
+    return { ok: true, post: data.post, warnings: getActionWarnings(data.warnings) };
   } catch {
     return { ok: false, error: "Revisa la conexión y vuelve a intentarlo." };
   }
@@ -55,7 +57,7 @@ export type BitacoraPatchAction =
   | "unfeature";
 
 export type BitacoraActionResult =
-  | { ok: true; post?: unknown }
+  | { ok: true; post?: unknown; warnings: string[] }
   | { ok: false; error: string };
 
 export function bitacoraPostEnabled(post: Pick<BlogPost, "status">) {
@@ -92,8 +94,8 @@ export async function patchBitacoraPostAction(id: string, action: BitacoraPatchA
     });
 
     if (response.ok) {
-      const data = (await response.json().catch(() => ({}))) as { post?: unknown };
-      return { ok: true, post: data.post };
+      const data = (await response.json().catch(() => ({}))) as { post?: unknown; warnings?: string[] };
+      return { ok: true, post: data.post, warnings: getActionWarnings(data.warnings) };
     }
 
     const data = (await response.json().catch(() => ({}))) as { error?: string };
@@ -112,8 +114,8 @@ export async function setBitacoraPostEnabledAction(id: string, enabled: boolean)
     });
 
     if (response.ok) {
-      const data = (await response.json().catch(() => ({}))) as { post?: unknown };
-      return { ok: true, post: data.post };
+      const data = (await response.json().catch(() => ({}))) as { post?: unknown; warnings?: string[] };
+      return { ok: true, post: data.post, warnings: getActionWarnings(data.warnings) };
     }
 
     const data = (await response.json().catch(() => ({}))) as { error?: string };

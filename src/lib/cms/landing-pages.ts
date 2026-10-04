@@ -5,6 +5,7 @@ import { readJsonFile, writeJsonFile } from "./local-storage";
 import { isLandingPageStatus, isCampaignType } from "./types";
 import type { LandingPage, LandingPageBlock } from "./types";
 import { logAction } from "./history-logs";
+import { validateSeoInput } from "../seo/content";
 
 const TABLE = "landing_pages";
 const BLOCK_TABLE = "landing_page_blocks";
@@ -22,6 +23,7 @@ function uniqueSlug(items: LandingPage[], base: string, currentId?: string) {
 }
 
 function normalize(input: Input, existing?: LandingPage, all: LandingPage[] = []) {
+  validateSeoInput(input);
   const title = String(input.title ?? existing?.title ?? "").trim();
   const slugBase = String(input.slug ?? existing?.slug ?? "").trim() || toSlug(title);
   const slug = uniqueSlug(all, slugBase || toSlug(title), existing?.id);
@@ -47,8 +49,8 @@ function normalize(input: Input, existing?: LandingPage, all: LandingPage[] = []
     social_gallery_id: input.social_gallery_id !== undefined ? input.social_gallery_id : (existing?.social_gallery_id ?? null),
     testimonials_id: input.testimonials_id !== undefined ? input.testimonials_id : (existing?.testimonials_id ?? null),
     footer_id: input.footer_id !== undefined ? input.footer_id : (existing?.footer_id ?? null),
-    seo_title: String(input.seo_title ?? existing?.seo_title ?? "").trim(),
-    seo_description: String(input.seo_description ?? existing?.seo_description ?? "").trim(),
+    seo_title: input.seo_title ?? existing?.seo_title ?? "",
+    seo_description: input.seo_description ?? existing?.seo_description ?? "",
     seo_image: String(input.seo_image ?? existing?.seo_image ?? "").trim(),
     blocks: input.blocks ?? existing?.blocks ?? [],
     created_at: existing?.created_at ?? now,

@@ -2,6 +2,7 @@
 
 import { memo } from "react";
 import AdminActionModal from "@/components/admin/AdminActionModal";
+import SeoReview from "@/components/admin/SeoReview";
 import type { NavigationItem } from "@/data/types";
 import type { SiteSettings } from "@/lib/cms/settings";
 import { BlogFormHeader } from "./components/BlogFormHeader";
@@ -44,6 +45,8 @@ function BlogFormViewComponent({ navigationItems, menuSettings, ...formProps }: 
       />
 
       <BlogFormTabBar activeTab={form.tab} onTabChange={form.setTab} />
+
+      <SeoReview kind="blog_post" id={form.recordId} title={form.seoTitle} description={form.seoDescription} fallbackTitle={form.title} fallbackDescription={form.excerpt} serverWarnings={form.seoWarnings} />
 
       <div className="cms-editor-main">
         <div className={form.tab === "hero" ? undefined : "hidden"} aria-hidden={form.tab !== "hero"}>

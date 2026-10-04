@@ -30,6 +30,7 @@ export function useBlogTableActions(handlers: BlogTableSyncHandlers = {}) {
   const router = useRouter();
   const { onPostUpdated, onPostRemoved } = handlers;
   const [notice, setNotice] = useState<Notice | null>(null);
+  const [seoWarnings, setSeoWarnings] = useState<string[]>([]);
   const [trashDialog, setTrashDialog] = useState<BlogPostTrashDialogState>(null);
   const [pendingKey, setPendingKey] = useState<string | null>(null);
   const [hiddenIds, setHiddenIds] = useState<Set<string>>(() => new Set());
@@ -80,6 +81,7 @@ export function useBlogTableActions(handlers: BlogTableSyncHandlers = {}) {
           return next;
         });
         onPostUpdated?.(post.id, result.post, fallbackPatch);
+        setSeoWarnings(result.warnings);
         setNotice({
           type: "success",
           title: "Estado actualizado",
@@ -120,6 +122,7 @@ export function useBlogTableActions(handlers: BlogTableSyncHandlers = {}) {
       const result = await patchBitacoraPostAction(id, action);
 
       if (result.ok) {
+        setSeoWarnings(result.warnings);
         if (action === "trash") {
           onPostRemoved?.(id);
         } else if (action === "feature") {
@@ -214,6 +217,7 @@ export function useBlogTableActions(handlers: BlogTableSyncHandlers = {}) {
   );
 
   return {
+    seoWarnings,
     notice,
     closeNotice,
     trashDialog,

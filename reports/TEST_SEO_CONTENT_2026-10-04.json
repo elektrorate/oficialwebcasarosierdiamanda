@@ -1,0 +1,217 @@
+{
+  "checkedAt": "2026-10-04T14:54:23.488Z",
+  "api": [
+    {
+      "route": "/api/admin/seo-review",
+      "authenticated": 200,
+      "unauthenticated": 401,
+      "publishedPeers": 20
+    },
+    {
+      "route": "/bitacora",
+      "invalidTypeRejected": true
+    },
+    {
+      "route": "/shop/products",
+      "invalidTypeRejected": true
+    },
+    {
+      "route": "/offerings",
+      "invalidTypeRejected": true
+    },
+    {
+      "route": "/landing-pages",
+      "invalidTypeRejected": true
+    },
+    {
+      "route": "settings and marketing",
+      "invalidTypeRejected": true
+    }
+  ],
+  "publicMetadata": [
+    {
+      "path": "/blog/del-barro-a-la-idea-7-formas-de-expandir-tu-creatividad-con-piezas-funcionales",
+      "matchesCleanResolvedDescription": true,
+      "descriptionLength": 57,
+      "usesFallback": false
+    },
+    {
+      "path": "/blog/esmaltes-ceramicos-que-son-como-funcionan-y-como-evitar-errores-comunes",
+      "matchesCleanResolvedDescription": true,
+      "descriptionLength": 95,
+      "usesFallback": false
+    },
+    {
+      "path": "/blog/barbotina-con-esteroides",
+      "matchesCleanResolvedDescription": true,
+      "descriptionLength": 57,
+      "usesFallback": false
+    },
+    {
+      "path": "/blog/hacer-ceramica-en-pareja-en-barcelona",
+      "matchesCleanResolvedDescription": true,
+      "descriptionLength": 159,
+      "usesFallback": true
+    },
+    {
+      "path": "/blog/no-es-falta-de-talento-es-miedo-a-crear",
+      "matchesCleanResolvedDescription": true,
+      "descriptionLength": 159,
+      "usesFallback": true
+    },
+    {
+      "path": "/blog/caminos-y-tecnicas-para-convertir-barro-en-forma",
+      "matchesCleanResolvedDescription": true,
+      "descriptionLength": 29,
+      "usesFallback": false
+    },
+    {
+      "path": "/shop/ggrdgr-er",
+      "matchesCleanResolvedDescription": true,
+      "descriptionLength": 16,
+      "usesFallback": true
+    },
+    {
+      "path": "/shop/mostro1",
+      "matchesCleanResolvedDescription": true,
+      "descriptionLength": 44,
+      "usesFallback": true
+    },
+    {
+      "path": "/shop/jarron-de-gres-blanco",
+      "matchesCleanResolvedDescription": true,
+      "descriptionLength": 80,
+      "usesFallback": false
+    },
+    {
+      "path": "/shop/serie-mineral-01",
+      "matchesCleanResolvedDescription": true,
+      "descriptionLength": 72,
+      "usesFallback": false
+    },
+    {
+      "path": "/shop/pieza-escultorica-organica",
+      "matchesCleanResolvedDescription": true,
+      "descriptionLength": 73,
+      "usesFallback": false
+    },
+    {
+      "path": "/experiencias/un-dia-de-torno-ceramico",
+      "matchesCleanResolvedDescription": true,
+      "descriptionLength": 141,
+      "usesFallback": false
+    },
+    {
+      "path": "/cursos/coworking-de-investigacion-tecnica-de-esmaltes-y-engobes",
+      "matchesCleanResolvedDescription": true,
+      "descriptionLength": 66,
+      "usesFallback": true
+    },
+    {
+      "path": "/workshops/formulacion-esmaltes-barcelona",
+      "matchesCleanResolvedDescription": true,
+      "descriptionLength": 59,
+      "usesFallback": true
+    },
+    {
+      "path": "/experiencias/team-building-ceramica-barcelona",
+      "matchesCleanResolvedDescription": true,
+      "descriptionLength": 112,
+      "usesFallback": false
+    },
+    {
+      "path": "/experiencias/clases-regulares-de-modelado",
+      "matchesCleanResolvedDescription": true,
+      "descriptionLength": 141,
+      "usesFallback": false
+    },
+    {
+      "path": "/experiencias/experiencia-de-un-dia-modelado",
+      "matchesCleanResolvedDescription": true,
+      "descriptionLength": 141,
+      "usesFallback": false
+    },
+    {
+      "path": "/cursos/curso-ceramica-barcelona-formacion-integral",
+      "matchesCleanResolvedDescription": true,
+      "descriptionLength": 141,
+      "usesFallback": false
+    },
+    {
+      "path": "/workshops/workshops-esmaltes-online-zoom",
+      "matchesCleanResolvedDescription": true,
+      "descriptionLength": 54,
+      "usesFallback": true
+    },
+    {
+      "path": "/gift-cards/tarjeta-regalo-ceramica-en-barcelona",
+      "matchesCleanResolvedDescription": true,
+      "descriptionLength": 121,
+      "usesFallback": false
+    }
+  ],
+  "forms": [
+    {
+      "path": "/admin/bitacora/new",
+      "titleNotCropped": true,
+      "descriptionNotCropped": true,
+      "markupAndLengthWarnings": true,
+      "mobileOverflow": false
+    },
+    {
+      "path": "/admin/shop/products/new",
+      "titleNotCropped": true,
+      "descriptionNotCropped": true,
+      "markupAndLengthWarnings": true,
+      "mobileOverflow": false
+    },
+    {
+      "path": "/admin/clases/new",
+      "titleNotCropped": true,
+      "descriptionNotCropped": true,
+      "markupAndLengthWarnings": true,
+      "mobileOverflow": false
+    },
+    {
+      "path": "/admin/offerings/new",
+      "titleNotCropped": true,
+      "descriptionNotCropped": true,
+      "markupAndLengthWarnings": true,
+      "mobileOverflow": false
+    },
+    {
+      "path": "/admin/landing-pages/new",
+      "titleNotCropped": true,
+      "descriptionNotCropped": true,
+      "markupAndLengthWarnings": true,
+      "mobileOverflow": false
+    },
+    {
+      "path": "/admin/settings",
+      "titleNotCropped": true,
+      "descriptionNotCropped": true,
+      "markupAndLengthWarnings": true,
+      "mobileOverflow": false
+    },
+    {
+      "path": "/admin/marketing/settings",
+      "titleNotCropped": true,
+      "descriptionNotCropped": true,
+      "markupAndLengthWarnings": true,
+      "mobileOverflow": false
+    },
+    {
+      "path": "existing experience",
+      "duplicateWarningVisible": true
+    }
+  ],
+  "mockSave": {
+    "source": "browser-only fixture, not persisted",
+    "warningsVisibleAfterSuccess": true,
+    "firstMethod": "POST",
+    "titleLength": 90,
+    "descriptionLength": 200
+  },
+  "sourceDataUnchanged": true,
+  "blockedServerWrites": []
+}

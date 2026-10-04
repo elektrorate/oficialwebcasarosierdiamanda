@@ -9,6 +9,7 @@ import { DEFAULT_RICH_TEXT_TYPOGRAPHY, normalizeRichTextTypography, type RichTex
 import type { Json } from "../supabase/types";
 import { logAction } from "./history-logs";
 import { duplicateOfferingIdentity } from "./offering-duplication";
+import { validateSeoInput } from "../seo/content";
 
 const TABLE = "offerings";
 const HERO_SETTINGS_TABLE = "offering_public_hero_settings";
@@ -123,6 +124,7 @@ function normalizeDetails(value: unknown) {
 }
 
 function normalizeOffering(input: OfferingInput, existing?: Offering, allItems: Offering[] = []) {
+  validateSeoInput(input);
   const title = String(input.title ?? existing?.title ?? "").trim();
   const rawSlug = String(input.slug ?? existing?.slug ?? "").trim();
   const slugBase = toSlug(rawSlug) || toSlug(title) || "offering";
@@ -154,8 +156,8 @@ function normalizeOffering(input: OfferingInput, existing?: Offering, allItems: 
     cover_image_url: String(input.cover_image_url ?? existing?.cover_image_url ?? "").trim(),
     gallery: normalizeTextArray(input.gallery ?? existing?.gallery ?? []),
     details: normalizeDetails(input.details ?? existing?.details ?? {}),
-    seo_title: String(input.seo_title ?? existing?.seo_title ?? "").trim(),
-    seo_description: String(input.seo_description ?? existing?.seo_description ?? "").trim(),
+    seo_title: input.seo_title ?? existing?.seo_title ?? "",
+    seo_description: input.seo_description ?? existing?.seo_description ?? "",
     expiration_enabled: Boolean(input.expiration_enabled ?? existing?.expiration_enabled ?? false),
     expires_at: normalizeExpirationDate(input.expires_at) ?? (input.expiration_enabled === false ? null : existing?.expires_at ?? null),
     expired_at: normalizeExpirationDate(input.expired_at),
@@ -846,6 +848,7 @@ export async function getOfferingBySlug(slug: string) {
 }
 
 export async function createOffering(data: OfferingInput) {
+  validateSeoInput(data);
   const offerings = await getOfferings();
   const next = normalizeOffering(data, undefined, offerings);
 
@@ -864,6 +867,7 @@ export async function createOffering(data: OfferingInput) {
 }
 
 export async function updateOffering(id: string, data: OfferingInput) {
+  validateSeoInput(data);
   const offerings = await getOfferings();
   const index = offerings.findIndex((item) => item.id === id);
   if (index === -1) return null;

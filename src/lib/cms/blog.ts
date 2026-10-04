@@ -6,6 +6,7 @@ import { isBlogPostBlockType, isBlogPostStatus } from "./types";
 import type { BlogPost, BlogPostBlock } from "./types";
 import { logAction } from "./history-logs";
 import { normalizeHeroSettings } from "./hero-settings";
+import { validateSeoInput } from "../seo/content";
 
 const TABLE = "blog_posts";
 const BLOCK_TABLE = "blog_post_blocks";
@@ -68,6 +69,7 @@ function normalizeBlocks(blocks: unknown[]): BlogPostBlock[] {
 }
 
 function normalizePost(input: BlogInput, existing?: BlogPost, allItems: BlogPost[] = []) {
+  validateSeoInput(input);
   const now = new Date().toISOString();
   const title = String(input.title ?? existing?.title ?? "").trim();
   const slugBase = String(input.slug ?? existing?.slug ?? "").trim() || toSlug(title);
@@ -108,8 +110,8 @@ function normalizePost(input: BlogInput, existing?: BlogPost, allItems: BlogPost
     sort_order: Number(input.sort_order ?? existing?.sort_order ?? 0),
     published_at: input.status === "published" && !existing?.published_at ? now : (input.published_at ?? existing?.published_at ?? ""),
     reading_time: readingTime,
-    seo_title: String(input.seo_title ?? existing?.seo_title ?? "").trim(),
-    seo_description: String(input.seo_description ?? existing?.seo_description ?? "").trim(),
+    seo_title: input.seo_title ?? existing?.seo_title ?? "",
+    seo_description: input.seo_description ?? existing?.seo_description ?? "",
     seo_image: String(input.seo_image ?? existing?.seo_image ?? "").trim(),
     hero,
     blocks,

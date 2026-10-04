@@ -12,6 +12,8 @@ import Checkbox from "@/components/ui/Checkbox";
 import Button from "@/components/ui/Button";
 import MediaLibraryModal from "./MediaLibraryModal";
 import { CmsRichTextField } from "@/components/admin/CmsRichTextField";
+import SeoReview from "./SeoReview";
+import { getActionWarnings } from "@/lib/admin/action-warnings";
 
 function defaultOffering(type?: string): Partial<Offering> {
   return {
@@ -53,6 +55,11 @@ export default function OfferingForm({
 }) {
   const router = useRouter();
   const current = offering ?? (defaultOffering(defaultType) as Offering);
+  const [recordId, setRecordId] = useState(mode === "edit" ? offering?.id : undefined);
+  const [seoWarnings, setSeoWarnings] = useState<string[]>([]);
+  const [title, setTitle] = useState(current.title);
+  const [seoTitle, setSeoTitle] = useState(current.seo_title);
+  const [seoDescription, setSeoDescription] = useState(current.seo_description);
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [coverUrl, setCoverUrl] = useState(current.cover_image_url);
@@ -123,8 +130,8 @@ export default function OfferingForm({
       gallery: payload.gallery,
     });
 
-    const response = await fetch(mode === "create" ? "/api/admin/offerings" : `/api/admin/offerings/${offering?.id}`, {
-      method: mode === "create" ? "POST" : "PUT",
+    const response = await fetch(recordId ? `/api/admin/offerings/${recordId}` : "/api/admin/offerings", {
+      method: recordId ? "PUT" : "POST",
       headers: { "Content-Type": "application/json" },
       body,
     });
@@ -136,7 +143,12 @@ export default function OfferingForm({
       return;
     }
 
-    router.push(returnHref);
+    const data = await response.json() as { offering: Offering; warnings?: string[] };
+    const warnings = getActionWarnings(data.warnings);
+    setRecordId(data.offering.id);
+    setSeoWarnings(warnings);
+    setIsLoading(false);
+    if (!warnings.length) router.push(returnHref);
     router.refresh();
   }
 
@@ -147,6 +159,7 @@ export default function OfferingForm({
   return (
     <>
       <form onSubmit={handleSubmit} className="max-w-3xl space-y-8">
+        <SeoReview kind="offering" id={recordId} title={seoTitle} description={seoDescription} fallbackTitle={title} fallbackDescription={excerpt} serverWarnings={seoWarnings} />
         {/* Información principal */}
         <section className="bg-surface-container-lowest border border-outline-variant rounded-xl p-6 space-y-4">
           <h3 className="text-headline-sm text-headline-sm text-on-surface">Información principal</h3>
@@ -172,7 +185,7 @@ export default function OfferingForm({
                 .map((h) => ({ value: h.id, label: h.name }))}
             />
             <div className="md:col-span-2">
-              <Input label="Título" name="title" defaultValue={current.title} />
+              <Input label="Título" name="title" value={title} onChange={(event) => setTitle(event.target.value)} />
             </div>
             <div className="md:col-span-2">
               <Input
@@ -269,8 +282,8 @@ export default function OfferingForm({
         <section className="bg-surface-container-lowest border border-outline-variant rounded-xl p-6 space-y-4">
           <h3 className="text-headline-sm text-headline-sm text-on-surface">SEO</h3>
           <div className="space-y-4">
-            <Input label="SEO title" name="seo_title" defaultValue={current.seo_title} />
-            <Textarea label="SEO description" name="seo_description" rows={3} defaultValue={current.seo_description} />
+            <Input label="SEO title" name="seo_title" value={seoTitle} onChange={(event) => setSeoTitle(event.target.value)} />
+            <Textarea label="SEO description" name="seo_description" rows={3} value={seoDescription} onChange={(event) => setSeoDescription(event.target.value)} />
           </div>
         </section>
 

@@ -1,4 +1,5 @@
 import { cache } from "react";
+import { getSeoContentFields, resolveSeoText } from "../seo/content";
 import type { BlogContentBlock, BlogPost as PublicBlogPost } from "@/data/types";
 import { getBlogPosts } from "./blog";
 import type { BlogPost as CmsBlogPost, BlogPostBlock } from "./types";
@@ -97,6 +98,7 @@ function blocksToPublicContent(blocks: BlogPostBlock[], contentFallback: string)
 
 function cmsToPublicPost(post: CmsBlogPost): PublicBlogPost {
   const publishedAt = post.published_at || post.updated_at || post.created_at;
+  const seo = resolveSeoText(getSeoContentFields("blog_post", post));
   return {
     id: post.id,
     title: post.title,
@@ -118,8 +120,8 @@ function cmsToPublicPost(post: CmsBlogPost): PublicBlogPost {
     visibleInListing: post.visible_in_listing !== false,
     manualOrder: post.sort_order ?? 0,
     publishedAt,
-    seoTitle: post.seo_title || post.title,
-    seoDescription: post.seo_description || post.excerpt,
+    seoTitle: seo.title,
+    seoDescription: seo.description,
     hero: post.hero,
     contentBlocks: blocksToPublicContent(visibleBlocks(post), post.content),
   };

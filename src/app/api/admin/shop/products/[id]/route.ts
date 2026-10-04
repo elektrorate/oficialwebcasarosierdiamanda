@@ -4,6 +4,7 @@ import { type NextRequest, NextResponse } from "next/server";
 import { revalidatePath } from "next/cache";
 import { publicSlugError } from "@/lib/seo/public-slug";
 import { revalidatePublicSitemap } from "@/lib/seo/revalidation";
+import { getSeoContentWarnings } from "@/lib/cms/seo-review";
 
 function refreshProductViews(...slugs: Array<string | null | undefined>) {
   revalidatePath("/shop");
@@ -28,7 +29,7 @@ export async function PUT(request: NextRequest, ctx: { params: Promise<{ id: str
     const item = await updateProduct(id, body);
     if (!item) return NextResponse.json({ error: "No encontrado" }, { status: 404 });
     refreshProductViews(previous?.slug, item.slug);
-    return NextResponse.json({ product: item });
+    return NextResponse.json({ product: item, warnings: await getSeoContentWarnings("product", item) });
   }
   catch (err) { return NextResponse.json({ error: err instanceof Error ? err.message : "Error" }, { status: 400 }); }
 }
@@ -37,11 +38,11 @@ export async function PATCH(request: NextRequest, ctx: { params: Promise<{ id: s
   const { id } = await ctx.params; const body = await request.json().catch(() => ({}));
   if (body.action === "duplicate") { const item = await duplicateProduct(id); if (!item) return NextResponse.json({ error: "No encontrado" }, { status: 404 }); refreshProductViews(item.slug); return NextResponse.json({ product: item }); }
   if (body.action === "trash") { const item = await moveProductToTrash(id); if (!item) return NextResponse.json({ error: "No encontrado" }, { status: 404 }); refreshProductViews(item.slug); return NextResponse.json({ product: item }); }
-  if (body.action === "restore") { const item = await restoreProduct(id); if (!item) return NextResponse.json({ error: "No encontrado" }, { status: 404 }); refreshProductViews(item.slug); return NextResponse.json({ product: item }); }
+  if (body.action === "restore") { const item = await restoreProduct(id); if (!item) return NextResponse.json({ error: "No encontrado" }, { status: 404 }); refreshProductViews(item.slug); return NextResponse.json({ product: item, warnings: item.status === "published" ? await getSeoContentWarnings("product", item) : [] }); }
   const item = await getProductById(id); if (!item) return NextResponse.json({ error: "No encontrado" }, { status: 404 });
-  if (body.action === "publish") { const u = await updateProduct(id, { status: "published" }); refreshProductViews(u?.slug); return NextResponse.json({ product: u }); }
-  if (body.action === "draft") { const u = await updateProduct(id, { status: "draft" }); refreshProductViews(u?.slug); return NextResponse.json({ product: u }); }
-  if (body.action === "archive") { const u = await updateProduct(id, { status: "archived" }); refreshProductViews(u?.slug); return NextResponse.json({ product: u }); }
+  if (body.action === "publish") { const u = await updateProduct(id, { status: "published" }); refreshProductViews(u?.slug); return NextResponse.json({ product: u, warnings: await getSeoContentWarnings("product", u) }); }
+  if (body.action === "draft") { const u = await updateProduct(id, { status: "draft" }); refreshProductViews(u?.slug); return NextResponse.json({ product: u, warnings: await getSeoContentWarnings("product", u) }); }
+  if (body.action === "archive") { const u = await updateProduct(id, { status: "archived" }); refreshProductViews(u?.slug); return NextResponse.json({ product: u, warnings: await getSeoContentWarnings("product", u) }); }
   return NextResponse.json({ error: "Acción no válida" }, { status: 400 });
 }
 export async function DELETE(request: NextRequest, ctx: { params: Promise<{ id: string }> }) {

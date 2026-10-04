@@ -36,6 +36,8 @@ export type UseBlogPostFormProps = {
 export function useBlogPostForm({ mode, item }: UseBlogPostFormProps) {
   const router = useRouter();
   const saveInFlight = useRef(false);
+  const [recordId, setRecordId] = useState(mode === "edit" ? item?.id : undefined);
+  const [seoWarnings, setSeoWarnings] = useState<string[]>([]);
 
   const itemCategory = item?.category ?? "Procesos";
   const hasKnownCategory = BLOG_POST_CATEGORY_OPTIONS.includes(itemCategory as (typeof BLOG_POST_CATEGORY_OPTIONS)[number]);
@@ -127,7 +129,7 @@ export function useBlogPostForm({ mode, item }: UseBlogPostFormProps) {
     syncError,
     prepareForManualSave,
     completeManualSave,
-  } = useBlogPostAutosave(mode, item?.id, formFields, status, !isSaving);
+  } = useBlogPostAutosave(recordId ? "edit" : mode, recordId, formFields, status, !isSaving, setSeoWarnings);
 
   const readingTime = useMemo(() => estimateBlogReadingMinutes(blocks), [blocks]);
   const visibleBlockCount = useMemo(() => blocks.filter((block) => block.is_visible).length, [blocks]);
@@ -177,7 +179,7 @@ export function useBlogPostForm({ mode, item }: UseBlogPostFormProps) {
 
       const payload = buildBlogPostSavePayload(formFields, nextStatus);
       await prepareForManualSave();
-      const result = await saveBlogPostAction(mode, item?.id, payload);
+      const result = await saveBlogPostAction(recordId ? "edit" : mode, recordId, payload);
 
       if (!result.ok) {
         completeManualSave();
@@ -188,6 +190,8 @@ export function useBlogPostForm({ mode, item }: UseBlogPostFormProps) {
       }
 
       setStatus(result.post.status);
+      setRecordId(result.post.id);
+      setSeoWarnings(result.warnings);
       setBlocks(result.post.blocks);
       setHero(result.post.hero);
       completeManualSave(payload);
@@ -198,13 +202,13 @@ export function useBlogPostForm({ mode, item }: UseBlogPostFormProps) {
           nextStatus === "published"
             ? "El artículo se sincronizó y ya está publicado."
             : "El borrador se guardó correctamente en la base de datos.",
-        redirectToList: true,
+        redirectToList: result.warnings.length === 0,
       });
       setIsSaving(false);
       saveInFlight.current = false;
       router.refresh();
     },
-    [completeManualSave, formFields, item?.id, mode, prepareForManualSave, router, status, title],
+    [completeManualSave, formFields, recordId, mode, prepareForManualSave, router, status, title],
   );
 
   const saveDraft = useCallback(() => save("draft"), [save]);
@@ -212,6 +216,8 @@ export function useBlogPostForm({ mode, item }: UseBlogPostFormProps) {
   const openPreviewTab = useCallback(() => setTab("preview"), []);
 
   return {
+    recordId,
+    seoWarnings,
     mode,
     tab,
     setTab,

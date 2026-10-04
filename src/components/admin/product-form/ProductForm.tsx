@@ -1,6 +1,7 @@
 "use client";
 
 import AdminActionModal from "@/components/admin/AdminActionModal";
+import SeoReview from "@/components/admin/SeoReview";
 import { ProductCharacteristicsSection } from "./components/ProductCharacteristicsSection";
 import { ProductContentSection } from "./components/ProductContentSection";
 import { ProductCtaSection } from "./components/ProductCtaSection";
@@ -39,6 +40,8 @@ export default function ProductForm({ mode, item }: ProductFormProps) {
       />
 
       <ProductFormHero mode={mode} name={form.fields.name} status={form.fields.status} />
+
+      <SeoReview kind="product" id={form.recordId} title={form.fields.seoTitle} description={form.fields.seoDescription} fallbackTitle={form.fields.name} fallbackDescription={form.fields.excerpt || form.fields.description} serverWarnings={form.seoWarnings} />
 
       <div className="shop-product-editor__layout">
         <div className="shop-product-editor__main">

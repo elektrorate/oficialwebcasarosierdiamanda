@@ -4,6 +4,7 @@ import { revalidatePath } from "next/cache";
 import { type NextRequest, NextResponse } from "next/server";
 import { revalidatePublicSitemap } from "@/lib/seo/revalidation";
 import { publicSlugError } from "@/lib/seo/public-slug";
+import { getSeoContentWarnings } from "@/lib/cms/seo-review";
 
 function refreshBlogViews() {
   revalidatePath("/blog");
@@ -27,7 +28,7 @@ export async function PUT(request: NextRequest, ctx: { params: Promise<{ id: str
     const item = await updateBlogPost((await ctx.params).id, body);
     if (!item) return NextResponse.json({ error: "No encontrado" }, { status: 404 });
     if (request.headers.get("x-cms-autosave") !== "1") refreshBlogViews();
-    return NextResponse.json({ post: item });
+    return NextResponse.json({ post: item, warnings: await getSeoContentWarnings("blog_post", item) });
   }
   catch (err) { return NextResponse.json({ error: err instanceof Error ? err.message : "Error" }, { status: 400 }); }
 }
@@ -38,11 +39,11 @@ export async function PATCH(request: NextRequest, ctx: { params: Promise<{ id: s
   if (body.action === "trash") { const item = await moveBlogPostToTrash(id); if (!item) return NextResponse.json({ error: "No encontrado" }, { status: 404 }); refreshBlogViews(); return NextResponse.json({ post: item }); }
   if (body.action === "restore") { const item = await restoreBlogPost(id); if (!item) return NextResponse.json({ error: "No encontrado" }, { status: 404 }); refreshBlogViews(); return NextResponse.json({ post: item }); }
   const item = await getBlogPostById(id); if (!item) return NextResponse.json({ error: "No encontrado" }, { status: 404 });
-  if (body.action === "publish") { const updated = await updateBlogPost(id, { status: "published", published_at: item.published_at || new Date().toISOString() }); refreshBlogViews(); return NextResponse.json({ post: updated }); }
-  if (body.action === "draft") { const updated = await updateBlogPost(id, { status: "draft" }); refreshBlogViews(); return NextResponse.json({ post: updated }); }
-  if (body.action === "archive") { const updated = await updateBlogPost(id, { status: "archived" }); refreshBlogViews(); return NextResponse.json({ post: updated }); }
-  if (body.action === "feature") { const updated = await updateBlogPost(id, { is_featured: true, featured_order: Number(body.featured_order ?? (item.featured_order || 99)) }); refreshBlogViews(); return NextResponse.json({ post: updated }); }
-  if (body.action === "unfeature") { const updated = await updateBlogPost(id, { is_featured: false }); refreshBlogViews(); return NextResponse.json({ post: updated }); }
+  if (body.action === "publish") { const updated = await updateBlogPost(id, { status: "published", published_at: item.published_at || new Date().toISOString() }); refreshBlogViews(); return NextResponse.json({ post: updated, warnings: await getSeoContentWarnings("blog_post", updated) }); }
+  if (body.action === "draft") { const updated = await updateBlogPost(id, { status: "draft" }); refreshBlogViews(); return NextResponse.json({ post: updated, warnings: await getSeoContentWarnings("blog_post", updated) }); }
+  if (body.action === "archive") { const updated = await updateBlogPost(id, { status: "archived" }); refreshBlogViews(); return NextResponse.json({ post: updated, warnings: await getSeoContentWarnings("blog_post", updated) }); }
+  if (body.action === "feature") { const updated = await updateBlogPost(id, { is_featured: true, featured_order: Number(body.featured_order ?? (item.featured_order || 99)) }); refreshBlogViews(); return NextResponse.json({ post: updated, warnings: await getSeoContentWarnings("blog_post", updated) }); }
+  if (body.action === "unfeature") { const updated = await updateBlogPost(id, { is_featured: false }); refreshBlogViews(); return NextResponse.json({ post: updated, warnings: await getSeoContentWarnings("blog_post", updated) }); }
   if (body.action === "set_enabled") {
     const enabled = body.enabled !== false;
     const updated = enabled
@@ -56,7 +57,7 @@ export async function PATCH(request: NextRequest, ctx: { params: Promise<{ id: s
           visible_in_listing: false,
         });
     refreshBlogViews();
-    return NextResponse.json({ post: updated });
+    return NextResponse.json({ post: updated, warnings: await getSeoContentWarnings("blog_post", updated) });
   }
   return NextResponse.json({ error: "Acción no válida" }, { status: 400 });
 }

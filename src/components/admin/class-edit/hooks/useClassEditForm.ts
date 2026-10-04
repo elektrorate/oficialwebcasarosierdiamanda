@@ -5,6 +5,7 @@ import { useCallback, useEffect, useState, type FormEvent } from "react";
 import type { ClassHomeCard, ClassOfferingContent, ClassOfferingDetails, Offering } from "@/lib/cms/types";
 import { fromLocalDateTime, toLocalDateTimeParts } from "@/lib/cms/offering-expiration";
 import { uploadAdminMediaFile } from "@/lib/admin/media-upload-client";
+import { getActionWarnings } from "@/lib/admin/action-warnings";
 import { MAX_CALENDAR_LABELS, MAX_GALLERY_IMAGES } from "../constants";
 import type {
   FormNotice,
@@ -37,6 +38,8 @@ export function useClassEditForm({
   basePath?: string;
 }) {
   const router = useRouter();
+  const [recordId, setRecordId] = useState(mode === "edit" ? offering.id : undefined);
+  const [seoWarnings, setSeoWarnings] = useState<string[]>([]);
   const [activeTab, setActiveTab] = useState<TabKey>("hero");
   const [title, setTitle] = useState(offering.title);
   const [slug, setSlug] = useState(offering.slug);
@@ -364,9 +367,9 @@ export function useClassEditForm({
 
     try {
       const response = await fetch(
-        mode === "create" ? "/api/admin/offerings" : `/api/admin/offerings/${offering.id}`,
+        recordId ? `/api/admin/offerings/${recordId}` : "/api/admin/offerings",
         {
-          method: mode === "create" ? "POST" : "PUT",
+          method: recordId ? "PUT" : "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(buildOfferingPayload({
             offering,
@@ -385,20 +388,23 @@ export function useClassEditForm({
         },
       );
 
-      const data = (await response.json().catch(() => ({}))) as { offering?: Offering; error?: string };
+      const data = (await response.json().catch(() => ({}))) as { offering?: Offering; error?: string; warnings?: string[] };
       if (!response.ok) {
         setToast({ type: "error", message: data.error || "No se pudieron guardar los cambios." });
         return;
       }
 
       setStatus(nextStatus);
+      const warnings = getActionWarnings(data.warnings);
+      setSeoWarnings(warnings);
+      if (data.offering?.id) setRecordId(data.offering.id);
       setIsDirty(false);
       setErrors({});
       setToast({
         type: "success",
         message: nextStatus === "published" ? "Publicado exitosamente." : "Borrador guardado correctamente.",
       });
-      if (mode === "create" && data.offering?.id) {
+      if (mode === "create" && data.offering?.id && warnings.length === 0) {
         router.push(`${basePath}/${data.offering.id}/edit`);
       } else {
         router.refresh();
@@ -409,7 +415,7 @@ export function useClassEditForm({
       setIsSaving(false);
       setSavingIntent(null);
     }
-  }, [basePath, currency, description, details, expirationDate, expirationEnabled, expirationTime, mode, offering, router, seoDescription, seoTitle, slug, subtitle, title]);
+  }, [basePath, currency, description, details, expirationDate, expirationEnabled, expirationTime, mode, offering, recordId, router, seoDescription, seoTitle, slug, subtitle, title]);
 
   const handleCancel = useCallback(() => {
     if (isDirty && !window.confirm("Hay cambios sin guardar. ¿Salir igualmente?")) return;
@@ -426,6 +432,8 @@ export function useClassEditForm({
   }, [pendingValidationFocus, toast?.type]);
 
   return {
+    recordId,
+    seoWarnings,
     activeTab,
     setActiveTab,
     title,

@@ -5,6 +5,8 @@ import { useRouter } from "next/navigation";
 import type { Product, ProductCategory, ProductStatus } from "@/lib/cms/types";
 import { formatAdminDateTime } from "@/lib/admin/date-format";
 import AdminActionModal from "./AdminActionModal";
+import { SeoServerWarnings } from "./SeoReview";
+import { getActionWarnings } from "@/lib/admin/action-warnings";
 
 type Notice = {
   type: "success" | "error" | "info";
@@ -50,6 +52,7 @@ export default function ProductsTable({
 }) {
   const router = useRouter();
   const [notice, setNotice] = useState<Notice | null>(null);
+  const [seoWarnings, setSeoWarnings] = useState<string[]>([]);
   const [confirm, setConfirm] = useState<ConfirmAction | null>(null);
   const [pendingAction, setPendingAction] = useState<string | null>(null);
   const [query, setQuery] = useState(pagination?.q ?? "");
@@ -77,6 +80,8 @@ export default function ProductsTable({
         body: JSON.stringify({ action }),
       });
       if (r.ok) {
+        const data = await r.json().catch(() => ({})) as { warnings?: string[] };
+        setSeoWarnings(getActionWarnings(data.warnings));
         setNotice({ type: "success", title: "Acción completada", message: message(action) });
         router.refresh();
         return;
@@ -121,6 +126,7 @@ export default function ProductsTable({
 
   return (
     <>
+      <SeoServerWarnings warnings={seoWarnings} />
       <div className="shop-products-panel">
         <form action="/admin/shop" method="get" className="shop-products-toolbar">
           <input type="hidden" name="tab" value="items" />

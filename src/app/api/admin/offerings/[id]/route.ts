@@ -13,6 +13,8 @@ import { expirationSaveError } from "@/lib/cms/offering-expiration";
 import { internalApiError } from "@/lib/security/api-response";
 import { publicSlugError } from "@/lib/seo/public-slug";
 import { offeringGalleryModalContentError } from "@/lib/cms/modal-content";
+import { getSeoContentWarnings } from "@/lib/cms/seo-review";
+import { validateSeoInput } from "@/lib/seo/content";
 
 export async function PUT(request: NextRequest, context: { params: Promise<{ id: string }> }) {
   const session = await requireAdminApi();
@@ -42,6 +44,7 @@ export async function PUT(request: NextRequest, context: { params: Promise<{ id:
   }
 
   try {
+    validateSeoInput(body);
     const previous = await getOfferingById(id);
     const offering = await updateOffering(id, body);
 
@@ -50,7 +53,7 @@ export async function PUT(request: NextRequest, context: { params: Promise<{ id:
     }
 
     refreshOfferingPaths(previous, offering);
-    return NextResponse.json({ offering });
+    return NextResponse.json({ offering, warnings: await getSeoContentWarnings("offering", offering) });
   } catch (error) {
     return internalApiError(error, "No se pudo actualizar el offering.", 400);
   }
@@ -90,7 +93,7 @@ export async function PATCH(request: NextRequest, context: { params: Promise<{ i
       return NextResponse.json({ error: "Offering no encontrado" }, { status: 404 });
     }
     refreshOfferingPaths(offering);
-    return NextResponse.json({ offering });
+    return NextResponse.json({ offering, warnings: offering.status === "published" ? await getSeoContentWarnings("offering", offering) : [] });
   }
 
   const offering = await getOfferingById(id);
@@ -114,7 +117,7 @@ export async function PATCH(request: NextRequest, context: { params: Promise<{ i
 
   const updated = await updateOffering(id, { ...offering, status: nextStatus });
   refreshOfferingPaths(offering, updated);
-  return NextResponse.json({ offering: updated });
+  return NextResponse.json({ offering: updated, warnings: await getSeoContentWarnings("offering", updated) });
 }
 
 export async function DELETE(request: NextRequest, context: { params: Promise<{ id: string }> }) {

@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback, useMemo } from "react";
-import { SEO_MAX_DESCRIPTION_LENGTH, SEO_MAX_TITLE_LENGTH } from "../constants";
+import { SEO_RECOMMENDED_DESCRIPTION_LENGTH, SEO_RECOMMENDED_TITLE_LENGTH } from "@/lib/seo/content";
 import { buildClassEditSerpPreview } from "../utils";
 import type { ClassEditFormState } from "./useClassEditForm";
 
@@ -9,7 +9,6 @@ export function useSeoTabHandlers(form: ClassEditFormState) {
   const {
     title,
     slug,
-    description,
     seoTitle,
     seoDescription,
     details,
@@ -21,7 +20,7 @@ export function useSeoTabHandlers(form: ClassEditFormState) {
 
   const handleSeoTitleChange = useCallback(
     (value: string) => {
-      setSeoTitle(value.slice(0, SEO_MAX_TITLE_LENGTH));
+      setSeoTitle(value);
       markDirty();
     },
     [markDirty, setSeoTitle],
@@ -29,7 +28,7 @@ export function useSeoTabHandlers(form: ClassEditFormState) {
 
   const handleSeoDescriptionChange = useCallback(
     (value: string) => {
-      setSeoDescription(value.slice(0, SEO_MAX_DESCRIPTION_LENGTH));
+      setSeoDescription(value);
       markDirty();
     },
     [markDirty, setSeoDescription],
@@ -38,12 +37,12 @@ export function useSeoTabHandlers(form: ClassEditFormState) {
   const openSeoImagePicker = useCallback(() => setPickerTarget("seo"), [setPickerTarget]);
 
   const serpPreview = useMemo(
-    () => buildClassEditSerpPreview({ seoTitle, seoDescription, title, slug, description }),
-    [description, seoDescription, seoTitle, slug, title],
+    () => buildClassEditSerpPreview({ seoTitle, seoDescription, title, slug, description: details.highlightDescription }),
+    [details.highlightDescription, seoDescription, seoTitle, slug, title],
   );
 
-  const seoTitleHelp = `Caracteres: ${seoTitle.length}/${SEO_MAX_TITLE_LENGTH}`;
-  const seoDescriptionHelp = `Caracteres: ${seoDescription.length}/${SEO_MAX_DESCRIPTION_LENGTH}`;
+  const seoTitleHelp = `Caracteres: ${seoTitle.length}. Recomendado: hasta ${SEO_RECOMMENDED_TITLE_LENGTH}.`;
+  const seoDescriptionHelp = `Caracteres: ${seoDescription.length}. Recomendado: hasta ${SEO_RECOMMENDED_DESCRIPTION_LENGTH}.`;
 
   return useMemo(
     () => ({
