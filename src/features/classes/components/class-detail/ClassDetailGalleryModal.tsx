@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useRef } from "react";
 import { createPortal } from "react-dom";
-import { assetPath } from "@/lib/assets";
+import { getPublicImageProps } from "@/lib/public-image";
 import type { ClassDetailGalleryItem } from "../../hooks/useClassDetailGallery";
 
 type Props = {
@@ -103,7 +103,7 @@ export function ClassDetailGalleryModal({
               </button>
             </>
           ) : null}
-          <img src={assetPath(current.poster)} alt={current.alt || offeringTitle} />
+          <img {...getPublicImageProps({ src: current.poster, alt: current.alt || offeringTitle, width: 1600, height: 1600, sizes: "(max-width: 760px) 100vw, 55vw", quality: 85, loading: "eager" })} alt={current.alt || offeringTitle} width={undefined} height={undefined} />
           <button
             className="ig-modal__icon-btn ig-modal__icon-btn--close"
             type="button"

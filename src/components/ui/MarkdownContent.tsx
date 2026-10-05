@@ -1,4 +1,5 @@
 import type { CSSProperties, ReactNode } from "react";
+import { getPublicImageProps } from "@/lib/public-image";
 
 type TextAlign = "left" | "center" | "right";
 
@@ -286,7 +287,7 @@ export function MarkdownContent({ source, className, style, h1Level = 1 }: Markd
         if (block.type === "image") {
           return (
             <figure className="markdown-content__figure" key={key}>
-              <img src={block.src} alt={block.alt} loading="lazy" />
+              <img {...getPublicImageProps({ src: block.src, alt: block.alt, width: 1600, height: 1600, sizes: "(max-width: 768px) 100vw, 1000px", loading: "lazy" })} alt={block.alt} width={undefined} height={undefined} />
             </figure>
           );
         }

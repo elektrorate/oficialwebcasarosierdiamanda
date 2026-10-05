@@ -10,5 +10,7 @@ export function applyImageFallback(
   const image = event.currentTarget;
   if (image.getAttribute("src") === fallbackSrc) return;
   image.onerror = null;
+  image.removeAttribute("srcset");
+  image.removeAttribute("sizes");
   image.src = fallbackSrc;
 }

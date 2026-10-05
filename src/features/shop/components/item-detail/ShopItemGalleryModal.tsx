@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useRef, type TouchEvent } from "react";
 import { createPortal } from "react-dom";
-import { assetPath } from "@/lib/assets";
+import { getPublicImageProps } from "@/lib/public-image";
 import { applyImageFallback } from "@/lib/image-fallback";
 
 type Props = {
@@ -109,7 +109,7 @@ export function ShopItemGalleryModal({
           onTouchEnd={onTouchEnd}
           onTouchCancel={() => { touchStartRef.current = null; }}
         >
-          <img src={assetPath(images[safeIndex])} alt={title} onError={applyImageFallback} />
+          <img {...getPublicImageProps({ src: images[safeIndex], alt: title, width: 3840, height: 3840, quality: 85, loading: "eager" })} alt={title} width={undefined} height={undefined} onError={applyImageFallback} />
         </section>
         <button
           ref={closeButtonRef}

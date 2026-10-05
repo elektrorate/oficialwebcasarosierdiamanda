@@ -63,7 +63,7 @@ export function ShopItemGalleryView({
         aria-label={`${SHOP_LABELS.enlargeImage} ${productName}`}
         onClick={onOpenModal}
       >
-        <Image className="shop-item-gallery__ghost" src={src} alt="" width={1000} height={1000} sizes="(max-width: 760px) 100vw, 500px" aria-hidden="true" onError={applyImageFallback} />
+        <Image className="shop-item-gallery__ghost" src={src} alt="" width={1000} height={1000} sizes="(max-width: 760px) 100vw, 500px" quality={85} aria-hidden="true" onError={applyImageFallback} />
         <Image className="shop-item-gallery__img" src={src} alt={productName} width={1000} height={1000} sizes="(max-width: 760px) 100vw, 500px" quality={85} fetchPriority="high" onError={applyImageFallback} />
         {previousSrc ? (
           <Image
@@ -73,6 +73,7 @@ export function ShopItemGalleryView({
             width={1000}
             height={1000}
             sizes="(max-width: 760px) 100vw, 500px"
+            quality={85}
             aria-hidden="true"
             onError={applyImageFallback}
           />

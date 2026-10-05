@@ -98,7 +98,7 @@ function GalleryMainMedia({
 
   return (
     <div className="class-gallery__main-wrap">
-      <Image className="class-gallery__main-ghost" src={posterSrc} alt="" width={1000} height={1000} sizes="(max-width: 760px) 100vw, 354px" aria-hidden="true" />
+      <Image className="class-gallery__main-ghost" src={posterSrc} alt="" width={1000} height={1000} sizes="(max-width: 760px) 100vw, 354px" quality={85} aria-hidden="true" />
       <Image className="class-gallery__main" src={posterSrc} alt={item.alt || title} title={item.seoTitle || undefined} width={1000} height={1000} sizes="(max-width: 760px) 100vw, 354px" quality={85} />
       {previousPosterSrc ? (
         <Image
@@ -108,6 +108,7 @@ function GalleryMainMedia({
           width={1000}
           height={1000}
           sizes="(max-width: 760px) 100vw, 354px"
+          quality={85}
           aria-hidden="true"
         />
       ) : null}

@@ -7,34 +7,10 @@ const missingAssetFallbacks: Record<string, string> = {
   "img/5fd27c84-15dd-43ef-b039-2e8458a3f1a6.png": "/img/social-5.png"
 };
 
-// No usar un proyecto real como respaldo: un entorno mal configurado no debe
-// cargar silenciosamente sus medios desde producción.
-const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL?.replace(/\/$/, "");
-const STORAGE_MEDIA_ORIGIN = SUPABASE_URL
-  ? `${SUPABASE_URL}/storage/v1/object/public/media`
-  : "";
-const STORAGE_IMAGE_EXT = /\.(avif|jpe?g|png|webp)$/i;
-
-export function assetPath(
-  value: string,
-  options?: { width?: number; quality?: number }
-): string {
+export function assetPath(value: string): string {
   if (!value) return value;
-  if (/^(data:|blob:|\/)/.test(value)) return value;
-  if (/^https?:/.test(value)) {
-    if (
-      STORAGE_MEDIA_ORIGIN &&
-      value.startsWith(STORAGE_MEDIA_ORIGIN) &&
-      STORAGE_IMAGE_EXT.test(value.split("?")[0])
-    ) {
-      const [base, search = ""] = value.split("?");
-      const params = new URLSearchParams(search);
-      if (!params.has("width")) params.set("width", String(options?.width ?? 1200));
-      if (!params.has("quality")) params.set("quality", String(options?.quality ?? 75));
-      return `${base}?${params.toString()}`;
-    }
-    return value;
-  }
+  if (/^(data:|blob:|\/)/i.test(value)) return value;
+  if (/^https?:/i.test(value)) return value;
   return missingAssetFallbacks[value] ?? `/${value.replace(/^\.?\//, "")}`;
 }
 

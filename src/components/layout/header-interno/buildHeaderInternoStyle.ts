@@ -1,5 +1,5 @@
 import type { CSSProperties } from "react";
-import { assetPath } from "@/lib/assets";
+import { getPublicImageProps } from "@/lib/public-image";
 import type { HeaderInternoProps } from "./headerInternoTypes";
 
 const TEXT_HERO_DESKTOP_BASE_HEIGHT = 292;
@@ -8,6 +8,16 @@ const TEXT_HERO_TABLET_BASE_HEIGHT = 272;
 const TEXT_HERO_MOBILE_BASE_HEIGHT = 244;
 const TEXT_HERO_TITLE_BLOCK_HEIGHT = 210;
 const TEXT_HERO_TITLE_BOTTOM_GAP = 56;
+
+function optimizedBackground(value: string, width: number) {
+  const { src, srcSet } = getPublicImageProps({ src: value, alt: "", width, height: width, quality: 85 });
+  if (!srcSet) return `url(${JSON.stringify(src)})`;
+  const candidates = srcSet.split(", ").map((candidate) => {
+    const [url, density] = candidate.split(" ");
+    return `url(${JSON.stringify(url)}) ${density}`;
+  });
+  return `image-set(${candidates.join(", ")})`;
+}
 
 function lengthToPixels(value: string | undefined, percentBase: number) {
   const trimmed = value?.trim();
@@ -93,8 +103,9 @@ export function buildHeaderInternoStyle(props: HeaderInternoProps): CSSPropertie
     presentationImageScaleMobile = hero?.presentationImageScaleMobile,
   } = props;
   return {
-    "--page-hero-image": `url("${assetPath(image)}")`,
-    "--page-hero-image-mobile": `url("${assetPath(mobileImage || image)}")`,
+    "--page-hero-image": optimizedBackground(image, 1920),
+    // Cover crops can need more pixels than the viewport width on tall screens.
+    "--page-hero-image-mobile": optimizedBackground(mobileImage || image, 1920),
     "--hero-logo-position-x": heroLogoPositionX ?? "50%",
     "--hero-logo-position-y": heroLogoPositionY ?? "46px",
     "--hero-logo-width": heroLogoWidth ?? "118px",

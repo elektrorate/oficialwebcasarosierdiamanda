@@ -1,14 +1,5 @@
 import type { NextConfig } from "next";
-
-const supabaseHostname = (() => {
-  try {
-    return new URL(
-      process.env.NEXT_PUBLIC_SUPABASE_URL ?? "https://hhxftxxshwgmfxuyrjmz.supabase.co",
-    ).hostname;
-  } catch {
-    return "hhxftxxshwgmfxuyrjmz.supabase.co";
-  }
-})();
+import { imageRemotePatterns } from "./src/lib/image-config";
 
 const nextConfig: NextConfig = {
   async headers() {
@@ -26,19 +17,17 @@ const nextConfig: NextConfig = {
             : []),
         ],
       },
+      {
+        source: "/img/:path*",
+        headers: [{ key: "Cache-Control", value: "public, max-age=86400, must-revalidate" }],
+      },
     ];
   },
   images: {
     formats: ["image/webp"],
     minimumCacheTTL: 86400,
     qualities: [70, 75, 80, 85, 90],
-    remotePatterns: [
-      {
-        protocol: "https",
-        hostname: supabaseHostname,
-        pathname: "/storage/v1/object/public/**",
-      },
-    ],
+    remotePatterns: imageRemotePatterns,
   },
   experimental: {
     cpus: 1,
