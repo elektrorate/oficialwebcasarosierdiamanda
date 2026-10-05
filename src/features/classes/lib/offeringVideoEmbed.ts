@@ -1,3 +1,5 @@
+import { vimeoEmbedUrl } from "@/lib/vimeo";
+
 export function isDirectVideoFile(url: string) {
   return /\.(mp4|webm|ogg)(\?|$)/i.test(url.trim());
 }
@@ -12,10 +14,7 @@ export function offeringVideoEmbedUrl(rawUrl: string, autoplay = false) {
     const autoplayParam = autoplay ? "1" : "0";
 
     if (host === "player.vimeo.com" || host === "vimeo.com") {
-      const id = url.pathname.split("/").find((part) => /^\d+$/.test(part));
-      return id
-        ? `https://player.vimeo.com/video/${id}?autoplay=${autoplayParam}&playsinline=1`
-        : "";
+      return vimeoEmbedUrl(trimmed, { autoplay: autoplayParam, playsinline: "1" });
     }
 
     if (host === "youtu.be" || host === "youtube.com" || host === "m.youtube.com") {

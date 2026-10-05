@@ -1,0 +1,199 @@
+{
+  "checkedAt": "2026-10-05T07:03:29.050Z",
+  "changes": [
+    {
+      "table": "offerings",
+      "id": "b3eef5a5-2eac-4f1c-ab18-1b78e23e221b",
+      "slug": "curso-ceramica-barcelona-formacion-integral",
+      "before": {
+        "seo_title": "Formación integral en cerámica | Casa Rosier",
+        "seo_description": "Aprende torno cerámico en Barcelona con clases personalizadas, grupos reducidos y acompañamiento paso a paso. Materiales y cocción incluidos."
+      },
+      "after": {
+        "seo_title": "Formación integral en cerámica en Barcelona | Casa Rosier",
+        "seo_description": "Desarrolla una base sólida en cerámica con formación práctica en Barcelona: técnicas, materiales y fundamentos para crear tus propios proyectos."
+      }
+    },
+    {
+      "table": "offerings",
+      "id": "3e82c387-62e8-4b14-ad61-9f304e599b18",
+      "slug": "formulacion-esmaltes-barcelona",
+      "before": {
+        "seo_title": "",
+        "seo_description": "",
+        "excerpt": "INICIO 23 OCTUBRE DEL 20206\n\nConsultar Otras fechas próximas"
+      },
+      "after": {
+        "seo_title": "Workshop de esmaltes cerámicos en Barcelona | Casa Rosier",
+        "seo_description": "Aprende a formular esmaltes cerámicos de baja y alta temperatura en Barcelona. Desarrolla tus propias fórmulas y conoce los materiales en Casa Rosier.",
+        "excerpt": "INICIO 23 OCTUBRE DEL 2026\n\nConsultar Otras fechas próximas"
+      }
+    },
+    {
+      "table": "offerings",
+      "id": "6dcd8d49-e634-464f-8cc4-4e354ca697e1",
+      "slug": "clases-regulares-de-modelado",
+      "before": {
+        "seo_title": "Clase de iniciación a la cerámica | Casa Rosier",
+        "seo_description": "Aprende torno cerámico en Barcelona con clases personalizadas, grupos reducidos y acompañamiento paso a paso. Materiales y cocción incluidos."
+      },
+      "after": {
+        "seo_title": "Clases regulares de modelado en Barcelona | Casa Rosier",
+        "seo_description": "Disfruta de cuatro sesiones mensuales de modelado cerámico en Barcelona, con acompañamiento cercano, arcilla, esmaltes y horneado incluidos."
+      }
+    },
+    {
+      "table": "offerings",
+      "id": "231d135c-a8b5-407a-9920-b726f08845ea",
+      "slug": "coworking-de-investigacion-tecnica-de-esmaltes-y-engobes",
+      "before": {
+        "seo_title": "",
+        "seo_description": ""
+      },
+      "after": {
+        "seo_title": "Coworking de esmaltes y engobes en Barcelona | Casa Rosier",
+        "seo_description": "Investiga esmaltes y engobes en el laboratorio cerámico de Casa Rosier. Modalidad coworking con tres horas semanales para desarrollar tus pruebas."
+      }
+    },
+    {
+      "table": "offerings",
+      "id": "7bb1247d-b01a-4abb-aee0-f567e4b98f8a",
+      "slug": "experiencia-de-un-dia-modelado",
+      "before": {
+        "seo_title": "Clase de iniciación a la cerámica | Casa Rosier",
+        "seo_description": "Aprende torno cerámico en Barcelona con clases personalizadas, grupos reducidos y acompañamiento paso a paso. Materiales y cocción incluidos."
+      },
+      "after": {
+        "seo_title": "Modelado cerámico de un día en Barcelona | Casa Rosier",
+        "seo_description": "Descubre el modelado cerámico en una experiencia de un día en Barcelona. Ven sola, en pareja o con amigos a experimentar con el barro en Casa Rosier."
+      }
+    },
+    {
+      "table": "offerings",
+      "id": "e7645c12-abc5-48fc-94b2-3350bdc04cce",
+      "slug": "tarjeta-regalo-ceramica-en-barcelona",
+      "before": {
+        "seo_title": "Beginner Class Gift Card | Casa Rosier",
+        "seo_description": "Tarjeta de regalo para una primera experiencia de ceramica en Barcelona, con torno, acompanamiento y atmosfera artesanal."
+      },
+      "after": {
+        "seo_title": "Tarjeta regalo de cerámica en Barcelona | Casa Rosier",
+        "seo_description": "Regala tiempo para crear con una tarjeta regalo de cerámica en Barcelona. Una experiencia en el taller de Casa Rosier para descubrir el trabajo con arcilla."
+      }
+    },
+    {
+      "table": "offerings",
+      "id": "b73d0649-4b95-4e49-b749-c994e740b242",
+      "slug": "workshops-esmaltes-online-zoom",
+      "before": {
+        "seo_title": "",
+        "seo_description": ""
+      },
+      "after": {
+        "seo_title": "Workshop de formulación de esmaltes online | Casa Rosier",
+        "seo_description": "Aprende formulación de esmaltes cerámicos online vía Zoom con Casa Rosier. Explora materiales y fórmulas para avanzar en tus proyectos de cerámica."
+      }
+    },
+    {
+      "table": "offerings",
+      "id": "6c18f2ec-6c19-5b8b-b0e6-3e3c5e734e50",
+      "slug": "team-building-ceramica-barcelona",
+      "before": {
+        "seo_title": "TEAM BUILDING CERÁMICA Talleres para Grupos",
+        "seo_description": "Reserva privada de cerámica para pequeñas celebraciones en Barcelona, con actividad guiada y ambiente editorial."
+      },
+      "after": {
+        "seo_title": "Team building de cerámica en Barcelona | Casa Rosier",
+        "seo_description": "Comparte una experiencia de cerámica con tu equipo en Barcelona. Un taller de Casa Rosier para empresas y grupos que quieren crear juntos con arcilla."
+      }
+    },
+    {
+      "table": "blog_posts",
+      "id": "2db5db6d-5312-471b-b149-c3c01320298d",
+      "slug": "del-barro-a-la-idea-7-formas-de-expandir-tu-creatividad-con-piezas-funcionales",
+      "before": {
+        "seo_title": "formas de expandir tu creatividad",
+        "seo_description": "formas de expandir tu creatividad inspiración en cerámica"
+      },
+      "after": {
+        "seo_title": "7 ideas para crear cerámica funcional | Casa Rosier",
+        "seo_description": "Explora siete formas de desarrollar tu creatividad con cerámica funcional: convierte tus ideas en tazas, cuencos y piezas que forman parte del día a día."
+      }
+    },
+    {
+      "table": "blog_posts",
+      "id": "cec84e9b-be8e-4fc2-a6b3-62e3bc8bf74b",
+      "slug": "hacer-ceramica-en-pareja-en-barcelona",
+      "before": {
+        "seo_title": "",
+        "seo_description": ""
+      },
+      "after": {
+        "seo_title": "Hacer cerámica en pareja en Barcelona | Casa Rosier",
+        "seo_description": "Descubre cómo una experiencia de cerámica en pareja permite compartir tiempo, experimentar con el barro y crear algo juntos en Barcelona."
+      }
+    },
+    {
+      "table": "blog_posts",
+      "id": "f12030c8-87ad-4b52-a691-f32ff88d2231",
+      "slug": "caminos-y-tecnicas-para-convertir-barro-en-forma",
+      "before": {
+        "seo_title": "caminos y técnicas para convertir barro en forma",
+        "seo_description": "Modelado cerámico paso a paso"
+      },
+      "after": {
+        "seo_title": "Técnicas de modelado cerámico: del barro a la forma | Casa Rosier",
+        "seo_description": "Conoce distintos caminos para modelar arcilla y construir formas cerámicas. Técnicas, decisiones y práctica para dar forma a tus piezas en el taller."
+      }
+    },
+    {
+      "table": "blog_posts",
+      "id": "e6683045-dd7f-4be5-b366-0e0a2e4951e3",
+      "slug": "no-es-falta-de-talento-es-miedo-a-crear",
+      "before": {
+        "seo_title": "",
+        "seo_description": ""
+      },
+      "after": {
+        "seo_title": "El miedo a crear y la práctica cerámica | Casa Rosier",
+        "seo_description": "Una reflexión sobre el miedo a crear al empezar cerámica: el juicio, la experimentación y el aprendizaje a través del trabajo con arcilla."
+      }
+    },
+    {
+      "table": "blog_posts",
+      "id": "7b10bc30-2f9c-42f8-93ef-000000000001",
+      "slug": "esmaltes-ceramicos-que-son-como-funcionan-y-como-evitar-errores-comunes",
+      "before": {
+        "seo_title": "Como empezar una pieza ceramica | Casa Rosier",
+        "seo_description": "Una reflexion sobre el proceso creativo en ceramica, la arcilla y el trabajo dentro del taller."
+      },
+      "after": {
+        "seo_title": "Esmaltes cerámicos: composición y errores comunes | Casa Rosier",
+        "seo_description": "Descubre qué son los esmaltes cerámicos y cómo influyen la composición, la cocción y la aplicación en sus resultados. Aprende a interpretar errores comunes."
+      }
+    },
+    {
+      "table": "blog_posts",
+      "id": "8494abd4-93da-4bf5-a391-c79902c857a5",
+      "slug": "barbotina-con-esteroides",
+      "before": {
+        "seo_title": "como usar una barbotina en ceramica",
+        "seo_description": "Fórmula de barbotina para cerámica | Receta y preparación"
+      },
+      "after": {
+        "seo_title": "Barbotina cerámica: uniones y control de humedad | Casa Rosier",
+        "seo_description": "Conoce el papel de la barbotina, la humedad y el secado en las uniones de arcilla. Notas de taller sobre silicato de sodio y CMC en Casa Rosier."
+      }
+    },
+    {
+      "table": "site_settings",
+      "id": "00000000-0000-0000-0000-000000000001",
+      "before": {
+        "default_og_image_url": null
+      },
+      "after": {
+        "default_og_image_url": "https://hhxftxxshwgmfxuyrjmz.supabase.co/storage/v1/object/public/media/general/1788206749735-9e03ff10.webp"
+      }
+    }
+  ]
+}

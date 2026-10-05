@@ -9,7 +9,7 @@ import {
 import { invalidateSettingsCaches } from "@/lib/cms/settings-cache";
 import { validateSettingsPayload } from "@/lib/cms/settings-schema";
 import { requireAdminApi } from "@/lib/auth/supabase-auth";
-import { revalidatePublicRobots } from "@/lib/seo/revalidation";
+import { revalidatePublicRobots, revalidatePublicSitemap } from "@/lib/seo/revalidation";
 import { getSeoWarnings } from "@/lib/seo/content";
 
 export async function GET() {
@@ -53,6 +53,7 @@ export async function PUT(request: NextRequest) {
     invalidateSettingsCaches();
     revalidatePath("/", "layout");
     revalidatePublicRobots();
+    revalidatePublicSitemap();
 
     return NextResponse.json({ settings: result.settings, persisted: result.write, warnings: getSeoWarnings({
       title: result.settings.seo.default_seo_title,
@@ -93,6 +94,7 @@ export async function POST(request: NextRequest) {
       invalidateSettingsCaches();
       revalidatePath("/", "layout");
       revalidatePublicRobots();
+      revalidatePublicSitemap();
       return NextResponse.json({ settings: result.settings, persisted: result.write, warnings: getSeoWarnings({
         title: result.settings.seo.default_seo_title,
         description: result.settings.seo.default_seo_description,

@@ -2,7 +2,8 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { LandingPageView } from "@/features/landing-pages/LandingPageView";
 import { getPublishedLandingPageBySlug } from "@/lib/cms/landing-pages";
-import { assetPath } from "@/lib/assets";
+import { getSettings } from "@/lib/cms/settings";
+import { pageMetadata } from "@/lib/seo/page-metadata";
 import { getSeoContentFields, resolveSeoText } from "@/lib/seo/content";
 
 export const revalidate = 300;
@@ -12,12 +13,16 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const landing = await getPublishedLandingPageBySlug(slug);
   if (!landing) return {};
   const { title, description } = resolveSeoText(getSeoContentFields("landing_page", landing));
-  return {
+  const settings = await getSettings();
+  return pageMetadata({
     title,
     description,
-    alternates: { canonical: `/landing/${landing.slug}` },
-    openGraph: landing.seo_image ? { images: [assetPath(landing.seo_image)] } : undefined,
-  };
+    canonical: `/landing/${landing.slug}`,
+    image: landing.seo_image,
+    defaultImage: settings.seo.default_og_image_url,
+    siteName: settings.site.site_name,
+    language: settings.site.default_language,
+  });
 }
 
 export default async function PublicLandingPage({ params }: { params: Promise<{ slug: string }> }) {

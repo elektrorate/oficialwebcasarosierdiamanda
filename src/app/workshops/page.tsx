@@ -1,13 +1,11 @@
-import { canonicalPublicPath } from "@/lib/cms/public-section-routes";
+import { collectionMetadata } from "@/lib/seo/collection-metadata";
 import type { Metadata } from "next";
 import { ExperienceCollectionPage } from "@/features/experiences/ExperienceCollectionPage";
 import { getExperienceCollectionConfig } from "@/features/experiences/experienceRoutes";
 
-export async function generateMetadata(): Promise<Metadata> { return {
-  title: "Workshops de ceramica",
-  description: "Workshops de ceramica de Casa Rosier en Barcelona.",
-  alternates: { canonical: await canonicalPublicPath("/workshops") },
-}; }
+export async function generateMetadata(): Promise<Metadata> {
+  return collectionMetadata("workshops");
+}
 
 export default async function WorkshopsPage() {
   const config = await getExperienceCollectionConfig("workshops");

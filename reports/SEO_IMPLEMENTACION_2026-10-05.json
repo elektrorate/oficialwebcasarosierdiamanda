@@ -1,0 +1,492 @@
+{
+  "checkedAt": "2026-10-05T07:06:44.516Z",
+  "base": "http://localhost:9898",
+  "pages": [
+    {
+      "path": "/",
+      "status": 200,
+      "title": "Casa Rosier | Cursos y clases de cerámica en Barcelona",
+      "description": "Estudio de cerámica en Barcelona con clases regulares, cursos, workshops, torno, modelado, experiencias de un día, team building y tarjetas regalo.",
+      "canonical": "http://localhost:9898",
+      "robots": "",
+      "ogTitle": "Casa Rosier | Cursos y clases de cerámica en Barcelona",
+      "ogImage": "https://hhxftxxshwgmfxuyrjmz.supabase.co/storage/v1/object/public/media/general/1788206749735-9e03ff10.webp?width=1200&quality=75",
+      "twitterTitle": "Casa Rosier | Cursos y clases de cerámica en Barcelona",
+      "h1": 1,
+      "jsonLdTypes": [
+        "Organization"
+      ]
+    },
+    {
+      "path": "/cursos",
+      "status": 200,
+      "title": "Cursos de cerámica en Barcelona | Casa Rosier",
+      "description": "Descubre nuestros cursos de cerámica en Barcelona: formación, técnicas y práctica con arcilla para desarrollar tus proyectos en Casa Rosier.",
+      "canonical": "http://localhost:9898/cursos",
+      "robots": "",
+      "ogTitle": "Cursos de cerámica en Barcelona | Casa Rosier",
+      "ogImage": "https://hhxftxxshwgmfxuyrjmz.supabase.co/storage/v1/object/public/media/general/1788206749735-9e03ff10.webp?width=1200&quality=75",
+      "twitterTitle": "Cursos de cerámica en Barcelona | Casa Rosier",
+      "h1": 1,
+      "jsonLdTypes": [
+        "Organization"
+      ]
+    },
+    {
+      "path": "/workshops",
+      "status": 200,
+      "title": "Workshops de cerámica y esmaltes | Casa Rosier",
+      "description": "Explora los workshops de especialización de Casa Rosier: técnicas cerámicas y formulación de esmaltes, con propuestas en Barcelona y online.",
+      "canonical": "http://localhost:9898/workshops",
+      "robots": "",
+      "ogTitle": "Workshops de cerámica y esmaltes | Casa Rosier",
+      "ogImage": "https://hhxftxxshwgmfxuyrjmz.supabase.co/storage/v1/object/public/media/general/1788206749735-9e03ff10.webp?width=1200&quality=75",
+      "twitterTitle": "Workshops de cerámica y esmaltes | Casa Rosier",
+      "h1": 1,
+      "jsonLdTypes": [
+        "Organization"
+      ]
+    },
+    {
+      "path": "/experiencias",
+      "status": 200,
+      "title": "Experiencias de cerámica en Barcelona | Casa Rosier",
+      "description": "Disfruta de la cerámica en Casa Rosier: modelado, torno, clases regulares y experiencias para compartir en pareja, con amigos o con tu equipo.",
+      "canonical": "http://localhost:9898/experiencias",
+      "robots": "",
+      "ogTitle": "Experiencias de cerámica en Barcelona | Casa Rosier",
+      "ogImage": "https://hhxftxxshwgmfxuyrjmz.supabase.co/storage/v1/object/public/media/general/1788206749735-9e03ff10.webp?width=1200&quality=75",
+      "twitterTitle": "Experiencias de cerámica en Barcelona | Casa Rosier",
+      "h1": 1,
+      "jsonLdTypes": [
+        "Organization"
+      ]
+    },
+    {
+      "path": "/gift-cards",
+      "status": 200,
+      "title": "Tarjetas regalo de cerámica en Barcelona | Casa Rosier",
+      "description": "Regala una experiencia de cerámica en Barcelona con las tarjetas regalo de Casa Rosier: tiempo para crear, descubrir el barro y disfrutar del taller.",
+      "canonical": "http://localhost:9898/gift-cards",
+      "robots": "",
+      "ogTitle": "Tarjetas regalo de cerámica en Barcelona | Casa Rosier",
+      "ogImage": "https://hhxftxxshwgmfxuyrjmz.supabase.co/storage/v1/object/public/media/general/1788206749735-9e03ff10.webp?width=1200&quality=75",
+      "twitterTitle": "Tarjetas regalo de cerámica en Barcelona | Casa Rosier",
+      "h1": 1,
+      "jsonLdTypes": [
+        "Organization"
+      ]
+    },
+    {
+      "path": "/el-estudio",
+      "status": 200,
+      "title": "El Estudio | Casa Rosier",
+      "description": "Conoce el estudio, sus especialistas y la forma de trabajar la ceramica en Casa Rosier.",
+      "canonical": "http://localhost:9898/el-estudio",
+      "robots": "",
+      "ogTitle": "El Estudio | Casa Rosier",
+      "ogImage": "https://hhxftxxshwgmfxuyrjmz.supabase.co/storage/v1/object/public/media/general/1788206749735-9e03ff10.webp?width=1200&quality=75",
+      "twitterTitle": "El Estudio | Casa Rosier",
+      "h1": 1,
+      "jsonLdTypes": [
+        "Organization"
+      ]
+    },
+    {
+      "path": "/blog",
+      "status": 200,
+      "title": "Blog | Casa Rosier Ceramica",
+      "description": "Articulos, procesos y reflexiones sobre ceramica, talleres, tecnicas y creacion en Casa Rosier Ceramica Barcelona.",
+      "canonical": "http://localhost:9898/blog",
+      "robots": "",
+      "ogTitle": "Blog | Casa Rosier Ceramica",
+      "ogImage": "https://hhxftxxshwgmfxuyrjmz.supabase.co/storage/v1/object/public/media/general/1788206749735-9e03ff10.webp?width=1200&quality=75",
+      "twitterTitle": "Blog | Casa Rosier Ceramica",
+      "h1": 1,
+      "jsonLdTypes": [
+        "Organization"
+      ]
+    },
+    {
+      "path": "/shop",
+      "status": 200,
+      "title": "Shop | Casa Rosier",
+      "description": "Piezas ceramicas disponibles en Casa Rosier.",
+      "canonical": "http://localhost:9898/shop",
+      "robots": "",
+      "ogTitle": "Shop | Casa Rosier",
+      "ogImage": "https://hhxftxxshwgmfxuyrjmz.supabase.co/storage/v1/object/public/media/general/1788206749735-9e03ff10.webp?width=1200&quality=75",
+      "twitterTitle": "Shop | Casa Rosier",
+      "h1": 1,
+      "jsonLdTypes": [
+        "Organization"
+      ]
+    },
+    {
+      "path": "/politica-privacidad",
+      "status": 200,
+      "title": "Política de privacidad | Casa Rosier",
+      "description": "Política de privacidad.",
+      "canonical": "http://localhost:9898/politica-privacidad",
+      "robots": "",
+      "ogTitle": "Casa Rosier | Cursos y clases de cerámica en Barcelona",
+      "ogImage": "https://hhxftxxshwgmfxuyrjmz.supabase.co/storage/v1/object/public/media/general/1788206749735-9e03ff10.webp?width=1200&quality=75",
+      "twitterTitle": "Casa Rosier | Cursos y clases de cerámica en Barcelona",
+      "h1": 1,
+      "jsonLdTypes": [
+        "Organization"
+      ]
+    },
+    {
+      "path": "/cursos/curso-ceramica-barcelona-formacion-integral",
+      "status": 200,
+      "title": "Formación integral en cerámica en Barcelona | Casa Rosier",
+      "description": "Desarrolla una base sólida en cerámica con formación práctica en Barcelona: técnicas, materiales y fundamentos para crear tus propios proyectos.",
+      "canonical": "http://localhost:9898/cursos/curso-ceramica-barcelona-formacion-integral",
+      "robots": "",
+      "ogTitle": "Formación integral en cerámica en Barcelona | Casa Rosier",
+      "ogImage": "https://hhxftxxshwgmfxuyrjmz.supabase.co/storage/v1/object/public/media/offerings/1788265604722-0aeef683.jpg",
+      "twitterTitle": "Formación integral en cerámica en Barcelona | Casa Rosier",
+      "h1": 1,
+      "jsonLdTypes": [
+        "Organization",
+        null,
+        null
+      ]
+    },
+    {
+      "path": "/workshops/formulacion-esmaltes-barcelona",
+      "status": 200,
+      "title": "Workshop de esmaltes cerámicos en Barcelona | Casa Rosier",
+      "description": "Aprende a formular esmaltes cerámicos de baja y alta temperatura en Barcelona. Desarrolla tus propias fórmulas y conoce los materiales en Casa Rosier.",
+      "canonical": "http://localhost:9898/workshops/formulacion-esmaltes-barcelona",
+      "robots": "",
+      "ogTitle": "Workshop de esmaltes cerámicos en Barcelona | Casa Rosier",
+      "ogImage": "https://hhxftxxshwgmfxuyrjmz.supabase.co/storage/v1/object/public/media/general/1790336825368-3c51136b.webp",
+      "twitterTitle": "Workshop de esmaltes cerámicos en Barcelona | Casa Rosier",
+      "h1": 1,
+      "jsonLdTypes": [
+        "Organization",
+        null,
+        null
+      ]
+    },
+    {
+      "path": "/experiencias/clases-regulares-de-modelado",
+      "status": 200,
+      "title": "Clases regulares de modelado en Barcelona | Casa Rosier",
+      "description": "Disfruta de cuatro sesiones mensuales de modelado cerámico en Barcelona, con acompañamiento cercano, arcilla, esmaltes y horneado incluidos.",
+      "canonical": "http://localhost:9898/experiencias/clases-regulares-de-modelado",
+      "robots": "",
+      "ogTitle": "Clases regulares de modelado en Barcelona | Casa Rosier",
+      "ogImage": "https://hhxftxxshwgmfxuyrjmz.supabase.co/storage/v1/object/public/media/offerings/1788265604722-0aeef683.jpg",
+      "twitterTitle": "Clases regulares de modelado en Barcelona | Casa Rosier",
+      "h1": 1,
+      "jsonLdTypes": [
+        "Organization",
+        null,
+        null
+      ]
+    },
+    {
+      "path": "/cursos/coworking-de-investigacion-tecnica-de-esmaltes-y-engobes",
+      "status": 200,
+      "title": "Coworking de esmaltes y engobes en Barcelona | Casa Rosier",
+      "description": "Investiga esmaltes y engobes en el laboratorio cerámico de Casa Rosier. Modalidad coworking con tres horas semanales para desarrollar tus pruebas.",
+      "canonical": "http://localhost:9898/cursos/coworking-de-investigacion-tecnica-de-esmaltes-y-engobes",
+      "robots": "",
+      "ogTitle": "Coworking de esmaltes y engobes en Barcelona | Casa Rosier",
+      "ogImage": "http://localhost:9898/img/hero-bg.jpg",
+      "twitterTitle": "Coworking de esmaltes y engobes en Barcelona | Casa Rosier",
+      "h1": 1,
+      "jsonLdTypes": [
+        "Organization",
+        null,
+        null
+      ]
+    },
+    {
+      "path": "/experiencias/experiencia-de-un-dia-modelado",
+      "status": 200,
+      "title": "Modelado cerámico de un día en Barcelona | Casa Rosier",
+      "description": "Descubre el modelado cerámico en una experiencia de un día en Barcelona. Ven sola, en pareja o con amigos a experimentar con el barro en Casa Rosier.",
+      "canonical": "http://localhost:9898/experiencias/experiencia-de-un-dia-modelado",
+      "robots": "",
+      "ogTitle": "Modelado cerámico de un día en Barcelona | Casa Rosier",
+      "ogImage": "https://hhxftxxshwgmfxuyrjmz.supabase.co/storage/v1/object/public/media/offerings/1788265604722-0aeef683.jpg",
+      "twitterTitle": "Modelado cerámico de un día en Barcelona | Casa Rosier",
+      "h1": 1,
+      "jsonLdTypes": [
+        "Organization",
+        null,
+        null
+      ]
+    },
+    {
+      "path": "/gift-cards/tarjeta-regalo-ceramica-en-barcelona",
+      "status": 200,
+      "title": "Tarjeta regalo de cerámica en Barcelona | Casa Rosier",
+      "description": "Regala tiempo para crear con una tarjeta regalo de cerámica en Barcelona. Una experiencia en el taller de Casa Rosier para descubrir el trabajo con arcilla.",
+      "canonical": "http://localhost:9898/gift-cards/tarjeta-regalo-ceramica-en-barcelona",
+      "robots": "",
+      "ogTitle": "Tarjeta regalo de cerámica en Barcelona | Casa Rosier",
+      "ogImage": "https://hhxftxxshwgmfxuyrjmz.supabase.co/storage/v1/object/public/media/general/1790341107360-3a6d8576.webp",
+      "twitterTitle": "Tarjeta regalo de cerámica en Barcelona | Casa Rosier",
+      "h1": 1,
+      "jsonLdTypes": [
+        "Organization",
+        null,
+        null
+      ]
+    },
+    {
+      "path": "/workshops/workshops-esmaltes-online-zoom",
+      "status": 200,
+      "title": "Workshop de formulación de esmaltes online | Casa Rosier",
+      "description": "Aprende formulación de esmaltes cerámicos online vía Zoom con Casa Rosier. Explora materiales y fórmulas para avanzar en tus proyectos de cerámica.",
+      "canonical": "http://localhost:9898/workshops/workshops-esmaltes-online-zoom",
+      "robots": "",
+      "ogTitle": "Workshop de formulación de esmaltes online | Casa Rosier",
+      "ogImage": "https://hhxftxxshwgmfxuyrjmz.supabase.co/storage/v1/object/public/media/general/1790334904446-a1d211f7.webp",
+      "twitterTitle": "Workshop de formulación de esmaltes online | Casa Rosier",
+      "h1": 1,
+      "jsonLdTypes": [
+        "Organization",
+        null,
+        null
+      ]
+    },
+    {
+      "path": "/experiencias/un-dia-de-torno-ceramico",
+      "status": 200,
+      "title": "Clases de torno cerámico en Barcelona | Casa Rosier",
+      "description": "Aprende torno cerámico en Barcelona con clases personalizadas, grupos reducidos y acompañamiento paso a paso. Materiales y cocción incluidos.",
+      "canonical": "http://localhost:9898/experiencias/un-dia-de-torno-ceramico",
+      "robots": "",
+      "ogTitle": "Clases de torno cerámico en Barcelona | Casa Rosier",
+      "ogImage": "https://hhxftxxshwgmfxuyrjmz.supabase.co/storage/v1/object/public/media/offerings/1788265604722-0aeef683.jpg",
+      "twitterTitle": "Clases de torno cerámico en Barcelona | Casa Rosier",
+      "h1": 1,
+      "jsonLdTypes": [
+        "Organization",
+        null,
+        null
+      ]
+    },
+    {
+      "path": "/experiencias/team-building-ceramica-barcelona",
+      "status": 200,
+      "title": "Team building de cerámica en Barcelona | Casa Rosier",
+      "description": "Comparte una experiencia de cerámica con tu equipo en Barcelona. Un taller de Casa Rosier para empresas y grupos que quieren crear juntos con arcilla.",
+      "canonical": "http://localhost:9898/experiencias/team-building-ceramica-barcelona",
+      "robots": "",
+      "ogTitle": "Team building de cerámica en Barcelona | Casa Rosier",
+      "ogImage": "https://hhxftxxshwgmfxuyrjmz.supabase.co/storage/v1/object/public/media/general/1788969564066-810312d3.jpeg",
+      "twitterTitle": "Team building de cerámica en Barcelona | Casa Rosier",
+      "h1": 1,
+      "jsonLdTypes": [
+        "Organization",
+        null,
+        null
+      ]
+    },
+    {
+      "path": "/blog/del-barro-a-la-idea-7-formas-de-expandir-tu-creatividad-con-piezas-funcionales",
+      "status": 200,
+      "title": "7 ideas para crear cerámica funcional | Casa Rosier",
+      "description": "Explora siete formas de desarrollar tu creatividad con cerámica funcional: convierte tus ideas en tazas, cuencos y piezas que forman parte del día a día.",
+      "canonical": "http://localhost:9898/blog/del-barro-a-la-idea-7-formas-de-expandir-tu-creatividad-con-piezas-funcionales",
+      "robots": "",
+      "ogTitle": "7 ideas para crear cerámica funcional | Casa Rosier",
+      "ogImage": "https://hhxftxxshwgmfxuyrjmz.supabase.co/storage/v1/object/public/media/bitacora/1788957338968-93239d6d.jpg?width=1200&quality=75",
+      "twitterTitle": "7 ideas para crear cerámica funcional | Casa Rosier",
+      "h1": 1,
+      "jsonLdTypes": [
+        "Organization",
+        null
+      ]
+    },
+    {
+      "path": "/blog/hacer-ceramica-en-pareja-en-barcelona",
+      "status": 200,
+      "title": "Hacer cerámica en pareja en Barcelona | Casa Rosier",
+      "description": "Descubre cómo una experiencia de cerámica en pareja permite compartir tiempo, experimentar con el barro y crear algo juntos en Barcelona.",
+      "canonical": "http://localhost:9898/blog/hacer-ceramica-en-pareja-en-barcelona",
+      "robots": "",
+      "ogTitle": "Hacer cerámica en pareja en Barcelona | Casa Rosier",
+      "ogImage": "https://hhxftxxshwgmfxuyrjmz.supabase.co/storage/v1/object/public/media/bitacora/1790103707825-b5aa9943.jpg?width=1200&quality=75",
+      "twitterTitle": "Hacer cerámica en pareja en Barcelona | Casa Rosier",
+      "h1": 1,
+      "jsonLdTypes": [
+        "Organization",
+        null
+      ]
+    },
+    {
+      "path": "/blog/caminos-y-tecnicas-para-convertir-barro-en-forma",
+      "status": 200,
+      "title": "Técnicas de modelado cerámico: del barro a la forma | Casa Rosier",
+      "description": "Conoce distintos caminos para modelar arcilla y construir formas cerámicas. Técnicas, decisiones y práctica para dar forma a tus piezas en el taller.",
+      "canonical": "http://localhost:9898/blog/caminos-y-tecnicas-para-convertir-barro-en-forma",
+      "robots": "",
+      "ogTitle": "Técnicas de modelado cerámico: del barro a la forma | Casa Rosier",
+      "ogImage": "https://hhxftxxshwgmfxuyrjmz.supabase.co/storage/v1/object/public/media/bitacora/1788959301632-c67a3569.jpg?width=1200&quality=75",
+      "twitterTitle": "Técnicas de modelado cerámico: del barro a la forma | Casa Rosier",
+      "h1": 1,
+      "jsonLdTypes": [
+        "Organization",
+        null
+      ]
+    },
+    {
+      "path": "/blog/esmaltes-ceramicos-que-son-como-funcionan-y-como-evitar-errores-comunes",
+      "status": 200,
+      "title": "Esmaltes cerámicos: composición y errores comunes | Casa Rosier",
+      "description": "Descubre qué son los esmaltes cerámicos y cómo influyen la composición, la cocción y la aplicación en sus resultados. Aprende a interpretar errores comunes.",
+      "canonical": "http://localhost:9898/blog/esmaltes-ceramicos-que-son-como-funcionan-y-como-evitar-errores-comunes",
+      "robots": "",
+      "ogTitle": "Esmaltes cerámicos: composición y errores comunes | Casa Rosier",
+      "ogImage": "https://hhxftxxshwgmfxuyrjmz.supabase.co/storage/v1/object/public/media/offerings/1788518665184-86d94d52.jpg?width=1200&quality=75",
+      "twitterTitle": "Esmaltes cerámicos: composición y errores comunes | Casa Rosier",
+      "h1": 1,
+      "jsonLdTypes": [
+        "Organization",
+        null
+      ]
+    },
+    {
+      "path": "/blog/barbotina-con-esteroides",
+      "status": 200,
+      "title": "Barbotina cerámica: uniones y control de humedad | Casa Rosier",
+      "description": "Conoce el papel de la barbotina, la humedad y el secado en las uniones de arcilla. Notas de taller sobre silicato de sodio y CMC en Casa Rosier.",
+      "canonical": "http://localhost:9898/blog/barbotina-con-esteroides",
+      "robots": "",
+      "ogTitle": "Barbotina cerámica: uniones y control de humedad | Casa Rosier",
+      "ogImage": "https://hhxftxxshwgmfxuyrjmz.supabase.co/storage/v1/object/public/media/bitacora/1788958669041-f2f3af6c.png?width=1200&quality=75",
+      "twitterTitle": "Barbotina cerámica: uniones y control de humedad | Casa Rosier",
+      "h1": 1,
+      "jsonLdTypes": [
+        "Organization",
+        null
+      ]
+    },
+    {
+      "path": "/blog/no-es-falta-de-talento-es-miedo-a-crear",
+      "status": 200,
+      "title": "El miedo a crear y la práctica cerámica | Casa Rosier",
+      "description": "Una reflexión sobre el miedo a crear al empezar cerámica: el juicio, la experimentación y el aprendizaje a través del trabajo con arcilla.",
+      "canonical": "http://localhost:9898/blog/no-es-falta-de-talento-es-miedo-a-crear",
+      "robots": "",
+      "ogTitle": "El miedo a crear y la práctica cerámica | Casa Rosier",
+      "ogImage": "https://hhxftxxshwgmfxuyrjmz.supabase.co/storage/v1/object/public/media/general/1782943504952-da642eb7.png?width=1200&quality=75",
+      "twitterTitle": "El miedo a crear y la práctica cerámica | Casa Rosier",
+      "h1": 1,
+      "jsonLdTypes": [
+        "Organization",
+        null
+      ]
+    },
+    {
+      "path": "/shop/ggrdgr-er",
+      "status": 200,
+      "title": "GGRDGR ER | Casa Rosier",
+      "description": "WEFWEWFWEFWFWFWF",
+      "canonical": "http://localhost:9898/shop/ggrdgr-er",
+      "robots": "",
+      "ogTitle": "GGRDGR ER | Casa Rosier",
+      "ogImage": "https://hhxftxxshwgmfxuyrjmz.supabase.co/storage/v1/object/public/media/shop/1790612646492-66bb55b2.webp?width=1200&quality=75",
+      "twitterTitle": "GGRDGR ER | Casa Rosier",
+      "h1": 1,
+      "jsonLdTypes": [
+        "Organization",
+        null
+      ]
+    },
+    {
+      "path": "/shop/pieza-escultorica-organica",
+      "status": 200,
+      "title": "Pieza escultorica organica | Casa Rosier Shop",
+      "description": "Escultura ceramica organica y pieza unica disponible en Casa Rosier Shop.",
+      "canonical": "http://localhost:9898/shop/pieza-escultorica-organica",
+      "robots": "",
+      "ogTitle": "Pieza escultorica organica | Casa Rosier Shop",
+      "ogImage": "http://localhost:9898/img/gift-1.jpg",
+      "twitterTitle": "Pieza escultorica organica | Casa Rosier Shop",
+      "h1": 1,
+      "jsonLdTypes": [
+        "Organization",
+        null
+      ]
+    },
+    {
+      "path": "/shop/jarron-de-gres-blanco",
+      "status": 200,
+      "title": "Jarron de gres blanco | Casa Rosier Shop",
+      "description": "Pieza ceramica disponible en Casa Rosier: jarron de gres blanco modelado a mano.",
+      "canonical": "http://localhost:9898/shop/jarron-de-gres-blanco",
+      "robots": "",
+      "ogTitle": "Jarron de gres blanco | Casa Rosier Shop",
+      "ogImage": "https://hhxftxxshwgmfxuyrjmz.supabase.co/storage/v1/object/public/media/general/1782943504952-da642eb7.png?width=1200&quality=75",
+      "twitterTitle": "Jarron de gres blanco | Casa Rosier Shop",
+      "h1": 1,
+      "jsonLdTypes": [
+        "Organization",
+        null
+      ]
+    },
+    {
+      "path": "/shop/serie-mineral-01",
+      "status": 200,
+      "title": "Serie mineral 01 | Casa Rosier Shop",
+      "description": "Pieza unica ceramica de la serie mineral disponible en Casa Rosier Shop.",
+      "canonical": "http://localhost:9898/shop/serie-mineral-01",
+      "robots": "",
+      "ogTitle": "Serie mineral 01 | Casa Rosier Shop",
+      "ogImage": "http://localhost:9898/img/workshop-1.jpg",
+      "twitterTitle": "Serie mineral 01 | Casa Rosier Shop",
+      "h1": 1,
+      "jsonLdTypes": [
+        "Organization",
+        null
+      ]
+    },
+    {
+      "path": "/shop/mostro1",
+      "status": 200,
+      "title": "mostro1 | Casa Rosier",
+      "description": "este es un mostro verde de el arttista erick",
+      "canonical": "http://localhost:9898/shop/mostro1",
+      "robots": "",
+      "ogTitle": "mostro1 | Casa Rosier",
+      "ogImage": "http://localhost:9898/img/social-2.jpg",
+      "twitterTitle": "mostro1 | Casa Rosier",
+      "h1": 1,
+      "jsonLdTypes": [
+        "Organization",
+        null
+      ]
+    }
+  ],
+  "extraLinks": [
+    {
+      "path": "/auth",
+      "status": 200
+    },
+    {
+      "path": "/clases/coworking-de-investigacion-tecnica-de-esmaltes-y-engobes",
+      "status": 200
+    },
+    {
+      "path": "/clases/curso-ceramica-barcelona-formacion-integral",
+      "status": 200
+    },
+    {
+      "path": "/clases",
+      "status": 200
+    }
+  ],
+  "duplicateTitles": [],
+  "duplicateDescriptions": [],
+  "missingPage": 404,
+  "aliasStatus": 301
+}

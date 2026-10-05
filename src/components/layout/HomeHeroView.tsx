@@ -6,6 +6,7 @@ import type { NavigationItem } from "@/data/types";
 import type { CmsHeroSettings } from "@/lib/cms/types";
 import { assetPath } from "@/lib/assets";
 import { classNames } from "@/lib/utils";
+import { vimeoEmbedUrl, isDirectVideoUrl } from "@/lib/vimeo";
 import type { CSSProperties } from "react";
 
 function heroVideoEmbedUrl(rawUrl: string) {
@@ -15,8 +16,7 @@ function heroVideoEmbedUrl(rawUrl: string) {
     const host = url.hostname.replace(/^www\./, "");
 
     if (host === "player.vimeo.com" || host === "vimeo.com") {
-      const id = url.pathname.split("/").find((part) => /^\d+$/.test(part));
-      return id ? `https://player.vimeo.com/video/${id}?background=1&autoplay=1&muted=1&loop=1&autopause=0&controls=0&api=1&playsinline=1&dnt=1` : "";
+      return vimeoEmbedUrl(rawUrl, { background: "1", autoplay: "1", muted: "1", loop: "1", autopause: "0", controls: "0", api: "1", playsinline: "1", dnt: "1" });
     }
 
     if (host === "youtu.be" || host === "youtube.com" || host === "m.youtube.com") {
@@ -63,7 +63,8 @@ export function HomeHeroView({
   const mobileVideo = hero.heroVideoUrlMobile.trim() || desktopVideo;
   const desktopVideoEmbed = heroVideoEmbedUrl(desktopVideo);
   const mobileVideoEmbed = mobileVideo === desktopVideo ? desktopVideoEmbed : heroVideoEmbedUrl(mobileVideo);
-  const hasHeroVideo = hero.heroVariant === "image" && Boolean(desktopVideo);
+  const hasHeroVideo = hero.heroVariant === "image" && Boolean(desktopVideoEmbed || isDirectVideoUrl(desktopVideo));
+  const hasMobileVideo = Boolean(mobileVideoEmbed || isDirectVideoUrl(mobileVideo));
   const videoPoster = hero.heroVideoPoster || hero.heroImage || "/img/hero-bg.jpg";
   const { props: desktopBackgroundProps } = getImageProps({
     src: assetPath(desktopImage),
@@ -222,7 +223,7 @@ export function HomeHeroView({
         hero.heroVariant === "image" && "header-home--image-hero",
         hero.heroVariant === "presentation" && "header-home--presentation-hero",
         hasHeroVideo && "header-home--video-hero",
-        hasHeroVideo && mobileVideo && mobileVideo !== desktopVideo && "header-home--has-mobile-video",
+        hasHeroVideo && hasMobileVideo && mobileVideo !== desktopVideo && "header-home--has-mobile-video",
       )}
       data-header-component="HeaderHome"
       style={heroStyle}
@@ -279,7 +280,7 @@ export function HomeHeroView({
           tabIndex={-1}
           aria-hidden="true"
         />
-      ) : hasHeroVideo && mobileVideo && mobileVideo !== desktopVideo ? (
+      ) : hasHeroVideo && isDirectVideoUrl(mobileVideo) && mobileVideo !== desktopVideo ? (
         <video
           className="hero__video hero__video--mobile"
           src={mobileVideo}

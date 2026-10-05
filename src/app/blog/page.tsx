@@ -4,6 +4,8 @@ import { getBlogPageSettings } from "@/lib/cms/blog-page";
 import { canonicalPublicPath } from "@/lib/cms/public-section-routes";
 import { assetPath } from "@/lib/assets";
 import { resolveSeoText } from "@/lib/seo/content";
+import { getSettings } from "@/lib/cms/settings";
+import { DEFAULT_SOCIAL_IMAGE } from "@/lib/seo/page-metadata";
 
 export const revalidate = 900;
 
@@ -14,7 +16,8 @@ export async function generateMetadata(): Promise<Metadata> {
     fallbackTitle: "Blog | Casa Rosier Ceramica",
     fallbackDescription: "Articulos, procesos y reflexiones sobre ceramica, talleres, tecnicas y creacion en Casa Rosier Ceramica Barcelona.",
   });
-  const image = page.seo_image ? assetPath(page.seo_image) : undefined;
+  const settings = await getSettings();
+  const image = assetPath(page.seo_image || settings.seo.default_og_image_url || DEFAULT_SOCIAL_IMAGE);
 
   return {
     title: { absolute: title },

@@ -8,6 +8,8 @@ import { JsonLd } from "@/components/seo/JsonLd";
 import { getSettings } from "@/lib/cms/settings";
 import { organizationJsonLd } from "@/lib/seo/structured-data";
 import { getSiteUrl } from "@/lib/seo/site-url";
+import { assetPath } from "@/lib/assets";
+import { DEFAULT_SOCIAL_IMAGE } from "@/lib/seo/page-metadata";
 import { resolveRobotsMetadata } from "@/lib/seo/site-robots";
 import { resolveSeoText } from "@/lib/seo/content";
 import { siteHtmlLang, siteOpenGraphLocale } from "@/lib/seo/site-language";
@@ -80,7 +82,7 @@ export async function generateMetadata(): Promise<Metadata> {
     fallbackTitle: siteName,
     fallbackDescription: settings.site.site_description || FALLBACK_SITE_DESCRIPTION,
   });
-  const ogImage = settings.seo.default_og_image_url?.trim();
+  const ogImage = assetPath(settings.seo.default_og_image_url?.trim() || DEFAULT_SOCIAL_IMAGE);
   const images = ogImage ? [ogImage] : undefined;
 
   // `robots_index` y `robots_follow` son independientes: cada uno añade solo su

@@ -45,7 +45,7 @@ function HeroPositionPreviewComponent({
             tabIndex={-1}
             aria-hidden="true"
           />
-        ) : previewVideoUrl ? (
+        ) : /\.(mp4|webm|ogg)([?#]|$)/i.test(previewVideoUrl) ? (
           <video
             className="absolute z-0 object-cover"
             style={previewVideoFrameStyle}

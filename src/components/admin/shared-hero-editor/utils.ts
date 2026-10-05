@@ -1,4 +1,5 @@
 import type { CSSProperties } from "react";
+import { vimeoEmbedUrl } from "@/lib/vimeo";
 import { richTextTypographyRevision } from "@/lib/cms/rich-text-typography";
 import type { CmsHeroSettings } from "@/lib/cms/types";
 import type { DeviceFieldKeys, DeviceKey } from "./types";
@@ -16,8 +17,7 @@ export function heroVideoEmbedUrl(rawUrl: string) {
     const host = url.hostname.replace(/^www\./, "");
 
     if (host === "player.vimeo.com" || host === "vimeo.com") {
-      const id = url.pathname.split("/").find((part) => /^\d+$/.test(part));
-      return id ? `https://player.vimeo.com/video/${id}?background=1&autoplay=1&muted=1&loop=1&autopause=0&controls=0` : "";
+      return vimeoEmbedUrl(rawUrl, { background: "1", autoplay: "1", muted: "1", loop: "1", autopause: "0", controls: "0" });
     }
 
     if (host === "youtu.be" || host === "youtube.com" || host === "m.youtube.com") {

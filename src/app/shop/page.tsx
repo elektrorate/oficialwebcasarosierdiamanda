@@ -5,6 +5,7 @@ import { assetPath } from "@/lib/assets";
 import { getShopPageSettings } from "@/lib/cms/shop-page";
 import { getSettings } from "@/lib/cms/settings";
 import { resolveSeoText } from "@/lib/seo/content";
+import { DEFAULT_SOCIAL_IMAGE } from "@/lib/seo/page-metadata";
 
 export async function generateMetadata(): Promise<Metadata> {
   const settings = await getSettings();
@@ -23,7 +24,7 @@ export async function generateMetadata(): Promise<Metadata> {
     ? assetPath(page.seo_image)
     : settings.seo.default_og_image_url
       ? assetPath(settings.seo.default_og_image_url)
-      : undefined;
+      : DEFAULT_SOCIAL_IMAGE;
 
   return {
     title: { absolute: title },
