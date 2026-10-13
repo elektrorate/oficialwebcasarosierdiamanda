@@ -124,7 +124,13 @@ function dynamicKeyForItem(item: NavigationItem): DynamicMenuKey | null {
   if (byHref) return byHref[0];
 
   const label = normalizeLabel(item.label);
-  if (label === "clases" || label === "classes") return "classes";
+  if (
+    item.href === "/cursos" ||
+    label === "clases" ||
+    label === "classes" ||
+    label === "curso" ||
+    label === "cursos"
+  ) return "classes";
   if (label === "workshops") return "workshops";
   if (item.href === "/reservas-privadas" || label === "reservas privadas" || label === "experiencias") return "privateBookings";
   if (

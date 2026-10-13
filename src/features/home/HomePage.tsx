@@ -1,15 +1,11 @@
 import { FeaturedSection } from "@/components/home/FeaturedSection";
 import { IntroSlider } from "@/components/home/IntroSlider";
+import { TrustindexReviewsSection } from "@/components/home/TrustindexReviewsSection";
 import { HeaderHome } from "@/components/layout/HeaderHome";
 import { PromoEntry } from "@/components/ui/PromoEntry";
-import {
-  mapCmsTestimonialsToSlides,
-  TestimonialSlider,
-} from "@/components/home/testimonial-slider";
 import type { GiftCardItem } from "@/data/types";
 import { getPublicExperienceItems } from "@/features/experiences/experienceDetailRouting";
 import { HomeGiftCardSection } from "@/features/home/HomeGiftCardSection";
-import { getClassAndExperienceItems } from "@/features/home/homeFeaturedItems";
 import { IdeaPromptSection } from "@/features/shared/contextual-sections/IdeaPromptSection";
 import { SitePage } from "@/features/shared/layout/SitePage";
 import { getHomePageSettings } from "@/lib/cms/home-page";
@@ -27,7 +23,7 @@ function pickHomeItems<T extends { id: string }>(
 
 export async function HomePage() {
   const [
-    { promoBanner, testimonials: cmsTestimonials },
+    { promoBanner },
     experienceItems,
     homePage,
   ] = await Promise.all([
@@ -35,19 +31,16 @@ export async function HomePage() {
     getPublicExperienceItems(),
     getHomePageSettings(),
   ]);
-  const classesAndExperiences = getClassAndExperienceItems(experienceItems);
-  const workshops = experienceItems.filter((item) => item.kind === "workshop");
+  const featuredItems = experienceItems.filter((item) => item.kind !== "gift-card");
   const giftCards = experienceItems.filter(
     (item): item is GiftCardItem => item.kind === "gift-card",
   );
   const homeClassesAndExperiences = pickHomeItems(
-    classesAndExperiences,
+    featuredItems,
     homePage.classesFeaturedIds,
   );
-  const homeWorkshops = pickHomeItems(workshops, homePage.workshopsFeaturedIds);
+  const homeWorkshops = pickHomeItems(featuredItems, homePage.workshopsFeaturedIds);
   const homeGiftCards = pickHomeItems(giftCards, homePage.giftFeaturedIds);
-  const testimonials = mapCmsTestimonialsToSlides(cmsTestimonials);
-
   return (
     <SitePage
       bodyClass=""
@@ -105,7 +98,7 @@ export async function HomePage() {
         />
       ) : null}
       <IdeaPromptSection context="home" />
-      <TestimonialSlider testimonials={testimonials} variant="home" />
+      <TrustindexReviewsSection />
     </SitePage>
   );
 }
