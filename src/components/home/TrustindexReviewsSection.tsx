@@ -3,9 +3,9 @@
 import { useEffect, useRef, useState } from "react";
 
 const TRUSTINDEX_WIDGET_SRC =
-  "https://cdn.trustindex.io/loader.js?f16545b83e584814a4961a14873";
+  "https://cdn.trustindex.io/loader.js?b51e38b83fae531b2a56032f313";
 const TRUSTINDEX_WIDGET_SELECTOR =
-  ".ti-widget[data-pid='f16545b83e584814a4961a14873']";
+  ".ti-widget[data-pid='b51e38b83fae531b2a56032f313']";
 
 export function TrustindexReviewsSection() {
   const [failed, setFailed] = useState(false);

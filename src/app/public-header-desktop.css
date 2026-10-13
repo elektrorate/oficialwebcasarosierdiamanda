@@ -327,6 +327,28 @@
   }
 }
 
+/* Shared legibility rules for every desktop submenu, including the sticky nav. */
+@media (min-width: 1025px) {
+  .header-home .navbar-global .nav-submenu,
+  .header-interno .navbar-global .nav-submenu,
+  .page-hero .navbar-global .nav-submenu,
+  .scroll-desktop-submenu {
+    text-align: left !important;
+  }
+
+  .header-home .navbar-global .nav-submenu__link,
+  .header-interno .navbar-global .nav-submenu__link,
+  .page-hero .navbar-global .nav-submenu__link,
+  .scroll-desktop-submenu__link {
+    display: block;
+    padding: 10px 18px !important;
+    text-align: left !important;
+    line-height: 1.5 !important;
+    letter-spacing: 0.04em !important;
+    white-space: normal;
+  }
+}
+
 
 /* =========================================================
    AJUSTE FINAL DE POSICION — igual a la referencia
