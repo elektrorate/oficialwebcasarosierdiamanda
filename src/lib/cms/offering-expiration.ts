@@ -57,7 +57,8 @@ export function fromLocalDateTime(
   const day = Number(dateMatch[3]);
   const hour = Number(timeMatch[1]);
   const minute = Number(timeMatch[2]);
-  if (month < 1 || month > 12 || day < 1 || day > 31 || hour > 23 || minute > 59) return null;
+  const daysInMonth = new Date(Date.UTC(year, month, 0)).getUTCDate();
+  if (month < 1 || month > 12 || day < 1 || day > daysInMonth || hour > 23 || minute > 59) return null;
 
   return madridLocalToUtc(year, month, day, hour, minute);
 }
@@ -87,7 +88,8 @@ function madridLocalToUtc(year: number, month: number, day: number, hour: number
 export function isPastDueExpiration(offering: Pick<Offering, "expiration_enabled" | "expires_at">, now: Date = new Date()) {
   if (!offering.expiration_enabled) return false;
   if (!offering.expires_at) return true;
-  return new Date(offering.expires_at).getTime() <= now.getTime();
+  const expiresAt = new Date(offering.expires_at).getTime();
+  return Number.isNaN(expiresAt) || expiresAt <= now.getTime();
 }
 
 /**

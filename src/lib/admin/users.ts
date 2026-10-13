@@ -125,7 +125,18 @@ export async function createCmsAdminUser(input: {
   };
 
   const { error: profileError } = await supabase.from("profiles").upsert(profile, { onConflict: "id" });
-  if (profileError) throw profileError;
+  if (profileError) {
+    // The auth trigger already inserted a 'collaborator' profile, so without this
+    // rollback the account would stay invisible in the panel and undeletable from it.
+    const { error: rollbackError } = await supabase.auth.admin.deleteUser(data.user.id);
+    if (rollbackError) {
+      throw new Error(
+        "No se pudo crear el perfil del usuario y tampoco se pudo revertir la cuenta. Revísala en Supabase Auth.",
+        { cause: profileError },
+      );
+    }
+    throw profileError;
+  }
 
   await logAction({
     action: "create",

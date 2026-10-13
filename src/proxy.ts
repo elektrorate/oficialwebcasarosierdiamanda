@@ -9,6 +9,8 @@ import {
   resolveMaintenanceDecision,
 } from "@/lib/cms/maintenance";
 import { readMaintenanceSnapshot } from "@/lib/cms/maintenance-mode";
+import { createSessionRefresher } from "@/lib/auth/session-refresh";
+import { shouldRefreshSession } from "@/lib/auth/session-state";
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
 
@@ -19,11 +21,31 @@ function isPrefetchRequest(request: NextRequest) {
 
 export async function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
+
+  // Las rutas con sesión renuevan el token antes de resolver la respuesta, de
+  // modo que redirects, rewrites y `next({ request })` conserven los
+  // `Set-Cookie` que entrega Supabase.
+  if (shouldRefreshSession(pathname) && !(pathname.startsWith("/admin") && isPrefetchRequest(request))) {
+    const session = createSessionRefresher(request);
+    await session.refresh();
+    return session.applyTo(await resolveResponse(request, true));
+  }
+
+  return resolveResponse(request, false);
+}
+
+/**
+ * `forwardRequest` reenvía las cabeceras de la petición hacia el render. Solo
+ * hace falta cuando el refresco pudo modificar cookies: en el sitio público
+ * evita añadir cabeceras de override en respuestas que siguen siendo cacheables.
+ */
+async function resolveResponse(request: NextRequest, forwardRequest: boolean) {
+  const { pathname } = request.nextUrl;
   if (pathname.startsWith("/admin")) {
     if (isPrefetchRequest(request)) return new NextResponse(null, { status: 204 });
     if (pathname === "/admin") return NextResponse.redirect(new URL("/admin/dashboard", request.url));
     if (pathname === "/admin/login") return NextResponse.redirect(new URL("/auth", request.url));
-    return NextResponse.next();
+    return NextResponse.next(forwardRequest ? { request } : undefined);
   }
 
   // Modo mantenimiento: solo páginas públicas, con respuesta 503.
@@ -65,7 +87,7 @@ export async function proxy(request: NextRequest) {
   } catch (error) {
     console.error("No se pudo resolver la redirección pública:", error);
   }
-  return NextResponse.next();
+  return NextResponse.next(forwardRequest ? { request } : undefined);
 }
 
 export const config = {

@@ -33,3 +33,14 @@ supabase/.temp/
 
 .playwright-mcp
 /docs
+
+# Private audit originals; keep local copies out of the public repository.
+/reports/AUDITORIA_IMAGENES_2026-10-05.json
+/reports/AUDITORIA_IMAGENES_2026-10-05.md
+/reports/AUDITORIA_SEO_CMS_2026-10-05.json
+/reports/AUDITORIA_SEO_CMS_2026-10-05.md
+/reports/AUDITORIA_SEO_CMS_ACTUAL_2026-10-05.json
+/reports/INFORME_CAMBOS_2026-09-29.md
+/reports/PREVIEW_CMS_SEO_2026-10-04.json
+/reports/PREVIEW_CMS_SEO_2026-10-04.md
+/reports/REVISION_INFORME_CAMBIOS_2026-09-29.md

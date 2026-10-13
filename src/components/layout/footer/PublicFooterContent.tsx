@@ -117,17 +117,18 @@ export function PublicFooterContent({
           <FooterContactInfo model={model} variant="editorial" />
           <FooterContactForm config={model.contactForm} preview={preview} />
           <nav
-            className="grid w-full grid-cols-[1fr_auto_1fr] items-center mt-[clamp(8px,1.5vw,16px)] pt-[clamp(12px,2vw,20px)] max-[640px]:grid-cols-1 max-[640px]:justify-items-center max-[640px]:gap-2.5 max-[640px]:text-center"
+            className="grid w-full grid-cols-[1fr_auto_1fr] items-center mt-[clamp(8px,1.5vw,16px)] pt-[clamp(12px,2vw,20px)] max-[640px]:grid-cols-[1fr_auto] max-[640px]:items-center"
             aria-label="Enlaces legales del sitio"
           >
             <a
-              className="text-[#8a8a8a] text-[clamp(11px,1vw,12px)] leading-[1.3] font-light no-underline [font-family:var(--font-menu)] transition-colors duration-180 ease-in-out hover:text-[#5a5a5a] justify-self-start max-[640px]:col-1 max-[640px]:justify-self-center"
+              className="text-[#8a8a8a] text-[10px] leading-[1.3] font-light no-underline [font-family:var(--font-menu)] transition-colors duration-180 ease-in-out hover:text-[#5a5a5a] row-start-1 justify-self-end col-3 max-[640px]:col-2 max-[640px]:justify-self-end"
               href="/auth"
+              aria-label="Administración"
             >
-              Administración
+              adm.
             </a>
             <a
-              className="text-[#8a8a8a] text-[clamp(11px,1vw,12px)] leading-[1.3] font-light no-underline [font-family:var(--font-menu)] transition-colors duration-180 ease-in-out hover:text-[#5a5a5a] col-2 justify-self-center max-[640px]:col-1 max-[640px]:justify-self-center"
+              className="text-[#8a8a8a] text-[clamp(11px,1vw,12px)] leading-[1.3] font-light no-underline [font-family:var(--font-menu)] transition-colors duration-180 ease-in-out hover:text-[#5a5a5a] row-start-1 col-2 justify-self-center max-[640px]:col-1 max-[640px]:justify-self-start"
               href="/politica-privacidad"
             >
               Política y privacidad

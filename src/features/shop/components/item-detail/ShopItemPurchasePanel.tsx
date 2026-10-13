@@ -7,7 +7,7 @@ import { SHOP_LABELS } from "../../lib/shopLabels";
 import { ShopItemPrice } from "./ShopItemPrice";
 
 export function ShopItemPurchasePanel({ item }: { item: ShopItem }) {
-  const purchase = useShopItemPurchase(item);
+  const { addToCart } = useShopItemPurchase(item);
   const subtitle = item.availabilityNote?.trim() || item.categoryLabel;
 
   return (
@@ -26,7 +26,7 @@ export function ShopItemPurchasePanel({ item }: { item: ShopItem }) {
       ) : null}
 
       <div className="shop-item-purchase__cta">
-        {purchase.isSoldOut ? (
+        {item.badge === "sold" ? (
           <button
             type="button"
             className="shop-item-purchase__button"
@@ -41,15 +41,15 @@ export function ShopItemPurchasePanel({ item }: { item: ShopItem }) {
             target="_blank"
             rel="noopener noreferrer"
           >
-            {purchase.ctaLabel}
+            {item.ctaLabel?.trim() || SHOP_LABELS.buyNowAlt}
           </a>
         ) : (
           <button
             type="button"
             className="shop-item-purchase__button"
-            onClick={purchase.addToCart}
+            onClick={addToCart}
           >
-            {purchase.ctaLabel}
+            {item.ctaLabel?.trim() || SHOP_LABELS.buyNowAlt}
           </button>
         )}
       </div>

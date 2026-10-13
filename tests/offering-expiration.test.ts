@@ -42,6 +42,12 @@ test("fromLocalDateTime usa 23:59 como hora por defecto", () => {
   assert.equal(fromLocalDateTime("2026-08-01", "", null), "2026-08-01T21:59:00.000Z");
 });
 
+test("fromLocalDateTime rechaza fechas de calendario imposibles", () => {
+  assert.equal(fromLocalDateTime("2026-02-29", "12:00"), null);
+  assert.equal(fromLocalDateTime("2028-02-29", "12:00"), "2028-02-29T11:00:00.000Z");
+  assert.equal(fromLocalDateTime("2026-04-31", "12:00"), null);
+});
+
 test("expirationSaveError valida activación sin fecha", () => {
   const error = expirationSaveError({ expirationEnabled: true, expiresAt: null });
   assert.ok(error && error.includes("falta la fecha"));
@@ -74,6 +80,7 @@ test("isPastDueExpiration evalúa solo la caducidad activa", () => {
   assert.equal(isPastDueExpiration({ expiration_enabled: true, expires_at: null }), true);
   assert.equal(isPastDueExpiration({ expiration_enabled: true, expires_at: future }), false);
   assert.equal(isPastDueExpiration({ expiration_enabled: false, expires_at: past }), false);
+  assert.equal(isPastDueExpiration({ expiration_enabled: true, expires_at: "fecha-invalida" }), true);
 });
 
 test("formatExpirationSummary muestra el texto con hora madrileña", () => {
