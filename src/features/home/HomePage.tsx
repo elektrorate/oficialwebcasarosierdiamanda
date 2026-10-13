@@ -82,6 +82,7 @@ export async function HomePage() {
           id="clases-destacadas"
           title={homePage.classesTitle}
           subtitle={homePage.classesSubtitle}
+          description={homePage.classesDescription}
           items={homeClassesAndExperiences}
           variant="classes"
         />
@@ -91,6 +92,7 @@ export async function HomePage() {
           id="workshops-destacados"
           title={homePage.workshopsTitle}
           subtitle={homePage.workshopsSubtitle}
+          description={homePage.workshopsDescription}
           items={homeWorkshops}
           variant="workshops"
         />

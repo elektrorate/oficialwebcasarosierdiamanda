@@ -1207,9 +1207,11 @@ export interface HomePageSettings {
   introSlides: HomeIntroSlide[];
   classesTitle: string;
   classesSubtitle: string;
+  classesDescription: string;
   classesFeaturedIds: string[];
   workshopsTitle: string;
   workshopsSubtitle: string;
+  workshopsDescription: string;
   workshopsFeaturedIds: string[];
   giftTitle: string;
   giftSubtitle: string;

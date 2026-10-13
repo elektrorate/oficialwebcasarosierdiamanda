@@ -7,6 +7,7 @@ export type HomeSectionProps = {
   id?: string;
   title: string;
   subtitle?: string;
+  description?: string;
   /** Appended as `{block}--{variant}` on the section root. */
   variant?: string;
   /** BEM block prefix for container/head/title (default `featured`). */
@@ -24,6 +25,7 @@ export function HomeSection({
   id,
   title,
   subtitle,
+  description,
   variant,
   block = "featured",
   className,
@@ -61,6 +63,11 @@ export function HomeSection({
           {subtitle ? (
             <p className="m-0 mt-[clamp(4px,0.55vw,8px)] font-normal text-[clamp(13px,1.35vw,19px)] leading-[1.2] tracking-[0.03em] text-[#3f3f3f] uppercase text-balance">
               {subtitle}
+            </p>
+          ) : null}
+          {description?.trim() ? (
+            <p className="home-section__description mx-auto mb-0 mt-[clamp(12px,1.6vw,18px)] max-w-[680px] whitespace-pre-line break-words font-normal text-[clamp(14px,1.2vw,16px)] leading-[1.65] tracking-normal text-[#57534e]">
+              {description.trim()}
             </p>
           ) : null}
         </header>

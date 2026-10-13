@@ -19,9 +19,11 @@ export const defaultHomePageSettings: HomePageSettings = {
   introSlides: defaultHomeIntroSlides,
   classesTitle: "",
   classesSubtitle: "",
+  classesDescription: "",
   classesFeaturedIds: [],
   workshopsTitle: "",
   workshopsSubtitle: "",
+  workshopsDescription: "",
   workshopsFeaturedIds: [],
   giftTitle: "",
   giftSubtitle: "",
@@ -54,9 +56,11 @@ function normalizeHomePageSettings(input: Partial<HomePageSettings> | null | und
     intro_slides?: unknown;
     classes_title?: string;
     classes_subtitle?: string;
+    classes_description?: string;
     classes_featured_ids?: unknown;
     workshops_title?: string;
     workshops_subtitle?: string;
+    workshops_description?: string;
     workshops_featured_ids?: unknown;
     gift_title?: string;
     gift_subtitle?: string;
@@ -79,9 +83,11 @@ function normalizeHomePageSettings(input: Partial<HomePageSettings> | null | und
     introSlides: rawSlides.map(normalizeSlide).sort((a, b) => a.sortOrder - b.sortOrder),
     classesTitle: String(input?.classesTitle ?? row?.classes_title ?? defaultHomePageSettings.classesTitle),
     classesSubtitle: String(input?.classesSubtitle ?? row?.classes_subtitle ?? defaultHomePageSettings.classesSubtitle),
+    classesDescription: String(input?.classesDescription ?? row?.classes_description ?? defaultHomePageSettings.classesDescription),
     classesFeaturedIds,
     workshopsTitle: String(input?.workshopsTitle ?? row?.workshops_title ?? defaultHomePageSettings.workshopsTitle),
     workshopsSubtitle: String(input?.workshopsSubtitle ?? row?.workshops_subtitle ?? defaultHomePageSettings.workshopsSubtitle),
+    workshopsDescription: String(input?.workshopsDescription ?? row?.workshops_description ?? defaultHomePageSettings.workshopsDescription),
     workshopsFeaturedIds,
     giftTitle: String(input?.giftTitle ?? row?.gift_title ?? defaultHomePageSettings.giftTitle),
     giftSubtitle: String(input?.giftSubtitle ?? row?.gift_subtitle ?? defaultHomePageSettings.giftSubtitle),
@@ -98,9 +104,11 @@ function toRow(settings: HomePageSettings) {
     intro_slides: settings.introSlides,
     classes_title: settings.classesTitle,
     classes_subtitle: settings.classesSubtitle,
+    classes_description: settings.classesDescription,
     classes_featured_ids: settings.classesFeaturedIds,
     workshops_title: settings.workshopsTitle,
     workshops_subtitle: settings.workshopsSubtitle,
+    workshops_description: settings.workshopsDescription,
     workshops_featured_ids: settings.workshopsFeaturedIds,
     gift_title: settings.giftTitle,
     gift_subtitle: settings.giftSubtitle,
@@ -148,12 +156,12 @@ export async function updateHomePageSettings(input: Partial<HomePageSettings>) {
     updated_at: new Date().toISOString(),
   });
 
-  try {
+  if (USE_LOCAL_DATA) {
+    await writeToFile(next);
+  } else {
     const supabase = createAdminClient();
     const { error } = await supabase.from(TABLE).upsert(toRow(next), { onConflict: "id" });
     if (error) throw error;
-  } catch {
-    await writeToFile(next);
   }
 
   return next;

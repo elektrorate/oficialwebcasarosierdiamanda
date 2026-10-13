@@ -43,9 +43,11 @@ function serializeEditorState(input: {
   introSlides: HomeIntroSlide[];
   classesTitle: string;
   classesSubtitle: string;
+  classesDescription: string;
   classesFeaturedIds: string[];
   workshopsTitle: string;
   workshopsSubtitle: string;
+  workshopsDescription: string;
   workshopsFeaturedIds: string[];
   giftTitle: string;
   giftSubtitle: string;
@@ -87,9 +89,11 @@ export default function HomePageEditor({
   const [introSlides, setIntroSlides] = useState(page.introSlides);
   const [classesTitle, setClassesTitle] = useState(page.classesTitle);
   const [classesSubtitle, setClassesSubtitle] = useState(page.classesSubtitle);
+  const [classesDescription, setClassesDescription] = useState(page.classesDescription);
   const [classesFeaturedIds, setClassesFeaturedIds] = useState(page.classesFeaturedIds);
   const [workshopsTitle, setWorkshopsTitle] = useState(page.workshopsTitle);
   const [workshopsSubtitle, setWorkshopsSubtitle] = useState(page.workshopsSubtitle);
+  const [workshopsDescription, setWorkshopsDescription] = useState(page.workshopsDescription);
   const [workshopsFeaturedIds, setWorkshopsFeaturedIds] = useState(page.workshopsFeaturedIds);
   const [giftTitle, setGiftTitle] = useState(page.giftTitle);
   const [giftSubtitle, setGiftSubtitle] = useState(page.giftSubtitle);
@@ -102,14 +106,16 @@ export default function HomePageEditor({
     introSlides,
     classesTitle,
     classesSubtitle,
+    classesDescription,
     classesFeaturedIds,
     workshopsTitle,
     workshopsSubtitle,
+    workshopsDescription,
     workshopsFeaturedIds,
     giftTitle,
     giftSubtitle,
     giftFeaturedIds,
-  }), [status, hero, introSlides, classesTitle, classesSubtitle, classesFeaturedIds, workshopsTitle, workshopsSubtitle, workshopsFeaturedIds, giftTitle, giftSubtitle, giftFeaturedIds]);
+  }), [status, hero, introSlides, classesTitle, classesSubtitle, classesDescription, classesFeaturedIds, workshopsTitle, workshopsSubtitle, workshopsDescription, workshopsFeaturedIds, giftTitle, giftSubtitle, giftFeaturedIds]);
   const [savedSnapshot, setSavedSnapshot] = useState(() => currentSnapshot);
   const isDirty = currentSnapshot !== savedSnapshot;
 
@@ -168,9 +174,11 @@ export default function HomePageEditor({
       introSlides: introSlides.map((slide, sortOrder) => ({ ...slide, sortOrder })),
       classesTitle,
       classesSubtitle,
+      classesDescription,
       classesFeaturedIds,
       workshopsTitle,
       workshopsSubtitle,
+      workshopsDescription,
       workshopsFeaturedIds,
       giftTitle,
       giftSubtitle,
@@ -188,9 +196,11 @@ export default function HomePageEditor({
     setIntroSlides(result.page.introSlides);
     setClassesTitle(result.page.classesTitle);
     setClassesSubtitle(result.page.classesSubtitle);
+    setClassesDescription(result.page.classesDescription);
     setClassesFeaturedIds(result.page.classesFeaturedIds);
     setWorkshopsTitle(result.page.workshopsTitle);
     setWorkshopsSubtitle(result.page.workshopsSubtitle);
+    setWorkshopsDescription(result.page.workshopsDescription);
     setWorkshopsFeaturedIds(result.page.workshopsFeaturedIds);
     setGiftTitle(result.page.giftTitle);
     setGiftSubtitle(result.page.giftSubtitle);
@@ -201,9 +211,11 @@ export default function HomePageEditor({
       introSlides: result.page.introSlides,
       classesTitle: result.page.classesTitle,
       classesSubtitle: result.page.classesSubtitle,
+      classesDescription: result.page.classesDescription,
       classesFeaturedIds: result.page.classesFeaturedIds,
       workshopsTitle: result.page.workshopsTitle,
       workshopsSubtitle: result.page.workshopsSubtitle,
+      workshopsDescription: result.page.workshopsDescription,
       workshopsFeaturedIds: result.page.workshopsFeaturedIds,
       giftTitle: result.page.giftTitle,
       giftSubtitle: result.page.giftSubtitle,
@@ -311,14 +323,18 @@ export default function HomePageEditor({
           <FeaturedHomePicker
             experiencesTitle={classesTitle}
             experiencesSubtitle={classesSubtitle}
+            experiencesDescription={classesDescription}
             workshopsTitle={workshopsTitle}
             workshopsSubtitle={workshopsSubtitle}
+            workshopsDescription={workshopsDescription}
             items={featuredItems}
             destinationFor={featuredDestination}
             onExperiencesTitleChange={setClassesTitle}
             onExperiencesSubtitleChange={setClassesSubtitle}
+            onExperiencesDescriptionChange={setClassesDescription}
             onWorkshopsTitleChange={setWorkshopsTitle}
             onWorkshopsSubtitleChange={setWorkshopsSubtitle}
+            onWorkshopsDescriptionChange={setWorkshopsDescription}
             onDestinationChange={setFeaturedDestination}
           />
         ) : null}
@@ -335,8 +351,8 @@ export default function HomePageEditor({
                 <HomePreviewHeader hero={hero} navigationItems={navigationItems} previewMenu={previewMenu} />
                 <main>
                   <IntroSlider slides={introSlides.filter((slide) => slide.isVisible)} />
-                  {selectedClassesAndExperiences.length ? <FeaturedSection id="clases-destacadas" title={classesTitle} subtitle={classesSubtitle} items={selectedClassesAndExperiences} variant="classes" /> : null}
-                  {selectedWorkshops.length ? <FeaturedSection id="workshops-destacados" title={workshopsTitle} subtitle={workshopsSubtitle} items={selectedWorkshops} variant="workshops" /> : null}
+                  {selectedClassesAndExperiences.length ? <FeaturedSection id="clases-destacadas" title={classesTitle} subtitle={classesSubtitle} description={classesDescription} items={selectedClassesAndExperiences} variant="classes" /> : null}
+                  {selectedWorkshops.length ? <FeaturedSection id="workshops-destacados" title={workshopsTitle} subtitle={workshopsSubtitle} description={workshopsDescription} items={selectedWorkshops} variant="workshops" /> : null}
                   {selectedGiftCards.length ? <HomeGiftCardSection title={giftTitle} subtitle={giftSubtitle} items={selectedGiftCards} /> : null}
                 </main>
               </div>
@@ -381,26 +397,34 @@ function featuredKindLabel(item: ExperienceItem) {
 function FeaturedHomePicker({
   experiencesTitle,
   experiencesSubtitle,
+  experiencesDescription,
   workshopsTitle,
   workshopsSubtitle,
+  workshopsDescription,
   items,
   destinationFor,
   onExperiencesTitleChange,
   onExperiencesSubtitleChange,
+  onExperiencesDescriptionChange,
   onWorkshopsTitleChange,
   onWorkshopsSubtitleChange,
+  onWorkshopsDescriptionChange,
   onDestinationChange,
 }: {
   experiencesTitle: string;
   experiencesSubtitle: string;
+  experiencesDescription: string;
   workshopsTitle: string;
   workshopsSubtitle: string;
+  workshopsDescription: string;
   items: ExperienceItem[];
   destinationFor: (id: string) => FeaturedDestination;
   onExperiencesTitleChange: (value: string) => void;
   onExperiencesSubtitleChange: (value: string) => void;
+  onExperiencesDescriptionChange: (value: string) => void;
   onWorkshopsTitleChange: (value: string) => void;
   onWorkshopsSubtitleChange: (value: string) => void;
+  onWorkshopsDescriptionChange: (value: string) => void;
   onDestinationChange: (id: string, destination: FeaturedDestination) => void;
 }) {
   return (
@@ -415,8 +439,18 @@ function FeaturedHomePicker({
       <div className="cms-home-section-settings grid-2">
         <label className="field"><span>Título: Experiencias y talleres</span><input value={experiencesTitle} onChange={(event) => onExperiencesTitleChange(event.target.value)} /></label>
         <label className="field"><span>Subtítulo: Experiencias y talleres</span><input value={experiencesSubtitle} onChange={(event) => onExperiencesSubtitleChange(event.target.value)} /></label>
+        <label className="field span-2">
+          <span>Texto explicativo: Experiencias y talleres</span>
+          <textarea name="classesDescription" rows={3} value={experiencesDescription} onChange={(event) => onExperiencesDescriptionChange(event.target.value)} />
+          <small className="muted">Opcional. Se muestra debajo del subtítulo y antes de las tarjetas. Puedes usar saltos de línea.</small>
+        </label>
         <label className="field"><span>Título: Workshops de especialización</span><input value={workshopsTitle} onChange={(event) => onWorkshopsTitleChange(event.target.value)} /></label>
         <label className="field"><span>Subtítulo: Workshops de especialización</span><input value={workshopsSubtitle} onChange={(event) => onWorkshopsSubtitleChange(event.target.value)} /></label>
+        <label className="field span-2">
+          <span>Texto explicativo: Workshops de especialización</span>
+          <textarea name="workshopsDescription" rows={3} value={workshopsDescription} onChange={(event) => onWorkshopsDescriptionChange(event.target.value)} />
+          <small className="muted">Opcional. Se muestra debajo del subtítulo y antes de las tarjetas. Puedes usar saltos de línea.</small>
+        </label>
       </div>
       <div className="cms-home-feature-grid">
         {items.length ? items.map((item) => (
