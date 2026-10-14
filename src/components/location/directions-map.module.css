@@ -1,0 +1,270 @@
+.page {
+  --ink: #282721;
+  --paper: #f5f2ea;
+  --clay: #9b5e48;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-ysabeau-office), sans-serif;
+}
+
+.intro,
+.arrival {
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(32px, 7vw, 96px) clamp(22px, 6vw, 80px);
+  text-align: center;
+}
+
+.backLink {
+  position: absolute;
+  inset: clamp(22px, 4vw, 48px) auto auto clamp(22px, 4vw, 52px);
+  color: inherit;
+  text-decoration: none;
+  text-transform: uppercase;
+  letter-spacing: .14em;
+  font-size: 12px;
+}
+
+.eyebrow {
+  margin: 0 0 18px;
+  color: var(--clay);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+}
+
+.intro h1,
+.arrival h2 {
+  max-width: 400px;
+  margin: 0;
+  font-family: var(--font-baskervville), serif;
+  font-size: clamp(38.4px, 6.08vw, 89.6px);
+  font-weight: 400;
+  letter-spacing: -.035em;
+  line-height: .96;
+}
+
+.lead {
+  max-width: 400px;
+  margin: clamp(28px, 4vw, 48px) auto 0;
+  font-size: clamp(17px, 1.7vw, 23px);
+  font-weight: 350;
+  line-height: 1.45;
+}
+
+.originPicker {
+  display: grid;
+  width: min(420px, 100%);
+  margin-top: clamp(24px, 3vw, 36px);
+  gap: 7px;
+  text-align: left;
+}
+
+.originPicker > span {
+  color: var(--clay);
+  font-size: 10px;
+  font-weight: 650;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+}
+
+.originPicker select {
+  width: 100%;
+  appearance: auto;
+  border: 0;
+  border-bottom: 1px solid rgba(40, 39, 33, .45);
+  border-radius: 0;
+  padding: 9px 30px 9px 0;
+  background: transparent;
+  color: var(--ink);
+  font: 400 clamp(19px, 2vw, 25px)/1.25 var(--font-baskervville), serif;
+  cursor: pointer;
+}
+
+.originPicker select:focus-visible {
+  outline: 2px solid var(--clay);
+  outline-offset: 4px;
+}
+
+.originPicker small {
+  color: #6f695f;
+  font-size: 14.3px;
+}
+
+.scrollCue {
+  display: grid;
+  justify-items: center;
+  margin-top: clamp(14px, 2vw, 24px);
+  gap: 9px;
+  font-size: 10px;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+}
+
+.scrollCue span {
+  width: 1px;
+  height: 38px;
+  background: currentColor;
+  animation: cue 1.8s ease-in-out infinite;
+  transform-origin: top;
+}
+
+@keyframes cue {
+  0%, 100% { transform: scaleY(.25); opacity: .25; }
+  50% { transform: scaleY(1); opacity: 1; }
+}
+
+.scene {
+  --route-progress: 0;
+  position: relative;
+  height: 380svh;
+  background: #e9e4d9;
+}
+
+.stickyMap {
+  position: sticky;
+  top: 0;
+  height: 100svh;
+  overflow: hidden;
+}
+
+.map {
+  display: block;
+  width: 100%;
+  height: 100%;
+  transition: view-box .1s linear;
+}
+
+.tileLayer {
+  filter: saturate(.42) sepia(.13) brightness(1.06) contrast(.9);
+}
+
+.route {
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.route {
+  stroke: #2868a6;
+  stroke-width: 2;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+}
+
+.startHalo,
+.endHalo { fill: rgba(155,94,72,.15); }
+.startDot,
+.endDot { fill: var(--clay); stroke: #fff; stroke-width: 2.5; vector-effect: non-scaling-stroke; }
+.traveller { fill: #202b29; stroke: #fff; stroke-width: 3; vector-effect: non-scaling-stroke; filter: drop-shadow(0 3px 5px rgba(31,33,28,.25)); }
+
+.metroLabel rect,
+.destinationLabel rect { fill: rgba(250,248,242,.94); stroke: rgba(55,52,46,.17); }
+.metroLabel circle { fill: #d9272e; }
+.metroLabel text { fill: var(--ink); font-size: 8px; font-weight: 600; }
+.metroLabel text:first-of-type { fill: white; font-size: 8px; font-weight: 700; }
+.metroLabel .metroExit { fill: #716a5e; font-size: 6px; font-weight: 500; }
+.destinationLabel text { fill: var(--ink); font-size: 7.65px; font-weight: 700; letter-spacing: .08em; }
+.destinationLabel .address { fill: #716a5e; font-size: 6.57px; font-weight: 400; letter-spacing: .025em; }
+
+.mapHeading {
+  position: absolute;
+  z-index: 2;
+  top: clamp(22px, 4vw, 48px);
+  left: clamp(22px, 4vw, 52px);
+  padding: 14px 18px;
+  background: rgba(245,242,234,.87);
+  backdrop-filter: blur(12px);
+}
+
+.mapHeading p,
+.mapHeading strong { display: block; margin: 0; }
+.mapHeading p { color: var(--clay); font-size: 10px; letter-spacing: .16em; text-transform: uppercase; }
+.mapHeading strong { margin-top: 4px; font-family: var(--font-baskervville), serif; font-size: clamp(16px, 2vw, 25px); font-weight: 400; }
+
+.progress {
+  position: absolute;
+  z-index: 2;
+  right: clamp(20px, 3vw, 40px);
+  bottom: clamp(20px, 3vw, 40px);
+  width: 90px;
+  height: 2px;
+  background: rgba(40,39,33,.18);
+}
+
+.progress span {
+  display: block;
+  width: calc(var(--route-progress) * 100%);
+  height: 100%;
+  background: var(--clay);
+}
+
+.attribution {
+  position: absolute;
+  z-index: 2;
+  right: 12px;
+  bottom: 8px;
+  margin: 0;
+  padding: 3px 6px;
+  background: rgba(250, 248, 242, .86);
+  color: #5f5b53;
+  font-size: 10px;
+  line-height: 1.2;
+}
+
+.attribution a { color: inherit; }
+
+.arrival {
+  background: #252720;
+  color: #f4f0e7;
+}
+
+.arrivalLogo {
+  display: block;
+  width: 100px;
+  height: auto;
+  object-fit: contain;
+}
+
+@media (max-width: 767px) {
+  .arrivalLogo {
+    width: min(100px, 25vw);
+  }
+}
+
+.arrival address { margin-top: 34px; font-size: clamp(20px, 2vw, 27px); font-style: normal; line-height: 1.45; }
+.arrival > p:not(.eyebrow) { margin: 12px 0 0; color: #c9c5bb; font-size: 16px; }
+
+.mapsButton {
+  margin-top: 42px;
+  padding: 13.6px 21.25px;
+  border: 1px solid #f4f0e7;
+  border-radius: 999px;
+  color: inherit;
+  font-size: .85rem;
+  text-decoration: none;
+  transition: background .25s ease, color .25s ease;
+}
+
+.mapsButton:hover,
+.mapsButton:focus-visible { background: #f4f0e7; color: #252720; }
+.homeLink { margin-top: 24px; color: #c9c5bb; font-size: 13px; }
+
+@media (max-width: 640px) {
+  .intro h1 { font-size: clamp(36.8px, 12vw, 56px); }
+  .lead { max-width: 32ch; }
+  .originPicker { margin-bottom: 42px; }
+  .scene { height: 340svh; }
+  .mapHeading { right: 22px; }
+  .progress { width: 66px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scrollCue span { animation: none; transform: none; }
+  .route { stroke-dashoffset: 0 !important; }
+  .map { transition: none; }
+}

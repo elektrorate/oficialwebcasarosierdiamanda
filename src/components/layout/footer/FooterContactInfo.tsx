@@ -66,9 +66,7 @@ export function FooterContactInfo({
           {isEditorial ? (
             <a
               className="footer-map-link inline-flex flex-col items-center gap-0 text-[clamp(17.6px,2.12vw,22.4px)] leading-[1.35] font-light no-underline lowercase tracking-[0.03em] text-center [font-family:var(--font-menu)] hover:no-underline focus-visible:outline-none"
-              href={model.mapUrl}
-              target="_blank"
-              rel="noopener noreferrer"
+              href="/como-llegar"
             >
               <span className="block">{model.mapLinkLines[0]}</span>
               <span className="block">{model.mapLinkLines[1]}</span>

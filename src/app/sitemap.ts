@@ -21,6 +21,7 @@ const STATIC_ROUTES = [
   "/blog",
   "/shop",
   "/politica-privacidad",
+  "/como-llegar",
 ] as const;
 
 function offeringPath(type: string, slug: string) {
