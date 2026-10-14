@@ -1272,6 +1272,14 @@ main {
   will-change: filter, opacity, transform;
 }
 
+@media (min-width: 1025px) {
+  .header-home--image-hero > .public-hero-title--blur-reveal .page-hero__title {
+    max-width: 34ch !important;
+    line-height: 0.954;
+    text-wrap: balance;
+  }
+}
+
 .header-home .hero__logo {
   position: absolute;
   left: var(--hero-logo-position-x, 50%) !important;
