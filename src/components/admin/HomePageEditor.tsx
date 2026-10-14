@@ -263,6 +263,7 @@ export default function HomePageEditor({
             details={hero}
             titleFallback="Casa Rosier"
             subtitleFallback="Cerámica con las manos"
+            allowImageTextOverlay
             onChange={(next) => setHero((current) => ({ ...current, ...next }))}
           />
         ) : null}

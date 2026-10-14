@@ -219,10 +219,12 @@ function HeroPresentationPositionFields({
 export function HeroPositionSection({
   details,
   editor,
+  allowImageTextOverlay = false,
   onChange,
 }: {
   details: CmsHeroSettings;
   editor: SharedHeroEditorState;
+  allowImageTextOverlay?: boolean;
   onChange: (next: Partial<CmsHeroSettings>) => void;
 }) {
   return (
@@ -237,6 +239,7 @@ export function HeroPositionSection({
 
       {editor.isImageHero ? <HeroMediaPositionFields details={details} editor={editor} onChange={onChange} /> : null}
       {editor.isImageHero ? <HeroOverlayPositionFields details={details} editor={editor} onChange={onChange} /> : null}
+      {allowImageTextOverlay && editor.isImageHero ? <HeroTextPositionFields details={details} editor={editor} onChange={onChange} /> : null}
       {editor.isTextHero ? <HeroTextPositionFields details={details} editor={editor} onChange={onChange} /> : null}
       {editor.isPresentationHero ? (
         <HeroPresentationPositionFields details={details} editor={editor} onChange={onChange} />

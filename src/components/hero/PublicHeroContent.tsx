@@ -9,6 +9,7 @@ import {
   richTextTypographyStyle,
 } from "@/lib/cms/rich-text-typography";
 import type { CmsHeroSettings } from "@/lib/cms/types";
+import { BlurRevealText } from "./BlurRevealText";
 
 export function PublicHeroContent({ hero }: { hero: CmsHeroSettings }) {
   if (hero.heroVariant === "image") {
@@ -102,9 +103,9 @@ export function PublicHeroContent({ hero }: { hero: CmsHeroSettings }) {
   return null;
 }
 
-export function PublicHeroTitle({ title, subtitle }: { hero: CmsHeroSettings; title: string; subtitle?: string }) {
+export function PublicHeroTitle({ title, subtitle, blurReveal = false }: { hero: CmsHeroSettings; title: string; subtitle?: string; blurReveal?: boolean }) {
   return (
-    <div className="public-hero-title" style={{
+    <div className={`public-hero-title${blurReveal ? " public-hero-title--blur-reveal" : ""}`} style={{
       position: "absolute",
       left: "var(--hero-title-position-x, 50%)",
       top: "var(--hero-title-position-y, 50%)",
@@ -122,12 +123,12 @@ export function PublicHeroTitle({ title, subtitle }: { hero: CmsHeroSettings; ti
         margin: 0,
         maxWidth: "none",
         textAlign: "center",
-      } as CSSProperties}>{title}</h1>
+      } as CSSProperties}>{blurReveal ? <BlurRevealText text={title} /> : title}</h1>
       {subtitle ? <p className="page-hero__eyebrow" style={{
         marginTop: "16px",
         marginBottom: 0,
         textAlign: "center",
-      }}>{subtitle}</p> : null}
+      }}>{blurReveal ? <BlurRevealText text={subtitle} /> : subtitle}</p> : null}
     </div>
   );
 }

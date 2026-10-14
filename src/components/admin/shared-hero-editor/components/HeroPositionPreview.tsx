@@ -13,10 +13,12 @@ function HeroPositionPreviewComponent({
   details,
   previewHero,
   editor,
+  allowImageTextOverlay = false,
 }: {
   details: CmsHeroSettings;
   previewHero: CmsHeroSettings;
   editor: SharedHeroEditorState;
+  allowImageTextOverlay?: boolean;
 }) {
   const { device, keys, isHydrated, isImageHero, isPresentationHero, isTextHero, frameStyle, menuStyle, logoMask, previewVideoEmbedUrl, previewVideoUrl, previewVideoFrameStyle, previewBackgroundStyle } = editor;
   const frameClassName = [
@@ -150,6 +152,15 @@ function HeroPositionPreviewComponent({
                 </div>
               ) : null}
             </div>
+          ) : null}
+
+          {allowImageTextOverlay && isImageHero && previewHero.heroTitle ? (
+            <PublicHeroTitle
+              hero={previewHero}
+              title={previewHero.heroTitle}
+              subtitle={previewHero.heroSubtitle}
+              blurReveal
+            />
           ) : null}
 
           {isTextHero ? (

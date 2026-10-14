@@ -321,7 +321,12 @@ export function HomeHeroView({
         heroMenuMobilePositionY={hero.heroMenuMobilePositionY}
       />
       {hero.heroVariant === "image" || hero.heroVariant === "presentation" ? (
-        <PublicHeroContent hero={hero} />
+        <>
+          <PublicHeroContent hero={hero} />
+          {hero.heroVariant === "image" && hero.heroTitle ? (
+            <PublicHeroTitle hero={hero} title={hero.heroTitle} subtitle={hero.heroSubtitle} blurReveal />
+          ) : null}
+        </>
       ) : hero.heroVariant === "text" && hero.heroTitle ? (
         <PublicHeroTitle hero={hero} title={hero.heroTitle} subtitle={hero.heroSubtitle} />
       ) : (

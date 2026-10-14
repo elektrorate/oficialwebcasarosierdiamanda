@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
-import { Baskervville, Inter, Manrope, Roboto_Flex } from "next/font/google";
+import { Baskervville, Inter, Manrope, Roboto_Flex, Ysabeau_Office } from "next/font/google";
 import { SiteChrome } from "@/components/layout/SiteChrome";
 import { SiteTimeZoneProvider } from "@/components/layout/SiteTimeZoneProvider";
 import { WhatsAppFloat } from "@/components/layout/WhatsAppFloat";
@@ -42,6 +42,12 @@ const manrope = Manrope({
   weight: ["400", "500", "600", "700", "800"],
   variable: "--font-manrope",
   display: "swap"
+});
+
+const ysabeauOffice = Ysabeau_Office({
+  subsets: ["latin"],
+  variable: "--font-ysabeau-office",
+  display: "swap",
 });
 
 const robotoFlex = Roboto_Flex({
@@ -133,7 +139,7 @@ export default async function RootLayout({
     <html lang={siteHtmlLang(settings.site.default_language)} data-scroll-behavior="smooth">
       <body
         suppressHydrationWarning
-        className={`${baskervville.variable} ${inter.variable} ${manrope.variable} ${robotoFlex.variable} ${nunito.variable}`}
+        className={`${baskervville.variable} ${inter.variable} ${manrope.variable} ${ysabeauOffice.variable} ${robotoFlex.variable} ${nunito.variable}`}
       >
         <JsonLd
           data={organizationJsonLd(siteName, {

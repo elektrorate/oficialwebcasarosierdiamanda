@@ -41,6 +41,7 @@ export type SharedHeroEditorProps = {
   details: CmsHeroSettings;
   titleFallback: string;
   subtitleFallback?: string;
+  allowImageTextOverlay?: boolean;
   onChange: (next: Partial<CmsHeroSettings>) => void;
 };
 

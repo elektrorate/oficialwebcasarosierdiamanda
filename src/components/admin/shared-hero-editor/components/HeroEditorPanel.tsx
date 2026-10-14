@@ -17,6 +17,7 @@ type HeroEditorPanelProps = {
   previewHero: CmsHeroSettings;
   titleFallback: string;
   subtitleFallback?: string;
+  allowImageTextOverlay?: boolean;
   editor: SharedHeroEditorState;
   onChange: (next: Partial<CmsHeroSettings>) => void;
 };
@@ -26,6 +27,7 @@ export function HeroEditorPanel({
   previewHero,
   titleFallback,
   subtitleFallback,
+  allowImageTextOverlay = false,
   editor,
   onChange,
 }: HeroEditorPanelProps) {
@@ -61,6 +63,7 @@ export function HeroEditorPanel({
                   details={details}
                   titleFallback={titleFallback}
                   subtitleFallback={subtitleFallback}
+                  allowImageTextOverlay={allowImageTextOverlay}
                   editor={editor}
                   onChange={onChange}
                 />
@@ -71,6 +74,7 @@ export function HeroEditorPanel({
               <HeroPositionSection
                 details={details}
                 editor={editor}
+                allowImageTextOverlay={allowImageTextOverlay}
                 onChange={onChange}
               />
             ) : null}
@@ -95,6 +99,7 @@ export function HeroEditorPanel({
           details={details}
           previewHero={previewHero}
           editor={editor}
+          allowImageTextOverlay={allowImageTextOverlay}
         />
       </aside>
     </div>

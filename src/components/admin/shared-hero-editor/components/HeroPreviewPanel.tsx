@@ -11,12 +11,14 @@ type HeroPreviewPanelProps = {
   details: CmsHeroSettings;
   previewHero: CmsHeroSettings;
   editor: SharedHeroEditorState;
+  allowImageTextOverlay?: boolean;
 };
 
 function HeroPreviewPanelComponent({
   details,
   previewHero,
   editor,
+  allowImageTextOverlay = false,
 }: HeroPreviewPanelProps) {
   return (
     <SectionCard
@@ -26,7 +28,7 @@ function HeroPreviewPanelComponent({
       className="class-edit-hero-preview-card"
       action={<HeroDeviceTabs editor={editor} />}
     >
-      <HeroPositionPreview details={details} previewHero={previewHero} editor={editor} />
+      <HeroPositionPreview details={details} previewHero={previewHero} editor={editor} allowImageTextOverlay={allowImageTextOverlay} />
     </SectionCard>
   );
 }

@@ -20,6 +20,7 @@ type HeroContentFieldsProps = {
   details: CmsHeroSettings;
   titleFallback: string;
   subtitleFallback?: string;
+  allowImageTextOverlay?: boolean;
   editor: SharedHeroEditorState;
   onChange: (next: Partial<CmsHeroSettings>) => void;
 };
@@ -213,20 +214,21 @@ export function HeroContentFields({
   titleFallback,
   subtitleFallback,
   editor,
+  allowImageTextOverlay = false,
   onChange,
 }: HeroContentFieldsProps) {
   return (
     <div className="class-edit-hero-content-stack">
-      {editor.isTextHero ? (
+      {editor.isTextHero || (allowImageTextOverlay && editor.isImageHero) ? (
         <div className="class-edit-field-grid class-edit-field-grid--meta">
           <AdminInput
-            label="Título del hero tipográfico"
+            label={editor.isImageHero ? "Texto animado sobre la imagen" : "Título del hero tipográfico"}
             value={details.heroTitle}
             placeholder={titleFallback}
             onChange={(event) => onChange({ heroTitle: event.target.value })}
           />
           <AdminInput
-            label="Subtítulo del hero tipográfico"
+            label={editor.isImageHero ? "Subtítulo sobre la imagen" : "Subtítulo del hero tipográfico"}
             value={details.heroSubtitle}
             placeholder={subtitleFallback}
             onChange={(event) => onChange({ heroSubtitle: event.target.value })}
