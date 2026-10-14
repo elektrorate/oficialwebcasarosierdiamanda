@@ -18,6 +18,24 @@ export function vimeoEmbedUrl(raw: string, params: Record<string, string>): stri
   }
 }
 
+/** Accept Mux Player iframe URLs and preserve the playback ID. */
+export function muxEmbedUrl(raw: string, params: Record<string, string>): string {
+  try {
+    const source = new URL(raw);
+    const host = source.hostname.replace(/^www\./, "");
+    if (source.protocol !== "https:" || host !== "player.mux.com") return "";
+    const match = source.pathname.match(/^\/([a-zA-Z0-9]+)\/?$/);
+    if (!match) return "";
+
+    const result = new URL(`https://player.mux.com/${match[1]}`);
+    for (const [key, value] of source.searchParams) result.searchParams.set(key, value);
+    for (const [key, value] of Object.entries(params)) result.searchParams.set(key, value);
+    return result.toString();
+  } catch {
+    return "";
+  }
+}
+
 export function isDirectVideoUrl(raw: string): boolean {
   return /^(?:https?:\/\/|\/)[^\s]*\.(?:mp4|webm|ogg)(?:[?#].*)?$/i.test(raw.trim());
 }

@@ -6,7 +6,7 @@ import type { NavigationItem } from "@/data/types";
 import type { CmsHeroSettings } from "@/lib/cms/types";
 import { assetPath } from "@/lib/assets";
 import { classNames } from "@/lib/utils";
-import { vimeoEmbedUrl, isDirectVideoUrl } from "@/lib/vimeo";
+import { isDirectVideoUrl, muxEmbedUrl, vimeoEmbedUrl } from "@/lib/vimeo";
 import type { CSSProperties } from "react";
 
 function heroVideoEmbedUrl(rawUrl: string) {
@@ -17,6 +17,16 @@ function heroVideoEmbedUrl(rawUrl: string) {
 
     if (host === "player.vimeo.com" || host === "vimeo.com") {
       return vimeoEmbedUrl(rawUrl, { background: "1", autoplay: "1", muted: "1", loop: "1", autopause: "0", controls: "0", api: "1", playsinline: "1", dnt: "1" });
+    }
+
+    if (host === "player.mux.com") {
+      return muxEmbedUrl(rawUrl, {
+        autoplay: "muted",
+        muted: "true",
+        loop: "true",
+        controls: "false",
+        nohotkeys: "true",
+      });
     }
 
     if (host === "youtu.be" || host === "youtube.com" || host === "m.youtube.com") {
@@ -245,7 +255,8 @@ export function HomeHeroView({
           className="hero__video hero__video--embed hero__video--desktop"
           src={desktopVideoEmbed}
           title="Video de fondo del hero"
-          allow="autoplay; fullscreen; picture-in-picture"
+          allow="accelerometer; gyroscope; autoplay; encrypted-media; fullscreen; picture-in-picture"
+          allowFullScreen
           tabIndex={-1}
           aria-hidden="true"
         />
@@ -276,7 +287,8 @@ export function HomeHeroView({
           className="hero__video hero__video--embed hero__video--mobile"
           src={mobileVideoEmbed}
           title="Video de fondo movil del hero"
-          allow="autoplay; fullscreen; picture-in-picture"
+          allow="accelerometer; gyroscope; autoplay; encrypted-media; fullscreen; picture-in-picture"
+          allowFullScreen
           tabIndex={-1}
           aria-hidden="true"
         />

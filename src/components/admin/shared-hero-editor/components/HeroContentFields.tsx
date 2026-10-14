@@ -54,15 +54,15 @@ function HeroImageVariantFields({ details, onChange }: Pick<HeroContentFieldsPro
         <AdminInput
           label="URL del video de fondo"
           value={details.heroVideoUrl}
-          placeholder="https://.../hero.mp4"
-          help="Usa el enlace de Compartir o de inserción de Vimeo, con el hash completo si es privado; los enlaces /manage/ no son reproducibles. Si falta un vídeo válido, se conserva la imagen de fondo."
+          placeholder="https://player.mux.com/PLAYBACK_ID"
+          help="Admite Mux Player, un enlace público de Vimeo o una URL .mp4/.webm. Si falta un vídeo válido, se conserva la imagen de fondo."
           onChange={(event) => onChange({ heroVideoUrl: event.target.value })}
         />
         <AdminInput
           label="URL del video para movil (opcional)"
           value={details.heroVideoUrlMobile}
-          placeholder="https://.../hero-mobile.mp4"
-          help="Admite un enlace de Compartir de Vimeo (no /manage/) o una URL .mp4/.webm. En móvil, usa preferiblemente un vídeo vertical o cuadrado."
+          placeholder="https://player.mux.com/PLAYBACK_ID"
+          help="Admite Mux Player, Vimeo público o una URL .mp4/.webm. En móvil, usa preferiblemente un vídeo vertical o cuadrado."
           onChange={(event) => onChange({ heroVideoUrlMobile: event.target.value })}
         />
       </div>

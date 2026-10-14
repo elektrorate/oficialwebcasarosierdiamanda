@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import { vimeoEmbedUrl, isDirectVideoUrl } from "../src/lib/vimeo.ts";
+import { isDirectVideoUrl, muxEmbedUrl, vimeoEmbedUrl } from "../src/lib/vimeo.ts";
 
 test("preserves unlisted video hashes from sharing and player URLs", () => {
   for (const source of ["https://vimeo.com/123456/abc123", "https://player.vimeo.com/video/123456?h=abc123"]) {
@@ -8,6 +8,23 @@ test("preserves unlisted video hashes from sharing and player URLs", () => {
     assert.equal(embed.pathname, "/video/123456");
     assert.equal(embed.searchParams.get("h"), "abc123");
     assert.equal(embed.searchParams.get("autoplay"), "1");
+  }
+});
+
+test("Mux Player URLs preserve the playback ID and receive background playback parameters", () => {
+  const embed = new URL(muxEmbedUrl("https://player.mux.com/rl8BoYlDJit7gxPAQplsFrlKNBZpcAsu01r45RC6IUbI", {
+    autoplay: "muted",
+    loop: "true",
+  }));
+  assert.equal(embed.origin, "https://player.mux.com");
+  assert.equal(embed.pathname, "/rl8BoYlDJit7gxPAQplsFrlKNBZpcAsu01r45RC6IUbI");
+  assert.equal(embed.searchParams.get("autoplay"), "muted");
+  assert.equal(embed.searchParams.get("loop"), "true");
+});
+
+test("Mux embeds reject non-player hosts and malformed playback paths", () => {
+  for (const source of ["https://mux.com/video", "https://player.mux.com/a/b", "http://player.mux.com/id", "bad-url"]) {
+    assert.equal(muxEmbedUrl(source, {}), "");
   }
 });
 
