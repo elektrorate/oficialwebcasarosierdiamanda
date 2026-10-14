@@ -61,8 +61,122 @@ async function openModal(page, trigger, selector, label) {
   fail(`${label} no se abre después de tres intentos.`);
 }
 
+async function assertStudioLayout(page, label) {
+  await page.locator("body.studio-page").waitFor({ state: "attached" });
+  await page.locator(".social__viewport").waitFor({ state: "visible" });
+  await page.locator(".testimonial__dots").waitFor({ state: "visible" });
+  await page.locator("#contacto-footer > .container").waitFor({ state: "visible" });
+  await page.evaluate(async () => { await document.fonts.ready; });
+  await assertNoHorizontalOverflow(page, label);
+
+  const result = await page.evaluate(() => {
+    const social = document.querySelector(".social--home-strip");
+    const socialContainer = social?.querySelector(".container");
+    const socialViewport = social?.querySelector(".social__viewport");
+    const socialTrack = social?.querySelector(".social__track");
+    const cards = [...(social?.querySelectorAll(".social__slide") ?? [])];
+    const testimonialContainer = document.querySelector(".testimonial__container");
+    const testimonialViewport = document.querySelector(".testimonial__viewport");
+    const slides = [...document.querySelectorAll(".testimonial__slide")];
+    const dots = document.querySelector(".testimonial__dots");
+    const footer = document.querySelector("#footer");
+    const footerContainer = footer?.querySelector("#contacto-footer > .container");
+    if (!social || !socialContainer || !socialViewport || !socialTrack || !cards.length ||
+        !testimonialContainer || !testimonialViewport || !slides.length || !dots || !footer || !footerContainer) return null;
+
+    const errors = [];
+    const check = (condition, message) => { if (!condition) errors.push(message); };
+    const center = (box) => box.left + box.width / 2;
+    const within = (box, parent) => box.width > 0 && box.left >= parent.left - 1 && box.right <= parent.right + 1;
+    const clips = (element) => {
+      const style = getComputedStyle(element);
+      return style.overflowX === "hidden" && style.overflowY === "hidden";
+    };
+    const socialBox = socialContainer.getBoundingClientRect();
+    const socialViewportBox = socialViewport.getBoundingClientRect();
+    const cardBox = cards[0].getBoundingClientRect();
+    const visibleCards = window.innerWidth <= 640 ? 2 : window.innerWidth <= 992 ? 3 : 5;
+    const gap = Number.parseFloat(getComputedStyle(socialTrack).columnGap);
+    check(clips(socialViewport), "el viewport social no tiene overflow hidden");
+    check(within(socialBox, social.getBoundingClientRect()) && Math.abs(center(socialBox) - window.innerWidth / 2) <= 1,
+      "el contenedor social no esta centrado dentro de la seccion");
+    check(Math.abs(socialViewportBox.width - socialBox.width) <= 1 && Math.abs(center(socialViewportBox) - center(socialBox)) <= 1,
+      "el viewport social no conserva el ancho y centro de su contenedor");
+    check(cards.length >= visibleCards && Number.isFinite(gap) &&
+      Math.abs(cardBox.width * visibleCards + gap * (visibleCards - 1) - socialViewportBox.width) <= 1,
+    `la galeria social no muestra ${visibleCards} tarjetas por viewport`);
+    for (const card of cards) {
+      const box = card.getBoundingClientRect();
+      const item = card.querySelector(".social__item")?.getBoundingClientRect();
+      check(box.width > 0 && box.height > 0 && Math.abs(box.width - cardBox.width) <= 1 &&
+        Math.abs(box.height - box.width * 5 / 4) <= 1 && item &&
+        Math.abs(item.width - box.width) <= 1 && Math.abs(item.height - box.height) <= 1,
+      "las tarjetas sociales no conservan su proporcion 4/5");
+    }
+    // El track puede desbordar dentro del viewport, pero no sus contenedores exteriores.
+    check(social.scrollWidth <= social.clientWidth + 1 && socialContainer.scrollWidth <= socialContainer.clientWidth + 1,
+      "la seccion social tiene scrollWidth exterior extra");
+
+    const testimonialBox = testimonialContainer.getBoundingClientRect();
+    const testimonialViewportBox = testimonialViewport.getBoundingClientRect();
+    check(testimonialBox.width > 0 && testimonialBox.width <= 561 && Math.abs(center(testimonialBox) - window.innerWidth / 2) <= 1,
+      "el contenedor testimonial supera 560px o no esta centrado");
+    check(clips(testimonialViewport) && within(testimonialViewportBox, testimonialBox) &&
+      Math.abs(center(testimonialViewportBox) - center(testimonialBox)) <= 1,
+    "el viewport testimonial no esta centrado o no tiene overflow hidden");
+    for (const slide of slides) {
+      const box = slide.getBoundingClientRect();
+      check(getComputedStyle(slide).display === "grid" && box.height > 0 && Math.abs(box.width - testimonialViewportBox.width) <= 1,
+        "el slide testimonial no es grid o no ocupa el ancho del viewport");
+    }
+    check(getComputedStyle(dots).display === "flex", "los dots del testimonial no usan flex");
+
+    const footerBox = footerContainer.getBoundingClientRect();
+    const form = footerContainer.querySelector("form");
+    const formBox = form?.getBoundingClientRect();
+    check(footerBox.width > 0 && footerBox.width <= 561 && Math.abs(center(footerBox) - window.innerWidth / 2) <= 1,
+      "el contenedor del footer supera 560px o no esta centrado");
+    check(footer.scrollWidth <= footer.clientWidth + 1 && footerContainer.scrollWidth <= footerContainer.clientWidth + 1,
+      "el footer tiene desplazamiento horizontal");
+    if (form) {
+      check(within(formBox, footerBox) && form.scrollWidth <= form.clientWidth + 1, "el formulario sale del contenedor del footer");
+      for (const field of form.querySelectorAll("input:not([type='hidden']), textarea, select, button")) {
+        check(within(field.getBoundingClientRect(), formBox), "un campo del footer sale del formulario");
+      }
+      for (const row of form.querySelectorAll(":scope > .grid")) {
+        const style = getComputedStyle(row);
+        check(style.display === "grid" && style.gridTemplateColumns.split(/\s+/).length === (window.innerWidth <= 640 ? 1 : 2),
+          "las columnas del formulario no respetan el breakpoint de 640px");
+      }
+    }
+    const legalNav = footerContainer.querySelector("nav[aria-label='Enlaces legales del sitio']");
+    if (legalNav) {
+      const style = getComputedStyle(legalNav);
+      check(style.display === "grid" && style.gridTemplateColumns.split(/\s+/).length === (window.innerWidth <= 640 ? 2 : 3),
+        "las columnas legales del footer no respetan el breakpoint de 640px");
+    }
+
+    return {
+      errors,
+      dimensions: {
+        socialWidth: socialViewportBox.width, socialCenter: center(socialViewportBox),
+        socialCardWidth: cardBox.width, socialCardHeight: cardBox.height,
+        testimonialContainerWidth: testimonialBox.width,
+        testimonialWidth: testimonialViewportBox.width, testimonialHeight: testimonialViewportBox.height,
+        testimonialCenter: center(testimonialViewportBox), testimonialSlideWidth: slides[0].getBoundingClientRect().width,
+        footerWidth: footerBox.width, footerCenter: center(footerBox),
+        footerFormWidth: formBox?.width ?? 0, footerFormHeight: formBox?.height ?? 0,
+      },
+    };
+  });
+
+  if (!result) fail(`${label} no contiene la estructura social, testimonial y footer esperada.`);
+  if (result.errors.length) fail(`${label}: ${result.errors.join("; ")}.`);
+  return result.dimensions;
+}
+
 const browser = await chromium.launch({ executablePath: edgePath, headless: true });
-const report = { baseUrl: baseUrl.href, checkedAt: new Date().toISOString(), mobile: [], desktop: null };
+const report = { baseUrl: baseUrl.href, checkedAt: new Date().toISOString(), mobile: [], desktop: null, studio: [] };
 
 try {
   for (const viewport of mobileViewports) {
@@ -107,6 +221,73 @@ try {
   await assertNoHorizontalOverflow(desktopPage, "Inicio desktop");
   report.desktop = { viewport: { width: 1440, height: 900 }, home: "ok" };
   await desktopContext.close();
+
+  for (const viewport of [{ width: 1440, height: 900 }, { width: 768, height: 1024 }, ...mobileViewports]) {
+    const isMobile = viewport.width <= 640;
+    // La primera carga de cada contexto debe ser El estudio, sin CSS heredado de Inicio.
+    const context = await browser.newContext({ viewport, isMobile, hasTouch: isMobile, reducedMotion: "reduce" });
+    const page = await context.newPage();
+    const label = `El estudio ${viewport.width}px`;
+    await page.goto(new URL("/el-estudio", baseUrl).href, { waitUntil: "domcontentloaded", timeout: 30000 });
+    const direct = await assertStudioLayout(page, `${label} directo`);
+
+    const dots = page.locator(".testimonial__dot");
+    if (await dots.count() < 2) fail(`${label} necesita dos testimonios para comprobar la transicion.`);
+    if (await dots.first().getAttribute("aria-pressed") !== "true") fail(`${label} no inicia en el primer testimonio.`);
+    await dots.nth(1).click();
+    await page.waitForFunction(() => {
+      const dots = [...document.querySelectorAll(".testimonial__dot")];
+      const viewport = document.querySelector(".testimonial__viewport")?.getBoundingClientRect();
+      const slide = document.querySelectorAll(".testimonial__slide")[1]?.getBoundingClientRect();
+      return dots[1]?.getAttribute("aria-pressed") === "true" && dots[1].classList.contains("is-active") &&
+        dots.filter((dot) => dot.getAttribute("aria-pressed") === "true").length === 1 &&
+        dots.filter((dot) => dot.classList.contains("is-active")).length === 1 && viewport && slide &&
+        Math.abs(slide.left - viewport.left) <= 1;
+    }, null, { timeout: 5000 });
+
+    const activeSlide = page.locator(".testimonial__slide").nth(1);
+    const author = (await activeSlide.locator(".testimonial__author").textContent()).trim();
+    await openModal(page, activeSlide, ".testimonial-modal", `${label}: modal testimonial`);
+    const modal = page.locator(".testimonial-modal");
+    if ((await modal.locator(".testimonial-modal__author").textContent()).trim() !== author) {
+      fail(`${label} no abre el testimonio del slide activo.`);
+    }
+    await page.waitForFunction(() => document.body.classList.contains("modal-open"));
+    await page.keyboard.press("Escape");
+    await modal.waitFor({ state: "hidden" });
+    await page.waitForFunction(() => !document.body.classList.contains("modal-open"));
+
+    await page.goto(baseUrl.href, { waitUntil: "domcontentloaded", timeout: 30000 });
+    await page.locator(".site-nav-shell--home[data-navigation-ready='true']").waitFor({ state: "attached" });
+    let studioLink;
+    if (viewport.width < 1025) {
+      await page.locator(".mobile-scroll-nav__toggle").first().click();
+      await page.locator("#mobile-scroll-menu").waitFor({ state: "visible" });
+      studioLink = page.locator("#mobile-scroll-menu a[href='/el-estudio']").first();
+      if (!(await studioLink.isVisible())) {
+        await page.locator("#mobile-scroll-menu .mobile-menu__item")
+          .filter({ has: page.locator("a[href='/el-estudio']") }).locator(".mobile-menu__link--submenu").click();
+      }
+    } else {
+      await page.locator(".social__viewport").scrollIntoViewIfNeeded();
+      studioLink = page.locator(".scroll-desktop-nav__link[href='/el-estudio']").first();
+    }
+    await studioLink.waitFor({ state: "visible" });
+    await page.evaluate(() => { window.__responsiveStudioNavigation = true; });
+    await studioLink.click();
+    await page.waitForURL((url) => url.pathname === "/el-estudio", { timeout: 30000 });
+    const navigated = await assertStudioLayout(page, `${label} tras Inicio`);
+    if (!(await page.evaluate(() => window.__responsiveStudioNavigation === true))) {
+      fail(`${label} no se ha abierto mediante navegacion cliente.`);
+    }
+    for (const [name, value] of Object.entries(direct)) {
+      if (Math.abs(navigated[name] - value) > 1) {
+        fail(`${label} cambia ${name} tras navegar desde Inicio: ${value} -> ${navigated[name]}.`);
+      }
+    }
+    report.studio.push({ viewport, direct, testimonialDot: "ok", testimonialModal: "ok", clientNavigation: "ok" });
+    await context.close();
+  }
 } finally {
   await browser.close();
 }

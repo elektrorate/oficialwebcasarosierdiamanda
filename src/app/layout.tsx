@@ -18,6 +18,7 @@ import "./legacy/base.css";
 import "./legacy/cart.css";
 import "./legacy/promo-entry.css";
 import "./legacy/footer.css";
+import "@/components/home/testimonial-slider/testimonial-slider.css";
 import "./globals.css";
 import "./responsive-tuning.css";
 import "./public-header-desktop.css";

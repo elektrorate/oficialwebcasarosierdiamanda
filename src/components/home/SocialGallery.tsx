@@ -5,6 +5,7 @@ import { createPortal } from "react-dom";
 import Image from "next/image";
 import { Carousel } from "@/components/ui/Carousel";
 import { classNames } from "@/lib/utils";
+import "./social-gallery-home.css";
 
 export interface SocialGalleryPost {
   image: string;

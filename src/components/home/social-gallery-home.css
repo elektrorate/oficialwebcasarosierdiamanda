@@ -1,9 +1,20 @@
 /**
- * Home Instagram strip — portrait tiles, marquee animation.
+ * Shared Instagram strip - portrait tiles, marquee animation.
  *
  * Structural layout (title, subtitle, container) migrated to Tailwind.
  * Tile sizing, container queries, marquee animation, hover effects stay in CSS.
  */
+
+.social__viewport {
+  overflow: hidden;
+  max-width: 700px;
+  margin-inline: auto;
+}
+
+@keyframes socialMarquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(calc(-50% - 6px)); }
+}
 
 .social--home-strip .social__viewport {
   width: 100%;
