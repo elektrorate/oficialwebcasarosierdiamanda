@@ -1388,7 +1388,7 @@ main {
   }
 
   .header-home--image-hero > .public-hero-title--blur-reveal .page-hero__title {
-    font-size: clamp(23.2px, 6.4vw, 27.2px);
+    font-size: clamp(25.16px, 6.94vw, 29.5px);
   }
 
   .header-home .hero__logo {
